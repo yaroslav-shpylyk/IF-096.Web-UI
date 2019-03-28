@@ -1,11 +1,11 @@
-<form class="component">
+<form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)"  class="component">
   <label class="field">
     <span>LOGIN</span>
-    <input type="text">
+    <input formControlName="username" type="text">
   </label>
   <label  class="field">
     <span>PASSWORD</span>
-    <input type="password">
+    <input formControlName="password" type="password">
   </label>
-  <input class="submit" type="submit" value="SUBMIT">
+  <input class="submit" type="submit" value="SUBMIT" [disabled]="!loginForm.valid">
 </form>
