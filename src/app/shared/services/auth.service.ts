@@ -65,7 +65,7 @@ export class AuthService {
   }
   public refreshTokenTimer(): void {
     clearTimeout(this.tokenRefreshTimer);
-    const serviceRef = this;
+    const serviceRef: AuthService = this;
     const delay = 300000;
     this.tokenRefreshTimer = setTimeout(function refresh() {
       serviceRef.refreshToken().subscribe();

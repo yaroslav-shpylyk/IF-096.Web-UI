@@ -13,7 +13,8 @@ export class TokenInterceptorService implements HttpInterceptor {
     const token = this.authService.getToken();
     request = request.clone({
       setHeaders: {
-        Authorization: token
+        Authorization: token,
+        'Access-Control-Allow-Origin': ''
       }
     });
     return next.handle(request)
