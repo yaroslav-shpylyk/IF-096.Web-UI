@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class TokenInterceptorService implements HttpInterceptor {
@@ -14,12 +13,9 @@ export class TokenInterceptorService implements HttpInterceptor {
     request = request.clone({
       setHeaders: {
         Authorization: token,
-        'Access-Control-Allow-Origin': ''
+        'Access-Control-Allow-Origin': '*'
       }
     });
-    return next.handle(request)
-      .pipe(tap( _ => {}, error => {
-        // do something when token is not valid
-      }));
+    return next.handle(request);
   }
 }

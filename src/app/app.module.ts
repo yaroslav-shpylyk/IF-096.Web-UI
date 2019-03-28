@@ -1,10 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthModule } from './auth/auth.module';
-import { TokenInterceptorService } from './shared/services/token-interceptor.service';
+import { TokenInterceptorService } from './services/token-interceptor.service';
 import { AppComponent } from './app.component';
-import { AuthService } from './shared/services/auth.service';
+import { AuthService } from './services/auth.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -12,7 +12,7 @@ import { AuthService } from './shared/services/auth.service';
   ],
   imports: [
     BrowserModule,
-    AuthModule
+    HttpClientModule
   ],
   providers: [
     AuthService,
@@ -22,8 +22,6 @@ import { AuthService } from './shared/services/auth.service';
       multi: true
     }
   ],
-  bootstrap: [
-    AppComponent
-  ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
