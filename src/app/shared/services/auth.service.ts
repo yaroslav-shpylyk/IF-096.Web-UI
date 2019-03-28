@@ -8,6 +8,7 @@ import { catchError, map } from 'rxjs/operators';
 
 export class AuthService {
   private readonly url: string;
+  private tokenRefreshTimer: any;
   constructor(private http: HttpClient) {
     this.url = 'http://35.228.220.5:8080';
   }
@@ -17,12 +18,13 @@ export class AuthService {
   public getToken(): string {
     return localStorage.getItem('token');
   }
-  public login(userData: LoginData): Observable<any> {
-    return this.http.post(`${this.url}/signin`, userData, { observe: 'response' })
+  public login(data: LoginData): Observable<any> {
+    return this.http.post(`${this.url}/signin`, data, { observe: 'response' })
       .pipe(
         map((response: any) => {
           const token: string = response.headers.get('Authorization');
           localStorage.setItem('token', token);
+          this.refreshTokenTimer();
           return response;
         })
       );
@@ -33,14 +35,16 @@ export class AuthService {
         map((response: any) => {
           const newToken = response.headers.get('Authorization');
           localStorage.setItem('token', newToken);
+          this.refreshTokenTimer();
           return response;
         }),
-        catchError(error => {
+        catchError((error: any) => {
           if (error.status.code === 401) {
+            clearTimeout(this.tokenRefreshTimer);
             localStorage.setItem('token', '');
           }
           // TODO: navigate to login page
-          throw error;
+          return error;
         })
       );
   }
@@ -57,5 +61,15 @@ export class AuthService {
       token
     };
     return this.http.put(`${this.url}/resetPassword`, data);
+  }
+  public refreshTokenTimer(): void {
+    clearTimeout(this.tokenRefreshTimer);
+    const serviceRef = this;
+    const delay = 300000;
+    this.tokenRefreshTimer = setTimeout(function refresh() {
+      serviceRef.refreshToken().subscribe();
+      console.log(serviceRef.getToken());
+      serviceRef.tokenRefreshTimer = setTimeout(refresh, delay);
+    }, delay);
   }
 }

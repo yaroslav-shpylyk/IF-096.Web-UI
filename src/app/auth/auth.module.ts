@@ -5,10 +5,11 @@ import { AuthComponent } from './auth.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+
 @NgModule({
   declarations: [
     LoginComponent,
-    AuthComponent
+    AuthComponent,
   ],
   imports: [
     CommonModule,
