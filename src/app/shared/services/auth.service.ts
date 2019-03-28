@@ -12,8 +12,10 @@ export class AuthService {
   constructor(private http: HttpClient) {
     this.url = 'http://35.228.220.5:8080';
   }
-  public static logout(): void {
+  public logout(): void {
     localStorage.setItem('token', '');
+    clearTimeout(this.tokenRefreshTimer);
+    // TODO: navigate to login page
   }
   public getToken(): string {
     return localStorage.getItem('token');
@@ -25,6 +27,7 @@ export class AuthService {
           const token: string = response.headers.get('Authorization');
           localStorage.setItem('token', token);
           this.refreshTokenTimer();
+          // TODO: navigate somewhere after login
           return response;
         })
       );
@@ -40,10 +43,8 @@ export class AuthService {
         }),
         catchError((error: any) => {
           if (error.status.code === 401) {
-            clearTimeout(this.tokenRefreshTimer);
-            localStorage.setItem('token', '');
+            this.logout();
           }
-          // TODO: navigate to login page
           return error;
         })
       );
