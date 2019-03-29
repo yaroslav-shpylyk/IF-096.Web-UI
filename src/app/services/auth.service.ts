@@ -45,7 +45,7 @@ export class AuthService {
           const token: string = response.headers.get('Authorization');
           localStorage.setItem('token', token);
           this.refreshTokenTimer();
-          this.router.navigate(['/shell']);
+          this.router.navigate(['']);
           return response;
         })
       );
