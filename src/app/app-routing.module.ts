@@ -7,13 +7,8 @@ const routes: Routes = [
     loadChildren: './login/login.module#LoginModule'
   },
   {
-    path: 'shell',
-    loadChildren: './shell/shell.module#ShellModule'
-  },
-  {
     path: '',
-    redirectTo: '',
-    pathMatch: 'full'
+    loadChildren: './shell/shell.module#ShellModule'
   }
 ];
 
