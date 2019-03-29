@@ -13,6 +13,9 @@ export class LoginComponent implements OnInit {
     this.createForm();
   }
 
+  /**
+   * Method creates reactive form for login component
+   */
   createForm(): void {
     this.loginForm = new FormGroup({
       username: new FormControl('', [
@@ -23,6 +26,11 @@ export class LoginComponent implements OnInit {
       ])
     });
   }
+
+  /**
+   * Method calls login subscription
+   * @param data - Username and password
+   */
   login(data): void {
     this.auth.login(data).subscribe();
   }
