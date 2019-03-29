@@ -15,6 +15,7 @@ export class AuthService {
   private readonly url: string = 'http://35.228.220.5:8080';
   private tokenRefreshTimer: any;
   constructor(private http: HttpClient, private router: Router) { }
+
   /**
    * Method logout's user
    */
@@ -23,6 +24,7 @@ export class AuthService {
     clearTimeout(this.tokenRefreshTimer);
     this.router.navigate(['/login']);
   }
+
   /**
    * Method returns token from localstorage
    * @returns - Current token
@@ -30,6 +32,7 @@ export class AuthService {
   public getToken(): string {
     return localStorage.getItem('token');
   }
+
   /**
    * Method get token from server and saves to localstorage
    * @param data - This is object with user's username and password
@@ -47,6 +50,7 @@ export class AuthService {
         })
       );
   }
+
   /**
    * Method use current token to get new token
    * @returns - New token
@@ -68,9 +72,10 @@ export class AuthService {
         })
       );
   }
+
   /**
    * Method send link to email to reset user's password
-   * @param query - users login or email
+   * @param query - Users login or email
    * @returns - Status of recovery process
    */
   public requestPassReset(query: string): Observable<any> {
@@ -79,9 +84,10 @@ export class AuthService {
     };
     return this.http.get(`${this.url}/requestPasswordReset`, data);
   }
+
   /**
    * Method resets current password
-   * @param password - users password
+   * @param password - Users password
    * @returns - New password
    */
   public resetPass(password: string): Observable<any> {
@@ -92,6 +98,7 @@ export class AuthService {
     };
     return this.http.put(`${this.url}/resetPassword`, data);
   }
+
   /**
    * Method creates recursive timeout which refreshes token after delay
    */
@@ -104,6 +111,7 @@ export class AuthService {
       serviceRef.tokenRefreshTimer = setTimeout(refresh, delay);
     }, delay);
   }
+
   /**
    * Method checks if current token is valid and refreshes it to continue current session
    * @returns - New token or nothing
