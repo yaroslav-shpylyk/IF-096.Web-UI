@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: './shell/shell.module#ShellModule'
+  },
+  {
+    path: 'admin',
+    loadChildren: './admin-panel/admin-panel.module#AdminPanelModule'
   }
 ];
 
@@ -16,4 +20,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

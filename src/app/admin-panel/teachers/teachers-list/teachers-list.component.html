@@ -1,0 +1,9 @@
+<h5>Simple Nav Listssssssssssssssss</h5>
+<mat-nav-list>
+	<ng-container *ngFor="let teacher of teachers">
+		<mat-list-item  routerLink="/home" routerLinkActive="active">
+			<img matListAvatar [src]="teacher.avatar" alt="...">
+		  <p matLine href="javascript:void(0)" > {{ teacher.firstname }} {{ teacher.lastname}} </p>    
+    </mat-list-item >
+	</ng-container>
+</mat-nav-list>

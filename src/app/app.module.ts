@@ -6,6 +6,11 @@ import { AppComponent } from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { MaterialModule } from './material';
+import { TeachersStorageService } from './services/teachers-storage.service';
+import { TeachersService } from './admin-panel/teachers/teachers.service';
+
 
 @NgModule({
   declarations: [
@@ -14,10 +19,14 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [
     AuthService,
+    TeachersStorageService,
+    TeachersService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
