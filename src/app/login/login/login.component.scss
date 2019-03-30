@@ -1,0 +1,28 @@
+.component {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  width: 600px;
+  height: 500px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+  border-radius: 5px;
+  margin-top: 5em;
+  font-size: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+
+  input {
+    width: 300px;
+    height: 50px;
+  }
+}
+
+.submit {
+  width: 200px;
+  height: 50px;
+}
