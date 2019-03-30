@@ -132,6 +132,7 @@ export class AuthService {
   */
   public getUserRole(): string {
     const decodedToken: TokenInfo = JWTDecoder(this.getToken());
+    console.log(decodedToken);
     return decodedToken.Roles.authority;
   }
 }

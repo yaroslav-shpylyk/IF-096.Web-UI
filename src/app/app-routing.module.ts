@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ShellGuard } from './services/shell.guard';
 
 const routes: Routes = [
   {
@@ -8,7 +9,8 @@ const routes: Routes = [
   },
   {
     path: '',
-    loadChildren: './shell/shell.module#ShellModule'
+    loadChildren: './shell/shell.module#ShellModule',
+    canActivate: [ShellGuard]
   }
 ];
 
