@@ -7,16 +7,15 @@ import { AuthService } from "./auth.service"
   providedIn: 'root'
 })
 export class ShellGuard implements CanActivate {
+
   roles: Array<string> = ['ROLE_TEACHER', 'ROLE_USER', 'ROLE_ADMIN'];
 
   constructor(public auth: AuthService, private router: Router) {
-
   }
-
+  
   canActivate(): boolean {
-    console.log("guard-here");
-    
     if (this.roles.some(role => role === this.auth.getUserRole())) {
+      console.log("true");
       return true
     }
     else {

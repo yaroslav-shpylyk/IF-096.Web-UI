@@ -6,6 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import * as JWTDecoder from 'jwt-decode';
 import { TokenInfo } from '../models/token-info';
+import { error } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -130,9 +131,14 @@ export class AuthService {
   * Method gets user's role from token
   * @returns - User role
   */
-  public getUserRole(): string {
-    const decodedToken: TokenInfo = JWTDecoder(this.getToken());
-    console.log(decodedToken);
-    return decodedToken.Roles.authority;
+  public getUserRole(): string | boolean {
+    if (this.getToken()) {
+      const decodedToken: TokenInfo = JWTDecoder(this.getToken());
+      console.log(decodedToken);
+      return decodedToken.Roles.authority;
+    }
+    else {
+      return false;
+    }
   }
 }
