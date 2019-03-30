@@ -8,7 +8,7 @@ import * as JWTDecoder from 'jwt-decode';
 import { TokenInfo } from '../models/token-info';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 
 export class AuthService {
@@ -125,5 +125,13 @@ export class AuthService {
       }
     }
     localStorage.setItem('token', '');
+  }
+  /**
+  * Method gets user's role from token
+  * @returns - User role
+  */
+  public getUserRole(): string {
+    const decodedToken: TokenInfo = JWTDecoder(this.getToken());
+    return decodedToken.Roles.authority;
   }
 }
