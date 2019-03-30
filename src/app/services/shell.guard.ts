@@ -12,10 +12,9 @@ export class ShellGuard implements CanActivate {
 
   constructor(public auth: AuthService, private router: Router) {
   }
-  
+
   canActivate(): boolean {
     if (this.roles.some(role => role === this.auth.getUserRole())) {
-      console.log("true");
       return true
     }
     else {
