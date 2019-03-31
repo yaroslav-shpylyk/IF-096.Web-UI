@@ -12,7 +12,6 @@ import { TokenInfo } from '../models/token-info';
 })
 
 export class AuthService {
-  private readonly url: string = 'http://35.228.220.5:8080';
   private tokenRefreshTimer: any;
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -39,7 +38,7 @@ export class AuthService {
    * @returns - New token
    */
   public login(data: LoginData): Observable<any> {
-    return this.http.post(`${this.url}/signin`, data, { observe: 'response' })
+    return this.http.post(`/signin`, data, { observe: 'response' })
       .pipe(
         map((response: any) => {
           const token: string = response.headers.get('Authorization');
@@ -56,7 +55,7 @@ export class AuthService {
    * @returns - New token
    */
   public refreshToken(): Observable<any> {
-    return this.http.get(`${this.url}/refresh`, { observe: 'response' })
+    return this.http.get(`/refresh`, { observe: 'response' })
       .pipe(
         map((response: any) => {
           const newToken = response.headers.get('Authorization');
@@ -82,7 +81,7 @@ export class AuthService {
     const data: object = {
       query
     };
-    return this.http.get(`${this.url}/requestPasswordReset`, data);
+    return this.http.get(`/requestPasswordReset`, data);
   }
 
   /**
@@ -96,7 +95,7 @@ export class AuthService {
       password,
       token
     };
-    return this.http.put(`${this.url}/resetPassword`, data);
+    return this.http.put(`/resetPassword`, data);
   }
 
   /**
