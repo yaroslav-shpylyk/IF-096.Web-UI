@@ -15,19 +15,23 @@ import { GroupsService } from 'src/app/services/groups.service';
 })
 export class GroupsComponent implements OnInit {
   
-  groups: Observable<Group[]>
-  response: any;
+  groups: Observable<Group[]>;
+ 
 
   
   constructor(private groupServices: GroupsService) { }
 
   ngOnInit() {
-    this.groups = this.groupServices.getGroups()
+    this.groups = this.groupServices.getGroups();
+  }
+
+  refreshGroups(){
+    this.groups = this.groupServices.getGroups();
   }
 
   addGrup(fields: Object) {
     const group = new Group(fields);
-    this.groupServices.addGrup(group).subscribe(newGroup => console.log(newGroup));
+    this.groupServices.addGrup(group).subscribe(_ => this.refreshGroups());
   }
 
 }
