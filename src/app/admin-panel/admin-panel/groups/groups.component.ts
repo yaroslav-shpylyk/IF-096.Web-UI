@@ -25,4 +25,9 @@ export class GroupsComponent implements OnInit {
     this.groups = this.groupServices.getGroups()
   }
 
+  addGrup(fields: Object) {
+    const group = new Group(fields);
+    this.groupServices.addGrup(group).subscribe(newGroup => console.log(newGroup));
+  }
+
 }

@@ -5,6 +5,16 @@
 
 <ul>
   <li *ngFor="let group of groups | async">
-      {{group.className}} - {{group.classYear}}
-  </li>
+    {{group.className}} - {{group.classYear}} - {{group.isActive}}
+   </li>
 </ul>
+
+<form #form = "ngForm" (submit)="addGrup(form.value)">
+  <label>Назва класу: <input type="text" name="className" ngModel> </label><br>
+  <label>Навчальний рік: <input type="number" name="classYear" ngModel> </label><br>
+  <label>Додадкова інформація: <input type="text" name="classDescription" ngModel> </label><br>
+  <label>Активний: <input type="radio" name="isActive" value="true" ngModel> </label><br>
+  <label>Неактивний: <input type="radio" name="isActive" value="false" ngModel> </label><br>
+  <input type="submit"  value="Зберегти">
+</form>
+ 

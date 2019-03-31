@@ -21,4 +21,8 @@ export class GroupsService {
       })
     );
   }
+
+  addGrup(group: Group ) {
+    return this.http.post<Group>(this.API_URL, group);
+  }
 }
