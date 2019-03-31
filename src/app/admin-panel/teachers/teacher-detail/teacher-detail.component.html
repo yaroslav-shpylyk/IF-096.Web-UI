@@ -1,0 +1,18 @@
+<div class="container">
+  <div *ngIf="teacher">
+    <div class="avatar-flip">
+      <img [src]="teacher.avatar" height="150" width="150" />
+    </div>
+    <h2>{{ teacher.lastname + ' ' + teacher.firstname }}</h2>
+    <h4>{{ teacher.patronymic }}</h4>
+    <p><b>Дата народження: </b> {{ teacher.dateOfBirth }}</p>
+    <p *ngIf="teacher.email">
+      <b>Электронна скринька: </b> {{ teacher.email }}
+    </p>
+    <p *ngIf="teacher.phone">
+      <b>Номер телефону: </b> {{ teacher.phone }}
+    </p>
+    <button mat-raised-button color="accent">Редагувати</button>
+  </div>
+
+</div>

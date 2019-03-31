@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
 import { TeachersService } from '../teachers.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-teachers-list',
@@ -9,7 +10,7 @@ import { TeachersService } from '../teachers.service';
   styleUrls: ['./teachers-list.component.scss']
 })
 export class TeachersListComponent implements OnInit {
-  teachers;
+  teachers; 
   subscription: Subscription;
 
   constructor(
@@ -25,6 +26,7 @@ export class TeachersListComponent implements OnInit {
       }
     );
   }
+
 
   ngOnDestroy() {
     this.subscription.unsubscribe()

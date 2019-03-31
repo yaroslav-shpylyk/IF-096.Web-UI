@@ -6,22 +6,22 @@ export class TeachersService {
   constructor() {}
 
   teachersChanged = new Subject();
+  teacherChanged = new Subject();
 
   private teachers = [];
+  private teacher;
 
   setTeachers(teachers) {
-    this.teachers = teachers.data;
-    for (let teacher of this.teachers) {
-      if (!teacher['avatar']) {
-        teacher.avatar = 'https://png.pngtree.com/svg/20161212/f93e57629c.svg'
-      }
-    }
+    this.teachers = teachers;
     this.teachersChanged.next(this.teachers.slice());
-    console.log(this.teachers)
   }
 
   getTeachers() {
-    console.log(this.teachers)
     return this.teachers.slice()
+  }
+
+  setTeacher(teacher) {
+    this.teacher = teacher;
+    this.teacherChanged.next(this.teacher);
   }
 }

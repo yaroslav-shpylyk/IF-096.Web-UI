@@ -1,7 +1,13 @@
 <h1>teachers comp</h1>
 
-<div style="display: flex">
-  <app-teachers-list  style="flex: 1"></app-teachers-list>
+<!-- <div style="display: flex"> -->
+<div fxLayout style=" margin: auto; width: 80%;">
+  <div style="width: 100%; justify-content: center">
+    <app-teachers-list fxFlex="25%"></app-teachers-list>
 
-  <app-default-teacher style="flex: 4"></app-default-teacher>
+    <div fxFlex="70%">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <!-- <app-default-teacher style="flex: 4"></app-default-teacher> -->
 </div>
