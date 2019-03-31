@@ -16,6 +16,8 @@ import { GroupsService } from 'src/app/services/groups.service';
 export class GroupsComponent implements OnInit {
   
   groups: Group[];
+  isShow: boolean = false;
+  isShow2: boolean = false;
  
   constructor(private groupServices: GroupsService) { }
 
