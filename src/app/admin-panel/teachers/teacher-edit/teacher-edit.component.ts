@@ -65,60 +65,56 @@ export class TeacherEditComponent implements OnInit {
       teacherEmail = this.teacher.email;
       teacherPhone = this.teacher.phone;
       teacherLogin = this.teacher.login;
-
-      // if (teacher['ingredients']) {
-      //   for (let ingredient of teacher.ingredients) {
-      //     teacherIngredients.push(
-      //       new FormGroup({
-      //         name: new FormControl(ingredient.name, Validators.required),
-      //         amount: new FormControl(ingredient.amount, [
-      //           Validators.required,
-      //           Validators.pattern(/^[1-9]+[0-9]*$/)
-      //         ])
-      //       })
-      //     );
-      //   }
-      // }
     }
     this.teacherForm = new FormGroup({
-      teacherFirstname: new FormControl(teacherFirstname, Validators.required),
-      teacherLastname: new FormControl(teacherLastname, Validators.required),
-      teacherPatronymic: new FormControl(
-        teacherPatronymic,
-        Validators.required
-      ),
+      teacherFirstname: new FormControl(teacherFirstname, [
+        Validators.required,
+        Validators.pattern(/[А-ЯІЇЄҐа-яіїєґ()' -]+/)
+      ]),
+      teacherLastname: new FormControl(teacherLastname, [
+        Validators.required,
+        Validators.pattern(/[А-ЯІЇЄҐа-яіїєґ()' -]+/)
+      ]),
+      teacherPatronymic: new FormControl(teacherPatronymic, [
+        Validators.required,
+        Validators.pattern(/[А-ЯІЇЄҐа-яіїєґ()' -]+/)
+      ]),
       teacherAvatar: new FormControl(teacherAvatar),
       teacherDateOfBirth: new FormControl(
         teacherDateOfBirth,
         Validators.required
       ),
-      teacherEmail: new FormControl(teacherEmail, Validators.email),
-      teacherPhone: new FormControl(teacherPhone),
-      teacherLogin: new FormControl(teacherLogin),
+      teacherEmail: new FormControl(teacherEmail, Validators.pattern(/^.+@.+$/)),
+      teacherPhone: new FormControl(teacherPhone, Validators.pattern(/^-?\d+$/)),
+      teacherLogin: new FormControl(teacherLogin, Validators.required),
       oldPassword: new FormControl(oldPassword),
       newPassword: new FormControl(newPassword)
     });
   }
-
+  
   onSubmit() {
-
-    let test = {
-      avatar: 'asdasd',
-      dateOfBirth: '2002-02-01',
-      email: 'null@ukr.net',
-      firstname: 'Валерка',
-      lastname: 'Бубликок',
-      login: 'aEinst14sw',
-      newPass: 'password1',
-      oldPass: 'password',
-      patronymic: 'Опанасовичі',
-      phone: '03123123123'
+ 
+    let testos = {
+      avatar: this.teacher.avatar,
+      dateOfBirth: this.teacherForm.value['teacherDateOfBirth'].split('.').reverse().join('-'),
+      email: this.teacherForm.value['email'],
+      firstname: this.teacherForm.value['teacherFirstname'],
+      lastname: this.teacherForm.value['teacherLastname'],
+      login: this.teacherForm.value['teacherLogin'],
+      newPass: this.teacherForm.value['newPassword'],
+      oldPass: this.teacherForm.value['oldPassword'],
+      patronymic: this.teacherForm.value['teacherPatronymic'],
+      phone: this.teacherForm.value['teacherPhone']
     };
 
-    this.teachersStorageService.updateTeacher(this.id, test)
-    .subscribe(
-      (response: Response) => console.log(response),
-      error => console.log(error)
-    );
+    console.log(this.teacher)
+    console.log(this.teacher)
+    
+    this.teachersStorageService
+      .updateTeacher(this.id, testos)
+      .subscribe(
+        (response: Response) => console.log(response),
+        error => console.log(error)
+      );
   }
 }

@@ -3,12 +3,17 @@
     <img [src]="teacher.avatar" height="150" width="150" />
   </div>
 
-  <form class="example-form" [formGroup]="teacherForm" (ngSubmit)="onSubmit()">
+  <form
+    class="example-form"
+    [formGroup]="teacherForm"
+    (ngSubmit)="onSubmit()"
+  >
     <mat-form-field class="example-full-width">
       <input matInput placeholder="Ім'я" formControlName="teacherFirstname" />
     </mat-form-field>
     <mat-form-field class="example-full-width">
       <input
+        type="text"
         matInput
         placeholder="Прізвище"
         formControlName="teacherLastname"
@@ -76,7 +81,12 @@
         formControlName="oldPassword"
       />
     </mat-form-field>
-    <button mat-raised-button color="primary" type="submit">
+
+    <button 
+      [disabled]="!teacherForm.valid"
+      mat-raised-button color="primary" 
+      type="submit"
+    >
       Зберегти
     </button>
   </form>
