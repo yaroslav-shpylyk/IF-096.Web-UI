@@ -56,7 +56,7 @@
       />
     </mat-form-field>
 
-    <mat-form-field class="example-full-width">
+    <mat-form-field *ngIf="editMode" class="example-full-width">
       <input
         type="password"
         matInput
@@ -65,7 +65,7 @@
       />
     </mat-form-field>
 
-    <mat-form-field class="example-full-width">
+    <mat-form-field *ngIf="editMode" class="example-full-width">
       <input
         type="password"
         matInput
@@ -73,7 +73,7 @@
         formControlName="newPassword"
       />
     </mat-form-field>
-    <mat-form-field class="example-full-width">
+    <mat-form-field *ngIf="editMode" class="example-full-width">
       <input
         type="password"
         matInput
@@ -89,5 +89,14 @@
     >
       Зберегти
     </button>
+
+    <button 
+      mat-raised-button
+      type="button"
+      (click)="onCancel()"
+    >
+      Відмінити
+    </button>
+
   </form>
 </div>

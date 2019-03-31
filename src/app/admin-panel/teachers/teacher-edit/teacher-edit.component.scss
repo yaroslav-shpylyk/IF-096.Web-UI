@@ -75,3 +75,11 @@ p {
 .example-full-width {
   width: 100%;
 }
+
+button {
+  margin: 6px
+}
+
+mat-form-field:first-child {
+  margin-top: 20px;
+}

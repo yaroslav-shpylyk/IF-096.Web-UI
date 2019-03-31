@@ -70,8 +70,10 @@ export class TeachersStorageService {
   }
 
   updateTeacher(id, teacher) {
-    console.log(`da  ${teacher}`)
-    
     return this.httpClient.put(`http://35.228.220.5:8080/admin/teachers/${id}`, teacher);
+  }
+
+  addTeacher(newTeacher) {
+    return this.httpClient.post(`http://35.228.220.5:8080/teachers`, newTeacher)
   }
 }

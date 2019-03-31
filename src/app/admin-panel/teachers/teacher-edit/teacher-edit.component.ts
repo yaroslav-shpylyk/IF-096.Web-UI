@@ -40,7 +40,6 @@ export class TeacherEditComponent implements OnInit {
           }
         );
       }
-
       this.initForm();
     });
   }
@@ -56,7 +55,8 @@ export class TeacherEditComponent implements OnInit {
     let teacherLogin = '';
     let oldPassword = '';
     let newPassword = '';
-    console.log(this.teacher);
+
+
     if (this.editMode && this.teacher) {
       teacherFirstname = this.teacher.firstname;
       teacherLastname = this.teacher.lastname;
@@ -93,10 +93,9 @@ export class TeacherEditComponent implements OnInit {
     });
   }
   
-  onSubmit() {
- 
+  onSubmit() { 
     let newValues = {
-      avatar: this.teacher.avatar,
+      avatar: this.teacher ? this.teacher.avatar : 'https://png.pngtree.com/svg/20161212/f93e57629c.svg',
       dateOfBirth: this.teacherForm.value['teacherDateOfBirth'].split('.').reverse().join('-'),
       email: this.teacherForm.value['email'],
       firstname: this.teacherForm.value['teacherFirstname'],
@@ -108,7 +107,17 @@ export class TeacherEditComponent implements OnInit {
       phone: this.teacherForm.value['teacherPhone']
     };
 
+    if (!this.editMode) {
+      console.log('das')
+      this.teachersStorageService.addTeacher(newValues)
+      .subscribe(
+        (response: Response) => {
+          this.teachersStorageService.getTeachers()
+        },
+        error => console.log(error)
+      );
     
+    } else {
     this.teachersStorageService
       .updateTeacher(this.id, newValues)
       .pipe(
@@ -124,10 +133,7 @@ export class TeacherEditComponent implements OnInit {
       )
       .subscribe(
           (response: Response) => {
-            console.log(response);
-
             let outdatedTeachers = this.teachersService.getTeachers()
-            console.log(outdatedTeachers)
             for (let i = 0; i < outdatedTeachers.length; i++) {
               if(outdatedTeachers[i].id == this.id) {
                 outdatedTeachers.splice(i, 1, response)
@@ -137,6 +143,11 @@ export class TeacherEditComponent implements OnInit {
           },
           error => console.log(error)
         );
+      }
+    this.onCancel()
+  }
 
+  onCancel() {
+    this.router.navigate(['/admin/teachers/']);
   }
 }

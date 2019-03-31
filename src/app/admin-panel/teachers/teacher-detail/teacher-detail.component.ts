@@ -36,5 +36,6 @@ export class TeacherDetailComponent implements OnInit {
   onEditTeacher() {
     this.router.navigate(['edit'], { relativeTo: this.route });
   }
+
 }
  

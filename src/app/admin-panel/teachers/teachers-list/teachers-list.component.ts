@@ -15,7 +15,9 @@ export class TeachersListComponent implements OnInit {
 
   constructor(
     private teachersStorageService: TeachersStorageService,
-    private teachersService: TeachersService
+    private teachersService: TeachersService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -27,8 +29,11 @@ export class TeachersListComponent implements OnInit {
     );
   }
 
-
   ngOnDestroy() {
     this.subscription.unsubscribe()
+  }
+
+  onNewTeacher() {
+    this.router.navigate(['new'], { relativeTo: this.route });
   }
 }

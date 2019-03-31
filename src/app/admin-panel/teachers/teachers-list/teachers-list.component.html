@@ -1,12 +1,13 @@
-<h5>Simple Nav Listssssssssssssssss</h5>
 <mat-nav-list>
-	<ng-container *ngFor="let teacher of teachers; let i = index">
-    <mat-list-item  
-      routerLinkActive="active"
-      [routerLink]="[teacher.id]"
-    >
-			<img matListAvatar [src]="teacher.avatar" alt="...">
-		  <p matLine href="javascript:void(0)" > {{ teacher.firstname }} {{ teacher.lastname}} </p>    
-    </mat-list-item >
-	</ng-container>
+  <button mat-raised-button color="primary" (click)="onNewTeacher()">
+    Додати Вчителя
+  </button>
+  <ng-container *ngFor="let teacher of teachers; let i = index">
+    <mat-list-item routerLinkActive="active" [routerLink]="[teacher.id]">
+      <img matListAvatar [src]="teacher.avatar" alt="..." />
+      <p matLine href="javascript:void(0)">
+        {{ teacher.firstname }} {{ teacher.lastname }}
+      </p>
+    </mat-list-item>
+  </ng-container>
 </mat-nav-list>
