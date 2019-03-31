@@ -20,7 +20,7 @@ export class AdminPanelGuard implements CanLoad, CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean  {
-    if (this.checkRole()) {
+    if (this.isAdmin()) {
       return false;
     }
     return true;
@@ -33,7 +33,7 @@ export class AdminPanelGuard implements CanLoad, CanActivate {
    * @returns false if user's role is ROLE_ADMIN
    */
   canLoad(): boolean {
-    if (this.checkRole()) {
+    if (this.isAdmin()) {
       return false;
     }
     return true;
@@ -43,7 +43,7 @@ export class AdminPanelGuard implements CanLoad, CanActivate {
    * Function that checks user's role -
    * @returns true if user's role == ROLE_ADMIN
    */
-  private checkRole(): boolean {
+  private isAdmin(): boolean {
     const decodedToken: TokenInfo = JWTDecoder(this.authService.getToken());
     const role: string = decodedToken.Roles.authority;
     if (role === 'ROLE_ADMIN') {
