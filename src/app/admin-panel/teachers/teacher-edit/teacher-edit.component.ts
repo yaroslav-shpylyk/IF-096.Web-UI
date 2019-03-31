@@ -4,6 +4,7 @@ import { TeachersService } from '../teachers.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-teacher-edit',
@@ -94,7 +95,7 @@ export class TeacherEditComponent implements OnInit {
   
   onSubmit() {
  
-    let testos = {
+    let newValues = {
       avatar: this.teacher.avatar,
       dateOfBirth: this.teacherForm.value['teacherDateOfBirth'].split('.').reverse().join('-'),
       email: this.teacherForm.value['email'],
@@ -107,14 +108,35 @@ export class TeacherEditComponent implements OnInit {
       phone: this.teacherForm.value['teacherPhone']
     };
 
-    console.log(this.teacher)
-    console.log(this.teacher)
     
     this.teachersStorageService
-      .updateTeacher(this.id, testos)
+      .updateTeacher(this.id, newValues)
+      .pipe(
+        map(response => {
+          let teacher = response['data'];
+          if (!teacher['avatar']) {
+            teacher['avatar'] =
+            'https://png.pngtree.com/svg/20161212/f93e57629c.svg';
+          }
+          teacher.id = this.id;
+          return teacher;
+        })
+      )
       .subscribe(
-        (response: Response) => console.log(response),
-        error => console.log(error)
-      );
+          (response: Response) => {
+            console.log(response);
+
+            let outdatedTeachers = this.teachersService.getTeachers()
+            console.log(outdatedTeachers)
+            for (let i = 0; i < outdatedTeachers.length; i++) {
+              if(outdatedTeachers[i].id == this.id) {
+                outdatedTeachers.splice(i, 1, response)
+              }       
+            }
+            this.teachersService.setTeachers(outdatedTeachers)
+          },
+          error => console.log(error)
+        );
+
   }
 }
