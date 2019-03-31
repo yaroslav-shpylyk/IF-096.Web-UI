@@ -21,6 +21,10 @@ const routes: Routes = [
     loadChildren: '../student-book/student-book.module#StudentBookModule'
   },
   {
+    path: 'new-year-transition',
+    loadChildren: '../new-year/new-year.module#NewYearModule'
+  },
+  {
     path: '',
     component: ShellComponent
   }
