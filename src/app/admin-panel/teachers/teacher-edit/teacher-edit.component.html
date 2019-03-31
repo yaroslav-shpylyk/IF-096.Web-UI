@@ -1,33 +1,83 @@
 <div class="container">
-  <div class="avatar-flip">
-    <!-- <img [src]="teacher.avatar" height="150" width="150" /> -->
+  <div class="avatar-flip" *ngIf="teacher">
+    <img [src]="teacher.avatar" height="150" width="150" />
   </div>
 
-  <form class="example-form"  [formGroup]="teacherForm">
+  <form class="example-form" [formGroup]="teacherForm" (ngSubmit)="onSubmit()">
     <mat-form-field class="example-full-width">
-      <input 
-      matInput 
-      placeholder="Ім'я" 
-    
-      formControlName="firstname"
+      <input matInput placeholder="Ім'я" formControlName="teacherFirstname" />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input
+        matInput
+        placeholder="Прізвище"
+        formControlName="teacherLastname"
       />
     </mat-form-field>
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Прізвище" value="мфдукф" />
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="По-батькові" value="мфдукф" />
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Логін" value="мфдукф" />
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Дата народження" value="мфдукф" />
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Електронна адреса" value="мфдукф" />
+      <input
+        matInput
+        placeholder="По-батькові"
+        formControlName="teacherPatronymic"
+      />
     </mat-form-field>
 
-   
+    <mat-form-field class="example-full-width">
+      <input
+        matInput
+        placeholder="Дата народження"
+        formControlName="teacherDateOfBirth"
+      />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input
+        matInput
+        type="email"
+        placeholder="Електронна адреса"
+        formControlName="teacherEmail"
+      />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Логін" formControlName="teacherLogin" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input
+        matInput
+        placeholder="Номер телефону"
+        formControlName="teacherPhone"
+      />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input
+        type="password"
+        matInput
+        placeholder="Старий пароль"
+        formControlName="oldPassword"
+      />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input
+        type="password"
+        matInput
+        placeholder="Новий пароль"
+        formControlName="newPassword"
+      />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input
+        type="password"
+        matInput
+        placeholder="Повторіть новий пароль"
+        formControlName="oldPassword"
+      />
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">
+      Зберегти
+    </button>
   </form>
 </div>
