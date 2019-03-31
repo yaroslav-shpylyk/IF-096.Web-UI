@@ -1,3 +1,10 @@
 <p>
   groups works!
 </p>
+
+
+<ul>
+  <li *ngFor="let group of groups | async">
+      {{group.className}} - {{group.classYear}}
+  </li>
+</ul>
