@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="avatar-flip">
+    <!-- <img [src]="teacher.avatar" height="150" width="150" /> -->
+  </div>
+
+  <form class="example-form"  [formGroup]="teacherForm">
+    <mat-form-field class="example-full-width">
+      <input 
+      matInput 
+      placeholder="Ім'я" 
+    
+      formControlName="firstname"
+      />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Прізвище" value="мфдукф" />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="По-батькові" value="мфдукф" />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Логін" value="мфдукф" />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Дата народження" value="мфдукф" />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Електронна адреса" value="мфдукф" />
+    </mat-form-field>
+
+   
+  </form>
+</div>

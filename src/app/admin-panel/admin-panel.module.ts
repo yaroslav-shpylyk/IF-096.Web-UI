@@ -9,6 +9,8 @@ import { TeachersListComponent } from './teachers/teachers-list/teachers-list.co
 import { DefaultTeacherComponent } from './teachers/default-teacher/default-teacher.component';
 import { TeacherDetailComponent } from './teachers/teacher-detail/teacher-detail.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,13 +18,16 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     TeachersComponent,
     TeachersListComponent,
     DefaultTeacherComponent,
-    TeacherDetailComponent
+    TeacherDetailComponent,
+    TeacherEditComponent
   ],
   imports: [
     CommonModule,
     AdminPanelRoutingModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class AdminPanelModule {}

@@ -35,16 +35,18 @@ export class TeachersStorageService {
   }
 
   getTeacher(id) {
-    let cachedTeachers = this.teachersService.getTeachers();
+    // let cachedTeachers = this.teachersService.getTeachers();
     
-    if (cachedTeachers.length) {
-      for (let teacher of cachedTeachers) {
-        if (teacher.id == id) {
-          console.log('est')
-          return teacher;
-        }
-      }
-    }
+    // if (cachedTeachers.length) {
+    //   for (let teacher of cachedTeachers) {
+    //     if (teacher.id == id) {
+    //       console.log('est')
+    //       return teacher;
+    //     }
+    //   }
+    // }
+    // console.log("net")
+
     this.httpClient
       .get(`http://35.228.220.5:8080/teachers/${id}`)
       .pipe(
@@ -55,7 +57,7 @@ export class TeachersStorageService {
             teacher['avatar'] =
             'https://png.pngtree.com/svg/20161212/f93e57629c.svg';
           }
-          console.log(teacher)
+          // console.log(teacher)
           return teacher;
         })
       )

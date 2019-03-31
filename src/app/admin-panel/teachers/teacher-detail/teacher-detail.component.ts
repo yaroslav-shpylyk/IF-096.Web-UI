@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TeachersService } from '../teachers.service';
 import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
 import { Subscription } from 'rxjs';
@@ -17,7 +17,8 @@ export class TeacherDetailComponent implements OnInit {
   constructor(
     private teachersService: TeachersService,
     private route: ActivatedRoute,
-    private teachersStorageService: TeachersStorageService
+    private teachersStorageService: TeachersStorageService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -30,6 +31,10 @@ export class TeacherDetailComponent implements OnInit {
         }
       );
     });
+  }
+
+  onEditTeacher() {
+    this.router.navigate(['edit'], { relativeTo: this.route });
   }
 }
  
