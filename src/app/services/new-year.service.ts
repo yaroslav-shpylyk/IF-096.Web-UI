@@ -10,17 +10,18 @@ import { Class } from "../models/class-info";
   providedIn: 'root'
 })
 export class NewYearService {
-  private url:string='http://35.228.220.5:8080/classes';
+  private url:string='http://35.228.220.5:8080';
   
   constructor( private http: HttpClient ) { }
 
 
    /**
-   * Method use current token to get list of classes
+   * Method return list of classes
    * @returns - list of classes
    */
   public getClasses(): Observable<Class[]> {
-    return this.http.get(this.url, {observe: 'response'}).pipe(
+    return this.http.get(`${this.url}/classes`, {observe: 'response'})
+    .pipe(
       map((response: any)=>{
         return response.body.data;
       }),
@@ -28,8 +29,22 @@ export class NewYearService {
         return error;  
       })
     )
+  }
 
-
+   /**
+   * Method use  class id to get list of pupils
+   * @returns - list of pupils
+   */
+  public getPupilList(classId:number): Observable<any> {
+    return this.http.get(`${this.url}/students/classes/${classId}`, {observe: 'response'})
+    .pipe(
+      map((response: any)=>{
+        return response.body.data;
+      }),
+      catchError((error: any) => {
+        return error;  
+      })
+    )
   }
 
 
