@@ -148,6 +148,10 @@ export class TeacherEditComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['/admin/teachers/']);
+    this.router.navigate(['/admin/teachers/'], { queryParams: { message: this.editMode ? 'Нові дані успішно внесено' : 'Нового викладача додано' } });
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) this.subscription.unsubscribe()
   }
 }

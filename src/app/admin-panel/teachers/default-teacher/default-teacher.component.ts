@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-default-teacher',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./default-teacher.component.scss']
 })
 export class DefaultTeacherComponent implements OnInit {
+  message: string = '';
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
+    if(this.route.snapshot.queryParams.message) {
+      this.message = this.route.snapshot.queryParams.message
+    }
   }
 
 }

@@ -37,5 +37,9 @@ export class TeacherDetailComponent implements OnInit {
     this.router.navigate(['edit'], { relativeTo: this.route });
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe()
+  }
+
 }
  
