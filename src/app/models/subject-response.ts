@@ -5,5 +5,5 @@ export interface SubjectResponse {
     code: number;
     message: string
   };
-  data: SubjectData;
+  data: SubjectData[];
 }

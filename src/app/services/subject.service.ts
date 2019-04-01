@@ -3,6 +3,7 @@ import { HttpClient} from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { SubjectResponse } from '../models/subject-response';
 import { Observable } from 'rxjs';
+import { SubjectData } from '../models/subject-data';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class SubjectService {
    * Method gets number of all subjects
    * @returns - Number of classes
    */
-  public getSubjects(): Observable<any> {
+  public getSubjects(): Observable<SubjectData[]> {
     return this.http.get('/subjects')
       .pipe(
         map((result: SubjectResponse) => result.data)

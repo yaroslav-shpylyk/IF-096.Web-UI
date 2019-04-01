@@ -5,5 +5,5 @@ export interface TeacherResponse {
     code: number;
     message: string
   };
-  data: TeacherData;
+  data: TeacherData[];
 }
