@@ -11,15 +11,29 @@ export class TeachersService {
   private teachers = [];
   private teacher;
 
+  /**
+   * Method gets array of up to date objects with teachers, 
+   * saves them to the local variable and passes a copy to observable 
+   * @param teachers - array of objects representing teacher
+   */
   setTeachers(teachers) {
     this.teachers = teachers;
     this.teachersChanged.next(this.teachers.slice());
   }
 
+  /**
+   * Method returns array of objects with teachers storode in local variable
+   * @returns - array of objects representing teacher
+   */
   getTeachers() {
-    return this.teachers.slice()
+    return this.teachers.slice();
   }
 
+  /**
+   * Method gets an object of teacher, saves it to the
+   * local variable and passes a copy to observable
+   * @param teacher - object representing a single teacher
+   */
   setTeacher(teacher) {
     this.teacher = teacher;
     this.teacherChanged.next(this.teacher);

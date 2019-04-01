@@ -60,7 +60,7 @@
       <input
         type="password"
         matInput
-        placeholder="Старий пароль"
+        placeholder="Пароль"
         formControlName="oldPassword"
       />
     </mat-form-field>
@@ -78,9 +78,13 @@
         type="password"
         matInput
         placeholder="Повторіть новий пароль"
-        formControlName="oldPassword"
+        formControlName="confirmPassword"
       />
     </mat-form-field>
+
+    <p *ngIf="teacherForm.get('confirmPassword')?.errors?.mustMatch && teacherForm.get('confirmPassword').touched">
+      Паролі не співпадають</p>
+
 
     <button 
       [disabled]="!teacherForm.valid"
@@ -99,4 +103,5 @@
     </button>
 
   </form>
+  
 </div>
