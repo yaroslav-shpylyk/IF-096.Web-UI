@@ -9,6 +9,7 @@ import { NewYearComponent } from './new-year/new-year.component';
   declarations: [NewYearComponent],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     NewYearRoutingModule
   ]
 })

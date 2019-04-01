@@ -1,4 +1,41 @@
-<table class="table">
+<form [formGroup]="transititionForm"  class="component" (ngSubmit)="formSubmit()">
+  <div formArrayName="newClassTitle">
+    <table class="table">
+          <thead>
+          <tr>
+              <th scope="col">Учні поточного класу</th>
+              <th scope="col">Поточний клас</th>
+              <th scope="col">Поточний рік</th>
+              <th scope="col">Новий клас</th>
+          </tr>
+          </thead>
+    <tr class="form-group" *ngFor="let class of transititionForm.controls['newClassTitle'].controls; let i = index">
+      <td>
+        <label for="spoiler_{{class.id}}">Учні {{classes[i].className}} класу</label>
+        <div class="spoiler_body">
+          <ul *ngFor="let pupil of classes[i].pupilList">
+            <li><a href="students/{{pupil.id}}" target="_blank">{{pupil.lastname}} {{pupil.firstname}}</a></li>
+          </ul>
+        </div>
+      </td>
+
+        <td> {{classes[i].className}} </td>
+        <td> {{classes[i].classYear}} </td>
+        
+        <label>Назва класу</label>
+        <input class="form-control" formControlName="{{i}}" />
+        <div 
+        *ngIf="this.newClassTitle.invalid && newClassTitle.touched">
+        Не вказано назву класу
+      </div>
+    </tr>
+  </table>    
+</div>
+  <input class="submit" type="submit" value="SUBMIT" [disabled]="!transititionForm.valid" >
+</form>
+
+
+<!-- <table class="table">
     <thead>
     <tr>
         <th scope="col">Учні поточного класу</th>
@@ -12,7 +49,6 @@
           <input type="checkbox" id="spoiler_{{class.id}}">
             <label for="spoiler_{{class.id}}">Учні {{class.className}} класу</label>
             <div class="spoiler_body">
-
               <ul *ngFor="let pupil of class.pupilList" id="{{class.id}}">
                 <li><a href="students/{{pupil.id}}" target="_blank">{{pupil.lastname}} {{pupil.firstname}}</a></li>
               </ul>
@@ -29,6 +65,7 @@
 
 <div>
 <button type="button">Перевести учнів в нові класи</button>
-</div>
+</div> -->
+
 
  

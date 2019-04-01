@@ -48,5 +48,23 @@ export class NewYearService {
   }
 
 
+  public transitClasses(data:any):Observable<any>{
+    return this.http.post(`${this.url}/students/transition`, data, {observe: 'response'})
+    .pipe(
+      map((response: any)=> {
+        return response.body;
+      }),
+      catchError((error:any) => {
+        return error;
+      })
+    )
+  }
+
+
+  public bindPupils(data: any): Observable<any> {
+    return this.http.put(`${this.url}/students/transition`, data);
+  }
+
+
 
    }
