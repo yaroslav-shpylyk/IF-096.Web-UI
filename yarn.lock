@@ -100,12 +100,35 @@
     "@angular-devkit/core" "7.3.6"
     rxjs "6.3.3"
 
-"@angular/animations@~7.2.0":
-  version "7.2.10"
-  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-7.2.10.tgz#a651c9526bc0c2860eca424d73d7cd87fee5793b"
-  integrity sha512-WgklBWYKy8LVlugMJ8XgBB4whNiMng8vY6mpaYhza064nsrQXK+ua1anSOGMGlmCI/5i4EgaycTS05XD/C+Kkw==
+"@angular/animations@^7.2.11":
+  version "7.2.11"
+  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-7.2.11.tgz#379015467aa97f5987a2c4b56c5a7cbdfce3fefc"
+  integrity sha512-YlZATC4Gnd3eOBuSW/QqsMPHeJWVKR8yfen2qKgFO3waK+6qXHXIdRF3j81l07jlUx5kBw+f1OCEeHl2QChBiw==
   dependencies:
     tslib "^1.9.0"
+
+"@angular/animations@angular/animations-builds":
+  version "8.0.0-beta.10"
+  resolved "https://codeload.github.com/angular/animations-builds/tar.gz/34c8385baddf45d8dc76b0b41627f1d17e62de62"
+  dependencies:
+    tslib "^1.9.0"
+
+"@angular/cdk@^7.3.6":
+  version "7.3.6"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-7.3.6.tgz#4c330cacd11df4adade6c1cd3ed587745f9912fd"
+  integrity sha512-ZuOz8nQk0bdo8YyNFcwnmSl4MPaQDAFTbLK29w4Vd/LfPnhBI3pAr0wVuPFb0fl3eSvvUrfTb/+kPbQcE07A0A==
+  dependencies:
+    tslib "^1.7.1"
+  optionalDependencies:
+    parse5 "^5.0.0"
+
+"@angular/cdk@angular/cdk-builds":
+  version "7.3.6-b72c1b7"
+  resolved "https://codeload.github.com/angular/cdk-builds/tar.gz/1ef87dfc6828def721ef991b52ac4c3e28ce49ce"
+  dependencies:
+    tslib "^1.7.1"
+  optionalDependencies:
+    parse5 "^5.0.0"
 
 "@angular/cli@~7.3.2":
   version "7.3.6"
@@ -175,6 +198,19 @@
   version "7.2.10"
   resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-7.2.10.tgz#5550fa689f1b35c78cfee65644cc00f0e7778325"
   integrity sha512-14mIHbouqD+JauLcNakhHSL7/YB63+w7NrwNJY/DHNT/IyppBUV2dneHHembGEUs3QBY+7oL8FfPCLDRT+K+OQ==
+
+"@angular/material@^7.3.6":
+  version "7.3.6"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-7.3.6.tgz#38e985bb623ba682dca60e06ff7de53047ecf1f5"
+  integrity sha512-yRQlB0+KO0BilpK9Eg8Sv+T1hJZEWgQ2YGTxnIsgc6DhYM/IHk165iN5KMj3MBJq425z16xEEP6GqDzjTwp+pA==
+  dependencies:
+    tslib "^1.7.1"
+
+"@angular/material@angular/material2-builds":
+  version "7.3.6-b72c1b7"
+  resolved "https://codeload.github.com/angular/material2-builds/tar.gz/54e11f04b07a9af8badcace80a41ce6d004b1cb0"
+  dependencies:
+    tslib "^1.7.1"
 
 "@angular/platform-browser-dynamic@~7.2.0":
   version "7.2.10"
@@ -4952,6 +4988,11 @@ parse5@4.0.0:
   resolved "https://registry.yarnpkg.com/parse5/-/parse5-4.0.0.tgz#6d78656e3da8d78b4ec0b906f7c08ef1dfe3f608"
   integrity sha512-VrZ7eOd3T1Fk4XWNXMgiGBK/z0MG48BWG2uQNU4I72fkQuKUTZpl+u9k+CxEG0twMVzSmXEEz12z5Fnw1jIQFA==
 
+parse5@^5.0.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/parse5/-/parse5-5.1.0.tgz#c59341c9723f414c452975564c7c00a68d58acd2"
+  integrity sha512-fxNG2sQjHvlVAYmzBZS9YlDp6PTSSDwa98vkD4QgVDDCAo84z5X1t5XyJQ62ImdLXx5NdIIfihey6xpum9/gRQ==
+
 parseqs@0.0.5:
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/parseqs/-/parseqs-0.0.5.tgz#d5208a3738e46766e291ba2ea173684921a8b89d"
@@ -6658,7 +6699,7 @@ ts-node@~7.0.0:
     source-map-support "^0.5.6"
     yn "^2.0.0"
 
-tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
+tslib@^1.7.1, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
   integrity sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==

@@ -1,5 +1,5 @@
-<ul>
-  <li *ngFor="let aclass of activeClass">
-    {{aclass.id}}
-  </li>
-</ul>
+<mat-list>
+  <mat-list-item *ngFor="let aClass of activeClass">
+    <a [routerLink]="['/user', aClass.id]" matLine>{{aClass.className}} {{aClass.classYear}}</a>
+  </mat-list-item>
+</mat-list>
