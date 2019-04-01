@@ -11,6 +11,10 @@ export class ClassService {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * Method gets number of all classes(active and inactive)
+   * @returns - Number of classes
+   */
   public getClasses(): Observable<any> {
     return this.http.get('/classes')
       .pipe(

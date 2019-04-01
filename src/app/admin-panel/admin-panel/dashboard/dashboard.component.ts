@@ -25,8 +25,7 @@ export class DashboardComponent implements OnInit {
     this.classService.getClasses().subscribe((result: ClassData[]) => {
       this.classes = result.filter(currClass => currClass.isActive).length;
       this.students = result.reduce((students, currClass) => {
-        return currClass.isActive ?
-          students + currClass.numOfStudents : students;
+        return currClass.isActive ? students + currClass.numOfStudents : students;
       }, 0);
     });
   }

@@ -10,7 +10,10 @@ import { Observable } from 'rxjs';
 export class SubjectService {
 
   constructor(private http: HttpClient) { }
-
+  /**
+   * Method gets number of all subjects
+   * @returns - Number of classes
+   */
   public getSubjects(): Observable<any> {
     return this.http.get('/subjects')
       .pipe(
