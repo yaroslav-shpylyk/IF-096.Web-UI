@@ -1,26 +1,40 @@
 <p>
   groups works!
 </p>
-
-<div id="activeGroup"> Активні класи
+<button (click)="toggleForAcniveGroups = !toggleForAcniveGroups">Активні класи</button>
+<div *ngIf="toggleForAcniveGroups"> 
     <tr *ngFor="let group of groups">
         <th *ngIf="group.isActive">
-           <a href="">{{group.className}}</a> - {{group.classYear}}
+           <a (click) = "changeGroup(group)">{{group.className}}</a> - {{group.classYear}}
         </th>
       </tr>
-</div>
+ </div>
+      <div *ngIf="toggleForRechangeGroups"> <p>Редагування класу - {{ nameChange.value }} </p>
+        <form #form = "ngForm" (submit)="addGrup(form.value)">
+            <label>Назва класу: <input type="text" name="className" [(ngModel)]="nameChange.value"> </label><br>
+            <label>Навчальний рік: <input type="number" name="classYear" [(ngModel)]="yearChange.value"> </label><br>
+            <label>Додадкова інформація: <input type="text" name="classDescription" [(ngModel)]="infaChange.value"> </label><br>
+            <label>Активний: <input type="radio" name="isActive" value="true" ngModel> </label><br>
+            <label>Неактивний: <input type="radio" name="isActive" value="false" ngModel> </label><br>
+            <input type="number" name="id" [(ngModel)]="idChange.value">
+            <br>
+            <input type="submit"  value="Зберегти зміни">
+          </form>
+          
+        </div>
 
-<button (click)="isShow = !isShow">Неактивні класи</button>
-<div *ngIf="isShow">
+<br>
+<button (click)="toggleForNotAcniveGroups = !toggleForNotAcniveGroups">Неактивні класи</button>
+<div *ngIf="toggleForNotAcniveGroups">
     <tr *ngFor="let group of groups">
         <th *ngIf="!group.isActive">
-           <a href="">{{group.className}}</a> - {{group.classYear}}
+           <a (click) = "changeGroup(group)">{{group.className}}</a> - {{group.classYear}} 
         </th>
       </tr>
 </div>
 <br>
-<button (click)="isShow2 = !isShow2">Додати клас</button>
-<div *ngIf="isShow2">
+<button (click)="toggleForAddGroups = !toggleForAddGroups">Додати клас</button>
+<div *ngIf="toggleForAddGroups">
   <form #form = "ngForm" (submit)="addGrup(form.value)">
     <label>Назва класу: <input type="text" name="className" ngModel> </label><br>
     <label>Навчальний рік: <input type="number" name="classYear" ngModel> </label><br>
@@ -30,3 +44,6 @@
     <input type="submit"  value="Зберегти">
   </form>
 </div>
+
+
+
