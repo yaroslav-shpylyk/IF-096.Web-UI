@@ -9,20 +9,18 @@
         </th>
       </tr>
  </div>
-      <div *ngIf="toggleForRechangeGroups"> <p>Редагування класу - {{ nameChange.value }} </p>
-        <form #form = "ngForm" (submit)="addGrup(form.value)">
-            <label>Назва класу: <input type="text" name="className" [(ngModel)]="nameChange.value"> </label><br>
-            <label>Навчальний рік: <input type="number" name="classYear" [(ngModel)]="yearChange.value"> </label><br>
-            <label>Додадкова інформація: <input type="text" name="classDescription" [(ngModel)]="infaChange.value"> </label><br>
-            <label>Активний: <input type="radio" name="isActive" value="true" ngModel> </label><br>
-            <label>Неактивний: <input type="radio" name="isActive" value="false" ngModel> </label><br>
-            <input type="number" name="id" [(ngModel)]="idChange.value">
-            <br>
-            <input type="submit"  value="Зберегти зміни">
-          </form>
-          
-        </div>
-
+  <div *ngIf="toggleForRechangeGroups"> <p>Редагування класу - {{ nameChange.value }} </p>
+    <form #form = "ngForm" (submit)="addGrup(form.value)">
+      <label>Назва класу: <input type="text" name="className" [(ngModel)]="nameChange.value"> </label><br>
+       <label>Навчальний рік: <input type="number" name="classYear" [(ngModel)]="yearChange.value"> </label><br>
+       <label>Додадкова інформація: <input type="text" name="classDescription" [(ngModel)]="infaChange.value"> </label><br>
+       <label>Активний: <input type="radio" name="isActive" value="true" ngModel> </label><br>
+       <label>Неактивний: <input type="radio" name="isActive" value="false" ngModel> </label><br>
+       <input type="number" name="id" [(ngModel)]="idChange.value">
+        <br>
+        <input type="submit"  value="Зберегти зміни">
+     </form>
+  </div>
 <br>
 <button (click)="toggleForNotAcniveGroups = !toggleForNotAcniveGroups">Неактивні класи</button>
 <div *ngIf="toggleForNotAcniveGroups">
