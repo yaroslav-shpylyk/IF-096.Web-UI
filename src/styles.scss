@@ -1,6 +1,10 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+html, body {
+  font-family: 'Roboto', sans-serif;
+  height: 100%;
+}
+
 body {
-  background-color: #00caca;
-  font-family: Arial, Helvetica, sans-serif
+  margin: 0;
 }

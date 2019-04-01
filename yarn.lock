@@ -651,11 +651,6 @@ amdefine@>=0.0.4:
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
-angular-material@^1.1.14:
-  version "1.1.14"
-  resolved "https://registry.yarnpkg.com/angular-material/-/angular-material-1.1.14.tgz#1f5e1a272a953d96870adfdb333d943617939978"
-  integrity sha512-vlimuonLiR615j/2Vi+zr+yt4xZ6oE+8ZSj2r2QJpkcV7NPh9Qwy5gpypA5gPfyCN7/4DmT/oq+hFgecWlOaeQ==
-
 ansi-colors@^3.0.0:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/ansi-colors/-/ansi-colors-3.2.4.tgz#e3a3da4bfbae6c86a9c285625de124a234026fbf"
