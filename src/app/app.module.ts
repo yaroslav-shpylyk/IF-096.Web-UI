@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
-import { GroupsService } from './services/groups.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +18,6 @@ import { GroupsService } from './services/groups.service';
   ],
   providers: [
     AuthService,
-    GroupsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
