@@ -5,6 +5,7 @@ import { TeacherData } from '../../../models/teacher-data';
 import { SubjectData } from '../../../models/subject-data';
 import { ClassService} from '../../../services/class.service';
 import { ClassData } from '../../../models/class-data';
+import { StudentService } from '../../../services/student.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,16 +18,12 @@ export class DashboardComponent implements OnInit {
   public classes: number;
   public teachers: number;
   constructor(private subjectService: SubjectService, private teacherService: TeacherService,
-              private classService: ClassService) { }
+              private classService: ClassService, private studentsService: StudentService) { }
 
   ngOnInit() {
     this.subjectService.getSubjects().subscribe((result: SubjectData[]) => this.subjects = result.length);
     this.teacherService.getTeachers().subscribe((result: TeacherData[]) => this.teachers = result.length);
-    this.classService.getClasses().subscribe((result: ClassData[]) => {
-      this.classes = result.filter(currClass => currClass.isActive).length;
-      this.students = result.reduce((students, currClass) => {
-        return currClass.isActive ? students + currClass.numOfStudents : students;
-      }, 0);
-    });
+    this.studentsService.getActiveStudents().subscribe((result: number) => this.students = result);
+    this.classService.getActiveClasses().subscribe((result: ClassData[]) => this.classes = result.length);
   }
 }

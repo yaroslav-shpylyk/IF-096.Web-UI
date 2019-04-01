@@ -5,5 +5,5 @@ export interface ClassResponse {
     code: number;
     message: string
   };
-  data: ClassData;
+  data: ClassData[];
 }
