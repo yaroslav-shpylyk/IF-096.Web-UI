@@ -1,0 +1,27 @@
+.component {
+  display: flex;
+}
+
+mat-card {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 200px;
+  height: 100px;
+  margin-left: 20px;
+
+  & > mat-icon {
+    position: absolute;
+    font-size: 40px;
+    margin: 30px 10px 0 80px;
+  }
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  span {
+    text-align: center;
+    font-size: 20px;
+  }
+}
