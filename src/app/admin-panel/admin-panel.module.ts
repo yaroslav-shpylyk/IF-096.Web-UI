@@ -4,9 +4,10 @@ import { CommonModule } from '@angular/common';
 import { AdminPanelRoutingModule } from './admin-panel-routing.module';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { StudentsListComponent } from './students-list/students-list.component';
-import { ClassListResolve } from '../services/class-servise.resolve';
+
 import { MatListModule } from '@angular/material/list';
-import {PlatformModule} from '@angular/cdk/platform';
+import { PlatformModule } from '@angular/cdk/platform';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [AdminPanelComponent, StudentsListComponent],
@@ -14,10 +15,9 @@ import {PlatformModule} from '@angular/cdk/platform';
     CommonModule,
     AdminPanelRoutingModule,
     MatListModule,
-    PlatformModule
-  ],
-  providers: [
-    ClassListResolve
-  ],
+    PlatformModule,
+    MatButtonModule
+  ]
+  
 })
 export class AdminPanelModule { }

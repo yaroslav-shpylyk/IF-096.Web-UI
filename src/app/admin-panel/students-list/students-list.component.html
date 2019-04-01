@@ -1,5 +1,18 @@
+
+<div>Виберіть клас</div>
+
 <mat-list>
-  <mat-list-item *ngFor="let aClass of activeClass">
-    <a [routerLink]="['/user', aClass.id]" matLine>{{aClass.className}} {{aClass.classYear}}</a>
+  <mat-list-item *ngFor="let active of activeClass">
+    <a [routerLink]="['/user', active.id]" >{{active.className}} {{active.classYear}}</a>
+  </mat-list-item>
+</mat-list>
+
+
+
+
+<button mat-raised-button color ="primary"  (click)='showNotActiveClasses()'>Неактивні класи</button>
+<mat-list *ngIf="toShowNotactiveClass">
+  <mat-list-item *ngFor="let notActive of notActiveClass">
+    <a [routerLink]="['/user', notActive.id]" >{{notActive.className}} {{notActive.classYear}}</a>
   </mat-list-item>
 </mat-list>
