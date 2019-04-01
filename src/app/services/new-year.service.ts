@@ -12,6 +12,10 @@ import { Class } from "../models/class-info";
 export class NewYearService {
   private url:string='http://35.228.220.5:8080';
   
+
+  public classes=[];
+  public classesNamesList=[];
+  
   constructor( private http: HttpClient ) { }
 
 

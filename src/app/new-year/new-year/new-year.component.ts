@@ -19,31 +19,28 @@ export class NewYearComponent implements OnInit {
   ngOnInit() {
 
   /*сreate reactive form*/ 
-    this.createTransititionForm();
+  this.createTransititionForm();
 
-  
   this.newYearTransitition.getClasses()
-    .subscribe(data => {this.classes = data
+    .subscribe(
+      data => {this.classes = data
       .filter((item) => { 
         this.classesNamesList.push(item.className);
-        return item.isActive && item.numOfStudents>0 })
-      console.log(this.classesNamesList);  
+        return item.isActive && item.numOfStudents>0 
+      })
       this.classes.forEach( 
         (schoolClass, index)=> {
           if (index < this.classes.length-1) this.addNewClassTitleInput();
           this.newYearTransitition.getPupilList(schoolClass.id)
            .subscribe( data => schoolClass["pupilList"]=data);
-          console.log(schoolClass);
         }
       )
     } );
-    
 }
 
   /**
    * Method creates reactive form for login component
    */
-
   createTransititionForm(): void {
     this.transititionForm = new FormGroup({
       "newClassTitle": new FormArray([
@@ -57,6 +54,7 @@ export class NewYearComponent implements OnInit {
   addNewClassTitleInput(){
     (<FormArray>this.transititionForm.controls["newClassTitle"]).push(new FormControl("", Validators.pattern("^([1-9]|1[0-2])-[А-Я]{1}$")));
   }
+
 
   get newClassTitle() { return this.transititionForm.get('newClassTitle'); } 
   formSubmit() {

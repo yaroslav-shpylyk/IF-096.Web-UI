@@ -9,63 +9,24 @@
               <th scope="col">Новий клас</th>
           </tr>
           </thead>
-    <tr class="form-group" *ngFor="let class of transititionForm.controls['newClassTitle'].controls; let i = index">
+    <tr class="form-group" *ngFor="let class of newClassTitle.controls; let index = index">
       <td>
-        <label for="spoiler_{{class.id}}">Учні {{classes[i].className}} класу</label>
-        <div class="spoiler_body">
-          <ul *ngFor="let pupil of classes[i].pupilList">
+        <label for="spoiler_{{class.id}}">Учні {{classes[index].className}} класу</label>
+        <div>
+          <ul *ngFor="let pupil of classes[index].pupilList">
             <li><a href="students/{{pupil.id}}" target="_blank">{{pupil.lastname}} {{pupil.firstname}}</a></li>
           </ul>
         </div>
       </td>
 
-        <td> {{classes[i].className}} </td>
-        <td> {{classes[i].classYear}} </td>
+        <td> {{classes[index].className}} </td>
+        <td> {{classes[index].classYear}} </td>
         
         <label>Назва класу</label>
-        <input class="form-control" formControlName="{{i}}" />
-        <div 
-        *ngIf="this.newClassTitle.invalid && newClassTitle.touched">
-        Не вказано назву класу
-      </div>
+        <input class="form-control" formControlName="{{index}}" />
+          <div *ngIf="class.invalid && class.touched "> Не вказано назву класу </div>
     </tr>
   </table>    
 </div>
   <input class="submit" type="submit" value="SUBMIT" [disabled]="!transititionForm.valid" >
 </form>
-
-
-<!-- <table class="table">
-    <thead>
-    <tr>
-        <th scope="col">Учні поточного класу</th>
-        <th scope="col">Поточний клас</th>
-        <th scope="col">Новий клас</th>
-    </tr>
-    </thead>
-    <tbody id="tbody">
-      <tr *ngFor="let class of classes">
-        <td><div>
-          <input type="checkbox" id="spoiler_{{class.id}}">
-            <label for="spoiler_{{class.id}}">Учні {{class.className}} класу</label>
-            <div class="spoiler_body">
-              <ul *ngFor="let pupil of class.pupilList" id="{{class.id}}">
-                <li><a href="students/{{pupil.id}}" target="_blank">{{pupil.lastname}} {{pupil.firstname}}</a></li>
-              </ul>
-            </div>
-          </div>
-        </td>
-        <td id="{{class.id}}">{{class.className}} - {{class.classYear}}</td>
-        <td>
-          <input type="text" id="newClassesList_{{class.id}}" placeholder="Назва нового класу">
-        </td>
-      </tr>
-    </tbody>
-</table>
-
-<div>
-<button type="button">Перевести учнів в нові класи</button>
-</div> -->
-
-
- 
