@@ -1,11 +1,41 @@
-<form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)"  class="component">
-  <label class="field">
-    <span>LOGIN</span>
-    <input formControlName="username" type="text">
-  </label>
-  <label  class="field">
-    <span>PASSWORD</span>
-    <input formControlName="password" type="password">
-  </label>
-  <input class="submit" type="submit" value="SUBMIT" [disabled]="!loginForm.valid">
-</form>
+<div class="main-container">
+  <div class="inner-container">
+    <section id="container">
+      <div id="parent">
+        <div id="child1">
+          <section class="form-container">
+            <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+              <label>
+                <h2>Вхід до системи:</h2>
+              </label>
+              <mat-form-field appearance="outline">
+                <input formControlName="username" type="text" matInput fillColor="accent"
+                       placeholder="Ім'я користувача">
+                <mat-icon matSuffix color="primary">account_circle</mat-icon>
+              </mat-form-field>
+              <br>
+              <mat-form-field appearance="outline">
+                <input formControlName="password" type="password" matInput placeholder="Пароль">
+                <mat-icon matSuffix color="primary">lock</mat-icon>
+              </mat-form-field>
+              <br>
+              <button class="button" mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">
+                Увійти
+              </button>
+              <br><br>
+              <div class="wrap-forgot">
+              <a class="forgot" routerLink="/">Забули пароль?</a>
+              </div>
+            </form>
+          </section>
+        </div>
+        <div id="child2" fxHide.lt-md class="child">
+          <img src="../../../assets/catholic-school-logo.png">
+          <br>
+          <h2>E-progress (журнал успішності учнів)</h2>
+          <h2>ІФ ПНВК "КАТОЛИЦЬКА ЗШ II-III СТ. ГІМНАЗІЯ СВ. ВАСИЛІЯ ВЕЛИКОГО"</h2>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
