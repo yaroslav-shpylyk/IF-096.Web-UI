@@ -16,6 +16,4 @@ export class DefaultTeacherComponent implements OnInit {
       this.message = this.route.snapshot.queryParams.message;
     }
   }
-
-
 }

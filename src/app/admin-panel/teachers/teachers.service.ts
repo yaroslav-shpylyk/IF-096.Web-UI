@@ -14,7 +14,7 @@ export class TeachersService {
   /**
    * Method gets array of up to date objects with teachers, 
    * saves them to the local variable and passes a copy to observable 
-   * @param teachers - array of objects representing teacher
+   * @param teachers - array of objects representing teacher.
    */
   setTeachers(teachers) {
     this.teachers = teachers;
@@ -32,7 +32,7 @@ export class TeachersService {
   /**
    * Method gets an object of teacher, saves it to the
    * local variable and passes a copy to observable
-   * @param teacher - object representing a single teacher
+   * @param teacher - object representing a single teacher.
    */
   setTeacher(teacher) {
     this.teacher = teacher;
