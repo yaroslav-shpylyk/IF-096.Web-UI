@@ -11,10 +11,12 @@ import { TeacherData } from '../models/teacher-data';
 export class TeacherService {
 
   constructor(private http: HttpClient) { }
+
   /**
    * Method gets number of all teachers
    * @returns - Number of classes
-   */  public getTeachers(): Observable<TeacherData[]> {
+   */
+  public getTeachers(): Observable<TeacherData[]> {
     return this.http.get('/teachers')
       .pipe(
         map((result: TeacherResponse) => result.data)
