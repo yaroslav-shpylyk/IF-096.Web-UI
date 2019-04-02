@@ -9,11 +9,9 @@ import { StudentsService } from '../../services/students.service';
   styleUrls: ['./students-list.component.scss']
 })
 export class StudentsListComponent implements OnInit {
-  activeClass: any;
-  notActiveClass: any;
-  studentList: any;
-  
-
+  activeClass: Array<any>;
+  notActiveClass: Array<any>;
+  studentList: Array<any>;
 
   constructor(private classList: ClassService, private students: StudentsService) { }
 
@@ -21,15 +19,15 @@ export class StudentsListComponent implements OnInit {
     this.classList.getClasses().subscribe((data: any) => {
       this.activeClass = data.filter((items: any) => items.isActive === true);
       this.notActiveClass = data.filter((items: any) => items.isActive === false);
-      
     });
   }
 
+  /**
+   * Method return students list from student service
+   * @returns - array with students
+   */
 
-  onSelectionClass($event) {
-    console.log($event.value)
-    this.students.getOneStudent($event.value).subscribe(list => this.studentList = list);
-    console.log(this.studentList)
+  onSelectionClass($event):void {
+    this.students.getStudents($event.value).subscribe(list => this.studentList = list);
   }
-
 }

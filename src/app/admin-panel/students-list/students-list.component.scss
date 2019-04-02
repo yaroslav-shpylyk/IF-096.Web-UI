@@ -1,6 +1,7 @@
 .select {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     div {
         margin:5%;
     }
@@ -18,10 +19,7 @@
 .students {
     display: flex;
     justify-content: center;
-    a {
-        text-decoration: none;
-        span {
-            margin-left: 0.5em;
-        }
-    }
+    span {
+        margin-left: 0.5em;
+    }    
 }

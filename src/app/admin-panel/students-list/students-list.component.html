@@ -27,14 +27,12 @@
   </div>
 </div>
 <div [ngClass]="'students'">
-  <mat-list *ngIf="studentList">
-    <mat-list-item *ngFor="let student of studentList">
-      <a [routerLink]="">
-        <span>{{student.firstname}}</span>
-        <span>{{student.lastname}}</span>
-        <span>{{student.patronymic}}</span>
-        <span>{{student.classe}}</span>
-      </a>
-    </mat-list-item>
-  </mat-list>
-</div>
+    <mat-list *ngIf="studentList">
+      <button [routerLink]="" mat-list-item *ngFor="let student of studentList">
+          <span>{{student.firstname}}</span>
+          <span>{{student.lastname}}</span>
+          <span>{{student.patronymic}}</span>
+          <span>{{student.classe}}</span>
+      </button>
+    </mat-list>
+  </div>
