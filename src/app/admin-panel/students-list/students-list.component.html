@@ -1,31 +1,40 @@
-<div>
-  <h4>Виберіть клас</h4>
-<mat-form-field>
-  <mat-label>Список активних класів</mat-label>
-  <mat-select (selectionChange)="onSelectionClass($event)">
-    <mat-option *ngFor="let active of activeClass" [value]="active.id">
-      {{active.className}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
-<h4>Виберіть клас</h4>
-<mat-form-field>
-  <mat-label>Список неактивних класів</mat-label>
-  <mat-select (selectionChange)="onSelectionClass($event)">
-    <mat-option *ngFor="let notactive of notActiveClass" [value]="notactive.id">
-      {{notactive.className}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+<div [ngClass]="'select'">
+  <div>
+    <h4>Активні класи</h4>
+    <mat-form-field>
+      <mat-label>Виберіть клас</mat-label>
+      <mat-select (selectionChange)="onSelectionClass($event)">
+        <mat-option *ngFor="let active of activeClass" [value]="active.id">
+          <span>{{active.className}}</span>
+          <span>-</span>
+          <span>{{active.classYear}}рік</span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div>
+    <h4>Неактивні класи</h4>
+    <mat-form-field>
+      <mat-label>Виберіть клас</mat-label>
+      <mat-select (selectionChange)="onSelectionClass($event)">
+        <mat-option *ngFor="let notActive of notActiveClass" [value]="notActive.id">
+          <span>{{notActive.className}}</span>
+          <span>-</span>
+          <span>{{notActive.classYear}}рік</span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 </div>
-<div>
-  <mat-list *ngIf="studentList" >
+<div [ngClass]="'students'">
+  <mat-list *ngIf="studentList">
     <mat-list-item *ngFor="let student of studentList">
-      <a [routerLink]="" >{{student.firstname}} {{student.lastname}}</a>
+      <a [routerLink]="">
+        <span>{{student.firstname}}</span>
+        <span>{{student.lastname}}</span>
+        <span>{{student.patronymic}}</span>
+        <span>{{student.classe}}</span>
+      </a>
     </mat-list-item>
   </mat-list>
 </div>
-
-
-
-
