@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { AdminPanelRoutingModule } from './admin-panel-routing.module';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { DashboardComponent } from './admin-panel/dashboard/dashboard.component';
-import { MatCardModule, MatIconModule, MatButtonModule, MatGridListModule, MatMenuModule } from '@angular/material';
+import { MatCardModule, MatIconModule, MatButtonModule, MatMenuModule } from '@angular/material';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -16,8 +17,8 @@ import { MatCardModule, MatIconModule, MatButtonModule, MatGridListModule, MatMe
     MatCardModule,
     MatIconModule,
     MatButtonModule,
-    MatGridListModule,
-    MatMenuModule
+    MatMenuModule,
+    ChartsModule
   ]
 })
 export class AdminPanelModule { }

@@ -1,8 +1,20 @@
 .component {
   display: flex;
-  width: 100%;
-  justify-content: space-around;
   align-items: center;
+  width: 100%;
+  flex-direction: column;
+}
+
+.graph {
+  display: block;
+  width: 50%;
+ }
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 4em 0;
+  width: 100%;
 }
 
 mat-card {
@@ -11,11 +23,7 @@ mat-card {
   justify-content: space-around;
   width: 15em;
   height: 7em;
-  margin: 50px 0 0 20px;
-
-  &:first-child {
-    margin-left: 0;
-  }
+  margin: 2em;
 
   span {
     text-align: center;
@@ -24,6 +32,7 @@ mat-card {
 }
 
 $background-colors: rgb(237,78,75), rgb(31,193,213), rgb(95,182,99), rgb(254,162,31);
+$box-shadow-colors: rgba(237,78,75,0.4), rgba(31,193,213,0.4), rgba(95,182,99,0.4), rgba(254,162,31,0.4);
 $background-gradient:
   linear-gradient(90deg, rgba(237,78,75,1) 0%, rgba(231,61,58,1) 100%),
   linear-gradient(90deg, rgba(31,193,213,1) 0%, rgba(6,176,197,1) 100%),
@@ -34,7 +43,9 @@ $background-gradient:
   mat-card:nth-child(#{$i}) {
     mat-card-header {
       background: nth($background-colors, $i);
-      background: nth($background-gradient, $i)
+      background: nth($background-gradient, $i);
+      box-shadow: 0 0.2em 0.6em 0 nth($box-shadow-colors, $i), 0 0.2em 1em 0 rgba(0, 0, 0, 0.19);
+
     }
   }
 }
@@ -46,14 +57,14 @@ mat-card-header {
   width: 7em;
   height: 7em;
   margin-top: -3em;
-  border-radius: 5px;
+  border-radius: 3px;
   color: white;
   font-size: 1rem;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
 
   mat-icon {
-    font-size: 4em;
-    margin: -0.7em 0 0 -1.1em;
+    font-size: 3.5em;
+    margin: -0.6em 0 0 -1.15em;
   }
 }
 
@@ -62,10 +73,10 @@ mat-card-content {
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  color: #a5a5a5;
+  color: #bcbcbc;
 
   span {
-    color: #333333;
+    color: #585858;
     font-size: 3em;
   }
 }
@@ -73,7 +84,7 @@ mat-card-content {
 .main {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(128, 128, 128, 0.64);
+  border-bottom: 1px solid rgba(236, 236, 236, 0.64);
 }
 
 mat-card-actions {
@@ -82,6 +93,12 @@ mat-card-actions {
   align-items: center;
   padding-top: 0;
   margin-top: 0.3em;
-  color: #a5a5a5;
+  color: #999999;
+
+  mat-icon {
+    position: absolute;
+    font-size: 1em;
+    margin-left: 1em;
+  }
 }
 

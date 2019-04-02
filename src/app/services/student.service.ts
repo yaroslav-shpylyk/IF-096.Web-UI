@@ -15,8 +15,8 @@ export class StudentService {
    * Method returns active students
    * @returns - Number of active classes
    */
-  public getActiveStudents(): Observable<number> {
-    return this.classService.getClasses('active')
+  public getStudents(type: string): Observable<number> {
+    return this.classService.getClasses(type)
       .pipe(
         map((result: ClassData[]) => {
           return result.reduce((students, currClass) => students + currClass.numOfStudents, 0);
