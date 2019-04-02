@@ -6,8 +6,6 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { TeachersComponent } from './teachers/teachers.component';
 import { MaterialModule } from '../material';
 import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
-import { DefaultTeacherComponent } from './teachers/default-teacher/default-teacher.component';
-import { TeacherDetailComponent } from './teachers/teacher-detail/teacher-detail.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,8 +16,6 @@ import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-ove
     AdminPanelComponent,
     TeachersComponent,
     TeachersListComponent,
-    DefaultTeacherComponent,
-    TeacherDetailComponent,
     TeacherEditComponent,
     DialogEntryComponent
   ],

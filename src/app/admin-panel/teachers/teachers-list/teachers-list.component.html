@@ -1,10 +1,6 @@
 <div class="container">
   <mat-nav-list>
-    <button mat-raised-button color="primary" (click)="onNewTeacher()">
-      Додати Вчителя
-    </button>
     <ng-container *ngFor="let teacher of teachers; let i = index">
-      <!-- <mat-list-item routerLinkActive="active" [routerLink]="[teacher.id]"> -->
       <mat-list-item
         routerLinkActive="active"
         (click)="onTeacherDetails(teacher)"
@@ -16,5 +12,10 @@
       </mat-list-item>
     </ng-container>
   </mat-nav-list>
+  <button class="mine" mat-fab color="primary" (click)="onNewTeacher()">
+    <i class="material-icons">
+      person_add
+    </i>
+  </button>
 </div>
 <router-outlet></router-outlet>

@@ -129,11 +129,8 @@ export class TeacherEditComponent implements OnInit {
       phone: this.teacherForm.value['teacherPhone']
     };
 
-    console.log(`шлю `)
-    console.log(newValues)
 
     if (!this.editMode) {
-      console.log('das');
       this.teachersStorageService.addTeacher(newValues).subscribe(
         (response: Response) => {
           this.teachersStorageService.getTeachers();
@@ -167,19 +164,11 @@ export class TeacherEditComponent implements OnInit {
           error => console.log(error)
         );
     }
-    this.router.navigate(['/admin/teachers/'], {
-      queryParams: {
-        message: this.editMode
-          ? 'Нові дані успішно внесено'
-          : 'Нового викладача додано'
-      }
-    });
+    this.router.navigate(['/admin/teachers/']);
   }
 
   onCancel() {
-    this.router.navigate(['/admin/teachers/'], {
-      queryParams: { message: 'Будь ласка, обиріть викладача' }
-    });
+    this.router.navigate(['/admin/teachers/']);
   }
 
   ngOnDestroy() {

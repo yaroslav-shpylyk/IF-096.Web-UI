@@ -3,12 +3,11 @@
 }
 
 mat-nav-list {
-  // justify-content: center;
   margin: auto;
 }
 
-button {
-  // margin-bottom: 20px;
-  display: block;
-  margin: 20px auto;
+.mine {
+  position: fixed;
+  bottom: 3em;
+  right: 3em;
 }

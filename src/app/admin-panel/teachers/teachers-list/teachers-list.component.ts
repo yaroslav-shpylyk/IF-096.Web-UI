@@ -21,7 +21,9 @@ export class TeachersListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.teachers = this.teachersStorageService.getTeachers();
+    this.teachers = this.teachersService.getTeachers();
+    if (!this.teachers.length)
+      this.teachers = this.teachersStorageService.getTeachers();
     this.subscription = this.teachersService.teachersChanged.subscribe(
       teachers => {
         this.teachers = teachers;
