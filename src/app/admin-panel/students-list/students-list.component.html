@@ -1,4 +1,4 @@
-<div [ngClass]="'select'">
+<div class="select">
   <div>
     <h4>Активні класи</h4>
     <mat-form-field>
@@ -26,13 +26,13 @@
     </mat-form-field>
   </div>
 </div>
-<div [ngClass]="'students'">
-    <mat-list *ngIf="studentList">
-      <button [routerLink]="" mat-list-item *ngFor="let student of studentList">
-          <span>{{student.firstname}}</span>
-          <span>{{student.lastname}}</span>
-          <span>{{student.patronymic}}</span>
-          <span>{{student.classe}}</span>
-      </button>
-    </mat-list>
-  </div>
+<div class="students">
+  <mat-list *ngIf="studentList">
+    <button [routerLink]="" mat-list-item *ngFor="let student of studentList">
+      <span>{{student.firstname}}</span>
+      <span>{{student.lastname}}</span>
+      <span>{{student.patronymic}}</span>
+      <span>{{student.classe}}</span>
+    </button>
+  </mat-list>
+</div>
