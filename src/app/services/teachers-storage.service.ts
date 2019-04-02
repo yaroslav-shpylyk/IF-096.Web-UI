@@ -16,7 +16,7 @@ export class TeachersStorageService {
    */
   getTeachers() {
     this.httpClient
-      .get('http://35.228.220.5:8080/teachers')
+      .get('/teachers')
       .pipe(
         map(response => {
           let teachers = response['data'];
@@ -57,7 +57,7 @@ export class TeachersStorageService {
     }
 
     this.httpClient
-      .get(`http://35.228.220.5:8080/teachers/${id}`)
+      .get(`/teachers/${id}`)
       .pipe(
         map(response => {
           let teacher = response['data'];
@@ -88,7 +88,7 @@ export class TeachersStorageService {
    */
   updateTeacher(id, teacher) {
     return this.httpClient.put(
-      `http://35.228.220.5:8080/admin/teachers/${id}`,
+      `/admin/teachers/${id}`,
       teacher
     );
   }
@@ -101,7 +101,7 @@ export class TeachersStorageService {
    */
   addTeacher(newTeacher) {
     return this.httpClient.post(
-      `http://35.228.220.5:8080/teachers`,
+      `/teachers`,
       newTeacher
     );
   }

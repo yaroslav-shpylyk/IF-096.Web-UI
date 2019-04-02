@@ -12,6 +12,10 @@ const routes: Routes = [
     loadChildren: './shell/shell.module#ShellModule',
     canActivate: [ShellGuard],
     canLoad: [ShellGuard]
+  },
+  {
+    path: 'admin',
+    loadChildren: './admin-panel/admin-panel.module#AdminPanelModule'
   }
 ];
 
