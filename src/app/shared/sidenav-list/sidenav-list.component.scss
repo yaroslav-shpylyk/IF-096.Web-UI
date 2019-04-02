@@ -1,9 +1,14 @@
-a {
-  text-decoration: none;
-  color: white;
+@import "../../../styles.scss";
+
+.nav-caption {
+  display: inline-block;
+  padding-left: 6px;
+  color: $dark-color;
+}
+mat-icon {
+  color: $dark-color;
 }
 
-a:hover,
-a:active {
-  color: lightgrey;
+a {
+  text-decoration: none;
 }

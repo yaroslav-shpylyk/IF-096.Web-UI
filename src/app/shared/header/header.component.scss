@@ -1,20 +1,14 @@
-a {
-  text-decoration: none;
+@import "../../../styles.scss";
+
+.mat-toolbar {
+  background: $main-color;
+  font-family: 'Roboto', sans-serif;
+}
+.mat-icon-button {
   color: white;
 }
 
-a:hover,
-a:active {
-  color: lightgrey;
-}
-
-.navigation-items {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.nav-caption {
-  display: inline-block;
-  padding-left: 6px;
+img {
+  width: 48px;
+  height: 48px;
 }
