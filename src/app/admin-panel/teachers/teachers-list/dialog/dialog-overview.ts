@@ -1,5 +1,5 @@
-import { Component, Inject, Injectable } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, Injectable } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TeachersService } from '../../teachers.service';
@@ -18,19 +18,17 @@ export class DialogEntryComponent {
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
-    private teachersService: TeachersService,
-    private teachersStorageService: TeachersStorageService
+    private teachersService: TeachersService
   ) {
     this.openDialog();
   }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      // console.log(params.id)
       this.id = +params.id;
       this.teachersService.modalsId = this.id;
     });
-  }
+  } 
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog);
@@ -40,16 +38,10 @@ export class DialogEntryComponent {
   }
 }
 
-@Component({
-  selector: 'dialog-overview-example',
-  templateUrl: 'dialog-overview-example.html',
-  styleUrls: []
-})
-export class DialogOverviewExample {}
 
 @Component({
-  selector: 'dialog-overview-example-dialog',
-  templateUrl: 'dialog-overview-example-dialog.html'
+  selector: 'dialog-overview',
+  templateUrl: 'dialog-overview.html'
 })
 export class DialogOverviewExampleDialog {
   teacher;

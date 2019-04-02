@@ -9,7 +9,7 @@ import { TeachersListComponent } from './teachers/teachers-list/teachers-list.co
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-overview-example';
+import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-overview';
 
 @NgModule({
   declarations: [

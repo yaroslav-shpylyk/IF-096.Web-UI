@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ShellComponent } from '../shell/shell/shell.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.component';
-import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-overview-example';
+import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-overview';
 import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
  
 const routes: Routes = [
