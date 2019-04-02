@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ClassService } from '../../services/class.service';
-
+import { StudentsService } from '../../services/students.service';
 
 
 @Component({
@@ -10,25 +10,25 @@ import { ClassService } from '../../services/class.service';
 })
 export class StudentsListComponent implements OnInit {
   activeClass: any;
-  notActiveClass:any;
-  toShowNotactiveClass: boolean = false;
+  notActiveClass: any;
+  toShowNotactiveClass: boolean = !true;
+  studentList: any;
 
-  constructor(private classList: ClassService) { }
+
+  constructor(private classList: ClassService, private students: StudentsService) { }
 
   ngOnInit() {
-    // console.log(this.route.snapshot.data.students)
-    // this.activeClass = this.route.snapshot.data.students;
-    this.classList.getClasses().subscribe((data:any) =>{
-      this.activeClass = data.filter((items:any)=>items.isActive===true);
-      this.notActiveClass=data.filter((items:any)=>items.isActive===false);
-    })
-    
+    this.classList.getClasses().subscribe((data: any) => {
+      this.activeClass = data.filter((items: any) => items.isActive === true);
+      this.notActiveClass = data.filter((items: any) => items.isActive === false);
+
+    });
   }
 
-  showNotActiveClasses(){
-    this.toShowNotactiveClass=!false;
-    
-  }
 
+  onSelectionClass($event) {
+    console.log($event.value)
+    this.students.getOneStudent($event.value).subscribe(list => this.studentList = list);
+  }
 
 }

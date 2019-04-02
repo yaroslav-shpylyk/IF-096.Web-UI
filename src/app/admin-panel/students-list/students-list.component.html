@@ -1,18 +1,31 @@
+<div>
+  <h4>Виберіть клас</h4>
+<mat-form-field>
+  <mat-label>Список активних класів</mat-label>
+  <mat-select (selectionChange)="onSelectionClass($event)">
+    <mat-option *ngFor="let active of activeClass" [value]="active.id">
+      {{active.className}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<h4>Виберіть клас</h4>
+<mat-form-field>
+  <mat-label>Список неактивних класів</mat-label>
+  <mat-select (selectionChange)="onSelectionClass($event)">
+    <mat-option *ngFor="let notactive of notActiveClass" [value]="notactive.id">
+      {{notactive.className}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+</div>
+<div>
+  <mat-list *ngIf="studentList" >
+    <mat-list-item *ngFor="let student of studentList">
+      <a [routerLink]="" >{{student.firstname}} {{student.lastname}}</a>
+    </mat-list-item>
+  </mat-list>
+</div>
 
-<div>Виберіть клас</div>
-
-<mat-list>
-  <mat-list-item *ngFor="let active of activeClass">
-    <a [routerLink]="['/user', active.id]" >{{active.className}} {{active.classYear}}</a>
-  </mat-list-item>
-</mat-list>
 
 
 
-
-<button mat-raised-button color ="primary"  (click)='showNotActiveClasses()'>Неактивні класи</button>
-<mat-list *ngIf="toShowNotactiveClass">
-  <mat-list-item *ngFor="let notActive of notActiveClass">
-    <a [routerLink]="['/user', notActive.id]" >{{notActive.className}} {{notActive.classYear}}</a>
-  </mat-list-item>
-</mat-list>

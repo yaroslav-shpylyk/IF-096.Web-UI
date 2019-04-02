@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { Observable, Subscription } from 'rxjs';
+import { map, tap, mergeMap, mergeAll, switchMap, merge } from 'rxjs/operators';
+import { Observable, Subscription, combineLatest } from 'rxjs';
+import { element, elementStart } from '@angular/core/src/render3';
+
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +11,23 @@ import { Observable, Subscription } from 'rxjs';
 export class ClassService {
   private readonly url: string = 'http://35.228.220.5:8080';
   constructor(private http: HttpClient) { }
-
-
   getClasses(): Observable<any> {
     return this.http.get(`${this.url}/classes`)
-      .pipe(map((res: any) => res.data));
+      .pipe(map((res: any) => {
+
+        return res.data;
+      }));
   }
 
+  
+
+
+  getOneStudent(id) {
+    return this.http.get(`${this.url}/students/classes/${id}`).
+      pipe(map((res: any) => res.data))
+  }
+
+  // = this.http.get(`/students/classes/${result}`)
 
   // getActiveClasses(): Observable<any> {
   //   return this.http.get(`${this.url}/classes`)
