@@ -13,6 +13,9 @@ export class SidenavListComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * close sidenav after pressing on link
+   */
   onClose() {
     this.closeSidenav.emit();
   }

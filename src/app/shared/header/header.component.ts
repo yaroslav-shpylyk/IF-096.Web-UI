@@ -13,6 +13,9 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * open and close burger menu icon
+   */
   onToggleSidenav() {
     this.sidenavToggle.emit();
   }

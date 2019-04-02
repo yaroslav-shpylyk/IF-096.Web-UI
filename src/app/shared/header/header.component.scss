@@ -1,15 +1,19 @@
 @import "../../../styles.scss";
 
-.mat-toolbar {
+.mat-toolbar { //header
   position: fixed;
   background: $main-color;
-  font-family: 'Roboto', sans-serif;
 }
-.mat-icon-button {
+.mat-icon-button { //burger menu icon
   color: white;
 }
-
-img {
-  width: 48px;
-  height: 48px;
+.header-list { // menu list
+  padding-right: 3%;
 }
+a img { //logo
+  display: block;
+  margin: auto;
+  height: 48px;
+  padding-right: 3%;
+}
+

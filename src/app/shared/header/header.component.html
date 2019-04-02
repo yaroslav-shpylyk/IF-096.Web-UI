@@ -8,19 +8,20 @@
   </div>
   <!--logo item for large screens on the left-->
   <div><a routerLink="/">
-    <img fxHide.xs src="../../../assets/catholic-school-logo.png" alt="">
+    <img fxHide.xs src="../../../assets/catholic-school-logo.png" alt="logo">
   </a>
   </div>
 
   <div fxFlex fxLayout fxLayoutAlign="flex-end"
-       fxHide.xs>
+       fxHide.xs class="header-list">
     <!-- example list for header menu-->
     <app-header-list></app-header-list>
   </div>
-
-  <!--logo item for mobile screens on the right-->
-  <a routerLink="/" fxFlex fxLayout fxHide.gt-xs fxLayoutAlign="flex-end">
-    <img src="../../../assets/catholic-school-logo.png" alt="">
-  </a>
+    <!--logo item for mobile screens on the right-->
+  <div fxFlex fxLayout fxHide.gt-xs fxLayoutAlign="flex-end">
+    <a routerLink="/">
+      <img src="../../../assets/catholic-school-logo.png" alt="logo">
+    </a>
+  </div>
 </mat-toolbar>
 

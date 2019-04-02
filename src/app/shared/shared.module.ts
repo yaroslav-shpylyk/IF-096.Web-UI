@@ -12,9 +12,9 @@ import { FooterComponent } from './footer/footer.component';
 @NgModule({
   declarations: [
     HeaderComponent,
+    HeaderListComponent,
     SidenavComponent,
     SidenavListComponent,
-    HeaderListComponent,
     FooterComponent
   ],
   imports: [
@@ -24,9 +24,9 @@ import { FooterComponent } from './footer/footer.component';
   ],
   exports: [
     HeaderComponent,
-    SidenavListComponent,
-    SidenavComponent,
     HeaderListComponent,
+    SidenavComponent,
+    SidenavListComponent,
     FooterComponent
   ]
 })

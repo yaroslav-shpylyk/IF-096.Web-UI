@@ -6,16 +6,10 @@ $light-color: lighten($main-color, 55%);
 html {
   height: 100%;
   background-color: $light-color;
-  box-sizing: border-box;
 }
-
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-}
-
 body {
   margin: 0;
   height: 100%;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
 }
