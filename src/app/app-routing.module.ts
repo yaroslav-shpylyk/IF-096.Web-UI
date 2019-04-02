@@ -10,7 +10,8 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: './shell/shell.module#ShellModule',
-    canActivate: [ShellGuard]
+    canActivate: [ShellGuard],
+    canLoad: [ShellGuard]
   }
 ];
 
