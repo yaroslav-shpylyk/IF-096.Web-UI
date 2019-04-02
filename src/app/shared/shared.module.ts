@@ -6,6 +6,7 @@ import { MaterialModule } from '../material.module';
 import { RouterModule } from '@angular/router';
 import { HeaderListComponent } from './header-list/header-list.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     HeaderComponent,
     SidenavComponent,
     SidenavListComponent,
-    HeaderListComponent
+    HeaderListComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,8 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     HeaderComponent,
     SidenavListComponent,
     SidenavComponent,
-    HeaderListComponent
+    HeaderListComponent,
+    FooterComponent
   ]
 })
 export class SharedModule { }

@@ -2,14 +2,10 @@
 
 .mat-toolbar {
   position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
   background: $main-color;
-  font-family: 'Roboto', sans-serif;
-}
-.mat-icon-button {
   color: white;
-}
-
-img {
-  width: 48px;
-  height: 48px;
+  text-align: center;
 }
