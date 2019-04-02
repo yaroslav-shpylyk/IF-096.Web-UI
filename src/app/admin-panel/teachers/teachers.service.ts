@@ -10,6 +10,7 @@ export class TeachersService {
 
   private teachers = [];
   private teacher;
+  public modalsId
 
   /**
    * Method gets array of up to date objects with teachers, 

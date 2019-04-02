@@ -11,11 +11,14 @@ import { MaterialModule } from './material';
 import { TeachersStorageService } from './services/teachers-storage.service';
 import { TeachersService } from './admin-panel/teachers/teachers.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-list/dialog/dialog-overview-example';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DialogOverviewExampleDialog
   ],
+  entryComponents: [DialogOverviewExampleDialog],
   imports: [
     BrowserModule,
     AppRoutingModule,

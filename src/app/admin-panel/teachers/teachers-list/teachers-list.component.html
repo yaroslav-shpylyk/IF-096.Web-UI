@@ -1,13 +1,20 @@
-<mat-nav-list>
-  <button mat-raised-button color="primary" (click)="onNewTeacher()">
-    Додати Вчителя
-  </button>
-  <ng-container *ngFor="let teacher of teachers; let i = index">
-    <mat-list-item routerLinkActive="active" [routerLink]="[teacher.id]">
-      <img matListAvatar [src]="teacher.avatar" alt="..." />
-      <p matLine href="javascript:void(0)">
-        {{ teacher.firstname }} {{ teacher.lastname }}
-      </p>
-    </mat-list-item>
-  </ng-container>
-</mat-nav-list>
+<div class="container">
+  <mat-nav-list>
+    <button mat-raised-button color="primary" (click)="onNewTeacher()">
+      Додати Вчителя
+    </button>
+    <ng-container *ngFor="let teacher of teachers; let i = index">
+      <!-- <mat-list-item routerLinkActive="active" [routerLink]="[teacher.id]"> -->
+      <mat-list-item
+        routerLinkActive="active"
+        (click)="onTeacherDetails(teacher)"
+      >
+        <img matListAvatar [src]="teacher.avatar" alt="..." />
+        <p matLine href="javascript:void(0)">
+          {{ teacher.firstname }} {{ teacher.lastname }}
+        </p>
+      </mat-list-item>
+    </ng-container>
+  </mat-nav-list>
+</div>
+<router-outlet></router-outlet>

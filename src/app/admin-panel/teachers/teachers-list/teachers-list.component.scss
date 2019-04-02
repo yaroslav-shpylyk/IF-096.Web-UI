@@ -1,9 +1,14 @@
-mat-nav-list {
-  margin-top: 50px
+.container {
+  display: flex;
 }
 
-button{
+mat-nav-list {
+  // justify-content: center;
+  margin: auto;
+}
+
+button {
   // margin-bottom: 20px;
-  display: block; 
+  display: block;
   margin: 20px auto;
 }

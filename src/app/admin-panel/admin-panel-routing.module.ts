@@ -6,22 +6,26 @@ import { TeachersComponent } from './teachers/teachers.component';
 import { DefaultTeacherComponent } from './teachers/default-teacher/default-teacher.component';
 import { TeacherDetailComponent } from './teachers/teacher-detail/teacher-detail.component';
 import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.component';
-
+import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-overview-example';
+import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
+ 
 const routes: Routes = [
   {
     path: '',
     component: AdminPanelComponent
   },
+  { path: 'teachers/new', component: TeacherEditComponent },
   {
     path: 'teachers',
-    component: TeachersComponent,
+    component: TeachersListComponent,
     children: [
-      { path: '', component: DefaultTeacherComponent },
-      { path: 'new', component: TeacherEditComponent },
-      { path: ':id', component: TeacherDetailComponent }, 
-      { path: ':id/edit', component: TeacherEditComponent }
+      {
+        path: ':id',
+        component: DialogEntryComponent
+      }
     ]
-  }
+  },
+  { path: 'teachers/:id/edit', component: TeacherEditComponent }
 ];
 
 @NgModule({

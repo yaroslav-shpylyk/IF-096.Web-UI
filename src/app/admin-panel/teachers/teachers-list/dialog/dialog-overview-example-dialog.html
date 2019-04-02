@@ -1,0 +1,20 @@
+<div>
+  <div *ngIf="teacher">
+    <div class="avatar">
+      <img [src]="teacher.avatar" height="150" width="150" />
+    </div>
+    <div class="info">
+      <h2>{{ teacher.lastname + ' ' + teacher.firstname }}</h2>
+      <h3>{{ teacher.patronymic }}</h3>
+      <p *ngIf="teacher.email">
+        <b>Электронна скринька: </b> {{ teacher.email }}
+      </p>
+      <p *ngIf="teacher.phone"><b>Номер телефону: </b> {{ teacher.phone }}</p>
+    </div>
+  </div>
+</div>
+
+<div style="display: flex; justify-content: space-evenly;">
+  <button mat-raised-button color="accent" (click)="onEditClick()" cdkFocusInitial>Редагувати</button>
+  <button mat-raised-button (click)="onBackClick()">Назад</button>
+</div>

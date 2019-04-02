@@ -11,6 +11,7 @@ import { TeacherDetailComponent } from './teachers/teacher-detail/teacher-detail
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-overview-example';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TeachersListComponent,
     DefaultTeacherComponent,
     TeacherDetailComponent,
-    TeacherEditComponent
+    TeacherEditComponent,
+    DialogEntryComponent
   ],
   imports: [
     CommonModule,

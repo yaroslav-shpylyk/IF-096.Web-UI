@@ -4,7 +4,8 @@ body {
   font-family: roboto;
 }
 .container {
-  width: 400px;
+  display: flex;
+  min-width: 100em;
   margin: 80px auto 120px;
   background-color: #fff;
   padding: 0 20px 20px;
