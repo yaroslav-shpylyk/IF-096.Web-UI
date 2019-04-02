@@ -1,20 +1,17 @@
 .component {
   display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
 }
 
 mat-card {
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
-  align-items: center;
-  width: 200px;
-  height: 100px;
-  margin-left: 20px;
-
-  & > mat-icon {
-    position: absolute;
-    font-size: 40px;
-    margin: 30px 10px 0 80px;
-  }
+  width: 15em;
+  height: 7em;
+  margin: 50px 0 0 20px;
 
   &:first-child {
     margin-left: 0;
@@ -25,3 +22,66 @@ mat-card {
     font-size: 20px;
   }
 }
+
+$background-colors: rgb(237,78,75), rgb(31,193,213), rgb(95,182,99), rgb(254,162,31);
+$background-gradient:
+  linear-gradient(90deg, rgba(237,78,75,1) 0%, rgba(231,61,58,1) 100%),
+  linear-gradient(90deg, rgba(31,193,213,1) 0%, rgba(6,176,197,1) 100%),
+  linear-gradient(90deg, rgba(95,182,99,1) 0%, rgba(61,163,65,1) 100%),
+  linear-gradient(90deg, rgba(254,162,31,1) 0%, rgba(252,145,7,1) 100%);
+
+@for $i from 1 through length($background-colors) {
+  mat-card:nth-child(#{$i}) {
+    mat-card-header {
+      background: nth($background-colors, $i);
+      background: nth($background-gradient, $i)
+    }
+  }
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 7em;
+  height: 7em;
+  margin-top: -3em;
+  border-radius: 5px;
+  color: white;
+  font-size: 1rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+
+  mat-icon {
+    font-size: 4em;
+    margin: -0.7em 0 0 -1.1em;
+  }
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  color: #a5a5a5;
+
+  span {
+    color: #333333;
+    font-size: 3em;
+  }
+}
+
+.main {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.64);
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 0;
+  margin-top: 0.3em;
+  color: #a5a5a5;
+}
+

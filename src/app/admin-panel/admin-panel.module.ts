@@ -3,15 +3,21 @@ import { CommonModule } from '@angular/common';
 import { AdminPanelRoutingModule } from './admin-panel-routing.module';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { DashboardComponent } from './admin-panel/dashboard/dashboard.component';
-import { MatCardModule, MatIconModule } from '@angular/material';
+import { MatCardModule, MatIconModule, MatButtonModule, MatGridListModule, MatMenuModule } from '@angular/material';
 
 @NgModule({
-  declarations: [AdminPanelComponent, DashboardComponent],
+  declarations: [
+    AdminPanelComponent,
+    DashboardComponent
+  ],
   imports: [
     CommonModule,
     AdminPanelRoutingModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule,
+    MatGridListModule,
+    MatMenuModule
   ]
 })
 export class AdminPanelModule { }

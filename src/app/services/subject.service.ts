@@ -9,7 +9,6 @@ import { SubjectData } from '../models/subject-data';
   providedIn: 'root'
 })
 export class SubjectService {
-
   constructor(private http: HttpClient) { }
   /**
    * Method gets number of all subjects
