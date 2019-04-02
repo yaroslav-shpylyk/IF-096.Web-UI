@@ -13,24 +13,24 @@ export class ClassService {
 
   /**
    * Method gets data about classes
+   * @param type - Type of classes(all, active, inActive)
    * @returns - Array with classes data
    */
-  public getClasses(): Observable<ClassData[]> {
+  public getClasses(type: string): Observable<ClassData[]> {
     return this.http.get('/classes')
       .pipe(
-        map((result: ClassResponse) => result.data)
-      );
-  }
-
-  /**
-   * Method returns active classes data
-   * @returns - Array with active classes
-   */
-  public getActiveClasses(): Observable<ClassData[]> {
-    return this.getClasses()
-      .pipe(
-        map((result: ClassData[]) => {
-          return result.filter(currClass => currClass.isActive);
+        map((result: ClassResponse) => {
+          switch (type) {
+            case 'all': {
+              return result.data;
+            }
+            case 'active': {
+              return result.data.filter(currClass => currClass.isActive);
+            }
+            case 'inActive': {
+              return result.data.filter(currClass => !currClass.isActive);
+            }
+          }
         })
       );
   }

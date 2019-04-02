@@ -23,7 +23,6 @@ export class DashboardComponent implements OnInit {
   public titles = ['Предмети', 'Учні', 'Класи', 'Вчителі'];
   public listLinks = ['/subjects', '/students', '/classes', '/teachers'];
   public buttonTitles = ['СПИСОК ПРЕДМЕТІВ', 'СПИСОК СТУДЕНТІВ', 'СПИСОК КЛАСІВ', 'СПИСОК ВЧИТЕЛІВ'];
-  public logoBgColors = ['#7e57c2', '#42a5f5', '#ffb300', '#66bb6a'];
   constructor(private subjectService: SubjectService, private teacherService: TeacherService,
               private classService: ClassService, private studentsService: StudentService) { }
   public dataValues(): any {
@@ -33,7 +32,7 @@ export class DashboardComponent implements OnInit {
     this.subjectService.getSubjects().subscribe((result: SubjectData[]) => this.data.subjects = result.length);
     this.teacherService.getTeachers().subscribe((result: TeacherData[]) => this.data.teachers = result.length);
     this.studentsService.getActiveStudents().subscribe((result: number) => this.data.students = result);
-    this.classService.getActiveClasses().subscribe((result: ClassData[]) => this.data.classes = result.length);
+    this.classService.getClasses('active').subscribe((result: ClassData[]) => this.data.classes = result.length);
   }
 }
 
