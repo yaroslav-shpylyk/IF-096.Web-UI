@@ -9,8 +9,6 @@ import { roles } from "../enum/roles.enum";
 })
 export class ShellGuard implements CanActivate, CanLoad {
 
-  roles: Array<string> = [roles[0], roles[1], roles[2]];
-
   constructor(public auth: AuthService, private router: Router) {
   }
 
@@ -40,6 +38,7 @@ export class ShellGuard implements CanActivate, CanLoad {
 
   IsLogged(): boolean {
     let checkRoleInToken: string | boolean = this.auth.getUserRole();
-    return this.roles.some(role => role === checkRoleInToken);
+    return roles.students === checkRoleInToken || roles.admin === checkRoleInToken
+      || roles.teacher === checkRoleInToken
   }
 }
