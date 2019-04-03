@@ -5,6 +5,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.component';
 import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-overview';
 import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
+import { ScheduleComponent } from './schedule/schedule.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,12 @@ const routes: Routes = [
       }
     ]
   },
-  { path: 'teachers/:id/edit', component: TeacherEditComponent }
+  { path: 'teachers/:id/edit', component: TeacherEditComponent },
+  {
+    path: 'schedule',
+    component: ScheduleComponent
+  }
+
 
 ];
 

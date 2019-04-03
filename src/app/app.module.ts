@@ -7,13 +7,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MaterialModule } from './material';
 import { TeachersStorageService } from './services/teachers-storage.service';
 import { TeachersService } from './admin-panel/teachers/teachers.service';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-list/dialog/dialog-overview';
 
-import { MaterialModule } from './material/material.module';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
@@ -26,13 +24,7 @@ import { MaterialModule } from './material/material.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-<<<<<<< HEAD
     MaterialModule
-=======
-    BrowserAnimationsModule,
-    MaterialModule,
-    FlexLayoutModule
->>>>>>> master
   ],
   providers: [
     AuthService,
