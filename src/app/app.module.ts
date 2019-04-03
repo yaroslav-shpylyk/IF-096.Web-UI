@@ -6,8 +6,9 @@ import { AppComponent } from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
-
 import { GroupsService } from './services/groups.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
 
 
 
@@ -18,7 +19,8 @@ import { GroupsService } from './services/groups.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [
     AuthService,
