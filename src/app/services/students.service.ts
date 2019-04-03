@@ -8,8 +8,6 @@ import { Observable } from 'rxjs';
 })
 export class StudentsService {
 
-private readonly url: string = 'http://35.228.220.5:8080';
-
   constructor(private http: HttpClient) { }
 
  /**
@@ -17,7 +15,7 @@ private readonly url: string = 'http://35.228.220.5:8080';
    */
 
   getStudents(id) : Observable<any> {
-    return this.http.get(`${this.url}/students/classes/${id}`).
+    return this.http.get(`/students/classes/${id}`).
       pipe(map((res: any) => res.data))
   }
 }
