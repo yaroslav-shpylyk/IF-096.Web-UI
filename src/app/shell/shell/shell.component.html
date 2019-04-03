@@ -1,3 +1,17 @@
-<p>
-  shell works!
-</p>
+<!--header with sidenav-->
+<mat-sidenav-container>
+  <!--sidenav-->
+  <mat-sidenav #sidenav role="navigation">
+    <app-sidenav (closeSidenav)="sidenav.close()"></app-sidenav>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <!--header-->
+    <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+    <div class="wrap-content"> <!--content goes here!-->
+      <router-outlet></router-outlet>
+    </div>
+    <!--footer-->
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
