@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
-import { catchError, map } from "rxjs/operators";
-import { Class } from "../models/class-info";
-
+import { Observable, Subscription} from 'rxjs';
+import { catchError, map, mergeMap, delay, switchMap } from "rxjs/operators";
+// import { Class } from "../models/class-info";
 
 @Injectable({
   providedIn: 'root'
@@ -12,22 +11,36 @@ import { Class } from "../models/class-info";
 export class NewYearService {
   private url:string='http://35.228.220.5:8080';
   
-
-  public classes=[];
-  public classesNamesList=[];
-  
   constructor( private http: HttpClient ) { }
 
 
+
+
+
+  public getAllClasesInfo():Observable <any>{
+    return this.getClasses().pipe(
+      map(
+        classList => { classList.forEach(
+          (singleClass) =>  {
+            if(singleClass['numOfStudents']>0)
+            this.getPupilList(singleClass['id'])
+            .subscribe( pupilList => singleClass['pupilList']=pupilList )
+          });
+        return classList; }
+      )    
+    )
+  }  
+  
    /**
    * Method return list of classes
    * @returns - list of classes
    */
-  public getClasses(): Observable<Class[]> {
+  public getClasses(): Observable<any> {
     return this.http.get(`${this.url}/classes`, {observe: 'response'})
     .pipe(
       map((response: any)=>{
-        return response.body.data;
+        console.log(response.body.data)
+        return response.body.data;      
       }),
       catchError((error: any) => {
         return error;  
@@ -51,8 +64,56 @@ export class NewYearService {
     )
   }
 
+  public transitClasses(formData, classes){
+    let request=this.getTransitRequest(formData, classes);
+    this.createClasses(request.transitClassesQuery).subscribe(
+      res => {res.data
+       .forEach( 
+         (newClass, index) => {request.bindPupilsQuery[index]["newClassID"]=newClass.id} 
+        )
+       this.bindPupils(request.bindPupilsQuery).subscribe();   
+       console.log(request.bindPupilsQuery);    
+      }      
+     )
+  }
 
-  public transitClasses(data:any):Observable<any>{
+   // this.newYearTransitition.transitClasses(query).subscribe(
+    //   res => {res.data
+    //     .forEach(
+    //       (item, index) => {queryPut[index]["newClassID"]=item.id}
+    //     )
+    //     console.log('queryPUT', queryPut);
+    //     this.newYearTransitition.bindPupils(queryPut).subscribe();   
+    //   }
+      
+    // );
+ 
+
+
+
+  public getTransitRequest(formData, classes){
+    let transitClassesQuery=[];
+    let bindPupilsQuery=[];
+    formData.forEach(
+      (item, index) => {
+        if(item) {transitClassesQuery.push(
+          {
+            "className": item, 
+            "classYear": classes[index].classYear+1
+          });
+          bindPupilsQuery.push({"oldClassId": classes[index].id});
+        }
+      }
+    )
+    return {
+      "transitClassesQuery": transitClassesQuery,
+      "bindPupilsQuery": bindPupilsQuery
+    }
+  }
+
+
+
+  public createClasses(data:any):Observable<any>{
     return this.http.post(`${this.url}/students/transition`, data, {observe: 'response'})
     .pipe(
       map((response: any)=> {
@@ -64,8 +125,8 @@ export class NewYearService {
     )
   }
 
-
   public bindPupils(data: any): Observable<any> {
+    console.log(data);
     return this.http.put(`${this.url}/students/transition`, data);
   }
 

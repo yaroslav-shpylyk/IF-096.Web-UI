@@ -9,12 +9,12 @@
               <th scope="col">Новий клас</th>
           </tr>
           </thead>
-    <tr class="form-group" *ngFor="let class of newClassTitle.controls; let index = index">
+    <tr class="form-group" *ngFor="let class of newClassTitle.controls | keyvalue; let index = index">
       <td>
         <label for="spoiler_{{class.id}}">Учні {{classes[index].className}} класу</label>
         <div>
-          <ul *ngFor="let pupil of classes[index].pupilList">
-            <li><a href="students/{{pupil.id}}" target="_blank">{{pupil.lastname}} {{pupil.firstname}}</a></li>
+          <ul *ngFor="let pupil of classes[index]['pupilList'] | keyvalue">
+            <li><a href="students/{{pupil.id}}" target="_blank">{{(pupil.value).lastname}} {{(pupil.value).firstname}}</a></li>
           </ul>
         </div>
       </td>
@@ -24,7 +24,15 @@
         
         <label>Назва класу</label>
         <input class="form-control" formControlName="{{index}}" />
-          <div *ngIf="class.invalid && class.touched "> Не вказано назву класу </div>
+
+        <div
+            *ngIf="class.value.errors && (class.value.dirty || class.value.touched)">
+          <p *ngIf="class.value.errors.pattern">Недопустима назва (Приклад: "8-А")</p>
+          <p *ngIf="class.value.errors.nameError">Такий клас уже ствоений</p>
+        </div>
+
+
+          <div *ngIf="class.value.invalid && class.value.touched "> Не вказано назву класу </div>
     </tr>
   </table>    
 </div>
