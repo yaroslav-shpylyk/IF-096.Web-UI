@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 import { ClassResponse } from '../models/class-response';
 import { ClassData } from '../models/class-data';
 
@@ -32,6 +32,23 @@ export class ClassService {
             }
           }
         })
+      );
+  }
+  public getClassesByStream(stream: number): any {
+    return this.getClasses('active')
+      .pipe(
+        map(result => {
+          const uniqueClasses: ClassData[] = [];
+          result
+            .filter(item => item.isActive && parseInt(item.className, 10) === stream)
+            .forEach(item => {
+              if (!uniqueClasses.some(value => item.className === value.className)) {
+                uniqueClasses.push(item);
+              }
+            });
+          return uniqueClasses;
+        }),
+        tap(result => console.log(result))
       );
   }
 }
