@@ -1,10 +1,15 @@
 $main-color: #1565C0;
+$dark-color: darken($main-color, 15%);
+$light-color: lighten($main-color, 55%);
 
-html, body {
+html {
   height: 100%;
+  background-color: $light-color;
 }
 
 body {
   margin: 0;
-  font-family: 'Philosopher', sans-serif;
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.2em;
 }
