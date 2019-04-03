@@ -1,0 +1,6 @@
+<button (click)="showList()">ShowList</button>
+<ul>
+  <li *ngFor = "let subj of subjects" class="list">
+    {{subj.subjectName}}
+  </li>
+</ul>
