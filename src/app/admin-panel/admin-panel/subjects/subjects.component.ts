@@ -9,15 +9,29 @@ import { SubjectsService } from 'src/app/services/subjects.service';
 })
 export class SubjectsComponent implements OnInit {
 
-  subjects: any;
+  public subjects: any;
+  public filteredSubjects: any;
+  public searchBar: string;
 
   constructor(private SubjectsService: SubjectsService) { }
 
   ngOnInit() {
+    this.SubjectsService.getSubjects().subscribe(subjects =>
+      {
+        this.subjects = subjects;
+        this.filteredSubjects = subjects;
+      });
   }
 
-  showList(){
-    this.SubjectsService.getSubjects().subscribe(result =>  this.subjects = result)
+  onChange(ev) {
+    this.searchBar = ev.target.value;
+   
+    let rx = new RegExp(this.searchBar,'i');
+    this.filteredSubjects = 				
+      this.subjects.filter(subj => {
+        return subj.subjectName.match(rx);
+      });
+    
   }
 
 }
