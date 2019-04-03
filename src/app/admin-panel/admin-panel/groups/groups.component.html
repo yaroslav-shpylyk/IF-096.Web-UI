@@ -2,7 +2,7 @@
 <div *ngIf="toggleForAcniveGroups"> 
   <tr *ngFor="let group of groups">
     <th *ngIf="group.isActive">
-      <a (click) = "changeGroup(group)">{{group.className}}</a> - {{group.classYear}}
+      {{group.className}} - {{group.classYear}} - <a (click) = "dataChengGroup(group)" routerLink="add-modify" >Редагувати клас</a>
     </th>
   </tr>
 </div>
@@ -12,12 +12,12 @@
   <div *ngIf="toggleForNotAcniveGroups">
     <tr *ngFor="let group of groups">
       <th *ngIf="!group.isActive">
-        <a (click) = "changeGroup(group)">{{group.className}}</a> - {{group.classYear}} 
+        {{group.className}} - {{group.classYear}} - <a (click) = "dataChengGroup(group)" routerLink="add-modify" >Редагувати клас</a>
       </th>
     </tr>
   </div>
 
-<a routerLink="add-modify">go</a>
+<a routerLink="add-modify" (click) = "dataAddGroup()">Додати клас</a>
 <router-outlet></router-outlet>
 
 

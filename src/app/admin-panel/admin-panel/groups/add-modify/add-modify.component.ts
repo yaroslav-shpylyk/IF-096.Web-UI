@@ -4,6 +4,7 @@ import { Group } from '../../../../models/group-data.model';
 import { GroupsService } from 'src/app/services/groups.service';
 import { FormControl } from '@angular/forms';
 import { GroupsComponent } from '../groups.component';
+import { map } from 'rxjs/internal/operators/map';
 
 @Component({
   selector: 'app-add-modify',
@@ -12,20 +13,21 @@ import { GroupsComponent } from '../groups.component';
 })
 export class AddModifyComponent implements OnInit {
   groups: Group[];
-  toggleForAcniveGroups: boolean = false;
-  toggleForNotAcniveGroups: boolean = false;
-  toggleForAddGroups: boolean = false;
-  toggleForRechangeGroups: boolean = false;
+  toggleForID = false;
   dataСhosenRechange:any;
   nameChange:any;
   yearChange:any;
   infaChange:any;
   idChange:any;
+ 
+
+  
 
   constructor(private groupServices: GroupsService,
     private groupComponent: GroupsComponent) { }
-
+   
   ngOnInit() {
+    this.changeGroup(this.groupComponent.groupCh)
   }
 
   addGrup(fields: Object) {
@@ -36,15 +38,17 @@ export class AddModifyComponent implements OnInit {
       )
     }else {
       this.groupServices.addGrup(group).subscribe(
-        group => this.groups.push(group)
+        (group) => {
+          return this.groupComponent.groups.push(group)
+        }
       );
     }
   }
 
-  changeGroup(groupCh:any){
-    this.toggleForRechangeGroups = !this.toggleForRechangeGroups
+  changeGroup(groupData: any){
+
+    this.dataСhosenRechange = groupData; 
     
-    this.dataСhosenRechange = groupCh;
     this.nameChange = new FormControl('');
     this.nameChange.setValue(this.dataСhosenRechange.className);
     this.yearChange = new FormControl('');
