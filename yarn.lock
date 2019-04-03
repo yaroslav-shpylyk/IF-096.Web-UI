@@ -107,24 +107,10 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/animations@angular/animations-builds":
-  version "8.0.0-beta.10"
-  resolved "https://codeload.github.com/angular/animations-builds/tar.gz/34c8385baddf45d8dc76b0b41627f1d17e62de62"
-  dependencies:
-    tslib "^1.9.0"
-
 "@angular/cdk@^7.3.6":
   version "7.3.6"
   resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-7.3.6.tgz#4c330cacd11df4adade6c1cd3ed587745f9912fd"
   integrity sha512-ZuOz8nQk0bdo8YyNFcwnmSl4MPaQDAFTbLK29w4Vd/LfPnhBI3pAr0wVuPFb0fl3eSvvUrfTb/+kPbQcE07A0A==
-  dependencies:
-    tslib "^1.7.1"
-  optionalDependencies:
-    parse5 "^5.0.0"
-
-"@angular/cdk@angular/cdk-builds":
-  version "7.3.6-b72c1b7"
-  resolved "https://codeload.github.com/angular/cdk-builds/tar.gz/1ef87dfc6828def721ef991b52ac4c3e28ce49ce"
   dependencies:
     tslib "^1.7.1"
   optionalDependencies:
@@ -206,12 +192,15 @@
   dependencies:
     tslib "^1.7.1"
 
+<<<<<<< HEAD
 "@angular/material@angular/material2-builds":
   version "7.3.6-b72c1b7"
   resolved "https://codeload.github.com/angular/material2-builds/tar.gz/54e11f04b07a9af8badcace80a41ce6d004b1cb0"
   dependencies:
     tslib "^1.7.1"
 
+=======
+>>>>>>> master
 "@angular/platform-browser-dynamic@~7.2.0":
   version "7.2.10"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-7.2.10.tgz#e721192c7e827b448daab236ba214890f29d9311"
@@ -663,11 +652,6 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
-
-angular-material@^1.1.14:
-  version "1.1.14"
-  resolved "https://registry.yarnpkg.com/angular-material/-/angular-material-1.1.14.tgz#1f5e1a272a953d96870adfdb333d943617939978"
-  integrity sha512-vlimuonLiR615j/2Vi+zr+yt4xZ6oE+8ZSj2r2QJpkcV7NPh9Qwy5gpypA5gPfyCN7/4DmT/oq+hFgecWlOaeQ==
 
 ansi-colors@^3.0.0:
   version "3.2.4"
