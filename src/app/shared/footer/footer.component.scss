@@ -1,0 +1,15 @@
+@import "../../../styles.scss";
+
+.mat-toolbar { //footer
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: $main-color;
+  color: white;
+}
+
+.footer-content {
+  margin: 0 auto;
+  font-size: 12px;
+}
