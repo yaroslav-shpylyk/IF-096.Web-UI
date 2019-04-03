@@ -173,6 +173,13 @@
   dependencies:
     tslib "^1.9.0"
 
+"@angular/flex-layout@^7.0.0-beta.24":
+  version "7.0.0-beta.24"
+  resolved "https://registry.yarnpkg.com/@angular/flex-layout/-/flex-layout-7.0.0-beta.24.tgz#ad2fd2b0ff5e49119a6e0bc2052256967ad749af"
+  integrity sha512-ll6sK0nLGxqI/f5+z4jbd+pve1QITzgehv2AuGvfSDgIjPMeqUDB5YZqQmIGM/dQRk/vIio5KCW5LQPJWzMMYQ==
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/forms@~7.2.0":
   version "7.2.10"
   resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-7.2.10.tgz#ab4b5d702e24921b60f8e0e6df527602f99d05c4"
@@ -643,11 +650,6 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
-
-angular-material@^1.1.14:
-  version "1.1.14"
-  resolved "https://registry.yarnpkg.com/angular-material/-/angular-material-1.1.14.tgz#1f5e1a272a953d96870adfdb333d943617939978"
-  integrity sha512-vlimuonLiR615j/2Vi+zr+yt4xZ6oE+8ZSj2r2QJpkcV7NPh9Qwy5gpypA5gPfyCN7/4DmT/oq+hFgecWlOaeQ==
 
 ansi-colors@^3.0.0:
   version "3.2.4"

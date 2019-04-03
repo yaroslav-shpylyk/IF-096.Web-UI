@@ -1,5 +1,16 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+$main-color: #1565C0;
+$dark-color: darken($main-color, 15%);
+$light-color: lighten($main-color, 55%);
+
+html {
+  height: 100%;
+  background-color: $light-color;
+}
+
 body {
-  background-color: #00caca;
-  font-family: Arial, Helvetica, sans-serif
+  margin: 0;
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.2em;
 }

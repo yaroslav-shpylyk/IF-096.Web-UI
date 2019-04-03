@@ -3,14 +3,12 @@ import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { AppComponent } from './app.component';
-import {AppRoutingModule} from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { GroupsService } from './services/groups.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
-
-
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +16,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule

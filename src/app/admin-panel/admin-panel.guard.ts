@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanLoad} from '@angular/router';
-import {TokenInfo} from '../models/token-info';
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanLoad } from '@angular/router';
+import { TokenInfo } from '../models/token-info';
 import * as JWTDecoder from 'jwt-decode';
-import {AuthService} from '../services/auth.service';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root'
