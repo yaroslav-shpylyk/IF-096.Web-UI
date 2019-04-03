@@ -3,8 +3,10 @@ import { CommonModule } from '@angular/common';
 import { AdminPanelRoutingModule } from './admin-panel-routing.module';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { DashboardComponent } from './admin-panel/dashboard/dashboard.component';
-import { MatCardModule, MatIconModule, MatButtonModule, MatMenuModule } from '@angular/material';
+import { MatCardModule, MatIconModule, MatButtonModule, MatMenuModule, MatFormFieldModule, MatInputModule,
+  MatRadioModule} from '@angular/material';
 import { ChartsModule } from 'ng2-charts';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,11 @@ import { ChartsModule } from 'ng2-charts';
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
-    ChartsModule
+    ChartsModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatRadioModule
   ]
 })
 export class AdminPanelModule { }

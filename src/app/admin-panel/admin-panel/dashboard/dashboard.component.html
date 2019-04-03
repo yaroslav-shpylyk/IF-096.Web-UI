@@ -1,12 +1,31 @@
 <div class="component">
   <div class="graph">
-    <canvas baseChart
-            [data]="peopleChartData"
-            [labels]="peopleChartLabels"
-            [chartType]="peopleChartType"
-            [options]="peopleChartOptions">
+    <div class="chart">
+      <canvas *ngIf="peopleChartData.length" baseChart
+              [data]="peopleChartData"
+              [labels]="peopleChartLabels"
+              [chartType]="peopleChartType"
+              [options]="peopleChartOptions">
 
-    </canvas>
+      </canvas>
+    </div>
+    <mat-card>
+      <mat-card-header color="mat-primary">Завантаженість класів</mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="streamClasses">
+          <mat-form-field appearance="outline">
+            <mat-label>Номер потоку класів</mat-label>
+            <input matInput formControlName="classes">
+          </mat-form-field>
+          <mat-radio-group aria-label="graphType">
+            <label id="graphType">Тип графіка:</label>
+            <mat-radio-button value="1" color="primary">Бублик</mat-radio-button>
+            <mat-radio-button value="2" color="primary">Вертикальний</mat-radio-button>
+          </mat-radio-group>
+          <button mat-raised-button color="primary">ПОКАЗАТИ</button>
+        </form>
+      </mat-card-content>
+    </mat-card>
   </div>
   <div class="stats">
     <mat-card *ngFor="let item of titles; let i = index">
@@ -20,7 +39,7 @@
         </mat-card-content>
       </div>
       <mat-card-actions>
-        <button mat-button routerLink="{{listLinks[i]}}">{{buttonTitles[i]}}<mat-icon>open_in_browser</mat-icon></button>
+        <button mat-raised-button routerLink="{{listLinks[i]}}">{{buttonTitles[i]}}<mat-icon>open_in_browser</mat-icon></button>
       </mat-card-actions>
     </mat-card>
   </div>
