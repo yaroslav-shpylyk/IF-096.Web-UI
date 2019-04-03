@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import {
   MatButtonModule, MatToolbarModule,
   MatIconModule, MatListModule,
-  MatSidenavModule
+  MatSidenavModule, MatGridListModule
 } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -15,8 +15,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    FlexLayoutModule
-  ],
+    FlexLayoutModule,
+    MatGridListModule
+      ],
   exports: [
     LayoutModule,
     MatToolbarModule,
@@ -24,7 +25,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatGridListModule
   ]
 })
 export class MaterialModule {}

@@ -1,40 +1,32 @@
 <form [formGroup]="transititionForm"  class="component" (ngSubmit)="formSubmit()">
   <div formArrayName="newClassTitle">
-    <table class="table">
-          <thead>
-          <tr>
-              <th scope="col">Учні поточного класу</th>
-              <th scope="col">Поточний клас</th>
-              <th scope="col">Поточний рік</th>
-              <th scope="col">Новий клас</th>
-          </tr>
-          </thead>
-    <tr class="form-group" *ngFor="let class of newClassTitle.controls | keyvalue; let index = index">
-      <td>
-        <label for="spoiler_{{class.id}}">Учні {{classes[index].className}} класу</label>
-        <div>
-          <ul *ngFor="let pupil of classes[index]['pupilList'] | keyvalue">
-            <li><a href="students/{{pupil.id}}" target="_blank">{{(pupil.value).lastname}} {{(pupil.value).firstname}}</a></li>
-          </ul>
-        </div>
-      </td>
-
-        <td> {{classes[index].className}} </td>
-        <td> {{classes[index].classYear}} </td>
-        
-        <label>Назва класу</label>
-        <input class="form-control" formControlName="{{index}}" />
-
-        <div
-            *ngIf="class.value.errors && (class.value.dirty || class.value.touched)">
+    <mat-card *ngFor="let class of newClassTitle.controls | keyvalue; let index = index">
+      <!-- <div>            -->
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="className">{{classes[index].className}}</div> 
+                <div>{{classes[index].classYear}}</div>
+              </mat-panel-title> 
+              <mat-panel-description>
+                {{panelOpenState ? 'Список учнів' : 'Переглянути список учнів'}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-list role="list" *ngFor="let pupil of classes[index]['pupilList'] | keyvalue; let i = index">
+              <mat-list-item role="listitem"><span>{{i+1}})</span><a href="students/{{pupil.id}}" target="_blank">{{(pupil.value).lastname}} {{(pupil.value).firstname}}</a></mat-list-item>
+            </mat-list>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <input class="new-class-name" placeholder="нова назва класу" formControlName="{{index}}" />
+        <div class="validation-error"
+          *ngIf="class.value.errors && (class.value.dirty || class.value.touched)">
           <p *ngIf="class.value.errors.pattern">Недопустима назва (Приклад: "8-А")</p>
           <p *ngIf="class.value.errors.nameError">Такий клас уже ствоений</p>
         </div>
-
-
-          <div *ngIf="class.value.invalid && class.value.touched "> Не вказано назву класу </div>
-    </tr>
-  </table>    
-</div>
+        <!-- <div *ngIf="class.value.invalid && class.value.touched"> Не вказано назву класу </div> -->
+      <!-- </div> -->
+    </mat-card>  
+   </div>
   <input class="submit" type="submit" value="SUBMIT" [disabled]="!transititionForm.valid" >
 </form>

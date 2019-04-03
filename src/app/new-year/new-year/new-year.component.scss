@@ -1,0 +1,47 @@
+mat-card{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 2px;
+}
+
+mat-card mat-accordion { width: 68%; }
+
+mat-card input {
+  width: 25%;
+  height: 35px;
+}
+
+mat-panel-title {
+  flex-direction: column;
+  align-items: center;
+}
+
+mat-expansion-panel-header {padding: 0 10px;}
+
+mat-list:nth-of-type(2n+1){
+  background-color: #f1f1f1ab;  
+}
+
+mat-list-item {
+  a {text-decoration: none;}
+  span { 
+    display: inline-block;
+    padding: 0 5px;}
+}
+
+.className {font-weight: 800;}
+.new-class-name{ 
+  padding-left: 5px;
+  overflow: hidden;
+}
+
+.validation-error{ 
+  position: absolute;
+  z-index: 2;
+  bottom: -15px;
+  right: 10px;
+  color:red;
+  p {font-size: 15px;}
+}
+
