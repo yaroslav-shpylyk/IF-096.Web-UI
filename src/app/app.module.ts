@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 
+
 @NgModule({
   declarations: [
     AppComponent
@@ -18,7 +19,8 @@ import { MaterialModule } from './material.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    MaterialModule
+    MaterialModule,
+    
   ],
   providers: [
     AuthService,

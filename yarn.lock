@@ -173,10 +173,9 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/flex-layout@^7.0.0-beta.24":
-  version "7.0.0-beta.24"
-  resolved "https://registry.yarnpkg.com/@angular/flex-layout/-/flex-layout-7.0.0-beta.24.tgz#ad2fd2b0ff5e49119a6e0bc2052256967ad749af"
-  integrity sha512-ll6sK0nLGxqI/f5+z4jbd+pve1QITzgehv2AuGvfSDgIjPMeqUDB5YZqQmIGM/dQRk/vIio5KCW5LQPJWzMMYQ==
+"@angular/flex-layout@angular/flex-layout-builds":
+  version "7.0.0-beta.24-b2e2064"
+  resolved "https://codeload.github.com/angular/flex-layout-builds/tar.gz/f9650797599a4c3aeb6b9ad1bd7b2c3d91403516"
   dependencies:
     tslib "^1.7.1"
 
