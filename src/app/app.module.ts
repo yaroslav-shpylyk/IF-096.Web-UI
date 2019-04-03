@@ -21,6 +21,7 @@ import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-lis
   entryComponents: [DialogOverviewExampleDialog],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
