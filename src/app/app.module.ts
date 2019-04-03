@@ -7,6 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 
+import { MaterialModule } from './material/material.module';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -14,7 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    MaterialModule
   ],
   providers: [
     AuthService,
