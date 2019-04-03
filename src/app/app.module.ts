@@ -6,21 +6,38 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { MaterialModule } from './material';
+import { TeachersStorageService } from './services/teachers-storage.service';
+import { TeachersService } from './admin-panel/teachers/teachers.service';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-list/dialog/dialog-overview';
 
 import { MaterialModule } from './material/material.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DialogOverviewExampleDialog
   ],
+  entryComponents: [DialogOverviewExampleDialog],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+<<<<<<< HEAD
     MaterialModule
+=======
+    BrowserAnimationsModule,
+    MaterialModule,
+    FlexLayoutModule
+>>>>>>> master
   ],
   providers: [
     AuthService,
+    TeachersStorageService,
+    TeachersService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

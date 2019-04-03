@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {AdminPanelComponent} from '../admin-panel/admin-panel/admin-panel.component';
-import {JournalComponent} from './journal/journal.component';
+import { JournalComponent } from './journal/journal.component';
 
 const routes: Routes = [
   {
