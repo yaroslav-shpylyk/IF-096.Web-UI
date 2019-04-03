@@ -1,21 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './header/header.component';
-import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
 import { MaterialModule } from '../material.module';
 import { RouterModule } from '@angular/router';
 import { HeaderListComponent } from './header-list/header-list.component';
-import { SidenavComponent } from './sidenav/sidenav.component';
 import { FooterComponent } from './footer/footer.component';
-
+import { StickyHeaderComponent } from './sticky-header/sticky-header.component';
 
 @NgModule({
   declarations: [
-    HeaderComponent,
     HeaderListComponent,
-    SidenavComponent,
-    SidenavListComponent,
-    FooterComponent
+    FooterComponent,
+    StickyHeaderComponent
   ],
   imports: [
     CommonModule,
@@ -23,11 +18,9 @@ import { FooterComponent } from './footer/footer.component';
     RouterModule
   ],
   exports: [
-    HeaderComponent,
     HeaderListComponent,
-    SidenavComponent,
-    SidenavListComponent,
-    FooterComponent
+    FooterComponent,
+    StickyHeaderComponent
   ]
 })
 export class SharedModule { }
