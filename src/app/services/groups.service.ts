@@ -10,12 +10,10 @@ import { map } from 'rxjs/internal/operators/map';
 })
 export class GroupsService {
 
-  readonly API_URL: string = 'http://35.228.220.5:8080/classes'
-
   constructor(private http: HttpClient) { }
 
   getGroups(): Observable<Group[]> {
-    return this.http.get<Group[]>(this.API_URL)
+    return this.http.get<Group[]>(`/classes`)
     .pipe(
       map((response: any) => {
         return response.data;
@@ -25,14 +23,14 @@ export class GroupsService {
 
   addGrup(group: Group) {
     if (Number(group.id)) {
-      return this.http.put<Group>(this.API_URL + '/' + group.id, group)
+      return this.http.put<Group>(`/classes/` + group.id, group)
       .pipe(
         map((response: any) => {
           return response.data;
         })
       );
     } else {
-       return this.http.post<Group>(this.API_URL, group)
+       return this.http.post<Group>(`/classes/`, group)
       .pipe(
         map((response: any) => {
           return response.data;

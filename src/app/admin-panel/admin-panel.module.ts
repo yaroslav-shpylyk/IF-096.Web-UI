@@ -9,7 +9,9 @@ import { GroupsComponent } from './admin-panel/groups/groups.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { AddModifyComponent } from './admin-panel/groups/add-modify/add-modify.component';
-import {MatInputModule, MatDialogModule} from '@angular/material';
+import {MatInputModule, MatDialogModule, MatIconModule} from '@angular/material';
+import {MatTableModule} from '@angular/material/table';
+import {MatButtonModule} from '@angular/material/button';
 
 
 @NgModule({
@@ -22,7 +24,10 @@ import {MatInputModule, MatDialogModule} from '@angular/material';
     MatRadioModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule
 
   ]
 })

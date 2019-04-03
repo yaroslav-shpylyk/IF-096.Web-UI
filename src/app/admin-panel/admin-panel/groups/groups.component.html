@@ -1,27 +1,73 @@
-<button (click)="toggleForAcniveGroups = !toggleForAcniveGroups">Активні класи</button>
-<div *ngIf="toggleForAcniveGroups"> 
-  <tr *ngFor="let group of groups">
-    <th *ngIf="group.isActive">
-      {{group.className}} - {{group.classYear}} - <a (click) = "dataChengGroup(group)" routerLink="add-modify" >Редагувати клас</a>
-    </th>
-  </tr>
-</div>
 
 
-<button (click)="toggleForNotAcniveGroups = !toggleForNotAcniveGroups">Неактивні класи</button>
-  <div *ngIf="toggleForNotAcniveGroups">
-    <tr *ngFor="let group of groups">
-      <th *ngIf="!group.isActive">
-        {{group.className}} - {{group.classYear}} - <a (click) = "dataChengGroup(group)" routerLink="add-modify" >Редагувати клас</a>
-      </th>
-    </tr>
-  </div>
 
-<a routerLink="add-modify" (click) = "dataAddGroup()">Додати клас</a>
+
+  <br>
+  <button (click)="test()" (click)="toggleForAcniveGroups = !toggleForAcniveGroups">показати відкриті класи</button>
+  <br>
+  <button (click)="test()" (click)="toggleForNotAcniveGroups = !toggleForNotAcniveGroups">показати закриті класи</button>
+   <a >Додати клас</a>
+
+
+   <div class="example-button-row">
+      
+      <button mat-fab color="primary" routerLink="add-modify" (click) = "dataAddGroup()">+</button>
+    
+    </div>
+
+
 <router-outlet></router-outlet>
+<div  *ngIf="toggleForAcniveGroups">
+<table mat-table [dataSource]="groupsTrue" class="mat-elevation-z8">
+  
+  <!-- Name Column -->
+  <ng-container matColumnDef="className">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.className}} </td>
+  </ng-container>
 
+  <!-- Weight Column -->
+  <ng-container matColumnDef="classYear">
+    <th mat-header-cell *matHeaderCellDef> Weight </th>
+    <td mat-cell *matCellDef="let element"> {{element.classYear}} </td>
+  </ng-container>
 
+   <!-- Name Column -->
+   <ng-container matColumnDef="isActive">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> <a  (click) = "dataChengGroup(element)" routerLink="add-modify" >⋮</a> </td>
+    </ng-container>
 
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+</div>
+<br><br><br>
+<div  *ngIf="toggleForNotAcniveGroups">
+<table mat-table [dataSource]="groupsFolse" class="mat-elevation-z8">
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="className">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.className}} </td>
+    </ng-container>
+  
+    <!-- Weight Column -->
+    <ng-container matColumnDef="classYear">
+      <th mat-header-cell *matHeaderCellDef> Weight </th>
+      <td mat-cell *matCellDef="let element"> {{element.classYear}} </td>
+    </ng-container>
+  
+     <!-- Name Column -->
+     <ng-container matColumnDef="isActive">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> <a  (click) = "dataChengGroup(element)" routerLink="add-modify" >⋮</a> </td>
+      </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
 
 
 

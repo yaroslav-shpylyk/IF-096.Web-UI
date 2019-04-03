@@ -4,9 +4,11 @@
     <label>Назва класу: <input type="text" name="className" [(ngModel)]="nameChange.value"> </label><br>
     <label>Навчальний рік: <input type="number" name="classYear" [(ngModel)]="yearChange.value"> </label><br>
     <label>Додадкова інформація: <input type="text" name="classDescription" [(ngModel)]="infaChange.value"> </label><br>
-    <label>Активний: <input type="radio" name="isActive" value="true" ngModel checked> </label><br>
-    <label>Неактивний: <input type="radio" name="isActive" value="false" ngModel> </label><br>
-    <input *ngIf = "false" type="number" name="id" [(ngModel)]="idChange.value">
+    <mat-radio-group ngModel name="isActive" >
+      <label>Активний: <mat-radio-button value="true"   checked></mat-radio-button> </label><br>
+      <label>Неактивний:  <mat-radio-button value="false"  ></mat-radio-button> </label><br>
+    </mat-radio-group>
+    <input type="number" name="id" [(ngModel)]="idChange.value">
     <br>
     <input type="submit"  value="Зберегти" (click)="addGrup(form.value)" routerLink="../">
     <button routerLink="../">Відміна</button>
