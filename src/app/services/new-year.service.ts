@@ -9,13 +9,8 @@ import { catchError, map, mergeMap, delay, switchMap } from "rxjs/operators";
   providedIn: 'root'
 })
 export class NewYearService {
-  private url:string='http://35.228.220.5:8080';
-  
+ 
   constructor( private http: HttpClient ) { }
-
-
-
-
 
   public getAllClasesInfo():Observable <any>{
     return this.getClasses().pipe(
@@ -36,7 +31,7 @@ export class NewYearService {
    * @returns - list of classes
    */
   public getClasses(): Observable<any> {
-    return this.http.get(`${this.url}/classes`, {observe: 'response'})
+    return this.http.get(`/classes`, {observe: 'response'})
     .pipe(
       map((response: any)=>{
         console.log(response.body.data)
@@ -53,7 +48,7 @@ export class NewYearService {
    * @returns - list of pupils
    */
   public getPupilList(classId:number): Observable<any> {
-    return this.http.get(`${this.url}/students/classes/${classId}`, {observe: 'response'})
+    return this.http.get(`/students/classes/${classId}`, {observe: 'response'})
     .pipe(
       map((response: any)=>{
         return response.body.data;
@@ -114,7 +109,7 @@ export class NewYearService {
 
 
   public createClasses(data:any):Observable<any>{
-    return this.http.post(`${this.url}/students/transition`, data, {observe: 'response'})
+    return this.http.post(`/students/transition`, data, {observe: 'response'})
     .pipe(
       map((response: any)=> {
         return response.body;
@@ -127,7 +122,7 @@ export class NewYearService {
 
   public bindPupils(data: any): Observable<any> {
     console.log(data);
-    return this.http.put(`${this.url}/students/transition`, data);
+    return this.http.put(`/students/transition`, data);
   }
 
 

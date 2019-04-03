@@ -28,6 +28,8 @@ const routes: Routes = [
   },
   {
     path: 'new-year-transition',
+    // canActivate: [AdminPanelGuard],
+    // canLoad: [AdminPanelGuard],
     loadChildren: '../new-year/new-year.module#NewYearModule'
   },
   {
