@@ -16,17 +16,17 @@ export class SubjectsComponent implements OnInit {
   constructor(private SubjectsService: SubjectsService) { }
 
   ngOnInit() {
-    this.SubjectsService.getSubjects().subscribe(subjects =>
-      {
-        this.subjects = subjects;
-        this.filteredSubjects = subjects;
-      });
+    this.SubjectsService.getSubjects().subscribe(subjects => {
+      this.subjects = subjects;
+      this.filteredSubjects = subjects;
+    });
   }
 
   onChange(ev) {
     this.searchBar = ev.target.value;
    
     let rx = new RegExp(this.searchBar,'i');
+
     this.filteredSubjects = 				
       this.subjects.filter(subj => {
         return subj.subjectName.match(rx);

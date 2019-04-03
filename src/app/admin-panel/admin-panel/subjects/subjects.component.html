@@ -1,8 +1,8 @@
-<label>Search
-  <input (input)="onChange($event)" type="text">
-</label>
-<ul>
-  <li *ngFor = "let subj of filteredSubjects" class="list">
+<mat-form-field class="example-full-width">
+  <input matInput placeholder="Пошук" (input)="onChange($event)" type="text">
+</mat-form-field>
+<mat-nav-list>
+  <a href="" mat-list-item *ngFor = "let subj of filteredSubjects" class="list">
     {{subj.subjectName}}
-  </li>
-</ul>
+  </a>
+</mat-nav-list>
