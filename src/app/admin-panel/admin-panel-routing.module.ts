@@ -10,7 +10,7 @@ const routes: Routes = [
     component: AdminPanelComponent,
     children: [
       {
-        path:'',
+        path:'teacher-connection',
         component: TeacherConnectionComponent
       }
     ]

@@ -8,15 +8,16 @@ import { TeacherService } from "src/app/services/teacher.service";
 })
 export class TeacherConnectionComponent implements OnInit {
 
-
+  result;
 
   constructor(private teacherService: TeacherService) {
-    console.log('done');
+    
   }
 
   ngOnInit() {
-    this.teacherService.getTeachers().subscribe(result => console.log(result));
+    this.teacherService.getTeachers().subscribe(result => this.result = result);
     console.log('works');
+   
       
   }
 
