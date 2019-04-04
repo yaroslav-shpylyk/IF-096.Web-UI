@@ -34,21 +34,4 @@ export class ClassService {
         })
       );
   }
-  public getClassesByStream(stream: number): any {
-    return this.getClasses('active')
-      .pipe(
-        map(result => {
-          const uniqueClasses: ClassData[] = [];
-          result
-            .filter(item => item.isActive && parseInt(item.className, 10) === stream)
-            .forEach(item => {
-              if (!uniqueClasses.some(value => item.className === value.className)) {
-                uniqueClasses.push(item);
-              }
-            });
-          return uniqueClasses;
-        }),
-        tap(result => console.log(result))
-      );
-  }
 }
