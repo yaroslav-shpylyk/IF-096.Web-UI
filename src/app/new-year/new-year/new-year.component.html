@@ -1,16 +1,15 @@
 <form [formGroup]="transititionForm"  class="component" (ngSubmit)="formSubmit()">
   <div formArrayName="newClassTitle">
     <mat-card *ngFor="let class of newClassTitle.controls | keyvalue; let index = index">
-      <!-- <div>            -->
         <mat-accordion>
-          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+          <mat-expansion-panel (opened)="panelOpenState[index] = true" (closed)="panelOpenState[index] = false">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <div class="className">{{classes[index].className}}</div> 
-                <div>{{classes[index].classYear}}</div>
+                <div class="currentYear">{{classes[index].classYear}}</div>
               </mat-panel-title> 
               <mat-panel-description>
-                {{panelOpenState ? 'Список учнів' : 'Переглянути список учнів'}}
+                {{panelOpenState[index] ? 'Список учнів' : 'Переглянути список учнів'}}
               </mat-panel-description>
             </mat-expansion-panel-header>
             <mat-list role="list" *ngFor="let pupil of classes[index]['pupilList'] | keyvalue; let i = index">
@@ -18,7 +17,8 @@
             </mat-list>
           </mat-expansion-panel>
         </mat-accordion>
-        <input class="new-class-name" placeholder="нова назва класу" formControlName="{{index}}" />
+        <input class="new-class-name" placeholder="нова назва класу" (click)="ngInput($event)" formControlName="{{index}}" />
+        <input type="hidden" value="{{classes[index].classYear}}">
         <div class="validation-error"
           *ngIf="class.value.errors && (class.value.dirty || class.value.touched)">
           <p *ngIf="class.value.errors.pattern">Недопустима назва (Приклад: "8-А")</p>

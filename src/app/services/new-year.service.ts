@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { HttpClient } from "@angular/common/http";
-import { Observable, Subscription} from 'rxjs';
-import { catchError, map, mergeMap, delay, switchMap } from "rxjs/operators";
+import { Observable } from 'rxjs';
+import { catchError, map } from "rxjs/operators";
 // import { Class } from "../models/class-info";
 
 @Injectable({
@@ -72,20 +71,6 @@ export class NewYearService {
      )
   }
 
-   // this.newYearTransitition.transitClasses(query).subscribe(
-    //   res => {res.data
-    //     .forEach(
-    //       (item, index) => {queryPut[index]["newClassID"]=item.id}
-    //     )
-    //     console.log('queryPUT', queryPut);
-    //     this.newYearTransitition.bindPupils(queryPut).subscribe();   
-    //   }
-      
-    // );
- 
-
-
-
   public getTransitRequest(formData, classes){
     let transitClassesQuery=[];
     let bindPupilsQuery=[];
@@ -124,7 +109,6 @@ export class NewYearService {
     console.log(data);
     return this.http.put(`/students/transition`, data);
   }
-
 
 
    }

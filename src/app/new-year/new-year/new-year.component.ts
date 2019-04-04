@@ -1,20 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NewYearService } from "../../services/new-year.service";
-import { ReactiveFormsModule, FormGroup, FormControl, FormArray, Validators} from '@angular/forms';
-import { Observable,  forkJoin } from 'rxjs';
+import { FormGroup, FormControl, FormArray, Validators} from '@angular/forms';
 import { HttpClient } from "@angular/common/http";
-import { mergeMap, map } from 'rxjs/operators';
-
-
-function classNameValidator(control: FormGroup) {
-  let classes = control.value; 
-  if (classes.indexOf('!') != -1){
-    return {
-      nameError: { parsedName: classes}
-    }
-  }
-  return null; (6)
-}
 
 @Component({
   selector: 'app-new-year',
@@ -22,13 +9,13 @@ function classNameValidator(control: FormGroup) {
   styleUrls: ['./new-year.component.scss']
 })
 
-
 export class NewYearComponent implements OnInit {
   public classes=[];
-  public activeClasses=[];
   public classesNamesList=[];
   public transititionForm: FormGroup;
-  panelOpenState = false;
+  public currentYear: number;
+  
+  panelOpenState = [];
 
   constructor( 
     private newYearTransitition: NewYearService,
@@ -41,12 +28,17 @@ export class NewYearComponent implements OnInit {
   
   this.newYearTransitition.getAllClasesInfo().subscribe(
     data => {
-      const array=[];
       data.forEach( 
         (schoolClass, index)=> {
-          this.classesNamesList.push(schoolClass['className']);
+          this.classesNamesList.push(
+             { 
+              'classTitle': schoolClass['className'],
+              'classYear': schoolClass['classYear']
+             }
+            );
           if(schoolClass.isActive && schoolClass.numOfStudents>0){
-            this.classes.push(schoolClass);
+            this.classes.push(schoolClass); 
+            this.panelOpenState.push(false);
             this.addNewClassTitleInput();
           }
         }  
@@ -61,8 +53,7 @@ export class NewYearComponent implements OnInit {
    */
   createTransititionForm(): void {
     this.transititionForm = new FormGroup({
-      "newClassTitle": new FormArray([
-      ])
+      "newClassTitle": new FormArray([])
     });
   }
 
@@ -75,8 +66,9 @@ export class NewYearComponent implements OnInit {
   );
     (<FormArray>this.transititionForm.controls["newClassTitle"]).push(newInput);
   }
-  
+
   get newClassTitle() { return this.transititionForm.get('newClassTitle'); } 
+
   formSubmit() {
     let query=[];
     let queryPut=[];
@@ -85,4 +77,24 @@ export class NewYearComponent implements OnInit {
     }
     console.log('Form data', this.transititionForm.value.newClassTitle)
   }
+
+  ngInput(event:any) {
+    this.currentYear=event.target.previousElementSibling.querySelector('.currentYear').textContent;
+    console.log(this.classes);     
+    console.log(this.classesNamesList);
+  }
+}
+
+function classNameValidator(control: FormGroup ) {
+  let newClassTitle = control.value;
+  this.classes.filter(
+    (element) => {element.classYear==(this.currentYear+1);}
+  ).some((elem)=>{elem.classTitle==control.value});
+  
+  if (this.classes.indexOf('!') != -1){
+    return {
+      nameError: { parsedName: newClassTitle}
+    }
+  }
+  return null;
 }
