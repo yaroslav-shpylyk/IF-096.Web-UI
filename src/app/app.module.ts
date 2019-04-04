@@ -12,6 +12,7 @@ import { TeachersService } from './admin-panel/teachers/teachers.service';
 import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-list/dialog/dialog-overview';
 
 import { MaterialModule } from './material.module';
+import { ClassListService } from './services/class-list.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { MaterialModule } from './material.module';
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true
-    }
+    },
+    ClassListService
   ],
   bootstrap: [AppComponent]
 })

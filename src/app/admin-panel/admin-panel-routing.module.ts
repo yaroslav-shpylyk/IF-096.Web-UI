@@ -10,7 +10,13 @@ import { ScheduleComponent } from './schedule/schedule.component';
 const routes: Routes = [
   {
     path: '',
-    component: AdminPanelComponent
+    component: AdminPanelComponent,
+    children: [
+      {
+        path: 'schedule',
+        component: ScheduleComponent
+      }
+    ]
   },
   { path: 'teachers/new', component: TeacherEditComponent },
   {
@@ -23,12 +29,7 @@ const routes: Routes = [
       }
     ]
   },
-  { path: 'teachers/:id/edit', component: TeacherEditComponent },
-  {
-    path: 'schedule',
-    component: ScheduleComponent
-  }
-
+  { path: 'teachers/:id/edit', component: TeacherEditComponent }
 
 ];
 
