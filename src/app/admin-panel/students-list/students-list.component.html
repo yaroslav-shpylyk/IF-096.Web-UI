@@ -27,12 +27,17 @@
   </div>
 </div>
 <div class="students">
-  <mat-list *ngIf="studentList">
-    <button [routerLink]="" mat-list-item *ngFor="let student of studentList">
+  <mat-nav-list *ngIf="studentList">
+    <mat-list-item [routerLink]="" routerLinkActive="active" *ngFor="let student of studentList">
       <span>{{student.firstname}}</span>
       <span>{{student.lastname}}</span>
       <span>{{student.patronymic}}</span>
       <span>{{student.classe}}</span>
-    </button>
-  </mat-list>
+    </mat-list-item>
+  </mat-nav-list>
 </div>
+<button class="mine" mat-fab color="primary" (click)="AddStudent()">
+  <i class="material-icons md-36">
+    add_circle
+  </i>
+</button>
