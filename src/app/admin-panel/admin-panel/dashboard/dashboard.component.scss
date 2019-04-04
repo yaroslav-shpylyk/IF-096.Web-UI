@@ -1,10 +1,12 @@
+@import "../../../../styles.scss";
+
 $background-colors: rgb(237,78,75), rgb(31,193,213), rgb(95,182,99), rgb(254,162,31), rgb(169,69,187);
 $box-shadow-colors: rgba(237,78,75,0.4), rgba(31,193,213,0.4), rgba(95,182,99,0.4), rgba(254,162,31,0.4), rgba(169,69,187, 0.4);
 $background-gradient:
-  linear-gradient(90deg, rgba(237,78,75,1) 0%, rgba(231,61,58,1) 100%),
-  linear-gradient(90deg, rgba(31,193,213,1) 0%, rgba(6,176,197,1) 100%),
-  linear-gradient(90deg, rgba(95,182,99,1) 0%, rgba(61,163,65,1) 100%),
-  linear-gradient(90deg, rgba(254,162,31,1) 0%, rgba(252,145,7,1) 100%),
+  linear-gradient(90deg, rgb(255, 82, 79) 0%, rgb(225, 61, 58) 100%),
+  linear-gradient(90deg, rgb(31, 205, 225) 0%, rgb(6, 162, 183) 100%),
+  linear-gradient(90deg, rgb(120, 215, 124) 0%, rgba(61,163,65,1) 100%),
+  linear-gradient(90deg, rgb(255, 181, 8) 0%, rgb(234, 127, 7) 100%),
   linear-gradient(90deg, rgba(169,69,187,1) 0%, rgba(143,37,170,1) 100%);
 
 .component {
@@ -15,39 +17,63 @@ $background-gradient:
 }
 
 .graph {
+  margin-top: 2rem;
   display: flex;
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  padding: 4em 0;
 
   .chart {
-    display: block;
-    width: 40%;
-  }
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
 
-  mat-card {
-    width: 25em;
-    height: 15em;
-    mat-card-header {
+    mat-card-content {
+      height: 77%;
+    }
+
+    mat-card-footer {
       display: flex;
       justify-content: center;
       align-items: center;
       width: 100%;
+      height: 12%;
+      border-top: 0.01em solid #eaeaea;
+    }
+  }
+
+  mat-card {
+    width: 20em;
+    height: 23em;
+
+    mat-card-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      width: 100%;
       border-radius: 3px;
       color: white;
-      height: 2.5em;
-      font-size: 1.3em;
+      height: 10%;
     }
+
     mat-card-content {
       display: flex;
       justify-content: center;
+      align-items: center;
       width: 100%;
-      height: 70%;
+    }
+  }
+
+  .chartOptions {
+    mat-card-content {
+      height: 90%;
 
       form {
         width: 70%;
-        height: 100%;
+        height: 95%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -55,33 +81,72 @@ $background-gradient:
 
         mat-form-field {
           width: 100%;
+          border-color: $main-color;
+          margin-top: 1em;
+
+          mat-label {
+            font-size: 1.3em;
+          }
+
+          mat-select {
+            font-size: 1.3em;
+          }
+          mat-error {
+            font-size: 1.2em;
+          }
+        }
+
+        .graphType {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          width: 100%;
+          height: 5em;
+          font-size: 1.1em;
+
+          mat-radio-group {
+            display: flex;
+            flex-direction: column;
+          }
+
+          label {
+            text-align: center;
+            vertical-align: center;
+          }
+
         }
 
         mat-radio-button {
-          margin-left: 0.5em;
+          margin: 1em;
         }
 
         button {
           width: 10em;
           height: 3em;
-          margin-top: 1em;
           font-size: 1.2em;
+          margin-top: 1em;
+          background-color: $main-color;
+          color: white;
+
+          &:not(disabled):hover {
+            background-color: $main-hover-color;
+          }
         }
       }
     }
   }
  }
 
-
 .stats {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
   padding: 4em 0;
   width: 100%;
 
   @for $i from 1 through 4 {
     mat-card:nth-child(#{$i}) {
-      mat-card-header {
+      .cardHeader {
         background: nth($background-colors, $i);
         background: nth($background-gradient, $i);
         box-shadow: 0 0.2em 0.6em 0 nth($box-shadow-colors, $i), 0 0.2em 1em 0 rgba(0, 0, 0, 0.19);
@@ -93,9 +158,9 @@ $background-gradient:
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    width: 15em;
-    height: 7em;
-    margin: 2em;
+    width: 12em;
+    height: 6.5em;
+    margin: 1.5em;
 
     span {
       text-align: center;
@@ -103,12 +168,12 @@ $background-gradient:
     }
   }
 
-  mat-card-header {
+  .cardHeader {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 7em;
-    height: 7em;
+    width: 6em;
+    height: 6em;
     margin-top: -3em;
     border-radius: 3px;
     color: white;
@@ -116,8 +181,8 @@ $background-gradient:
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
 
     mat-icon {
-      font-size: 3.5em;
-      margin: -0.6em 0 0 -1.15em;
+      font-size: 4.5em;
+      margin: -0.65em 0 0 -0.7em;
     }
   }
 
@@ -142,13 +207,18 @@ $background-gradient:
     margin-top: 0.3em;
     color: #999999;
 
+    button {
+      width: 12em;
+      height: 2.5em;
+    }
     button:hover {
       background-color: #ebebeb;
     }
     mat-icon {
       position: absolute;
       font-size: 1em;
-      margin-left: 1em;
+      margin-left: 5.5em;
+      color: #bcbcbc;
     }
   }
 }
@@ -157,4 +227,121 @@ $background-gradient:
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid rgba(236, 236, 236, 0.64);
+}
+
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .graph {
+    flex-direction: column;
+
+    .chart {
+      width: 60%;
+    }
+
+    .chartOptions {
+      margin-top: 4rem;
+      width: 60%;
+    }
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+
+  //CSS
+
+}
+
+@media (min-width: 667px) and (max-width: 767px) {
+  .graph {
+    flex-direction: column;
+
+    .chart {
+      width: 70%;
+    }
+
+    .chartOptions {
+      margin-top: 4rem;
+      width: 70%;
+    }
+  }
+}
+
+@media (min-width: 481px) and (max-width: 667px) {
+  .graph {
+    flex-direction: column;
+
+    .chart {
+      width: 80%;
+    }
+
+    .chartOptions {
+      margin-top: 4rem;
+      width: 80%;
+    }
+  }
+
+  .stats {
+    mat-card {
+      width: 20em;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .graph {
+    flex-direction: column;
+
+    .chart {
+      width: 80%;
+    }
+
+    .chartOptions {
+      margin-top: 4rem;
+      width: 80%;
+    }
+  }
+
+  .stats {
+    mat-card {
+      width: 20em;
+
+      mat-card-actions {
+        mat-icon {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+::ng-deep {
+  & .mat-card-header {
+    background-color: $main-color;
+  }
+
+  & .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: $main-color;
+  }
+
+  & .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: $main-color;
+  }
+
+  & .mat-form-field-appearance-outline.mat-focused .mat-form-field-label {
+    color: $main-color;
+  }
+
+  & .mat-radio-inner-circle {
+    background-color: $main-color;
+  }
+
+  & .mat-radio-checked .mat-radio-outer-circle {
+    border-color: $main-color;
+  }
+  & .mat-card-header-text {
+    margin: 0 !important;
+  }
+  & .mat-card-content {
+    margin: 0 !important;
+  }
 }
