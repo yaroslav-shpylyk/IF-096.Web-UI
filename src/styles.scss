@@ -1,7 +1,7 @@
-$main-hover-color: #1553af;
 $main-color: #1565c0;
 $dark-color: darken($main-color, 15%);
 $light-color: lighten($main-color, 55%);
+$main-hover-color: #1553af;
 
 html {
   height: 100%;
@@ -38,3 +38,4 @@ h3 {
   position: relative;
   margin: auto;
 }
+

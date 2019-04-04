@@ -1,0 +1,21 @@
+<div class="container">
+  <mat-nav-list>
+    <ng-container *ngFor="let teacher of teachers; let i = index">
+      <mat-list-item
+        routerLinkActive="active"
+        (click)="onTeacherDetails(teacher)"
+      >
+        <img matListAvatar [src]="teacher.avatar" alt="..." />
+        <p matLine href="javascript:void(0)">
+          {{ teacher.firstname }} {{ teacher.lastname }}
+        </p>
+      </mat-list-item>
+    </ng-container>
+  </mat-nav-list>
+  <button class="mine" mat-fab color="primary" (click)="onNewTeacher()">
+    <i class="material-icons">
+      person_add
+    </i>
+  </button>
+</div>
+<router-outlet></router-outlet>

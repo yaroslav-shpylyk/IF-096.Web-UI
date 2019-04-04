@@ -1,13 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { SubjectService } from '../../../services/subject.service';
-import { TeacherService } from '../../../services/teacher.service';
-import { TeacherData } from '../../../models/teacher-data';
-import { SubjectData } from '../../../models/subject-data';
-import { ClassService} from '../../../services/class.service';
-import { ClassData } from '../../../models/class-data';
-import { StudentService } from '../../../services/student.service';
+import { SubjectService } from '../../services/subject.service';
+import { TeacherService } from '../../services/teacher.service';
+import { TeacherData } from '../../models/teacher-data';
+import { SubjectData } from '../../models/subject-data';
+import { ClassService} from '../../services/class.service';
+import { ClassData } from '../../models/class-data';
+import { StudentService } from '../../services/student.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { StudentsOfStream } from '../../../models/students-of-stream';
+import { StudentsOfStream } from '../../models/students-of-stream';
 import { ChartType, ChartOptions } from 'chart.js';
 import {BaseChartDirective, Label} from 'ng2-charts';
 
