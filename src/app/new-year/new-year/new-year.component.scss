@@ -20,11 +20,14 @@ mat-panel-title {
 mat-expansion-panel-header {padding: 0 10px;}
 
 mat-list:nth-of-type(2n+1){
-  background-color: #f1f1f1ab;  
+  background-color: #e8e8e891;  
 }
 
 mat-list-item {
-  a {text-decoration: none;}
+  a {
+    color: #404040;  
+    text-decoration: none;
+  }
   span { 
     display: inline-block;
     padding: 0 5px;}
@@ -45,3 +48,16 @@ mat-list-item {
   p {font-size: 12px;}
 }
 
+.submit {
+  display: block;
+  width: 200px;
+  height: 50px;
+  margin: 0 auto; 
+}
+
+@media screen and (min-width: 600px) {
+  form {
+    width: 70%;
+    margin: 0 auto;
+  }
+}

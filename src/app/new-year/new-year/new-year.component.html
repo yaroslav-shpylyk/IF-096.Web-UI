@@ -17,8 +17,7 @@
             </mat-list>
           </mat-expansion-panel>
         </mat-accordion>
-        <input class="new-class-name" placeholder="нова назва класу" (click)="ngInput($event)" formControlName="{{index}}" />
-        <input type="hidden" value="{{classes[index].classYear}}">
+        <input class="new-class-name" placeholder="нова назва класу" formControlName="{{index}}" />
         <div class="validation-error"
           *ngIf="class.value.errors && (class.value.dirty || class.value.touched)">
           <p *ngIf="class.value.errors.pattern">Недопустима назва (Приклад: "8-А")</p>
