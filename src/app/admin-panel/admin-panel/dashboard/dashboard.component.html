@@ -1,28 +1,53 @@
 <div class="component">
   <div class="graph">
-    <div class="chart">
-      <canvas *ngIf="peopleChartData.length" baseChart
-              [data]="peopleChartData"
-              [labels]="peopleChartLabels"
-              [chartType]="peopleChartType"
-              [options]="peopleChartOptions">
-
-      </canvas>
-    </div>
-    <mat-card>
-      <mat-card-header color="mat-primary">Завантаженість класів</mat-card-header>
+    <mat-card class="chart" [ngSwitch]="chartType" *ngIf="chartData.length">
+      <mat-card-header>Потік {{classesStream}}-х класів</mat-card-header>
       <mat-card-content>
-        <form [formGroup]="streamClasses">
-          <mat-form-field appearance="outline">
-            <mat-label>Номер потоку класів</mat-label>
-            <input matInput formControlName="classes">
+        <canvas baseChart *ngSwitchCase="'pie'"
+                [data]="chartData"
+                [labels]="chartLabels"
+                [chartType]="chartType"
+                [options]="chartRoundOptions">
+        </canvas>
+        <canvas baseChart *ngSwitchCase="'doughnut'"
+                [data]="chartData"
+                [labels]="chartLabels"
+                [chartType]="chartType"
+                [options]="chartRoundOptions">
+        </canvas>
+        <canvas baseChart *ngSwitchCase="'bar'"
+                [datasets]="chartData"
+                [labels]="chartLabels"
+                [legend]="true"
+                [chartType]="chartType"
+                [options]="chartVerticalOptions">
+        </canvas>
+      </mat-card-content>
+      <mat-card-footer>Учнів на потоці: {{studentsOfStream}}</mat-card-footer>
+    </mat-card>
+    <mat-card class="chartOptions">
+      <mat-card-header>Завантаженість класів</mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="streamClasses" (ngSubmit)="submitChartChange(streamClasses)">
+          <mat-form-field>
+            <mat-label>Номер потоку</mat-label>
+            <mat-select formControlName="classes">
+              <mat-option>--</mat-option>
+              <mat-option *ngFor="let item of numberOfClasses; let i = index" [value]="i + 1">
+                {{i + 1}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="streamClasses.controls.classes.hasError('required')">Ви повинні вибрати номер потоку</mat-error>
           </mat-form-field>
-          <mat-radio-group aria-label="graphType">
-            <label id="graphType">Тип графіка:</label>
-            <mat-radio-button value="1" color="primary">Бублик</mat-radio-button>
-            <mat-radio-button value="2" color="primary">Вертикальний</mat-radio-button>
-          </mat-radio-group>
-          <button mat-raised-button color="primary">ПОКАЗАТИ</button>
+          <div class="graphType">
+            <label id="graphTypeGroup">Тип графіка:</label>
+            <mat-radio-group aria-label="graphTypeGroup" formControlName="graphType">
+              <mat-radio-button *ngFor="let item of objectKeys(graphTypes); let i = index" [value]="item" color="#000000">
+                {{graphTypes[item]}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <button mat-raised-button >ПОКАЗАТИ</button>
         </form>
       </mat-card-content>
     </mat-card>
@@ -30,16 +55,16 @@
   <div class="stats">
     <mat-card *ngFor="let item of titles; let i = index">
       <div class="main">
-        <mat-card-header>
+        <div class="cardHeader">
           <mat-icon>{{icons[i]}}</mat-icon>
-        </mat-card-header>
+        </div>
         <mat-card-content>
           {{item}}<br>
           <span>{{dataValues()[i]}}</span>
         </mat-card-content>
       </div>
       <mat-card-actions>
-        <button mat-raised-button routerLink="{{listLinks[i]}}">{{buttonTitles[i]}}<mat-icon>open_in_browser</mat-icon></button>
+        <button mat-raised-button routerLink="{{listLinks[i]}}">{{buttonTitles[i]}}</button><mat-icon>open_in_browser</mat-icon>
       </mat-card-actions>
     </mat-card>
   </div>

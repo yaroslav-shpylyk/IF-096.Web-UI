@@ -4,7 +4,7 @@ import { AdminPanelRoutingModule } from './admin-panel-routing.module';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { DashboardComponent } from './admin-panel/dashboard/dashboard.component';
 import { MatCardModule, MatIconModule, MatButtonModule, MatMenuModule, MatFormFieldModule, MatInputModule,
-  MatRadioModule} from '@angular/material';
+  MatRadioModule, MatSelectModule} from '@angular/material';
 import { ChartsModule } from 'ng2-charts';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -24,7 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSelectModule
   ]
 })
 export class AdminPanelModule { }
