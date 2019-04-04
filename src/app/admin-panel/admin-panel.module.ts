@@ -2,12 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminPanelRoutingModule } from './admin-panel-routing.module';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
-<<<<<<< HEAD
-import { TeacherConnectionComponent } from './teacher-connection/teacher-connection.component';
-
-@NgModule({
-  declarations: [AdminPanelComponent, TeacherConnectionComponent],
-=======
 import { TeachersComponent } from './teachers/teachers.component';
 import { MaterialModule } from '../material';
 import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
@@ -19,7 +13,8 @@ import { StudentsListComponent } from './students-list/students-list.component';
 import { MatListModule } from '@angular/material/list';
 import { PlatformModule } from '@angular/cdk/platform';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';    
+import { MatSelectModule } from '@angular/material/select';   
+import { TeacherConnectionComponent } from './teacher-connection/teacher-connection.component'; 
 
 @NgModule({
   declarations: [
@@ -28,9 +23,9 @@ import { MatSelectModule } from '@angular/material/select';
     TeachersListComponent,
     TeacherEditComponent,
     DialogEntryComponent,
-    StudentsListComponent
+    StudentsListComponent,
+    TeacherConnectionComponent
   ],
->>>>>>> master
   imports: [
     CommonModule,
     AdminPanelRoutingModule,
@@ -47,3 +42,5 @@ import { MatSelectModule } from '@angular/material/select';
 
 })
 export class AdminPanelModule {}
+
+

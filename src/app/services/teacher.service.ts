@@ -10,12 +10,14 @@ import { Observable } from 'rxjs';
 })
 export class TeacherService {
 
-  readonly url: string = 'http://35.228.220.5:8080'
+   /**
+     * Method returns data with all techers from backend
+  */
 
   constructor(private http: HttpClient) { }
 
   getTeachers() : Observable<any> {
-    return this.http.get(`http://35.228.220.5:8080/teachers`)
+    return this.http.get(`/teachers`)
       .pipe(map((res: any) => res.data))
   }
 }
