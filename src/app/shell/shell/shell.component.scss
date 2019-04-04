@@ -1,15 +1,9 @@
 @import "../../../styles.scss";
 
-mat-sidenav-container, mat-sidenav-content, mat-sidenav {
-  height: 100%;
-}
-
-.mat-drawer-container {
-  background-color: $light-color; // for body
+:host {
+  background: $light-color; // body background
 }
 
 .wrap-content {
-  padding: 2%;
-  padding-top: 75px; // space for header
-  padding-bottom: 75px; // space for footer
+  padding: calc(2% + 75px) 2%; // for header and footer
 }
