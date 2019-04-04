@@ -9,11 +9,13 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-overview';
-import { StudentsListComponent } from './students-list/students-list.component';
+import { StudentsListComponent, DialogOverviewExampleDialog } from './students-list/students-list.component';
 import { MatListModule } from '@angular/material/list';
 import { PlatformModule } from '@angular/cdk/platform';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';    
+import { MatSelectModule } from '@angular/material/select';
+
+   
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { MatSelectModule } from '@angular/material/select';
     TeachersListComponent,
     TeacherEditComponent,
     DialogEntryComponent,
-    StudentsListComponent
+    StudentsListComponent,
+    DialogOverviewExampleDialog
+    
   ],
   imports: [
     CommonModule,
