@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { AdminPanelRoutingModule } from './admin-panel-routing.module';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { TeachersComponent } from './teachers/teachers.component';
@@ -10,6 +9,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-overview';
+import { StudentsListComponent } from './students-list/students-list.component';
+import { MatListModule } from '@angular/material/list';
+import { PlatformModule } from '@angular/cdk/platform';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';    
 
 @NgModule({
   declarations: [
@@ -17,7 +21,8 @@ import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-ove
     TeachersComponent,
     TeachersListComponent,
     TeacherEditComponent,
-    DialogEntryComponent
+    DialogEntryComponent,
+    StudentsListComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +30,13 @@ import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-ove
     MaterialModule,
     FlexLayoutModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatListModule,
+    PlatformModule,
+    MatButtonModule,
+    MatSelectModule,
+
   ]
+
 })
 export class AdminPanelModule {}

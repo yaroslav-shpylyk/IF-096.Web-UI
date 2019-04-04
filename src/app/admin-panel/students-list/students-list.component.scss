@@ -1,0 +1,25 @@
+.select {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    div {
+        margin:5%;
+    }
+}
+
+::ng-deep .mat-option {
+    background-color: lightgray;
+    display: flex;
+    justify-content: space-between;
+    span{
+        margin-left:5%;
+    }
+}
+
+.students {
+    display: flex;
+    justify-content: center;
+    span {
+        margin-left: 0.5em;
+    }    
+}
