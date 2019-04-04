@@ -1,6 +1,6 @@
 @import "../../../styles.scss";
 
-a { //menu list items
+a { // menu list items
   text-decoration: none;
   color: white;
   &:hover,
@@ -13,4 +13,15 @@ a { //menu list items
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.account-photo { // photo account icon
+  padding: 0 3%;
+  font-size: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
