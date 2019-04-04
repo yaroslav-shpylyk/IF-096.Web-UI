@@ -1,81 +1,36 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger
-} from '@angular/animations';
-import { AfterViewInit, Component, HostBinding } from '@angular/core';
-import { fromEvent } from 'rxjs';
-import {
-  distinctUntilChanged,
-  filter,
-  map,
-  pairwise,
-  share,
-  throttleTime
-} from 'rxjs/operators';
-
-enum VisibilityState {
-  Visible = 'visible',
-  Hidden = 'hidden'
-}
-
-enum Direction {
-  Up = 'Up',
-  Down = 'Down'
-}
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
-  animations: [
-    trigger('toggle', [
-      state(
-        VisibilityState.Hidden,
-        style({opacity: 0, transform: 'translateY(-100%)'})
-      ),
-      state(
-        VisibilityState.Visible,
-        style({opacity: 1, transform: 'translateY(0)'})
-      ),
-      transition('* => *', animate('200ms ease-in'))
-    ])
-  ]
+  styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements AfterViewInit {
-  private isVisible = true;
+export class HeaderComponent implements OnInit {
 
-  @HostBinding('@toggle')
-  get toggle(): VisibilityState {
-    return this.isVisible ? VisibilityState.Visible : VisibilityState.Hidden;
-  }
-
-  /**
-   * make reactive sticky header
-   * swipe up - hide
-   * swipe down - show
-   */
-  ngAfterViewInit() {
-    const scroll$ = fromEvent(window, 'scroll').pipe(
-      throttleTime(10),
-      map(() => window.pageYOffset),
-      pairwise(),
-      map(([y1, y2]): Direction => (y2 < y1 ? Direction.Up : Direction.Down)),
-      distinctUntilChanged(),
-      share()
-    );
-
-    const goingUp$ = scroll$.pipe(
-      filter(direction => direction === Direction.Up)
-    );
-
-    const goingDown$ = scroll$.pipe(
-      filter(direction => direction === Direction.Down)
-    );
-
-    goingUp$.subscribe(() => (this.isVisible = true));
-    goingDown$.subscribe(() => (this.isVisible = false));
+  ngOnInit() {
+    const header = document.getElementById('header');
+    let isScrolling;
+    // Listen for scroll events
+    window.addEventListener('scroll', (event) => {
+      header.classList.add('hide');
+      header.classList.remove('notransition');
+      window.clearTimeout(isScrolling);
+      // Set a timeout to run after scrolling ends
+      isScrolling = setTimeout(() => {
+        header.classList.remove('hide');
+        header.classList.remove('notransition');
+      }, 2000);
+    }, false);
+    // Listen for scroll events
+    // when user scroll to top of the page
+    window.addEventListener('scroll', (event) => {
+      const body = document.body;
+      let doc = document.documentElement;
+      doc = (doc.clientHeight) ? doc : body;
+      if (doc.scrollTop >= 0 && doc.scrollTop <= 50) {
+        header.classList.add('notransition');
+        header.classList.remove('hide');
+      }
+    });
   }
 }

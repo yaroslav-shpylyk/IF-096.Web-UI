@@ -1,6 +1,6 @@
 @import "../../../styles.scss";
 
-:host {
+.mat-toolbar {
   position: fixed;
   top: 0;
   width: 100%;
@@ -12,6 +12,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 400ms ease-in-out;
+
+  &.hide {
+    transform: translateY(-75px);
+  }
+
+  &.notransition {
+    transition: none;
+  }
 }
 
 .header-list { // menu list
@@ -20,7 +29,6 @@
 }
 
 .account-photo { // account photo
-  padding: 0 3%;
   margin: auto;
   font-size: 48px;
 }
