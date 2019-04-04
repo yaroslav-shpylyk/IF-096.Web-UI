@@ -1,11 +1,11 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, ViewChild } from '@angular/core';
 
 import { Group } from '../../../models/group-data.model';
 import { GroupsService } from 'src/app/services/groups.service';
 import { FormControl } from '@angular/forms';
 import { AddModifyComponent } from './add-modify/add-modify.component';
 import { map } from 'rxjs/operators';
-import {MatBottomSheet, MatBottomSheetRef} from '@angular/material';
+import {MatBottomSheet, MatBottomSheetRef, MatTableDataSource, MatSort} from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 
@@ -21,13 +21,15 @@ export class GroupsComponent implements OnInit {
   groupsTrue = [];
   groupsFolse = [];
 
-  displayedColumns: string[] = ['className', 'classYear', 'isActive'];
+  displayedColumns: string[] = ['className', 'classYear', 'isActive', 'id'];
+  dataSource = new MatTableDataSource(this.groups);
+
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   
   constructor(private groupServices: GroupsService,
     private bottomSheet: MatBottomSheet,
     ) { }
 
-  
     openBottomSheet(element?: Object) {
       let sheet = this.bottomSheet.open(AddModifyComponent,{
         backdropClass: "my-bakdrop",
@@ -47,7 +49,6 @@ export class GroupsComponent implements OnInit {
       })
     }
 
-    
     openBottomSheetAdd() {
       let sheet = this.bottomSheet.open(AddModifyComponent,{
         backdropClass: "my-bakdrop",
@@ -69,28 +70,14 @@ export class GroupsComponent implements OnInit {
       })
     }
     
-    
   ngOnInit() {
     this.refreshGroups()
+    this.dataSource.sort = this.sort;
+    console.log(this.groups)
   }
   
-
   refreshGroups(){
-    this.groupServices.getGroups().subscribe( data => this.groups = data);
-  }
-
-  test(){
-    for (let i = 0; i < this.groups.length; i++){
-      if (this.groups[i].isActive === true){
-        this.groupsTrue.push(this.groups[i]);
-      }else {
-        this.groupsFolse.push(this.groups[i]);
-      }
-    }
-    console.log(this.groups)
-    console.log(this.groupsTrue)
-    console.log(this.groupsFolse)
-
+    this.groupServices.getGroups().subscribe( data =>  this.groups = data);
   }
 
 }
