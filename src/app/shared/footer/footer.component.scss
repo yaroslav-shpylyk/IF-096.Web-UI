@@ -10,26 +10,9 @@
   height: 50px;
 }
 
-.bottom-nav {
+app-footer-menu {
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-
-  a { // icons
-    height: 100%;
-    width: 100%;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .border-right { // vertical line
-    border-right: 1px solid white;
-  }
-
 }
 
 

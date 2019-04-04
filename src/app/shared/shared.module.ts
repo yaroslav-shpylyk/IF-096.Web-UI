@@ -4,13 +4,15 @@ import { MaterialModule } from '../material.module';
 import { RouterModule } from '@angular/router';
 import { HeaderListComponent } from './header-list/header-list.component';
 import { FooterComponent } from './footer/footer.component';
-import { StickyHeaderComponent } from './sticky-header/sticky-header.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterMenuComponent } from './footer-menu/footer-menu.component';
 
 @NgModule({
   declarations: [
+    HeaderComponent,
     HeaderListComponent,
     FooterComponent,
-    StickyHeaderComponent
+    FooterMenuComponent
   ],
   imports: [
     CommonModule,
@@ -18,9 +20,10 @@ import { StickyHeaderComponent } from './sticky-header/sticky-header.component';
     RouterModule
   ],
   exports: [
+    HeaderComponent,
     HeaderListComponent,
     FooterComponent,
-    StickyHeaderComponent
+    FooterMenuComponent
   ]
 })
 export class SharedModule { }

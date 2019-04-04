@@ -27,9 +27,9 @@ enum Direction {
 }
 
 @Component({
-  selector: 'app-sticky-header',
-  templateUrl: './sticky-header.component.html',
-  styleUrls: ['./sticky-header.component.scss'],
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
   animations: [
     trigger('toggle', [
       state(
@@ -44,7 +44,7 @@ enum Direction {
     ])
   ]
 })
-export class StickyHeaderComponent implements AfterViewInit {
+export class HeaderComponent implements AfterViewInit {
   private isVisible = true;
 
   @HostBinding('@toggle')
@@ -52,6 +52,11 @@ export class StickyHeaderComponent implements AfterViewInit {
     return this.isVisible ? VisibilityState.Visible : VisibilityState.Hidden;
   }
 
+  /**
+   * make reactive sticky header
+   * swipe up - hide
+   * swipe down - show
+   */
   ngAfterViewInit() {
     const scroll$ = fromEvent(window, 'scroll').pipe(
       throttleTime(10),
