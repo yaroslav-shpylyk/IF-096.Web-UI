@@ -18,21 +18,21 @@
 -->
 
 
-    <form class="example-form">
+    <form class="example-form" #form = "ngForm">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Назва класу:" value="Sushi">
+          <input matInput placeholder="Назва класу:"  name="className" [(ngModel)]="data.className">
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Навчальний рік:" value="Sushi">
+          <input matInput placeholder="Навчальний рік:" name="classYear" [(ngModel)]="data.classYear">
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Додадкова інформація:" value="Sushi">
+          <input matInput placeholder="Додадкова інформація:" name="classDescription" [(ngModel)]="data.classDescription">
         </mat-form-field>
         <mat-form-field class="example-full-width">
-            <input matInput placeholder="ID:" value="Sushi">
+            <input matInput placeholder="ID:" name="id" [(ngModel)]="data.id">
           </mat-form-field>
-       <mat-radio-group>
-         <mat-radio-button value="true" checked>Активний</mat-radio-button> 
+       <mat-radio-group name="isActive" [(ngModel)]="data.isActive">
+         <mat-radio-button value="true" checked >Активний</mat-radio-button> 
          <br>
          <br> 
          <mat-radio-button value="false">Неактивний</mat-radio-button> 
@@ -40,7 +40,10 @@
        <br>
        <br>
        <br>
-        <button mat-stroked-button color="primary">Зберегти</button>
+        
+        <button mat-stroked-button color="primary" type="submit" (click)="myAction(form.value)">Зберегти</button>
         <button mat-stroked-button color="primary">Відмінити</button>
       </form>
+      
   
+

@@ -12,13 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'groups',
-    component: GroupsComponent,
-    children: [
-    {
-      path: 'add-modify',
-      component: AddModifyComponent
-    }
-   ]
+    component: GroupsComponent
   }
 ];
 
