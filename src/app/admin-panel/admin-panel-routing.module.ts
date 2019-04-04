@@ -7,6 +7,8 @@ import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-ove
 import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 
+import { StudentsListComponent } from './students-list/students-list.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -17,6 +19,10 @@ const routes: Routes = [
         component: ScheduleComponent
       }
     ]
+  },
+  {
+    path: 'students',
+    component: StudentsListComponent
   },
   { path: 'teachers/new', component: TeacherEditComponent },
   {
