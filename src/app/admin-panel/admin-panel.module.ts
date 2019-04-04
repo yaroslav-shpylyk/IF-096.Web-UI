@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminPanelRoutingModule } from './admin-panel-routing.module';
-import * as adminPanelComponent from './admin-panel/admin-panel.component';
-
-
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { TeachersComponent } from './teachers/teachers.component';
 import { MaterialModule } from '../material';
 import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
@@ -20,7 +18,7 @@ import { SubjectsComponent } from './admin-panel/subjects/subjects.component';
 
 @NgModule({
   declarations: [
-    adminPanelComponent.AdminPanelComponent,
+    AdminPanelComponent,
     TeachersComponent,
     TeachersListComponent,
     TeacherEditComponent,

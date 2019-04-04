@@ -7,8 +7,6 @@ import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-ove
 import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
 import { StudentsListComponent } from './students-list/students-list.component';
 import { SubjectsComponent } from './admin-panel/subjects/subjects.component';
-import { CommonModule } from "@angular/common";
- 
 
 const routes: Routes = [
   {
@@ -38,7 +36,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), CommonModule],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
 export class AdminPanelRoutingModule {}
