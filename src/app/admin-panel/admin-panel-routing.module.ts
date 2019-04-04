@@ -18,7 +18,7 @@ const routes: Routes = [
     component: StudentsListComponent
   },
   {
-    path: 'dialog',
+    path: 'modal',
     component: DialogOverviewExampleDialog
   },
   { path: 'teachers/new', component: TeacherEditComponent },

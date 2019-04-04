@@ -63,7 +63,7 @@ export class StudentsListComponent implements OnInit, OnDestroy {
   }
 
   AddStudent() {
-    console.log('button add student',this.studentChoose)
+    console.log('button add student')
     this.router.navigate(['new'], { relativeTo: this.route });
   }
 
@@ -75,8 +75,8 @@ export class StudentsListComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.studentList = result;
-      this.router.navigate(['.'], { relativeTo: this.route });
+      // this.studentList = result;
+      this.router.navigate(['./'], { relativeTo: this.route });
     });
   }
 
@@ -104,4 +104,8 @@ export class DialogOverviewExampleDialog {
     this.dialogRef.close();
   }
 
+  onOkClick(): void {
+    
+    this.dialogRef.close();
+  }
 }
