@@ -1,4 +1,4 @@
-$main-color: #1565C0;
+$main-color: #1565c0;
 $dark-color: darken($main-color, 15%);
 $light-color: lighten($main-color, 55%);
 
@@ -6,9 +6,35 @@ html {
   height: 100%;
   background-color: $light-color;
 }
+
 body {
   margin: 0;
   height: 100%;
   font-family: 'Roboto', sans-serif;
   font-size: 1.2em;
 }
+
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+.mat-dialog-container .avatar {
+  display: flex;
+  justify-content: center;
+}
+
+.mat-dialog-container h2,
+h3 {
+  text-align: center;
+  line-height: 0.6em;
+}
+.mat-dialog-container img {
+  display: flex;
+  border-radius: 6.25em;
+  padding: 0.2em;
+  border: 0.2em solid #09dfbb;
+  overflow: hidden;
+  height: 9.375em;
+  width: 9.375em;
+  position: relative;
+  margin: auto;
+}
+

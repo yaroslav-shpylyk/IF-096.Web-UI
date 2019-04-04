@@ -1,32 +1,31 @@
 import { NgModule } from '@angular/core';
-import {
-  MatButtonModule, MatToolbarModule,
-  MatIconModule, MatListModule,
-  MatSidenavModule, MatGridListModule
-} from '@angular/material';
-import { LayoutModule } from '@angular/cdk/layout';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule,
+         MatToolbarModule, MatListModule, MatSidenavModule } from '@angular/material';
 
 @NgModule({
   imports: [
-    LayoutModule,
-    MatToolbarModule,
     MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
     FlexLayoutModule,
-    MatGridListModule
-      ],
+    LayoutModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule
+  ],
   exports: [
-    LayoutModule,
-    MatToolbarModule,
     MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
     FlexLayoutModule,
-    MatGridListModule
+    LayoutModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule
   ]
 })
 export class MaterialModule {}

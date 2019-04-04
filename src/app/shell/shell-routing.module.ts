@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {ShellComponent} from './shell/shell.component';
-import {AdminPanelGuard} from '../admin-panel/admin-panel.guard';
+import { ShellComponent } from './shell/shell.component';
+import { AdminPanelGuard } from '../admin-panel/admin-panel.guard';
 
 const routes: Routes = [
   {
