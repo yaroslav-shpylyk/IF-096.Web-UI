@@ -12,6 +12,7 @@ import { AddModifyComponent } from './admin-panel/groups/add-modify/add-modify.c
 import {MatInputModule, MatDialogModule, MatIconModule} from '@angular/material';
 import {MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {MatButtonModule} from '@angular/material/button';
     MatDialogModule,
     MatTableModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatExpansionModule
 
   ]
 })

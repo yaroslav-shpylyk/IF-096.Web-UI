@@ -35,6 +35,7 @@ export class GroupsComponent implements OnInit {
 
   refreshGroups(){
     this.groupServices.getGroups().subscribe( data => this.groups = data);
+    
   }
 
   dataChengGroup(group: any){
