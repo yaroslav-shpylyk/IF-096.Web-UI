@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ShellGuard } from './services/shell.guard';
 
 const routes: Routes = [
   {
@@ -8,7 +9,13 @@ const routes: Routes = [
   },
   {
     path: '',
-    loadChildren: './shell/shell.module#ShellModule'
+    loadChildren: './shell/shell.module#ShellModule',
+    canActivate: [ShellGuard],
+    canLoad: [ShellGuard]
+  },
+  {
+    path: 'admin',
+    loadChildren: './admin-panel/admin-panel.module#AdminPanelModule'
   }
 ];
 
@@ -16,5 +23,9 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
+<<<<<<< HEAD
 export class AppRoutingModule { }
  
+=======
+export class AppRoutingModule {}
+>>>>>>> master

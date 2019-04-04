@@ -1,0 +1,26 @@
+@import "../../../styles.scss";
+
+:host {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  color: white;
+  background-color: $main-color;
+  font-size: 2rem;
+  height: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-list { // menu list
+  padding: 0 3%;
+  font-size: 0.8em;
+}
+
+.account-photo { // account photo
+  padding: 0 3%;
+  margin: auto;
+  font-size: 48px;
+}

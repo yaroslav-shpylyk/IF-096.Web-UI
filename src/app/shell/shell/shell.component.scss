@@ -1,0 +1,9 @@
+@import "../../../styles.scss";
+
+:host {
+  background: $light-color; // body background
+}
+
+.wrap-content {
+  padding: calc(2% + 75px) 2%; // for header and footer
+}
