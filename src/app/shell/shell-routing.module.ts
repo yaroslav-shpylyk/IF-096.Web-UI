@@ -8,12 +8,12 @@ const routes: Routes = [
     path: 'admin-panel',
     loadChildren: '../admin-panel/admin-panel.module#AdminPanelModule'
   },
-  {
-    path: 'journal',
-    canActivate: [AdminPanelGuard],
-    canLoad: [AdminPanelGuard],
-    loadChildren: '../journal/journal.module#JournalModule'
-  },
+  // {
+  //   path: 'journal',
+  //   canActivate: [AdminPanelGuard],
+  //   canLoad: [AdminPanelGuard],
+  //   loadChildren: '../journal/journal.module#JournalModule'
+  // },
   {
     path: 'progress',
     canActivate: [AdminPanelGuard],

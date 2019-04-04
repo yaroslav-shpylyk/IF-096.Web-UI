@@ -12,6 +12,8 @@ import { TeachersStorageService } from './services/teachers-storage.service';
 import { TeachersService } from './admin-panel/teachers/teachers.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-list/dialog/dialog-overview';
+import { JournalsStorageService } from './services/journals-storage.service';
+import { JournalsService } from './journal/journals.service';
 
 
 @NgModule({
@@ -33,6 +35,8 @@ import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-lis
     AuthService,
     TeachersStorageService,
     TeachersService,
+    JournalsStorageService,
+    JournalsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
