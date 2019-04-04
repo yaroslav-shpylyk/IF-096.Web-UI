@@ -1,7 +1,17 @@
-.list{
-    list-style-type: none;
-}
-
 .example-full-width {
     width: 100%;
-  }
+}
+
+.mine {
+    position: fixed;
+    bottom: 3em;
+    right: 3em;
+}
+
+.container {
+    display: flex;
+}
+  
+mat-nav-list {
+    margin: auto;
+}

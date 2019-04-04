@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SubjectsService } from 'src/app/services/subjects.service';
+import { Subj } from '../../../models/subjects-data';
 
 
 @Component({
@@ -9,8 +10,8 @@ import { SubjectsService } from 'src/app/services/subjects.service';
 })
 export class SubjectsComponent implements OnInit {
 
-  public subjects: any;
-  public filteredSubjects: any;
+  public subjects: Subj[];
+  public filteredSubjects: Subj[];
   public searchBar: string;
 
   constructor(private SubjectsService: SubjectsService) { }
@@ -23,14 +24,10 @@ export class SubjectsComponent implements OnInit {
   }
 
   onChange(ev) {
-    this.searchBar = ev.target.value;
-   
-    let rx = new RegExp(this.searchBar,'i');
-
-    this.filteredSubjects = 				
-      this.subjects.filter(subj => {
-        return subj.subjectName.match(rx);
-      });
+    this.searchBar = ev.target.value.toLowerCase();
+    this.filteredSubjects = this.subjects.filter(subj => {
+      return subj.subjectName.toLowerCase().indexOf(this.searchBar) !== -1;
+    });
     
   }
 

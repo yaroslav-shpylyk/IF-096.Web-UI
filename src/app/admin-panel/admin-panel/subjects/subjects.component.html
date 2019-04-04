@@ -1,8 +1,19 @@
 <mat-form-field class="example-full-width">
-  <input matInput placeholder="Пошук" (input)="onChange($event)" type="text">
+    <input matInput placeholder="Пошук" (input)="onChange($event)" type="text">
 </mat-form-field>
+<div class="container">
 <mat-nav-list>
-  <a href="" mat-list-item *ngFor = "let subj of filteredSubjects" class="list">
-    {{subj.subjectName}}
-  </a>
+  <ng-container href="" mat-list-item *ngFor = "let subj of filteredSubjects" class="list">
+      <mat-list-item>
+          <p matLine>
+            {{subj.subjectName}}
+          </p>
+      </mat-list-item>
+  </ng-container>
 </mat-nav-list>
+<button class="mine" mat-fab color="primary">
+    <i class="material-icons">
+      subject
+    </i>
+  </button>
+</div>
