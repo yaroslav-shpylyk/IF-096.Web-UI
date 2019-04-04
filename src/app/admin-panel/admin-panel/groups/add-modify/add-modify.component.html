@@ -1,4 +1,4 @@
-
+<!--  
 <div> <p>Клас - {{ nameChange.value }} </p>
   <form #form = "ngForm" >
     <label>Назва класу: <input type="text" name="className" [(ngModel)]="nameChange.value"> </label><br>
@@ -14,3 +14,33 @@
     <button routerLink="../">Відміна</button>
   </form>
 </div>
+
+-->
+
+
+    <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Назва класу:" value="Sushi">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Навчальний рік:" value="Sushi">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Додадкова інформація:" value="Sushi">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="ID:" value="Sushi">
+          </mat-form-field>
+       <mat-radio-group>
+         <mat-radio-button value="true" checked>Активний</mat-radio-button> 
+         <br>
+         <br> 
+         <mat-radio-button value="false">Неактивний</mat-radio-button> 
+       </mat-radio-group>
+       <br>
+       <br>
+       <br>
+        <button mat-stroked-button color="primary">Зберегти</button>
+        <button mat-stroked-button color="primary">Відмінити</button>
+      </form>
+  

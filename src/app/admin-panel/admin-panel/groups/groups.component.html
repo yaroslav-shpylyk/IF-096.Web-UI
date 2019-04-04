@@ -7,12 +7,7 @@
   <br>
  
 
-   <div class="example-button-row">
-      
-      <button mat-fab color="primary" routerLink="add-modify" (click) = "dataAddGroup()">+</button>
-    
-    </div>
-
+   
 
 <router-outlet></router-outlet>
 <div  *ngIf="toggleForAcniveGroups">
@@ -26,10 +21,10 @@
                          (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Self aware panel
+          Список активних класів
         </mat-panel-title>
         <mat-panel-description>
-          Currently I am {{panelOpenState ? 'open' : 'closed'}}
+         {{panelOpenState ? 'приховати' : 'показати'}}
         </mat-panel-description>
       </mat-expansion-panel-header>
       <table mat-table [dataSource]="groupsTrue" class="mat-elevation-z8">
@@ -61,10 +56,10 @@
                          (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Self aware panel
+          Список пасивних класів
         </mat-panel-title>
         <mat-panel-description>
-          Currently I am {{panelOpenState ? 'open' : 'closed'}}
+          {{panelOpenState ? 'приховати' : 'показати'}}
         </mat-panel-description>
       </mat-expansion-panel-header>
       <table mat-table [dataSource]="groupsFolse" class="mat-elevation-z8">
@@ -97,3 +92,10 @@
 
 
 
+
+<div class="example-button-row">
+      
+    <button mat-fab color="primary"  mat-raised-button (click)="openBottomSheet()">+</button>
+  
+  </div>
+<!--(click) = "dataAddGroup()" -->
