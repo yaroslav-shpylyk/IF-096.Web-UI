@@ -6,7 +6,7 @@ body {
   overflow: hidden;
 }
 
-//Background image of the page
+/*Background image of the page*/
 .main-container {
   background-image: url("../../../assets/background-login.jpg");
   background-repeat: no-repeat;
@@ -16,7 +16,7 @@ body {
   height: 100%;
 }
 
-//Blackout of background image
+/*Blackout of background image*/
 .inner-container {
   width: 100%;
   height: 100%;
@@ -27,6 +27,15 @@ body {
 .form-wraper {
   width: 100%;
   padding-top: 2%;
+
+  /*
+##Device = Most of the Smartphones Mobiles (Portrait)
+##Screen = B/w 320px to 479px
+
+*/
+  @media (min-width: 320px) and (max-width: 480px) {
+    padding-top: 25%;
+  }
 }
 
 .form-container {
@@ -35,6 +44,53 @@ body {
   padding-bottom: 24px !important;
   display: block;
   background: rgb(253, 253, 253);
+
+  /*
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    width: 95%;
+    margin: auto;
+    padding-bottom: 24px !important;
+    display: block;
+    background: rgb(253, 253, 253);
+    .btn {
+      font-size: 1em;
+    }
+  }
+
+  /*
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+
+ */
+  @media (min-width: 481px) and (max-width: 767px) {
+    width: 95%;
+    margin: auto;
+    padding-bottom: 24px !important;
+    display: block;
+    background: rgb(253, 253, 253);
+    .btn {
+      font-size: 1em;
+    }
+  }
+  /*
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+
+*/
+  @media (min-width: 320px) and (max-width: 480px) {
+    width: 95%;
+    margin: auto;
+    padding-bottom: 24px !important;
+    display: block;
+    background: rgb(253, 253, 253);
+    .btn {
+      font-size: 1em;
+    }
+  }
 }
 
 .card {
@@ -109,61 +165,4 @@ mat-icon {
 a {
   text-decoration: none;
   color: $main-color;
-}
-
-/*
-  ##Device = Tablets, Ipads (portrait)
-  ##Screen = B/w 768px to 1024px
-*/
-
-@media (min-width: 768px) and (max-width: 1024px) {
-  .form-container {
-    width: 95%;
-    margin: auto;
-    padding-bottom: 24px !important;
-    display: block;
-    background: rgb(253, 253, 253);
-  }
-  .btn {
-    font-size: 1em;
-  }
-}
-
-/*
-  ##Device = Low Resolution Tablets, Mobiles (Landscape)
-  ##Screen = B/w 481px to 767px
-
- */
-@media (min-width: 481px) and (max-width: 767px) {
-  .form-container {
-    width: 95%;
-    margin: auto;
-    padding-bottom: 24px !important;
-    display: block;
-    background: rgb(253, 253, 253);
-  }
-  .btn {
-    font-size: 1em;
-  }
-}
-
-/*
-  ##Device = Most of the Smartphones Mobiles (Portrait)
-  ##Screen = B/w 320px to 479px
-
-*/
-@media (min-width: 320px) and (max-width: 480px) {
-  .form-wraper {
-    padding-top: 25%;
-  }
-  .form-container {
-    width: 95%;
-    margin: auto;
-    padding-bottom: 24px !important;
-    display: block;
-    background: rgb(253, 253, 253);
-  }
-  .btn {
-    font-size: 1em;
-  }
 }
