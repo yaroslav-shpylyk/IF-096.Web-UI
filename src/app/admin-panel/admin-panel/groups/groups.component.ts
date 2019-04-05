@@ -1,13 +1,9 @@
-import { Component, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { Group } from '../../../models/group-data.model';
 import { GroupsService } from 'src/app/services/groups.service';
-import { FormControl } from '@angular/forms';
 import { AddModifyComponent } from './add-modify/add-modify.component';
-import { map } from 'rxjs/operators';
-import {MatBottomSheet, MatBottomSheetRef, MatTableDataSource, MatSort} from '@angular/material';
-import { FormGroup, FormBuilder } from '@angular/forms';
-
+import {MatBottomSheet, MatTableDataSource, MatSort} from '@angular/material';
 
 
 @Component({
@@ -16,71 +12,44 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   styleUrls: ['./groups.component.scss']
 })
 export class GroupsComponent implements OnInit {
-  
+  @ViewChild(MatSort) sort: MatSort;
   groups: Group[];
-  groupsTrue = [];
-  groupsFolse = [];
-
   displayedColumns: string[] = ['className', 'classYear', 'isActive', 'id'];
-  dataSource = new MatTableDataSource(this.groups);
+  dataSource: MatTableDataSource<Group>;
 
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-  
   constructor(private groupServices: GroupsService,
-    private bottomSheet: MatBottomSheet,
-    ) { }
+              private bottomSheet: MatBottomSheet) { }
 
-    openBottomSheet(element?: Object) {
-      let sheet = this.bottomSheet.open(AddModifyComponent,{
-        backdropClass: "my-bakdrop",
+    openBottomSheet(element: Object) {
+      this.bottomSheet.open(AddModifyComponent,{
         hasBackdrop: true,
         data: element
       });
-
-      sheet.backdropClick().subscribe(()=> {
-        console.log("bd cliced")
-      })
-
-      sheet.afterDismissed().subscribe((group)=>{
-        this.groupServices.addGrup(group).subscribe(
-          _ => this.refreshGroups()
-        )
-        console.log(group)
-      })
     }
 
     openBottomSheetAdd() {
       let sheet = this.bottomSheet.open(AddModifyComponent,{
-        backdropClass: "my-bakdrop",
         hasBackdrop: true,
         data: Group
       });
 
-      sheet.backdropClick().subscribe(()=> {
-        console.log("bd cliced")
-      })
-
-      sheet.afterDismissed().subscribe((group)=>{
-        this.groupServices.addGrup(group).subscribe(
-          (group) => {
-            return this.groups.push(group)
-          }
-        );
-        console.log(group)
-      })
+      sheet.afterDismissed().subscribe(()=>{
+        this.refreshGroups()
+      }) 
     }
     
   ngOnInit() {
     this.refreshGroups()
-    this.dataSource.sort = this.sort;
-    console.log(this.groups)
+    setTimeout(()=>console.log(this.groups), 5000); 
   }
   
   refreshGroups(){
-    this.groupServices.getGroups().subscribe( data =>  this.groups = data);
+    this.groupServices.getGroups().subscribe( data =>  {
+      this.groups = data;
+      this.dataSource = new MatTableDataSource(this.groups);
+      console.log(this.dataSource)
+      this.dataSource.sort = this.sort;
+    });
   }
 
 }
-
-
-

@@ -1,49 +1,28 @@
-<!--  
-<div> <p>Клас - {{ nameChange.value }} </p>
-  <form #form = "ngForm" >
-    <label>Назва класу: <input type="text" name="className" [(ngModel)]="nameChange.value"> </label><br>
-    <label>Навчальний рік: <input type="number" name="classYear" [(ngModel)]="yearChange.value"> </label><br>
-    <label>Додадкова інформація: <input type="text" name="classDescription" [(ngModel)]="infaChange.value"> </label><br>
-    <mat-radio-group ngModel name="isActive" >
-      <label>Активний: <mat-radio-button value="true"   checked></mat-radio-button> </label><br>
-      <label>Неактивний:  <mat-radio-button value="false"  ></mat-radio-button> </label><br>
-    </mat-radio-group>
-    <input type="number" name="id" [(ngModel)]="idChange.value">
+<form class="example-form" #form = "ngForm">
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Назва класу:"  name="className" [(ngModel)]="data.className">
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Навчальний рік:" name="classYear" [(ngModel)]="data.classYear">
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Додадкова інформація:" name="classDescription" [(ngModel)]="data.classDescription">
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="ID:" name="id" [(ngModel)]="data.id">
+  </mat-form-field>
+  <mat-radio-group name="isActive" [(ngModel)]="data.isActive">
+    <mat-radio-button value="true" checked >Активний</mat-radio-button> 
     <br>
-    <input type="submit"  value="Зберегти" (click)="addGrup(form.value)" routerLink="../">
-    <button routerLink="../">Відміна</button>
-  </form>
-</div>
+    <br> 
+    <mat-radio-button value="false">Неактивний</mat-radio-button> 
+  </mat-radio-group>
+    <br>
+    <br>
+    <br>
+  <button mat-stroked-button color="primary" type="submit" (click)="save(form.value)" (click)="abort()">Зберегти</button>
+  <button mat-stroked-button color="primary" type="submit" (click)="abort()">Відміна</button>
+</form>
 
--->
-
-
-    <form class="example-form" #form = "ngForm">
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Назва класу:"  name="className" [(ngModel)]="data.className">
-        </mat-form-field>
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Навчальний рік:" name="classYear" [(ngModel)]="data.classYear">
-        </mat-form-field>
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Додадкова інформація:" name="classDescription" [(ngModel)]="data.classDescription">
-        </mat-form-field>
-        <mat-form-field class="example-full-width">
-            <input matInput placeholder="ID:" name="id" [(ngModel)]="data.id">
-          </mat-form-field>
-       <mat-radio-group name="isActive" [(ngModel)]="data.isActive">
-         <mat-radio-button value="true" checked >Активний</mat-radio-button> 
-         <br>
-         <br> 
-         <mat-radio-button value="false">Неактивний</mat-radio-button> 
-       </mat-radio-group>
-       <br>
-       <br>
-       <br>
-        
-        <button mat-stroked-button color="primary" type="submit" (click)="myAction(form.value)">Зберегти</button>
-        <button mat-stroked-button color="primary">Відмінити</button>
-      </form>
-      
   
 

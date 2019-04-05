@@ -2,9 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 
 import { Group } from '../../../../models/group-data.model';
 import { GroupsService } from 'src/app/services/groups.service';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { GroupsComponent } from '../groups.component';
-import { map } from 'rxjs/internal/operators/map';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 
 @Component({
@@ -18,35 +16,23 @@ export class AddModifyComponent implements OnInit {
 
   constructor(private bottomSheetRef: MatBottomSheetRef<AddModifyComponent>,
     private groupServices: GroupsService,
-    
     private fb: FormBuilder,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {}
 
-    myAction(formData){
-      this.bottomSheetRef.dismiss(formData)
+    abort(){
+      this.bottomSheetRef.dismiss()
     }
-
 
     ngOnInit() {
-    
     }
-  /**
-
-
-  addGrup(fields: Object) {
+  
+  save(fields: Object) {
     const group = new Group(fields);
     if (Number(group.id)){
-      this.groupServices.addGrup(group).subscribe(
-        _ => this.groupComponent.refreshGroups()
-      )
+      this.groupServices.addGrup(group);
     }else {
-      this.groupServices.addGrup(group).subscribe(
-        (group) => {
-          return this.groupComponent.groups.push(group)
-        }
-      );
+      this.groupServices.addGrup(group);
     }
   }
   
-  */
 }
