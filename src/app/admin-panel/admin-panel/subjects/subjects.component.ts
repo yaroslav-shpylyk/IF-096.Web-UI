@@ -22,13 +22,17 @@ export class SubjectsComponent implements OnInit {
       this.filteredSubjects = subjects;
     });
   }
+  
+  /**
+   * Method which searches a substring in array of strings,
+   * when user enter a key
+   * @param ev - key which user entered
+   */
 
   onChange(ev) {
     this.searchBar = ev.target.value.toLowerCase();
     this.filteredSubjects = this.subjects.filter(subj => {
       return subj.subjectName.toLowerCase().indexOf(this.searchBar) !== -1;
     });
-    
   }
-
 }
