@@ -1,15 +1,23 @@
+@import "../../../styles.scss";
+
+
+
 mat-card{
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 5px 2px;
-}
 
-mat-card mat-accordion { width: 68%; }
+  mat-accordion {width: 68%;}
 
-mat-card input {
-  width: 25%;
-  height: 35px;
+  input {
+    width: 25%;
+    height: 35px;
+    position: relative;
+    font-size: 0.45em;
+    @media (min-width: 481px) and (max-width: 767px) { font-size: 0.55em; }
+    @media (min-width: 768px) { font-size: 0.8em; }
+  }   
 }
 
 mat-panel-title {
@@ -42,22 +50,28 @@ mat-list-item {
 .validation-error{ 
   position: absolute;
   z-index: 2;
-  bottom: -12px;
+  bottom: -5px;
   right: 10px;
   color:red;
-  p {font-size: 12px;}
+  p {font-size: 0.5em;}
 }
 
 .submit {
   display: block;
+  background: $main-color;
+  color: #fff;
   width: 200px;
   height: 50px;
-  margin: 0 auto; 
+  margin: 10px auto; 
+  font-size: 1em;
 }
 
-@media screen and (min-width: 600px) {
-  form {
-    width: 70%;
-    margin: 0 auto;
-  }
+.container{
+  text-align: center;
+  h2 {font-size: 1.5em;}
+  margin: 20px auto;
+  @media (min-width: 481px) and (max-width: 767px) { width: 80%; }
+  @media (min-width: 768px) { width: 70%; }
 }
+
+
