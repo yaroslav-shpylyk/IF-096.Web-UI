@@ -1,17 +1,24 @@
 <div class="container">
-  <mat-nav-list>
-    <ng-container *ngFor="let teacher of teachers; let i = index">
-      <mat-list-item
-        routerLinkActive="active"
-        (click)="onTeacherDetails(teacher)"
-      >
-        <img matListAvatar [src]="teacher.avatar" alt="..." />
-        <p matLine href="javascript:void(0)">
-          {{ teacher.firstname }} {{ teacher.lastname }}
+  <mat-list>
+    <ng-container *ngFor="let teacher of teachers">
+      <mat-list-item routerLinkActive="active">
+        <mat-select>
+          <mat-option  (click)="onEdit(teacher.id)">
+            Редагувати
+          </mat-option>
+          <mat-option (click)="console.log('asd')">
+            Видалити
+          </mat-option>
+        </mat-select>
+
+        <img matListAvatar [src]="teacher.avatar" alt="{{teacher.lastname}}" />
+        <p matLine >
+          {{ teacher.lastname }} {{ teacher.firstname }}
+          {{ teacher.patronymic }}
         </p>
       </mat-list-item>
     </ng-container>
-  </mat-nav-list>
+  </mat-list>
   <button class="mine" mat-fab color="primary" (click)="onNewTeacher()">
     <i class="material-icons">
       person_add

@@ -1,4 +1,4 @@
-import { Component, Injectable } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -9,7 +9,7 @@ import { TeachersStorageService } from 'src/app/services/teachers-storage.servic
 @Component({
   template: ''
 })
-export class DialogEntryComponent {
+export class DialogEntryComponent implements OnInit {
   teacher;
   id: number;
   subscription: Subscription;
@@ -26,9 +26,10 @@ export class DialogEntryComponent {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.id = +params.id;
+      console.log(this.id);
       this.teachersService.modalsId = this.id;
     });
-  } 
+  }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog);
@@ -43,7 +44,7 @@ export class DialogEntryComponent {
   selector: 'dialog-overview',
   templateUrl: 'dialog-overview.html'
 })
-export class DialogOverviewExampleDialog {
+export class DialogOverviewExampleDialog implements OnInit {
   teacher;
   subscription: Subscription;
 
@@ -63,6 +64,7 @@ export class DialogOverviewExampleDialog {
     this.subscription = this.teachersService.teacherChanged.subscribe(
       teacher => {
         this.teacher = teacher;
+        this.router.navigate([this.teacher.id], { relativeTo: this.route });
       }
     );
   }

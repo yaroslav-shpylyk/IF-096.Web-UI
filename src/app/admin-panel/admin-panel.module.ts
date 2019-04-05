@@ -13,7 +13,8 @@ import { StudentsListComponent } from './students-list/students-list.component';
 import { MatListModule } from '@angular/material/list';
 import { PlatformModule } from '@angular/cdk/platform';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';    
+import { MatSelectModule } from '@angular/material/select';
+import { EditDialogEntryComponent } from './teachers/teachers-list/dialogs/edit-dialog';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { MatSelectModule } from '@angular/material/select';
     TeachersListComponent,
     TeacherEditComponent,
     DialogEntryComponent,
-    StudentsListComponent
+    StudentsListComponent,
+    EditDialogEntryComponent
   ],
   imports: [
     CommonModule,

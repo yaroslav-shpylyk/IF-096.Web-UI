@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
 import { TeachersService } from '../teachers.service';
@@ -9,7 +9,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
   templateUrl: './teachers-list.component.html',
   styleUrls: ['./teachers-list.component.scss']
 })
-export class TeachersListComponent implements OnInit {
+export class TeachersListComponent implements OnInit, OnDestroy {
   teachers;
   subscription: Subscription;
 
@@ -22,8 +22,9 @@ export class TeachersListComponent implements OnInit {
 
   ngOnInit() {
     this.teachers = this.teachersService.getTeachers();
-    if (!this.teachers.length)
+    if (!this.teachers.length) {
       this.teachers = this.teachersStorageService.getTeachers();
+    }
     this.subscription = this.teachersService.teachersChanged.subscribe(
       teachers => {
         this.teachers = teachers;
@@ -42,5 +43,9 @@ export class TeachersListComponent implements OnInit {
   onTeacherDetails(teacher) {
     this.teachersService.modalsId = teacher.id;
     this.router.navigate([teacher.id], { relativeTo: this.route });
+  }
+
+  onEdit(id) {
+    this.router.navigate([id, 'edit'], { relativeTo: this.route });
   }
 }

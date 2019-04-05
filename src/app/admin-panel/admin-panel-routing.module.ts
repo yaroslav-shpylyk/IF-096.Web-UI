@@ -6,7 +6,8 @@ import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.compo
 import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-overview';
 import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
 import { StudentsListComponent } from './students-list/students-list.component';
- 
+import { EditDialogEntryComponent } from './teachers/teachers-list/dialogs/edit-dialog';
+
 const routes: Routes = [
   {
     path: '',
@@ -24,10 +25,11 @@ const routes: Routes = [
       {
         path: ':id',
         component: DialogEntryComponent
-      }
+      },
+      { path: ':id/edit', component: EditDialogEntryComponent }
     ]
   },
-  { path: 'teachers/:id/edit', component: TeacherEditComponent }
+  // { path: 'teachers/:id/edit', component: TeacherEditComponent },
 
 ];
 

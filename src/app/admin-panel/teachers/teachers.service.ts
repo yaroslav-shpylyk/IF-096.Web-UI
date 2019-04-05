@@ -10,11 +10,11 @@ export class TeachersService {
 
   private teachers = [];
   private teacher;
-  public modalsId
+  public modalsId;
 
   /**
-   * Method gets array of up to date objects with teachers, 
-   * saves them to the local variable and passes a copy to observable 
+   * Method gets array of up to date objects with teachers,
+   * saves them to the local variable and passes a copy to observable
    * @param teachers - array of objects representing teacher.
    */
   setTeachers(teachers) {

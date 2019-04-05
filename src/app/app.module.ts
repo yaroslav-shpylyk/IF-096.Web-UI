@@ -6,20 +6,23 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material';
 import { TeachersStorageService } from './services/teachers-storage.service';
 import { TeachersService } from './admin-panel/teachers/teachers.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-list/dialog/dialog-overview';
+import { EditDialogOverviewComponent } from './admin-panel/teachers/teachers-list/dialogs/edit-dialog';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    DialogOverviewExampleDialog
+    DialogOverviewExampleDialog,
+    EditDialogOverviewComponent
   ],
-  entryComponents: [DialogOverviewExampleDialog],
+  entryComponents: [DialogOverviewExampleDialog, EditDialogOverviewComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -27,7 +30,9 @@ import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-lis
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     AuthService,

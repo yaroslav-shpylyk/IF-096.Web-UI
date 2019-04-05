@@ -2,12 +2,24 @@
   display: flex;
 }
 
-mat-nav-list {
+mat-list {
   margin: auto;
+  width: 17em;
+  display: flex;
+  flex-direction: column
+}
+
+mat-list-item{
+  width: 65%;
+  justify-content: left
 }
 
 .mine {
   position: fixed;
   bottom: 3em;
   right: 3em;
+}
+
+mat-select {
+  width: 50px
 }
