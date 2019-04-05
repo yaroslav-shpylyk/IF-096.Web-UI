@@ -1,4 +1,4 @@
-export interface StudentsOfStream {
+export interface ClassFromStream {
   className: string;
   numOfStudents: number;
 }

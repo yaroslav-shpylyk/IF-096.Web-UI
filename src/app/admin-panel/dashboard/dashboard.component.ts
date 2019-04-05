@@ -7,7 +7,7 @@ import { ClassService} from '../../services/class.service';
 import { ClassData } from '../../models/class-data';
 import { StudentsService } from '../../services/students.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { StudentsOfStream } from '../../models/students-of-stream';
+import { ClassFromStream } from '../../models/class-from-stream';
 import { ChartType, ChartOptions } from 'chart.js';
 
 @Component({
@@ -83,7 +83,7 @@ export class DashboardComponent implements OnInit {
     this.teacherService.getTeachers().subscribe((result: TeacherData[]) => this.data.teachers = result.length);
     this.studentService.getNumberOfStudents('active').subscribe((result: number) => this.data.students = result);
     this.classService.getClasses('active').subscribe((result: ClassData[]) => this.data.classes = result.length);
-    this.studentService.getStudentsByStream(8).subscribe((result: { allStudents: number, studentsData: StudentsOfStream[]}) => {
+    this.studentService.getStudentsByStream().subscribe((result: { allStudents: number, studentsData: ClassFromStream[]}) => {
       this.updateChart(result);
     });
   }
@@ -106,7 +106,7 @@ export class DashboardComponent implements OnInit {
       return;
     }
     this.studentService.getStudentsByStream(values.classes)
-      .subscribe((result: { allStudents: number, studentsData: StudentsOfStream[]}) => {
+      .subscribe((result: { allStudents: number, studentsData: ClassFromStream[]}) => {
         this.chartType = values.graphType;
         this.updateChart(result);
     });

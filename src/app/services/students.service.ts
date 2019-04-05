@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ClassData} from '../models/class-data';
 import { ClassService } from './class.service';
-import { StudentsOfStream } from '../models/students-of-stream';
+import { ClassFromStream } from '../models/class-from-stream';
+import { ClassesFromStream } from '../models/classes-from-stream';
 
 @Injectable({
   providedIn: 'root'
@@ -36,23 +37,27 @@ export class StudentsService {
   }
 
   /**
-   * Method return data with students by number of classes stream
+   * Method return all students on class stream and number of students per each class
    * @param stream - Number of stream
-   * @returns - Array with objects of class name and number of students in it
+   * @returns - Array with objects of className and number of students in it
    */
-  public getStudentsByStream(stream: number): Observable<any> {
+  public getStudentsByStream(stream?: number | undefined): Observable<ClassesFromStream> {
     return this.classService.getClasses('active')
       .pipe(
         map((result: ClassData[]) => {
-          const uniqueClasses: ClassData[] = [];
+          let uniqueClasses: ClassData[] = [];
           result
-            .filter(item => item.isActive && parseInt(item.className, 10) === stream && item.numOfStudents)
+            .filter(item => item.numOfStudents)
             .forEach(item => {
               if (!uniqueClasses.some(value => item.className === value.className)) {
                 uniqueClasses.push(item);
               }
             });
-          const studentsStream: StudentsOfStream[] = uniqueClasses.map(item => {
+          if (stream === undefined) {
+            stream = this.getRandomStream(uniqueClasses);
+          }
+          uniqueClasses = uniqueClasses.filter(item => parseInt(item.className, 10) === stream);
+          const studentsStream: ClassFromStream[] = uniqueClasses.map(item => {
             return {
               className: item.className,
               numOfStudents: item.numOfStudents
@@ -62,8 +67,24 @@ export class StudentsService {
             studentsData: studentsStream,
             allStudents: studentsStream.reduce((sum, studentClass) => sum + studentClass.numOfStudents , 0)
           };
-        }),
-        tap(result => console.log(result))
+        })
       );
   }
+
+  /**
+   * Method generates a random number of stream with classes
+   * @param classes - Array with active classes
+   * @returns - Number of stream
+   */
+  private getRandomStream(classes: ClassData[]): number {
+    const streams: number[] = [];
+    classes.forEach(item => {
+      const streamNumber = parseInt(item.className, 10);
+      if (!streams.includes(streamNumber)) {
+        streams.push(streamNumber);
+      }
+    });
+    return streams[Math.floor(Math.random() * streams.length)];
+  }
 }
+

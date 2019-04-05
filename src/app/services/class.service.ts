@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { ClassResponse } from '../models/class-response';
 import { ClassData } from '../models/class-data';
 
 @Injectable({
@@ -19,7 +18,7 @@ export class ClassService {
   public getClasses(type: string): Observable<ClassData[]> {
     return this.http.get('/classes')
       .pipe(
-        map((result: ClassResponse) => {
+        map((result: {status: any, data: ClassData[]}) => {
           switch (type) {
             case 'all': {
               return result.data;
