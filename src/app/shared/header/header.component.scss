@@ -9,13 +9,10 @@
   background-color: $main-color;
   font-size: 2rem;
   height: 75px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 400ms ease-in-out;
+  transition: top 400ms ease-in-out;
 
   &.hide {
-    transform: translateY(-75px);
+    top: -75px;
   }
 
   &.notransition {
@@ -29,6 +26,7 @@
 }
 
 .account-photo { // account photo
-  margin: auto;
+  margin: 0 auto;
   font-size: 48px;
+  width: 48px;
 }

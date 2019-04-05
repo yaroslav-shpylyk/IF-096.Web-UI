@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -8,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
 
   ngOnInit() {
+
+    window.onload = (() => {
+      header.classList.add('notransition');
+      header.classList.remove('hide');
+    }); // always show header after reloading page on any scroll height
+
     const header = document.getElementById('header');
-    let isScrolling;
-    // Listen for scroll events
+    let isScrolling: number;
+
     window.addEventListener('scroll', (event) => {
       header.classList.add('hide');
       header.classList.remove('notransition');
@@ -20,9 +26,8 @@ export class HeaderComponent implements OnInit {
         header.classList.remove('hide');
         header.classList.remove('notransition');
       }, 2000);
-    }, false);
-    // Listen for scroll events
-    // when user scroll to top of the page
+    }, false); // Listen for scroll events
+
     window.addEventListener('scroll', (event) => {
       const body = document.body;
       let doc = document.documentElement;
@@ -30,7 +35,7 @@ export class HeaderComponent implements OnInit {
       if (doc.scrollTop >= 0 && doc.scrollTop <= 50) {
         header.classList.add('notransition');
         header.classList.remove('hide');
-      }
+      } // Listen for scroll events when user scroll to top of the page
     });
   }
 }
