@@ -9,11 +9,13 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-overview';
-import { StudentsListComponent, DialogOverviewExampleDialog, ModalStudent } from './students-list/students-list.component';
+import { StudentsListComponent} from './students-list/students-list.component';
+import { StudentDatails } from './students-list/student-detail-modal/student-detail-modal.component';
 import { MatListModule } from '@angular/material/list';
 import { PlatformModule } from '@angular/cdk/platform';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { StudentDetailModalComponent, DialogOverviewExampleDialog } from './students-list/student-detail-modal/student-detail-modal.component';
 
    
 
@@ -26,7 +28,8 @@ import { MatSelectModule } from '@angular/material/select';
     DialogEntryComponent,
     StudentsListComponent,
     DialogOverviewExampleDialog,
-    ModalStudent
+    StudentDatails,
+    StudentDetailModalComponent
     
   ],
   imports: [
@@ -42,7 +45,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatSelectModule,
 
   ],
-  entryComponents: [ModalStudent, DialogOverviewExampleDialog],
+  entryComponents: [StudentDatails, DialogOverviewExampleDialog],
 
 })
 export class AdminPanelModule {}

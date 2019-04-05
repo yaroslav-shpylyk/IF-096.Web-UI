@@ -28,7 +28,7 @@
 </div>
 <div class="students">
   <mat-nav-list *ngIf="studentList">
-    <mat-list-item [routerLink]="['./', student.id]"  (click)="chooseStudents(student)" routerLinkActive="active" *ngFor="let student of studentList">
+    <mat-list-item [routerLink]="['./', student.id]" routerLinkActive="active" *ngFor="let student of studentList">
       <span>{{student.firstname}}</span>
       <span>{{student.lastname}}</span>
       <span>{{student.patronymic}}</span>

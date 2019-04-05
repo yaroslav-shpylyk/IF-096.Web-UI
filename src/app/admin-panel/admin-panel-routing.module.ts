@@ -5,7 +5,8 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.component';
 import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-overview';
 import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
-import { StudentsListComponent, DialogOverviewExampleDialog, ModalStudent } from './students-list/students-list.component';
+import { StudentsListComponent } from './students-list/students-list.component';
+import { StudentDatails } from './students-list/student-detail-modal/student-detail-modal.component';
 
 
 const routes: Routes = [
@@ -19,7 +20,7 @@ const routes: Routes = [
     children: [
       {
         path: ':id',
-        component: ModalStudent
+        component: StudentDatails
       }
     ]
   },
