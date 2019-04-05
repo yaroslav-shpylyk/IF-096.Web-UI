@@ -8,14 +8,14 @@
   <mat-form-field class="example-full-width">
     <input matInput placeholder="Додадкова інформація:" name="classDescription" [(ngModel)]="data.classDescription">
   </mat-form-field>
-  <mat-form-field class="example-full-width">
+  <mat-form-field class="example-full-width" id="displayNone">
     <input matInput placeholder="ID:" name="id" [(ngModel)]="data.id">
   </mat-form-field>
-  <mat-radio-group name="isActive" [(ngModel)]="data.isActive">
-    <mat-radio-button value="true" checked >Активний</mat-radio-button> 
+  <mat-radio-group name="isActive" [(ngModel)]="data.isActive" >
+    <mat-radio-button value="true" checked="data.isActive">Активний</mat-radio-button> 
     <br>
     <br> 
-    <mat-radio-button value="false">Неактивний</mat-radio-button> 
+    <mat-radio-button value="false" checked="data.isActive">Неактивний</mat-radio-button> 
   </mat-radio-group>
     <br>
     <br>

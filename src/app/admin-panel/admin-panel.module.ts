@@ -15,6 +15,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatListModule} from '@angular/material/list';
+import {MatSortModule} from '@angular/material/sort';
+
+
 
 
 @NgModule({
@@ -34,7 +37,10 @@ import {MatListModule} from '@angular/material/list';
     MatIconModule,
     MatExpansionModule,
     MatBottomSheetModule,
-    MatListModule
+    MatListModule,
+    MatSortModule
+    
+    
 
   ],
   entryComponents: [

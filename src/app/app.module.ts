@@ -19,7 +19,9 @@ import { MaterialModule } from './material.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MaterialModule,
+    
   ],
   providers: [
     AuthService,
