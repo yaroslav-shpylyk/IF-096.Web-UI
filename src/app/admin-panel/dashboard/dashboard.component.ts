@@ -1,15 +1,14 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SubjectService } from '../../services/subject.service';
 import { TeacherService } from '../../services/teacher.service';
 import { TeacherData } from '../../models/teacher-data';
 import { SubjectData } from '../../models/subject-data';
 import { ClassService} from '../../services/class.service';
 import { ClassData } from '../../models/class-data';
-import { StudentService } from '../../services/student.service';
+import { StudentsService } from '../../services/students.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { StudentsOfStream } from '../../models/students-of-stream';
 import { ChartType, ChartOptions } from 'chart.js';
-import {BaseChartDirective, Label} from 'ng2-charts';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,7 +16,6 @@ import {BaseChartDirective, Label} from 'ng2-charts';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  @ViewChild(BaseChartDirective) public chart: BaseChartDirective;
   public streamClasses: FormGroup;
   public data = {
     subjects: 0,
@@ -36,15 +34,16 @@ export class DashboardComponent implements OnInit {
   public classesStream: number;
   public icons = ['library_books', 'school', 'group_work', 'person'];
   public titles = ['Предмети', 'Учні', 'Класи', 'Вчителі'];
-  public listLinks = ['/subjects', '/students', '/classes', '/teachers'];
+  public listLinks = ['subjects', 'students', 'classes', 'teachers'];
   public buttonTitles = ['СПИСОК ПРЕДМЕТІВ', 'СПИСОК УЧНІВ', 'СПИСОК КЛАСІВ', 'СПИСОК ВЧИТЕЛІВ'];
   public chartLabels = [];
   public chartData = [];
-  public chartType = 'bar';
+  public chartType: ChartType = 'bar';
   public chartRoundOptions: ChartOptions = {
     responsive: true,
     legend: {
-      position: 'right'
+      display: false,
+      position: 'bottom'
     }
   };
   public chartVerticalOptions: ChartOptions = {
@@ -57,6 +56,7 @@ export class DashboardComponent implements OnInit {
       }
     },
     legend: {
+      display: false,
       position: 'bottom'
     },
     scales: {
@@ -73,7 +73,7 @@ export class DashboardComponent implements OnInit {
     }
   };
   constructor(private subjectService: SubjectService, private teacherService: TeacherService,
-              private classService: ClassService, private studentService: StudentService) { }
+              private classService: ClassService, private studentService: StudentsService) { }
   public dataValues(): any {
     return Object.values(this.data);
 }
