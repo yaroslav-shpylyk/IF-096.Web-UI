@@ -8,9 +8,8 @@ export class JournalsService {
   journalsChanged = new Subject();
   private journals = [];
 
-
   setJournals(journals) {
-    console.log(journals)
+
     this.journals = journals;
     this.journalsChanged.next(this.journals.slice());
   }
@@ -19,4 +18,20 @@ export class JournalsService {
     return this.journals.slice();
   }
 
+  distinctJournals(journals) {
+    const result = [];
+    const map = new Map();
+    for (const item of journals) {
+      if (!map.has(item.idClass)) {
+        map.set(item.idClass, true); 
+        result.push({
+          idClass: item.idClass,
+          className: item.className,
+          academicYear: item.academicYear
+        });
+      }
+    }
+
+    return result;
+  }
 }
