@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { SubjectResponse } from '../models/subject-response';
 import { Observable } from 'rxjs';
 import { SubjectData } from '../models/subject-data';
 
@@ -17,7 +16,7 @@ export class SubjectService {
   public getSubjects(): Observable<SubjectData[]> {
     return this.http.get('/subjects')
       .pipe(
-        map((result: SubjectResponse) => result.data)
+        map((result: {status: any, data: SubjectData[]}) => result.data)
       );
   }
 }
