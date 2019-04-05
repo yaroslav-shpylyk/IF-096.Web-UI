@@ -9,7 +9,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-overview';
-import { StudentsListComponent, DialogOverviewExampleDialog } from './students-list/students-list.component';
+import { StudentsListComponent, DialogOverviewExampleDialog, ModalStudent } from './students-list/students-list.component';
 import { MatListModule } from '@angular/material/list';
 import { PlatformModule } from '@angular/cdk/platform';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,7 +25,8 @@ import { MatSelectModule } from '@angular/material/select';
     TeacherEditComponent,
     DialogEntryComponent,
     StudentsListComponent,
-    DialogOverviewExampleDialog
+    DialogOverviewExampleDialog,
+    ModalStudent
     
   ],
   imports: [
@@ -40,7 +41,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatButtonModule,
     MatSelectModule,
 
-  ]
+  ],
+  entryComponents: [ModalStudent, DialogOverviewExampleDialog],
 
 })
 export class AdminPanelModule {}

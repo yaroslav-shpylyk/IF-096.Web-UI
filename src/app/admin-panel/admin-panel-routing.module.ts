@@ -5,7 +5,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.component';
 import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-overview';
 import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
-import { StudentsListComponent, DialogOverviewExampleDialog } from './students-list/students-list.component';
+import { StudentsListComponent, DialogOverviewExampleDialog, ModalStudent } from './students-list/students-list.component';
 
 
 const routes: Routes = [
@@ -15,12 +15,18 @@ const routes: Routes = [
   },
   {
     path: 'students',
-    component: StudentsListComponent
+    component: StudentsListComponent,
+    children: [
+      {
+        path: ':id',
+        component: ModalStudent
+      }
+    ]
   },
-  {
-    path: 'modal',
-    component: DialogOverviewExampleDialog
-  },
+  // {
+  //   path: 'modal',
+  //   component: DialogOverviewExampleDialog
+  // },
   { path: 'teachers/new', component: TeacherEditComponent },
   {
     path: 'teachers',
