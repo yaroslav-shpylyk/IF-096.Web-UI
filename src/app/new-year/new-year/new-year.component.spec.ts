@@ -23,3 +23,4 @@ describe('NewYearComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

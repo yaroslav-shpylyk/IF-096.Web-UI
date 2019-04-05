@@ -1,9 +1,9 @@
 <div class="container">
   <h2>Перехід на новий навчальний рік</h2>
-<form [formGroup]="transititionForm"  class="component" (ngSubmit)="formSubmit()">
-  <div formArrayName="newClassTitle">
-    <mat-card *ngFor="let feature of newClassTitle.controls; let index = index">
-      <mat-accordion>
+  <form [formGroup]="transititionForm"  class="component" (ngSubmit)="formSubmit()">
+    <div formArrayName="newClassTitle">
+      <mat-card *ngFor="let feature of newClassTitle.controls; let index = index">
+        <mat-accordion>
           <mat-expansion-panel (opened)="panelOpenState[index] = true" (closed)="panelOpenState[index] = false">
             <mat-expansion-panel-header>
               <mat-panel-title>
@@ -14,18 +14,18 @@
                 {{panelOpenState[index] ? 'Список учнів' : 'Переглянути список учнів'}}
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <mat-list role="list" *ngFor="let pupil of activeClasses[index]['pupilList'] | keyvalue; let i = index">
-              <mat-list-item role="listitem"><span>{{i+1}})</span><a href="students/{{pupil.id}}" target="_blank">{{(pupil.value).lastname}} {{(pupil.value).firstname}}</a></mat-list-item>
-            </mat-list>
+              <mat-list role="list" *ngFor="let pupil of activeClasses[index]['pupilList'] | keyvalue; let i = index">
+                <mat-list-item role="listitem"><span>{{i+1}})</span><a href="students/{{pupil.id}}" target="_blank">{{(pupil.value).lastname}} {{(pupil.value).firstname}}</a></mat-list-item>
+              </mat-list>
           </mat-expansion-panel>
         </mat-accordion>
         <input class="new-class-name" id={{index}} placeholder="нова назва класу" [formControlName]="index" />
         <div class="validation-error"
-              *ngIf="feature.invalid">
+          *ngIf="feature.invalid">
           <p>Недопустима назва (Приклад: "8-А")</p>
         </div>
-    </mat-card>  
-   </div>
-  <button mat-raised-button class="submit" type="submit" [disabled]="!transititionForm.valid" > Перевести учнів </button>
-</form>
+      </mat-card>  
+    </div>
+    <button mat-raised-button class="submit" type="submit" [disabled]="!transititionForm.valid" > Перевести учнів </button>
+  </form>
 </div>

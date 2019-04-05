@@ -1,7 +1,5 @@
 @import "../../../styles.scss";
 
-
-
 mat-card{
   display: flex;
   justify-content: space-between;
@@ -50,7 +48,7 @@ mat-list-item {
 .validation-error{ 
   position: absolute;
   z-index: 2;
-  bottom: -5px;
+  bottom: -8px;
   right: 10px;
   color:red;
   p {font-size: 0.5em;}
@@ -73,5 +71,3 @@ mat-list-item {
   @media (min-width: 481px) and (max-width: 767px) { width: 80%; }
   @media (min-width: 768px) { width: 70%; }
 }
-
-
