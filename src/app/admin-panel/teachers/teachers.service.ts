@@ -10,7 +10,8 @@ export class TeachersService {
 
   private teachers = [];
   private teacher;
-  public modalsId;
+  public modalsId: number;
+  public editMode: boolean;
 
   /**
    * Method gets array of up to date objects with teachers,

@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { TeachersService } from '../teachers.service';
-import {
-  FormGroup,
-  Validators,
-  FormBuilder
-} from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MustMatch } from '../must-match.validator';
+import { MustMatch } from '../validators';
 
 @Component({
   selector: 'app-teacher-edit',
@@ -85,7 +81,12 @@ export class TeacherEditComponent implements OnInit {
       {
         teacherFirstname: [
           teacherFirstname,
-          [Validators.required, Validators.pattern(/[А-ЯІЇЄҐа-яіїєґ()' -]+/)]
+          [
+            Validators.required,
+            Validators.pattern(
+              /^[абвгґдеєжзиіїйклмнопрстуфхцчшщьюяАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ']*$/
+            )
+          ]
         ],
         teacherLastname: [
           teacherLastname,
@@ -128,7 +129,6 @@ export class TeacherEditComponent implements OnInit {
       patronymic: this.teacherForm.value['teacherPatronymic'],
       phone: this.teacherForm.value['teacherPhone']
     };
-
 
     if (!this.editMode) {
       this.teachersStorageService.addTeacher(newValues).subscribe(

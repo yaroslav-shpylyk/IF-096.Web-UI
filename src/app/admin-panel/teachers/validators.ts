@@ -1,4 +1,4 @@
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 
 // custom validator to check that two fields match
 export function MustMatch(controlName: string, matchingControlName: string) {
@@ -14,3 +14,14 @@ export function MustMatch(controlName: string, matchingControlName: string) {
     }
   };
 }
+
+export const validConfig = [
+  Validators.required,
+  Validators.minLength(3),
+  Validators.pattern(
+    /[А-Я+І][абвгґдеєжзиіїйклмнопрстуфхцчшщьюяАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ']*$/
+  )
+];
+
+export const validEmail = Validators.pattern(/^.+@.+$/);
+export const validPhone = Validators.pattern(/^-?\d+$/);

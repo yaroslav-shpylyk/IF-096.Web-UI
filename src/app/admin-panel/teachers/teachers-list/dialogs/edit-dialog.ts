@@ -3,9 +3,15 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { map } from 'rxjs/operators';
 import { TeachersService } from '../../teachers.service';
 import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
+import {
+  MustMatch,
+  validConfig,
+  validEmail,
+  validPhone
+} from '../../validators';
+import { Teacher } from '../../teacher.model';
 
 @Injectable()
 @Component({
@@ -15,7 +21,6 @@ export class EditDialogEntryComponent implements OnInit {
   teacher;
   id: number;
   subscription: Subscription;
-  editMode;
 
   constructor(
     public dialog: MatDialog,
@@ -29,8 +34,7 @@ export class EditDialogEntryComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.id = +params.id;
-      this.editMode = params.id != null;
-      console.log(this.id);
+      this.teachersService.editMode = params.id != null;
       this.teachersService.modalsId = this.id;
     });
   }
@@ -38,8 +42,7 @@ export class EditDialogEntryComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(EditDialogOverviewComponent);
     dialogRef.afterClosed().subscribe(result => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-      console.log('nazad');
+      this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
 }
@@ -49,9 +52,8 @@ export class EditDialogEntryComponent implements OnInit {
   templateUrl: './edit-dialog.html'
 })
 export class EditDialogOverviewComponent implements OnInit {
-  teacher;
+  teacher: Teacher;
   subscription: Subscription;
-  editMode = true;
   teacherForm: FormGroup;
 
   constructor(
@@ -64,17 +66,20 @@ export class EditDialogOverviewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.teacher = this.teachersStorageService.getTeacher(
-      this.teachersService.modalsId
-    );
-    this.subscription = this.teachersService.teacherChanged.subscribe(
-      teacher => {
-        this.teacher = teacher;
-        console.log(teacher);
-        this.initForm();
-        return;
-      }
-    );
+    if (this.teachersService.editMode) {
+      this.teachersStorageService
+        .getTeacher(this.teachersService.modalsId)
+        .subscribe(
+          teacher => {
+            console.log(teacher);
+            this.teacher = teacher;
+            this.initForm();
+            return;
+          },
+          error => console.log(error)
+        );
+      this.initForm();
+    }
     this.initForm();
   }
 
@@ -99,31 +104,27 @@ export class EditDialogOverviewComponent implements OnInit {
       teacherAvatar = '';
     }
 
-    this.teacherForm = this.formBuilder.group({
-      teacherFirstname: [
-        teacherFirstname,
-        [Validators.required, Validators.pattern(/[А-ЯІЇЄҐа-яіїєґ()' -]+/)]
-      ],
-      teacherLastname: [
-        teacherLastname,
-        [Validators.required, Validators.pattern(/[А-ЯІЇЄҐа-яіїєґ()' -]+/)]
-      ],
-      teacherPatronymic: [
-        teacherPatronymic,
-        [Validators.required, Validators.pattern(/[А-ЯІЇЄҐа-яіїєґ()' -]+/)]
-      ],
-      teacherAvatar: [teacherAvatar],
-      teacherDateOfBirth: [teacherDateOfBirth, Validators.required],
-      teacherEmail: [teacherEmail, Validators.pattern(/^.+@.+$/)],
-      teacherPhone: [teacherPhone, Validators.pattern(/^-?\d+$/)],
-      teacherLogin: [teacherLogin, Validators.required],
-      oldPassword: [''],
-      newPassword: [''],
-      confirmPassword: ['']
-    });
+    this.teacherForm = this.formBuilder.group(
+      {
+        teacherFirstname: [teacherFirstname, validConfig],
+        teacherLastname: [teacherLastname, validConfig],
+        teacherPatronymic: [teacherPatronymic, validConfig],
+        teacherAvatar: [teacherAvatar],
+        teacherDateOfBirth: [teacherDateOfBirth, Validators.required],
+        teacherEmail: [teacherEmail, validEmail],
+        teacherPhone: [teacherPhone, validPhone],
+        teacherLogin: [teacherLogin, Validators.required],
+        oldPassword: [''],
+        newPassword: [''],
+        confirmPassword: ['']
+      },
+      {
+        validator: MustMatch('newPassword', 'confirmPassword')
+      }
+    );
   }
 
-  onBackClick(): void {
+  onCancel(): void {
     this.dialogRef.close();
   }
 
