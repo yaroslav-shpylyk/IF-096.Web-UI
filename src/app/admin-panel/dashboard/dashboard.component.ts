@@ -7,8 +7,8 @@ import { ClassService} from '../../services/class.service';
 import { ClassData } from '../../models/class-data';
 import { StudentsService } from '../../services/students.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ClassFromStream } from '../../models/class-from-stream';
 import { ChartType, ChartOptions } from 'chart.js';
+import { ClassesFromStream } from '../../models/classes-from-stream';
 
 @Component({
   selector: 'app-dashboard',
@@ -73,8 +73,14 @@ export class DashboardComponent implements OnInit {
     }
   };
   constructor(private subjectService: SubjectService, private teacherService: TeacherService,
-              private classService: ClassService, private studentService: StudentsService) { }
-  public dataValues(): any {
+              private classService: ClassService, private studentService: StudentsService) {
+  }
+
+  /**
+   * Method returns values of dashboard data
+   * @returns - Array with values of dashboard data
+   */
+  public dataValues(): number[] {
     return Object.values(this.data);
 }
   ngOnInit(): void {
@@ -83,11 +89,14 @@ export class DashboardComponent implements OnInit {
     this.teacherService.getTeachers().subscribe((result: TeacherData[]) => this.data.teachers = result.length);
     this.studentService.getNumberOfStudents('active').subscribe((result: number) => this.data.students = result);
     this.classService.getClasses('active').subscribe((result: ClassData[]) => this.data.classes = result.length);
-    this.studentService.getStudentsByStream().subscribe((result: { allStudents: number, studentsData: ClassFromStream[]}) => {
+    this.studentService.getStudentsByStream().subscribe((result: ClassesFromStream) => {
       this.updateChart(result);
     });
   }
 
+  /**
+   * Method creates a reactive form for chart options
+   */
   private createStreamClassesForm(): void {
     this.streamClasses = new FormGroup({
       classes: new FormControl('', [
@@ -99,6 +108,10 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  /**
+   * Method wich called after formSubmit of chart options
+   * @param form - Object of form with, which gives form controls and form values
+   */
   public submitChartChange(form: FormGroup): void {
     const controls = form.controls;
     const values = form.value;
@@ -106,12 +119,18 @@ export class DashboardComponent implements OnInit {
       return;
     }
     this.studentService.getStudentsByStream(values.classes)
-      .subscribe((result: { allStudents: number, studentsData: ClassFromStream[]}) => {
+      .subscribe((result: ClassesFromStream) => {
         this.chartType = values.graphType;
         this.updateChart(result);
     });
   }
-  private updateChart(response) {
+
+  /**
+   * Method updates data in chart
+   * @param response - Object with number of all students in stream and array with classNames and number of
+   * students in each class
+   */
+  private updateChart(response): void {
     const data = [];
     const labels = [];
     if (this.chartType === 'bar') {
