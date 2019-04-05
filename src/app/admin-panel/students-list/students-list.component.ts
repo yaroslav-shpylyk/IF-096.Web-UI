@@ -3,6 +3,7 @@ import { ClassService } from '../../services/class.service';
 import { StudentsService } from '../../services/students.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+
 import { Subscription } from 'rxjs';
 
 
@@ -17,7 +18,7 @@ export class StudentsListComponent implements OnInit, OnDestroy {
   notActiveClass: Array<any>;
   studentList: Array<any>;
   routeQueryParams$: Subscription;
-  studentChoose:any;
+  studentChoose: any;
 
 
 
@@ -59,7 +60,7 @@ export class StudentsListComponent implements OnInit, OnDestroy {
   }
 
   chooseStudents($event): any {
-    this.studentChoose=$event;
+    this.studentChoose = $event;
   }
 
   AddStudent() {
@@ -88,24 +89,27 @@ export class StudentsListComponent implements OnInit, OnDestroy {
 })
 export class DialogOverviewExampleDialog {
 
-  clickedStudent:any;
+  clickedStudent: any;
 
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-      // this.clickedStudent=this.data;
-     }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private route: ActivatedRoute,
+    private router: Router) {
+    // this.clickedStudent=this.data;
+  }
 
-
-
-  onNoClick(): void {
+  goBack(): void {
     // this.students.getStudents()
-    console.log("this.data.id",this.data.student);
+    console.log("this.data.id", this.data.student);
     this.dialogRef.close();
   }
 
+  editStudent() {
+    this.router.navigate(['edit', this.data.id], { relativeTo: this.route })
+  }
+
   onOkClick(): void {
-    
     this.dialogRef.close();
   }
 }

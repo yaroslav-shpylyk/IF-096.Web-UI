@@ -1,11 +1,42 @@
-<h1 mat-dialog-title>Hi {{data.student.id}}</h1>
-<div mat-dialog-content>
-    <p>What's your favorite animal?</p>
-    <mat-form-field>
-        <input matInput [(ngModel)]="data.animal">
-    </mat-form-field>
-</div>
-<div mat-dialog-actions>
+<mat-card>
+    <div style="display: flex;justify-content: center;">
+        <img *ngIf="data.student.avatar; else avatar" mat-card-image src="{{data.student.avatar}}"></div>
+
+
+    <mat-card-title style="font-size:0.8em;display:flex;justify-content:space-evenly;flex-wrap: wrap;">
+        <span>{{data.student.lastname}}</span>
+        <span>{{data.student.firstname}}</span>
+        <span>{{data.student.patronymic}}</span>
+    </mat-card-title>
+
+    <!-- <mat-list style="font-size:0.1em;display:flex;flex-direction: column;justify-content: flex-start; ;align-items:flex-start;">
+        <mat-list-item> <span>дата народження:{{data.student.dateOfBirth}}</span> </mat-list-item>
+        <mat-list-item> <span>Email:{{data.student.email}}</span> </mat-list-item>
+        <mat-list-item> <span>телефон:{{data.student.phone}}</span> </mat-list-item>
+        <mat-list-item> <span>клас:{{data.student.classe}}</span> </mat-list-item>
+    </mat-list> -->
+
+    <mat-card-content style="font-size:0.6em;display:flex;flex-direction: column;justify-content: flex-start;align-items:flex-start;">
+        <mat-divider></mat-divider>
+        <span *ngIf="data.student.dateOfBirth">Дата народження:{{data.student.dateOfBirth}}</span>
+        <span *ngIf="data.student.email">Email:{{data.student.email}}</span>
+        <span *ngIf="data.student.login">Логін:{{data.student.login}}</span>
+        <span *ngIf="data.student.phone">Телефон:{{data.student.phone}}</span>
+        <span *ngIf="data.student.classe">Клас:{{data.student.classe}}</span>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button (click)="goBack()" style="font-size:0.5em">Назад</button>
+        <button mat-button (click)="editStudent()" cdkFocusInitial style="font-size:0.5em">Редагувати</button>
+    </mat-card-actions>
+</mat-card>
+<ng-template #avatar style="display: flex;justify-content: center;">
+    <i class="material-icons" style="font-size: 8em;">
+        person
+    </i>
+</ng-template>
+
+
+<!-- <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">No Thanks</button>
     <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
-</div>
+</div> -->
