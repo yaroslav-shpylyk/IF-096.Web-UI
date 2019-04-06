@@ -23,7 +23,6 @@ export class HeaderComponent implements AfterViewInit {
         } else {
           header.classList.add('hide');
           header.classList.remove('notransition'); // run when user is scrolling
-          console.log('fi');
         }
       });
 
@@ -32,7 +31,6 @@ export class HeaderComponent implements AfterViewInit {
     ).subscribe(() => {
       header.classList.remove('hide');
       header.classList.remove('notransition');
-      console.log('se');
     }); // run after scroll is finished with 1.5s delay
 
     const reloading = fromEvent(window, 'load')
