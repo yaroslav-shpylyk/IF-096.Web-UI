@@ -15,25 +15,25 @@ export class AddModifyComponent implements OnInit {
   myFirstReactiveForm: FormGroup;
 
   constructor(private bottomSheetRef: MatBottomSheetRef<AddModifyComponent>,
-    private groupServices: GroupsService,
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {}
+  private groupServices: GroupsService,
+  @Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {}
 
-    ngOnInit() {
-    }
+  ngOnInit() {
+  }
 
-   /**
-   * Method reports about closing bottom sheet
-   */
-    abort(){
-      this.bottomSheetRef.dismiss()
-    }
+  /**
+  * Method reports about closing bottom sheet
+  */
+  abort(){
+    this.bottomSheetRef.dismiss()
+  }
 
-   /**
-   * Method saves data about a new or modified class
-   * @param formValue - data about the class that we want to change or create
-   */
-   save(formValue: Object) {
+  /**
+  * Method saves data about a new or modified class
+  * @param formValue - data about the class that we want to change or create
+  */
+  save(formValue: Object) {
     const group = new Group(formValue);
     this.groupServices.addGrup(group).subscribe();
-   } 
+  }  
 }
