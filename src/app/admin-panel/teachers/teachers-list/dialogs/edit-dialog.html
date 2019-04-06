@@ -1,105 +1,159 @@
 <div class="wrapper">
   <div class="container">
-    <div class="avatar" *ngIf="teacher">
-      <img [src]="teacher.avatar" height="150" width="150" />
+    <div class="avatar">
+      <img
+        *ngIf="editMode"
+        [src]="
+          teacher
+            ? teacher.avatar
+            : 'https://png.pngtree.com/svg/20161212/f93e57629c.svg'
+        "
+        height="150"
+        width="150"
+      />
+      <img
+        *ngIf="!editMode"
+        [src]="
+          ava ? ava : 'https://png.pngtree.com/svg/20161212/f93e57629c.svg'
+        "
+        height="150"
+        width="150"
+      />
     </div>
 
-    <form class="form" [formGroup]="teacherForm" (ngSubmit)="onSubmit()">
-      <mat-form-field class="full-width">
-        <input matInput placeholder="Ім'я" formControlName="teacherFirstname" />
-      </mat-form-field>
-      <mat-form-field class="full-width">
+    <form
+      class="form"
+      [formGroup]="teacherForm"
+      style="display: flex; max-width: 400px; "
+      (ngSubmit)="onSubmit()"
+    >
+      <div style="flex-direction: column; text-align: center;">
         <input
-          type="text"
-          matInput
-          placeholder="Прізвище"
-          formControlName="teacherLastname"
+          type="file"
+          (change)="onFileSelected($event)"
+          style="margin: 1.5em 0em"
         />
-      </mat-form-field>
-      <mat-form-field class="full-width">
-        <input
-          matInput
-          placeholder="По-батькові"
-          formControlName="teacherPatronymic"
-        />
-      </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Ім'я"
+            formControlName="teacherFirstname"
+          />
+        </mat-form-field>
 
-      <mat-form-field class="full-width">
-        <input
-          matInput
-          placeholder="Дата народження"
-          formControlName="teacherDateOfBirth"
-        />
-      </mat-form-field>
+        <br />
 
-      <mat-form-field class="full-width">
-        <input
-          matInput
-          type="email"
-          placeholder="Електронна адреса"
-          formControlName="teacherEmail"
-        />
-      </mat-form-field>
+        <mat-form-field>
+          <input
+            type="text"
+            matInput
+            placeholder="Прізвище"
+            formControlName="teacherLastname"
+            style="width: 100%"
+          />
+        </mat-form-field>
 
-      <mat-form-field class="full-width">
-        <input matInput placeholder="Логін" formControlName="teacherLogin" />
-      </mat-form-field>
+        <br />
 
-      <mat-form-field class="full-width">
-        <input
-          matInput
-          placeholder="Номер телефону"
-          formControlName="teacherPhone"
-        />
-      </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="По-батькові"
+            formControlName="teacherPatronymic"
+          />
+        </mat-form-field>
 
-      <mat-form-field *ngIf="editMode" class="full-width">
-        <input
-          type="password"
-          matInput
-          placeholder="Пароль"
-          formControlName="oldPassword"
-        />
-      </mat-form-field>
+        <br />
 
-      <mat-form-field *ngIf="editMode" class="full-width">
-        <input
-          type="password"
-          matInput
-          placeholder="Новий пароль"
-          formControlName="newPassword"
-        />
-      </mat-form-field>
-      <mat-form-field *ngIf="editMode" class="full-width">
-        <input
-          type="password"
-          matInput
-          placeholder="Повторіть новий пароль"
-          formControlName="confirmPassword"
-        />
-      </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Дата народження"
+            formControlName="teacherDateOfBirth"
+          />
+        </mat-form-field>
 
-      <p
-        *ngIf="
-          teacherForm.get('confirmPassword')?.errors?.mustMatch &&
-          teacherForm.get('confirmPassword').touched
-        "
-      >
-        Паролі не співпадають
-      </p>
+        <br />
 
-      <button
-        [disabled]="!teacherForm.valid"
-        mat-raised-button
-        color="primary"
-        type="submit"
-      >
-        Зберегти
-      </button>
+        <mat-form-field>
+          <input
+            matInput
+            type="email"
+            placeholder="Електронна адреса"
+            formControlName="teacherEmail"
+          />
+          <mat-hint>sdf</mat-hint>
+        </mat-form-field>
 
-      <button mat-raised-button type="button" (click)="onCancel()">
-        Відмінити
-      </button>
+        <br />
+
+        <mat-form-field>
+          <input matInput placeholder="Логін" formControlName="teacherLogin" />
+        </mat-form-field>
+
+        <br />
+
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Номер телефону"
+            formControlName="teacherPhone"
+          />
+        </mat-form-field>
+
+        <mat-form-field *ngIf="editMode">
+          <input
+            type="password"
+            matInput
+            placeholder="Пароль"
+            formControlName="oldPassword"
+          />
+        </mat-form-field>
+
+        <mat-form-field *ngIf="editMode">
+          <input
+            type="password"
+            matInput
+            placeholder="Новий пароль"
+            formControlName="newPassword"
+          />
+        </mat-form-field>
+
+        <mat-form-field *ngIf="editMode" style="margin-bottom: 0">
+          <input
+            type="password"
+            matInput
+            placeholder="Повторіть новий пароль"
+            formControlName="confirmPassword"
+          />
+          <!-- <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email is <strong>required</strong>
+          </mat-error> -->
+        </mat-form-field>
+        <p
+          *ngIf="
+            teacherForm.get('confirmPassword')?.errors?.mustMatch &&
+            teacherForm.get('confirmPassword').touched
+          "
+        >
+          Паролі не співпадають
+        </p>
+
+        <button
+          [disabled]="!teacherForm.valid"
+          mat-raised-button
+          color="primary"
+          type="submit"
+        >
+          Зберегти
+        </button>
+
+        <button mat-raised-button type="button" (click)="onCancel()">
+          Відмінити
+        </button>
+      </div>
     </form>
   </div>
 </div>
+
+<!-- для форми  style="display: flex; flex-direction: column; min-width: 255px; max-width: 500px"  -->

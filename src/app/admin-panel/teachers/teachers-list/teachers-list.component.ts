@@ -21,16 +21,22 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.teachers = this.teachersService.getTeachers();
-    if (!this.teachers.length) {
-      this.teachers = this.teachersStorageService.getTeachers();
-    }
-    this.subscription = this.teachersService.teachersChanged.subscribe(
+    this.teachers = this.teachersStorageService.getTeachers();
+    this.subscription = this.teachersStorageService.teachersChanged.subscribe(
       teachers => {
         this.teachers = teachers;
       }
     );
   }
+
+  // ngOnInit() {
+  //   this.teachersStorageService.getTeache().subscribe(
+  //     teachers => {
+  //       this.teachers = teachers;
+  //     },
+  //     error => console.log(error)
+  //   );
+  // }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

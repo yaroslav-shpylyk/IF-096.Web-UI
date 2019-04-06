@@ -42,19 +42,22 @@ export class EditDialogEntryComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(EditDialogOverviewComponent);
     dialogRef.afterClosed().subscribe(result => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.router.navigate(['/admin', 'teachers'], { relativeTo: this.route });
     });
   }
 }
 
 @Component({
   selector: 'app-edit-dialog-overview',
-  templateUrl: './edit-dialog.html'
+  templateUrl: './edit-dialog.html',
+  styleUrls: ['./edit-dialog.scss']
 })
 export class EditDialogOverviewComponent implements OnInit {
   teacher: Teacher;
   subscription: Subscription;
   teacherForm: FormGroup;
+  editMode: boolean;
+  ava;
 
   constructor(
     public dialogRef: MatDialogRef<EditDialogOverviewComponent>,
@@ -66,7 +69,8 @@ export class EditDialogOverviewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (this.teachersService.editMode) {
+    this.editMode = this.teachersService.editMode;
+    if (this.editMode) {
       this.teachersStorageService
         .getTeacher(this.teachersService.modalsId)
         .subscribe(
@@ -87,7 +91,6 @@ export class EditDialogOverviewComponent implements OnInit {
     let teacherFirstname = '';
     let teacherLastname = '';
     let teacherPatronymic = '';
-    let teacherAvatar = '';
     let teacherDateOfBirth = '';
     let teacherEmail = '';
     let teacherPhone = '';
@@ -101,7 +104,6 @@ export class EditDialogOverviewComponent implements OnInit {
       teacherEmail = this.teacher.email;
       teacherPhone = this.teacher.phone;
       teacherLogin = this.teacher.login;
-      teacherAvatar = '';
     }
 
     this.teacherForm = this.formBuilder.group(
@@ -109,14 +111,14 @@ export class EditDialogOverviewComponent implements OnInit {
         teacherFirstname: [teacherFirstname, validConfig],
         teacherLastname: [teacherLastname, validConfig],
         teacherPatronymic: [teacherPatronymic, validConfig],
-        teacherAvatar: [teacherAvatar],
         teacherDateOfBirth: [teacherDateOfBirth, Validators.required],
         teacherEmail: [teacherEmail, validEmail],
         teacherPhone: [teacherPhone, validPhone],
         teacherLogin: [teacherLogin, Validators.required],
         oldPassword: [''],
         newPassword: [''],
-        confirmPassword: ['']
+        confirmPassword: [''],
+        teacherAvatar: ['']
       },
       {
         validator: MustMatch('newPassword', 'confirmPassword')
@@ -124,8 +126,45 @@ export class EditDialogOverviewComponent implements OnInit {
     );
   }
 
+  onSubmit() {
+    const newValues = {
+      avatar: this.editMode ? this.teacher.avatar : this.ava,
+      dateOfBirth: this.teacherForm.value.teacherDateOfBirth
+        .split('.')
+        .reverse()
+        .join('-'),
+      email: this.teacherForm.value.teacherEmail,
+      firstname: this.teacherForm.value.teacherFirstname,
+      lastname: this.teacherForm.value.teacherLastname,
+      login: this.teacherForm.value.teacherLogin,
+      newPass: this.teacherForm.value.newPassword,
+      oldPass: this.teacherForm.value.oldPassword,
+      patronymic: this.teacherForm.value.teacherPatronymic,
+      phone: this.teacherForm.value.teacherPhone
+    };
+    if (!this.editMode) {
+      this.teachersStorageService.addTeacher(newValues).subscribe(() => {
+        this.teachersStorageService.getTeachers();
+      });
+    } else {
+      this.teachersStorageService
+        .updateTeacher(this.teachersService.modalsId, newValues)
+        .subscribe(
+          response => {
+            this.teachersStorageService.getTeachers();
+          },
+          error => console.log(error)
+        );
+    }
+    this.dialogRef.close();
+    this.router.navigate(['/admin/teachers/']);
+  }
+
   onCancel(): void {
     this.dialogRef.close();
+    this.router.navigate(['admin', 'teachers'], {
+      relativeTo: this.route
+    });
   }
 
   onEditClick(): void {
@@ -133,5 +172,21 @@ export class EditDialogOverviewComponent implements OnInit {
     this.router.navigate(['admin', 'teachers', this.teacher.id, 'edit'], {
       relativeTo: this.route
     });
+  }
+
+  onFileSelected(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = this._handleReaderLoaded.bind(this);
+    reader.readAsDataURL(file);
+  }
+
+  _handleReaderLoaded(e) {
+    const reader = e.target;
+    if (this.editMode) {
+      this.teacher.avatar = reader.result;
+    } else {
+      this.ava = reader.result;
+    }
   }
 }

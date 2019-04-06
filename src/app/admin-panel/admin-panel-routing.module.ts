@@ -17,11 +17,12 @@ const routes: Routes = [
     path: 'students',
     component: StudentsListComponent
   },
-  { path: 'teachers/new', component: TeacherEditComponent },
+  // { path: 'teachers/new', component: TeacherEditComponent },
   {
     path: 'teachers',
     component: TeachersListComponent,
     children: [
+      { path: 'new', component: EditDialogEntryComponent },
       {
         path: ':id',
         component: DialogEntryComponent
