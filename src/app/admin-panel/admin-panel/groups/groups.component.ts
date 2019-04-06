@@ -17,7 +17,7 @@ export class GroupsComponent implements OnInit {
   groups: Group[];
   displayedColumns: string[] = ['className', 'classYear', 'isActive', 'id'];
   dataSource: MatTableDataSource<Group>;
-
+ 
   constructor(private groupServices: GroupsService,
               private bottomSheet: MatBottomSheet) { }
            
