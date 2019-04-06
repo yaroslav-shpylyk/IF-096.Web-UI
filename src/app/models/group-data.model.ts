@@ -6,6 +6,6 @@ export class Group {
     isActive: boolean;
     numOfStudents: number;
     constructor(fields:Object){
-      Object.assign(this, fields)
-    }
+       Object.assign(this, fields)
+     }
   }
