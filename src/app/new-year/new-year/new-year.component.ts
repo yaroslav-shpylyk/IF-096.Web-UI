@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NewYearService } from '../../services/new-year.service';
+import { ClassData } from '../../models/class-info';
 
 @Component({
   selector: 'app-new-year',
@@ -9,17 +10,15 @@ import { NewYearService } from '../../services/new-year.service';
 })
 
 export class NewYearComponent implements OnInit {
-  public allClasses = [];
-  public activeClasses = [];
+  public allClasses: ClassData[] = [];
+  public activeClasses: ClassData[] = [];
   public transititionForm: FormGroup;
-  public currentYear: number;
   panelOpenState = [];
 
   constructor(
     private newYearTransitition: NewYearService) {  }
 
 ngOnInit() {
-  this.allClasses = [''];
   this.createTransititionForm();
   this.newYearTransitition.getAllClasesInfo().subscribe(
     data => {
