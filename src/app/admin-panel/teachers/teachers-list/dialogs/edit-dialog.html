@@ -71,6 +71,7 @@
             placeholder="Дата народження"
             formControlName="teacherDateOfBirth"
           />
+          <mat-hint>В форматі: <strong>дд.мм.рррр</strong></mat-hint>
         </mat-form-field>
 
         <br />
@@ -82,7 +83,6 @@
             placeholder="Електронна адреса"
             formControlName="teacherEmail"
           />
-          <mat-hint>sdf</mat-hint>
         </mat-form-field>
 
         <br />
@@ -126,18 +126,16 @@
             placeholder="Повторіть новий пароль"
             formControlName="confirmPassword"
           />
-          <!-- <mat-error *ngIf="emailFormControl.hasError('required')">
-            Email is <strong>required</strong>
-          </mat-error> -->
+          <mat-error> Паролі не співпадають </mat-error>
         </mat-form-field>
-        <p
+        <!-- <p
           *ngIf="
             teacherForm.get('confirmPassword')?.errors?.mustMatch &&
             teacherForm.get('confirmPassword').touched
           "
         >
           Паролі не співпадають
-        </p>
+        </p> -->
 
         <button
           [disabled]="!teacherForm.valid"

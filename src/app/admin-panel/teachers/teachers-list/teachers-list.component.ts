@@ -12,6 +12,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 export class TeachersListComponent implements OnInit, OnDestroy {
   teachers;
   subscription: Subscription;
+  filteredTeachers = '';
 
   constructor(
     private teachersStorageService: TeachersStorageService,

@@ -1,9 +1,16 @@
 <div class="container">
   <mat-list>
-    <ng-container *ngFor="let teacher of teachers">
+    <mat-form-field>
+      <input autocomplete="off" placeholder="Шукати за прізвищем" matInput type="search" [(ngModel)]="filteredTeachers" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    
+    <ng-container
+      *ngFor="let teacher of (teachers | filter: filteredTeachers:'lastname')"
+    >
       <mat-list-item routerLinkActive="active">
         <mat-select>
-          <mat-option  (click)="onEdit(teacher.id)">
+          <mat-option (click)="onEdit(teacher.id)">
             Редагувати
           </mat-option>
           <mat-option (click)="console.log('asd')">
@@ -11,8 +18,12 @@
           </mat-option>
         </mat-select>
 
-        <img matListAvatar [src]="teacher.avatar" alt="{{teacher.lastname}}" />
-        <p matLine >
+        <img
+          matListAvatar
+          [src]="teacher.avatar"
+          alt="{{ teacher.lastname }}"
+        />
+        <p matLine>
           {{ teacher.lastname }} {{ teacher.firstname }}
           {{ teacher.patronymic }}
         </p>

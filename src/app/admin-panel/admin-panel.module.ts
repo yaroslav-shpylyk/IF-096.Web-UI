@@ -15,6 +15,7 @@ import { PlatformModule } from '@angular/cdk/platform';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { EditDialogEntryComponent } from './teachers/teachers-list/dialogs/edit-dialog';
+import { FilterPipe } from './teachers/teachers-list/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { EditDialogEntryComponent } from './teachers/teachers-list/dialogs/edit-
     TeacherEditComponent,
     DialogEntryComponent,
     StudentsListComponent,
-    EditDialogEntryComponent
+    EditDialogEntryComponent,
+    FilterPipe
   ],
   imports: [
     CommonModule,
