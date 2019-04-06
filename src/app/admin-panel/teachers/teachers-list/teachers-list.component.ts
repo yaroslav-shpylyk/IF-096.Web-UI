@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
 import { TeachersService } from '../teachers.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 @Component({
   selector: 'app-teachers-list',
@@ -18,7 +19,8 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     private teachersStorageService: TeachersStorageService,
     private teachersService: TeachersService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -29,15 +31,6 @@ export class TeachersListComponent implements OnInit, OnDestroy {
       }
     );
   }
-
-  // ngOnInit() {
-  //   this.teachersStorageService.getTeache().subscribe(
-  //     teachers => {
-  //       this.teachers = teachers;
-  //     },
-  //     error => console.log(error)
-  //   );
-  // }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -55,15 +48,65 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   onEdit(id) {
     this.router.navigate([id, 'edit'], { relativeTo: this.route });
   }
+
+  onDelete(teacher): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '20em',
+      height: '11em',
+      panelClass: ['confirmation-dialog'],
+      data: {
+        id: teacher.id,
+        name: teacher.firstname,
+        lastname: teacher.lastname
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+    });
+  }
+}
+
+@Component({
+  selector: 'app-confirmation-dialog',
+  templateUrl: 'app-confirmation-dialog.html'
+})
+export class ConfirmationDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
+    private teachersStorageService: TeachersStorageService,
+    public snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA)
+    public data: any
+  ) {}
+
+  onDeleteClick() {
+    this.teachersStorageService.deleteTeacher(this.data.id).subscribe((response) => {
+      this.teachersStorageService.getTeachers();
+      this.dialogRef.close();
+      this.openSnackBar(`Викладач ${response.firstname} видалений`);
+    });
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  openSnackBar(message: string) {
+    const config = new MatSnackBarConfig();
+    config.panelClass = ['snack-class'];
+    config.duration = 2000;
+    config.verticalPosition = 'top';
+    this.snackBar.open(message, null, config);
+  }
 }
 
 let prevScrollpos = window.pageYOffset;
 window.onscroll = () => {
-const currentScrollPos = window.pageYOffset;
-if (prevScrollpos > currentScrollPos) {
+  const currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
     document.getElementById('mine').style.bottom = '3.5em';
   } else {
     document.getElementById('mine').style.bottom = '-75px';
   }
-prevScrollpos = currentScrollPos;
+  prevScrollpos = currentScrollPos;
 };

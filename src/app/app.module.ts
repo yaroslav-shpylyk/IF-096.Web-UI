@@ -14,15 +14,20 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-list/dialog/dialog-overview';
 import { EditDialogOverviewComponent } from './admin-panel/teachers/teachers-list/dialogs/edit-dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { ConfirmationDialogComponent } from './admin-panel/teachers/teachers-list/teachers-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DialogOverviewExampleDialog,
-    EditDialogOverviewComponent
+    EditDialogOverviewComponent,
+    ConfirmationDialogComponent
   ],
-  entryComponents: [DialogOverviewExampleDialog, EditDialogOverviewComponent],
+  entryComponents: [
+    DialogOverviewExampleDialog,
+    EditDialogOverviewComponent,
+    ConfirmationDialogComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -46,4 +51,4 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

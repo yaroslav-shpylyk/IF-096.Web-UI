@@ -113,6 +113,10 @@ export class TeachersStorageService {
     );
   }
 
+  deleteTeacher(id) {
+    return this.httpClient.patch<any>(`/users/${id}`, { observe: 'response' });
+  }
+
   /**
    * Method gets object representing a teacher to be created
    * and passes it to the server in post request
