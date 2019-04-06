@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { SubjectService } from '../../services/subject.service';
 import { TeacherService } from '../../services/teacher.service';
 import { TeacherData } from '../../models/teacher-data';
@@ -9,6 +9,8 @@ import { StudentsService } from '../../services/students.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ChartType, ChartOptions } from 'chart.js';
 import { ClassesFromStream } from '../../models/classes-from-stream';
+import { AsyncStreamValidator } from './async-stream.validator';
+import { FormGroupDirective } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +18,7 @@ import { ClassesFromStream } from '../../models/classes-from-stream';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  @ViewChild(FormGroupDirective) chartOptions;
   public streamClasses: FormGroup;
   public data = {
     subjects: 0,
@@ -73,8 +76,7 @@ export class DashboardComponent implements OnInit {
     }
   };
   constructor(private subjectService: SubjectService, private teacherService: TeacherService,
-              private classService: ClassService, private studentService: StudentsService) {
-  }
+              private classService: ClassService, private studentService: StudentsService) { }
 
   /**
    * Method returns values of dashboard data
@@ -89,7 +91,7 @@ export class DashboardComponent implements OnInit {
     this.teacherService.getTeachers().subscribe((result: TeacherData[]) => this.data.teachers = result.length);
     this.studentService.getNumberOfStudents('active').subscribe((result: number) => this.data.students = result);
     this.classService.getClasses('active').subscribe((result: ClassData[]) => this.data.classes = result.length);
-    this.studentService.getStudentsByStream().subscribe((result: ClassesFromStream) => {
+    this.classService.getClassesByStream().subscribe((result: ClassesFromStream) => {
       this.updateChart(result);
     });
   }
@@ -100,8 +102,8 @@ export class DashboardComponent implements OnInit {
   private createStreamClassesForm(): void {
     this.streamClasses = new FormGroup({
       classes: new FormControl('', [
-        Validators.required
-      ]),
+        Validators.required,
+      ], AsyncStreamValidator.createValidator(this.classService)),
       graphType: new FormControl('bar', [
         Validators.required
       ])
@@ -115,13 +117,19 @@ export class DashboardComponent implements OnInit {
   public submitChartChange(form: FormGroup): void {
     const controls = form.controls;
     const values = form.value;
+    console.log(form);
     if (controls.graphType.errors || controls.classes.errors) {
       return;
     }
-    this.studentService.getStudentsByStream(values.classes)
+    this.classService.getClassesByStream(values.classes)
       .subscribe((result: ClassesFromStream) => {
         this.chartType = values.graphType;
         this.updateChart(result);
+        this.chartOptions.resetForm();
+        this.streamClasses.reset({
+          classes: '',
+          graphType: 'bar'
+        });
     });
   }
 

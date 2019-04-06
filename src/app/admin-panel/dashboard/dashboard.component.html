@@ -37,7 +37,12 @@
                 {{i + 1}}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="streamClasses.controls.classes.hasError('required')">Ви повинні вибрати номер потоку</mat-error>
+            <mat-error *ngIf="streamClasses.controls.classes.hasError('required') && streamClasses.controls.classes.touched">
+              Ви повинні вибрати номер потоку
+            </mat-error>
+            <mat-error *ngIf="streamClasses.controls.classes.hasError('noClasses') && streamClasses.controls.classes.touched">
+              В цьому потоці немає учнів у класах
+            </mat-error>
           </mat-form-field>
           <div class="graphType">
             <label id="graphTypeGroup">Тип графіка:</label>
@@ -47,7 +52,7 @@
               </mat-radio-button>
             </mat-radio-group>
           </div>
-          <button mat-raised-button >ПОКАЗАТИ</button>
+          <button mat-raised-button type="submit" [disabled]="!streamClasses.valid">ПОКАЗАТИ</button>
         </form>
       </mat-card-content>
     </mat-card>
