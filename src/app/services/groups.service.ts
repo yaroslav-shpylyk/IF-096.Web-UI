@@ -35,5 +35,4 @@ export class GroupsService {
       return this.http.put<Group>(`/classes/` + group.id, group);
     } else  return this.http.post<Group>(`/classes/`, group) ;  
   }
-
 }
