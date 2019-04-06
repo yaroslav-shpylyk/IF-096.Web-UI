@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ShellComponent } from '../shell/shell/shell.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.component';
 import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-overview';
@@ -24,10 +23,6 @@ const routes: Routes = [
       }
     ]
   },
-  // {
-  //   path: 'modal',
-  //   component: DialogOverviewExampleDialog
-  // },
   { path: 'teachers/new', component: TeacherEditComponent },
   {
     path: 'teachers',

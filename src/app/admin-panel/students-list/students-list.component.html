@@ -4,9 +4,10 @@
     <mat-form-field>
       <mat-label>Виберіть клас</mat-label>
       <mat-select (selectionChange)="onSelectionClass($event)">
-        <mat-option *ngFor="let active of activeClass" [value]="active.id">
-          <span>{{active.className}}</span>
-          <span>-</span>
+        <mat-option class='option' *ngFor="let active of activeClass" [value]="active.id">
+          <span>&nbsp;&nbsp;&nbsp;</span>
+          <span class='option'>{{active.className}}</span>
+          <span>&nbsp;&nbsp;&nbsp;</span>
           <span>{{active.classYear}}рік</span>
         </mat-option>
       </mat-select>
@@ -17,9 +18,10 @@
     <mat-form-field>
       <mat-label>Виберіть клас</mat-label>
       <mat-select (selectionChange)="onSelectionClass($event)">
-        <mat-option *ngFor="let notActive of notActiveClass" [value]="notActive.id">
+        <mat-option class='option' *ngFor="let notActive of notActiveClass" [value]="notActive.id">
+          <span>&nbsp;&nbsp;&nbsp;</span>
           <span>{{notActive.className}}</span>
-          <span>-</span>
+          <span>&nbsp;&nbsp;&nbsp;</span>
           <span>{{notActive.classYear}}рік</span>
         </mat-option>
       </mat-select>
@@ -28,7 +30,7 @@
 </div>
 <div class="students">
   <mat-nav-list *ngIf="studentList">
-    <mat-list-item [routerLink]="['./', student.id]" routerLinkActive="active" *ngFor="let student of studentList">
+    <mat-list-item class="oneStudent" [routerLink]="['./', student.id]" *ngFor="let student of studentList">
       <span>{{student.firstname}}</span>
       <span>{{student.lastname}}</span>
       <span>{{student.patronymic}}</span>
@@ -36,7 +38,7 @@
     </mat-list-item>
   </mat-nav-list>
 </div>
-<button class="mine" mat-fab color="primary" (click)="AddStudent()">
+<button mat-fab color="primary" (click)="AddStudent()">
   <i class="material-icons">
     person_add
   </i>

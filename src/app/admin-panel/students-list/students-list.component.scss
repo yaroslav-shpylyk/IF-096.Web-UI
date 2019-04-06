@@ -7,23 +7,15 @@
     }
 }
 
-::ng-deep .mat-option {
-    background-color: lightgray;
-    display: flex;
-    justify-content: space-between;
-    span{
-        margin-left:5%;
-    }
-}
-
 .students {
     display: flex;
     justify-content: center;
     span {
         margin-left: 0.5em;
-    }    
+    };
 }
-.mine {
+
+button {
     position: fixed;
     bottom: 5em;
     right: 5em;

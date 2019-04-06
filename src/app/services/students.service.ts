@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
+import { Student } from '../models/student';
 
 
 @Injectable({
@@ -15,13 +16,13 @@ export class StudentsService {
     * Method returns data with students from backend,where id is class
     */
 
-  getStudents(id): Observable<any> {
+  getStudents(id): Observable<Student[]> {
     return this.http.get(`/students/classes/${id}`).
-      pipe(map((res: any) => res.data))
+      pipe(map((res: { status: any, data: Student[] }) => res.data))
   }
 
-  getOneStudent(id): Observable<any> {
+  getOneStudent(id): Observable<Student> {
     return this.http.get(`/students/${id}`).
-      pipe(map((res: any) => res.data))
+      pipe(map((res: { status: any, data: Student }) => res.data))
   }
 }
