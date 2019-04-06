@@ -29,10 +29,12 @@
     >
       <div style="flex-direction: column; text-align: center;">
         <input
+          formControlName="teacherAvatar"
           type="file"
           (change)="onFileSelected($event)"
           style="margin: 1.5em 0em"
         />
+
         <mat-form-field>
           <input
             matInput
@@ -128,14 +130,6 @@
           />
           <mat-error> Паролі не співпадають </mat-error>
         </mat-form-field>
-        <!-- <p
-          *ngIf="
-            teacherForm.get('confirmPassword')?.errors?.mustMatch &&
-            teacherForm.get('confirmPassword').touched
-          "
-        >
-          Паролі не співпадають
-        </p> -->
 
         <button
           [disabled]="!teacherForm.valid || teacherForm.pristine"
@@ -153,5 +147,3 @@
     </form>
   </div>
 </div>
-
-<!-- для форми  style="display: flex; flex-direction: column; min-width: 255px; max-width: 500px"  -->

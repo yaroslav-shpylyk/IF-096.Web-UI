@@ -38,9 +38,7 @@ import { FilterPipe } from './teachers/teachers-list/filter.pipe';
     MatListModule,
     PlatformModule,
     MatButtonModule,
-    MatSelectModule,
-
+    MatSelectModule
   ]
-
 })
 export class AdminPanelModule {}

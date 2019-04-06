@@ -1,5 +1,5 @@
 import { Component, Injectable, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef, MatSnackBarConfig } from '@angular/material';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
@@ -12,7 +12,7 @@ import {
   validPhone
 } from '../../validators';
 import { Teacher } from '../../teacher.model';
-import {MatSnackBar} from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable()
 @Component({
@@ -77,7 +77,6 @@ export class EditDialogOverviewComponent implements OnInit {
         .getTeacher(this.teachersService.modalsId)
         .subscribe(
           teacher => {
-            console.log(teacher);
             this.teacher = teacher;
             this.initForm();
             return;
@@ -145,7 +144,7 @@ export class EditDialogOverviewComponent implements OnInit {
       phone: this.teacherForm.value.teacherPhone
     };
     if (!this.editMode) {
-      this.teachersStorageService.addTeacher(newValues).subscribe(() => {
+      this.teachersStorageService.addTeacher(newValues).subscribe(res => {
         this.teachersStorageService.getTeachers();
       });
     } else {
@@ -167,7 +166,7 @@ export class EditDialogOverviewComponent implements OnInit {
     this.router.navigate(['admin', 'teachers'], {
       relativeTo: this.route
     });
-    this.openSnackBar('Дані', 'додано');
+    this.openSnackBar('Дані');
   }
 
   onEditClick(): void {
@@ -175,6 +174,7 @@ export class EditDialogOverviewComponent implements OnInit {
     this.router.navigate(['admin', 'teachers', this.teacher.id, 'edit'], {
       relativeTo: this.route
     });
+    this.openSnackBar('Дані');
   }
 
   onFileSelected(event) {
@@ -193,10 +193,11 @@ export class EditDialogOverviewComponent implements OnInit {
     }
   }
 
-  openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 2000,
-      verticalPosition: 'top'
-    });
+  openSnackBar(message: string) {
+    const config = new MatSnackBarConfig();
+    config.panelClass = ['snack-class'];
+    config.duration = 2000;
+    config.verticalPosition = 'top';
+    this.snackBar.open(message, null, config);
   }
 }

@@ -34,7 +34,6 @@ export class TeachersStorageService {
 
       .subscribe(
         teachers => {
-          console.log(teachers);
           this.teachersChanged.next(teachers);
         },
         error => console.log(error)

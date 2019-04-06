@@ -43,17 +43,9 @@ mat-dialog-container {
   margin: 0.5em;
 }
 
-// @media screen and (max-width: 450px) {
-//   form {
-//     display: flex;
-//     flex-direction: column;
-//     width: 255px;
-//   }
-// }
-// @media screen and (max-width: 2000px) {
-//   form {
-//     display: flex;
-//     flex-direction: column;
-//     width: 400px;
-//   }
-// }
+.snack-class {
+  background-color: rgb(63, 81, 181);
+  display: flex !important;
+  justify-content: center !important;
+  color: white !important;
+}
