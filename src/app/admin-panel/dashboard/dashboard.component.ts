@@ -111,7 +111,7 @@ export class DashboardComponent implements OnInit {
   }
 
   /**
-   * Method wich called after formSubmit of chart options
+   * Method which called after formSubmit of chart options
    * @param form - Object of form with, which gives form controls and form values
    */
   public submitChartChange(form: FormGroup): void {
