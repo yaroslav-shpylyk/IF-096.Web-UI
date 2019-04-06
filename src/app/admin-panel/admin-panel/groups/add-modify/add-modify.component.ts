@@ -20,10 +20,17 @@ export class AddModifyComponent implements OnInit {
     ngOnInit() {
     }
 
+   /**
+   * Method reports about closing bottom sheet
+   */
     abort(){
       this.bottomSheetRef.dismiss()
     }
 
+   /**
+   * Method saves data about a new or modified class
+   * @param formValue - data about the class that we want to change or create
+   */
    save(formValue: Object) {
     const group = new Group(formValue);
     this.groupServices.addGrup(group).subscribe();

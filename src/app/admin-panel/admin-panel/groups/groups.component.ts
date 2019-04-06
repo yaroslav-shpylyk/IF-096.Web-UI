@@ -25,6 +25,10 @@ export class GroupsComponent implements OnInit {
       this.refreshGroups()
     }
 
+   /**
+   * Method open bottom sheet, send data to the bottom sheet,
+   *  updates list of class after closing bottom sheet
+   */
     openBottomSheet(element:Object) {
       let sheet = this.bottomSheet.open(AddModifyComponent,{
         hasBackdrop: true,
@@ -32,7 +36,10 @@ export class GroupsComponent implements OnInit {
       });
       sheet.afterDismissed().subscribe(()=> this.refreshGroups())
     }
-
+    
+   /**
+   * Method updates list of class and creates the possibility of sorting them
+   */
   refreshGroups(){
     this.groupServices.getGroups().subscribe( data =>  {
       this.groups = data;

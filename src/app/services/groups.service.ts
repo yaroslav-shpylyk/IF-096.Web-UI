@@ -12,6 +12,10 @@ export class GroupsService {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * Method returns list of classes
+   * @returns - array, his elements are objects with data class
+   */
   getGroups(): Observable<Group[]> {
     return this.http.get<Group[]>(`/classes`)
     .pipe(
@@ -21,21 +25,15 @@ export class GroupsService {
     );
   }
 
+  /**
+   * Method send changes in class or creates a new class
+   * @param group - data about the class that we want to change or create
+   * @returns - edit class - if "id" is true, or add new class  - if there is't "id"
+   */
   addGrup(group: Group) {
     if (Number(group.id)) {
-      return this.http.put<Group>(`/classes/` + group.id, group)
-      .pipe(
-        map((response: any) => {
-          return response.data;
-        })
-      );
-    } else {
-       return this.http.post<Group>(`/classes/`, group)
-      .pipe(
-        map((response: any) => {
-          return response.data;
-        })
-      );
-    }
+      return this.http.put<Group>(`/classes/` + group.id, group);
+    } else  return this.http.post<Group>(`/classes/`, group) ;  
   }
+
 }
