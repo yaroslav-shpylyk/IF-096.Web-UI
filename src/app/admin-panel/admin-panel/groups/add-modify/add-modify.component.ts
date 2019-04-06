@@ -10,6 +10,7 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
   templateUrl: './add-modify.component.html',
   styleUrls: ['./add-modify.component.scss']
 })
+
 export class AddModifyComponent implements OnInit {
   myFirstReactiveForm: FormGroup;
 
@@ -34,6 +35,5 @@ export class AddModifyComponent implements OnInit {
    save(formValue: Object) {
     const group = new Group(formValue);
     this.groupServices.addGrup(group).subscribe();
-   }
-    
+   } 
 }
