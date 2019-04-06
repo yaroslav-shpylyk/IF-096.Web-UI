@@ -56,3 +56,14 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     this.router.navigate([id, 'edit'], { relativeTo: this.route });
   }
 }
+
+let prevScrollpos = window.pageYOffset;
+window.onscroll = () => {
+const currentScrollPos = window.pageYOffset;
+if (prevScrollpos > currentScrollPos) {
+    document.getElementById('mine').style.bottom = '3.5em';
+  } else {
+    document.getElementById('mine').style.bottom = '-75px';
+  }
+prevScrollpos = currentScrollPos;
+};

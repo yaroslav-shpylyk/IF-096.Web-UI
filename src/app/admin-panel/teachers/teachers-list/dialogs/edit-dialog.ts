@@ -12,6 +12,7 @@ import {
   validPhone
 } from '../../validators';
 import { Teacher } from '../../teacher.model';
+import {MatSnackBar} from '@angular/material';
 
 @Injectable()
 @Component({
@@ -65,7 +66,8 @@ export class EditDialogOverviewComponent implements OnInit {
     private teachersStorageService: TeachersStorageService,
     private router: Router,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -165,6 +167,7 @@ export class EditDialogOverviewComponent implements OnInit {
     this.router.navigate(['admin', 'teachers'], {
       relativeTo: this.route
     });
+    this.openSnackBar('Дані', 'додано');
   }
 
   onEditClick(): void {
@@ -188,5 +191,12 @@ export class EditDialogOverviewComponent implements OnInit {
     } else {
       this.ava = reader.result;
     }
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+      verticalPosition: 'top'
+    });
   }
 }

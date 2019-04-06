@@ -6,20 +6,21 @@ mat-list {
   margin: auto;
   width: 17em;
   display: flex;
-  flex-direction: column
+  flex-direction: column;
 }
 
-mat-list-item{
+mat-list-item {
   width: 65%;
-  justify-content: left
+  justify-content: left;
 }
 
-.mine {
+#mine {
   position: fixed;
-  bottom: 3em;
+  bottom: 3.5em;
   right: 3em;
+  transition: bottom 0.3s;
 }
 
 mat-select {
-  width: 50px
+  width: 2em;
 }

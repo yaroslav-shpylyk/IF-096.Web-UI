@@ -138,7 +138,7 @@
         </p> -->
 
         <button
-          [disabled]="!teacherForm.valid"
+          [disabled]="!teacherForm.valid || teacherForm.pristine"
           mat-raised-button
           color="primary"
           type="submit"
