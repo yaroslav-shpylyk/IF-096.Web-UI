@@ -33,7 +33,7 @@ import { GroupsService } from './services/groups.service';
     AuthService,
     TeachersStorageService,
     TeachersService,
-    GroupsService
+    GroupsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
