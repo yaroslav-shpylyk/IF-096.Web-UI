@@ -9,7 +9,7 @@ import { GroupsComponent } from './admin-panel/groups/groups.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { AddModifyComponent } from './admin-panel/groups/add-modify/add-modify.component';
-import {MatInputModule, MatDialogModule, MatIconModule} from '@angular/material';
+import {MatInputModule, MatDialogModule, MatIconModule, MatSelectModule} from '@angular/material';
 import {MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -38,7 +38,8 @@ import {MatSortModule} from '@angular/material/sort';
     MatExpansionModule,
     MatBottomSheetModule,
     MatListModule,
-    MatSortModule
+    MatSortModule,
+    MatSelectModule
     
     
 

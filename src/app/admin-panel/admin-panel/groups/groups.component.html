@@ -7,7 +7,7 @@
       <td mat-cell *matCellDef="let element"> {{element.className}} </td>
     </ng-container>
 
-    <!-- Weight Column -->
+    <!-- Name Column -->
     <ng-container matColumnDef="classYear">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Рік класа </th>
       <td mat-cell *matCellDef="let element"> {{element.classYear}} </td>
@@ -31,5 +31,5 @@
 </div>
 
 <div class="example-button-row">
-  <button mat-fab color="primary"  mat-raised-button (click)="openBottomSheetAdd()">+</button>
+  <button mat-fab color="primary"  mat-raised-button (click)="openBottomSheet()">+</button>
 </div>

@@ -5,16 +5,13 @@ import { GroupsService } from 'src/app/services/groups.service';
 import { AddModifyComponent } from './add-modify/add-modify.component';
 import {MatBottomSheet, MatTableDataSource, MatSort} from '@angular/material';
 
-
-
 @Component({
   selector: 'app-groups',
   templateUrl: './groups.component.html',
   styleUrls: ['./groups.component.scss']
 })
-export class GroupsComponent implements OnInit {
 
-  
+export class GroupsComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
   groups: Group[];
@@ -23,30 +20,19 @@ export class GroupsComponent implements OnInit {
 
   constructor(private groupServices: GroupsService,
               private bottomSheet: MatBottomSheet) { }
-
-              
+           
     ngOnInit() {
       this.refreshGroups()
-      setTimeout(()=>console.log(this.groups), 5000); 
-    }
-    openBottomSheet(element: Object) {
-      this.bottomSheet.open(AddModifyComponent,{
-        hasBackdrop: true,
-        data: element
-      });
     }
 
-    openBottomSheetAdd() {
+    openBottomSheet(element:Object) {
       let sheet = this.bottomSheet.open(AddModifyComponent,{
         hasBackdrop: true,
-        data: Group
+        data: (element) ? element : Group   
       });
-
-      sheet.afterDismissed().subscribe(()=>{
-        this.refreshGroups()
-      }) 
+      sheet.afterDismissed().subscribe(()=> this.refreshGroups())
     }
-    
+
   refreshGroups(){
     this.groupServices.getGroups().subscribe( data =>  {
       this.groups = data;

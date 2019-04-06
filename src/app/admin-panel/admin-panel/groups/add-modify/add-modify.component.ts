@@ -11,7 +11,6 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
   styleUrls: ['./add-modify.component.scss']
 })
 export class AddModifyComponent implements OnInit {
-  isActive="data.isActive"
   myFirstReactiveForm: FormGroup;
 
   constructor(private bottomSheetRef: MatBottomSheetRef<AddModifyComponent>,
@@ -25,8 +24,8 @@ export class AddModifyComponent implements OnInit {
       this.bottomSheetRef.dismiss()
     }
 
-   save(fields: Object) {
-    const group = new Group(fields);
+   save(formValue: Object) {
+    const group = new Group(formValue);
     this.groupServices.addGrup(group).subscribe();
    }
     
