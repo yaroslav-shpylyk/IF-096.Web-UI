@@ -1,0 +1,38 @@
+<div class="select">
+  <div>
+    <h4>Активні класи</h4>
+    <mat-form-field>
+      <mat-label>Виберіть клас</mat-label>
+      <mat-select (selectionChange)="onSelectionClass($event)">
+        <mat-option *ngFor="let active of activeClass" [value]="active.id">
+          <span>{{active.className}}</span>
+          <span>-</span>
+          <span>{{active.classYear}}рік</span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div>
+    <h4>Неактивні класи</h4>
+    <mat-form-field>
+      <mat-label>Виберіть клас</mat-label>
+      <mat-select (selectionChange)="onSelectionClass($event)">
+        <mat-option *ngFor="let notActive of notActiveClass" [value]="notActive.id">
+          <span>{{notActive.className}}</span>
+          <span>-</span>
+          <span>{{notActive.classYear}}рік</span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+<div class="students">
+  <mat-list *ngIf="studentList">
+    <button [routerLink]="" mat-list-item *ngFor="let student of studentList">
+      <span>{{student.firstname}}</span>
+      <span>{{student.lastname}}</span>
+      <span>{{student.patronymic}}</span>
+      <span>{{student.classe}}</span>
+    </button>
+  </mat-list>
+</div>
