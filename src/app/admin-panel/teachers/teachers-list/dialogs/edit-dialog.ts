@@ -9,7 +9,8 @@ import {
   MustMatch,
   validConfig,
   validEmail,
-  validPhone
+  validPhone,
+  validDate
 } from '../../validators';
 import { Teacher } from '../../teacher.model';
 import { MatSnackBar } from '@angular/material';
@@ -112,7 +113,7 @@ export class EditDialogOverviewComponent implements OnInit {
         teacherFirstname: [teacherFirstname, validConfig],
         teacherLastname: [teacherLastname, validConfig],
         teacherPatronymic: [teacherPatronymic, validConfig],
-        teacherDateOfBirth: [teacherDateOfBirth, Validators.required],
+        teacherDateOfBirth: [teacherDateOfBirth, [Validators.required, validDate]],
         teacherEmail: [teacherEmail, validEmail],
         teacherPhone: [teacherPhone, validPhone],
         teacherLogin: [teacherLogin, Validators.required],
@@ -151,7 +152,7 @@ export class EditDialogOverviewComponent implements OnInit {
       this.teachersStorageService
         .updateTeacher(this.teachersService.modalsId, newValues)
         .subscribe(
-          response => {
+          () => {
             this.teachersStorageService.getTeachers();
           },
           error => console.log(error)
@@ -159,6 +160,7 @@ export class EditDialogOverviewComponent implements OnInit {
     }
     this.dialogRef.close();
     this.router.navigate(['/admin/teachers/']);
+    this.openSnackBar(this.editMode ? 'Нові дані внесено' : `Викладач ${newValues.lastname} ${newValues.lastname} створений`);
   }
 
   onCancel(): void {
@@ -166,15 +168,6 @@ export class EditDialogOverviewComponent implements OnInit {
     this.router.navigate(['admin', 'teachers'], {
       relativeTo: this.route
     });
-    this.openSnackBar('Дані');
-  }
-
-  onEditClick(): void {
-    this.dialogRef.close();
-    this.router.navigate(['admin', 'teachers', this.teacher.id, 'edit'], {
-      relativeTo: this.route
-    });
-    this.openSnackBar('Дані');
   }
 
   onFileSelected(event) {

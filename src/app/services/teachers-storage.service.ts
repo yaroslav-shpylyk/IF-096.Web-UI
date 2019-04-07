@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
 
 @Injectable()
 export class TeachersStorageService {
+  public modalsId: number;
   constructor(private httpClient: HttpClient) {}
 
   public defaultAvatar = 'https://png.pngtree.com/svg/20161212/f93e57629c.svg';
@@ -71,12 +72,6 @@ export class TeachersStorageService {
         return teacher;
       })
     );
-    // .subscribe(
-    //   teacher => {
-    //     this.teachersService.setTeacher(teacher);
-    //   },
-    //   error => console.log(error)
-    // );
   }
 
   /**
@@ -89,12 +84,10 @@ export class TeachersStorageService {
   updateTeacher(id, updTeacher) {
     return this.httpClient.put<any>(`/admin/teachers/${id}`, updTeacher).pipe(
       map(response => {
-        console.log(response);
         const teacher = response.data;
         if (!teacher.avatar) {
           teacher.avatar = this.defaultAvatar;
         }
-        // teacher.id = this.id;
         return teacher;
       })
     );
@@ -125,7 +118,8 @@ export class TeachersStorageService {
           }
           journalData[item.idClass] = {
             className: item.className,
-            subjectName: [item.subjectName]
+            subjectName: [item.subjectName],
+            academicYear: item.academicYear
           };
         }
 
@@ -134,4 +128,3 @@ export class TeachersStorageService {
     );
   }
 }
- 

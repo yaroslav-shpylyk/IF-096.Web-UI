@@ -20,7 +20,7 @@ export class DialogEntryComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
-    private teachersService: TeachersService
+    private teachersStorageService: TeachersStorageService
   ) {
     this.openDialog();
   }
@@ -28,12 +28,15 @@ export class DialogEntryComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.id = +params.id;
-      this.teachersService.modalsId = this.id;
+      this.teachersStorageService.modalsId = this.id;
+      console.log(this.id);
     });
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialog);
+    const dialogRef = this.dialog.open(DetailsDialogOverviewComponent, {
+      panelClass: 'details-dialog'
+    });
     dialogRef.afterClosed().subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
@@ -41,17 +44,15 @@ export class DialogEntryComponent implements OnInit {
 }
 
 @Component({
-  selector: 'dialog-overview',
+  selector: 'app-dialog-overview',
   templateUrl: 'dialog-overview.html'
 })
-export class DialogOverviewExampleDialog implements OnInit {
+export class DetailsDialogOverviewComponent implements OnInit {
   teacher: Teacher;
   teacherJournal;
-  subscription: Subscription;
 
   constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-    private teachersService: TeachersService,
+    public dialogRef: MatDialogRef<DetailsDialogOverviewComponent>,
     private teachersStorageService: TeachersStorageService,
     private router: Router,
     private route: ActivatedRoute,
@@ -61,31 +62,24 @@ export class DialogOverviewExampleDialog implements OnInit {
 
   ngOnInit() {
     this.teachersStorageService
-      .getTeacher(this.teachersService.modalsId)
+      .getTeacher(this.teachersStorageService.modalsId)
       .subscribe(
         teacher => {
           console.log(teacher);
           this.teacher = teacher;
+          this.teacher.id = this.teachersStorageService.modalsId;
         },
         error => console.log(error)
       );
 
     this.teachersStorageService
-      .getTeacherJournal(this.teachersService.modalsId)
+      .getTeacherJournal(this.teachersStorageService.modalsId)
       .subscribe(
         teacherJournal => {
-          console.log(teacherJournal);
           this.teacherJournal = teacherJournal;
         },
         error => console.log(error)
       );
-
-    // this.subscription = this.teachersService.teacherChanged.subscribe(
-    //   teacher => {
-    //     this.teacher = teacher;
-    //     this.router.navigate([this.teacher.id], { relativeTo: this.route });
-    //   }
-    // );
   }
 
   onBackClick(): void {

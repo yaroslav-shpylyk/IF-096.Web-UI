@@ -1,51 +1,53 @@
 <div class="container">
-  <mat-nav-list>
-    <mat-form-field style="display: block">
-      <input
-        autocomplete="off"
-        placeholder="Шукати за прізвищем"
-        matInput
-        type="search"
-        [(ngModel)]="filteredTeachers"
-      />
-      <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field>
+  <div style="width: 18.6em;  margin-left: calc(100vw - 100%);">
+    <mat-nav-list>
+      <mat-form-field style="display: block">
+        <input
+          autocomplete="off"
+          placeholder="Шукати за прізвищем"
+          matInput
+          type="search"
+          [(ngModel)]="filteredTeachers"
+        />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
 
-    <ng-container
-      *ngFor="let teacher of (teachers | filter: filteredTeachers:'lastname')"
-    >
-      <div style="display: flex">
-        <mat-list-item
-          routerLinkActive="active"
-          (click)="onTeacherDetails(teacher.id)"
-        >
-          <img
-            matListAvatar
-            [src]="teacher.avatar"
-            alt="{{ teacher.lastname }}"
-          />
-          <p matLine>
-            {{ teacher.lastname }} {{ teacher.firstname }}
-            {{ teacher.patronymic }}
-          </p>
-        </mat-list-item>
+      <ng-container
+        *ngFor="let teacher of (teachers | filter: filteredTeachers:'lastname')"
+      >
+        <div style="display: flex">
+          <mat-list-item
+            routerLinkActive="active"
+            (click)="onTeacherDetails(teacher.id)"
+          >
+            <img
+              matListAvatar
+              [src]="teacher.avatar"
+              alt="{{ teacher.lastname }}"
+            />
+            <p matLine>
+              {{ teacher.lastname }} {{ teacher.firstname }}
+              {{ teacher.patronymic }}
+            </p>
+          </mat-list-item>
 
-        <button
-          style="margin: auto"
-          mat-icon-button
-          #menuTrigger="matMenuTrigger"
-          [matMenuTriggerFor]="menu"
-        >
-          <mat-icon>more_vert</mat-icon>
-        </button>
-      </div>
+          <button
+            style="margin: auto"
+            mat-icon-button
+            #menuTrigger="matMenuTrigger"
+            [matMenuTriggerFor]="menu"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </div>
 
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="onEdit(teacher.id)">Редагувати</button>
-        <button mat-menu-item (click)="onDelete(teacher)">Видалити</button>
-      </mat-menu>
-    </ng-container>
-  </mat-nav-list>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="onEdit(teacher.id)">Редагувати</button>
+          <button mat-menu-item (click)="onDelete(teacher)">Видалити</button>
+        </mat-menu>
+      </ng-container>
+    </mat-nav-list>
+  </div>
   <button id="mine" mat-fab color="primary" (click)="onNewTeacher()">
     <i class="material-icons">
       person_add

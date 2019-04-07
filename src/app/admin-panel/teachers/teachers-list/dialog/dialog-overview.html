@@ -1,20 +1,74 @@
+<style>
+  p,
+  h2,
+  h3 {
+    color: rgb(107, 103, 103);
+  }
+
+  p {
+    margin: 0.4em 0;
+  }
+</style>
 <div>
   <div *ngIf="teacher">
     <div class="avatar">
       <img [src]="teacher.avatar" height="150" width="150" />
     </div>
-    <div class="info">
-      <h2>{{ teacher.lastname + ' ' + teacher.firstname }}</h2>
-      <h3>{{ teacher.patronymic }}</h3>
-      <p *ngIf="teacher.email">
-        <b>Электронна скринька: </b> {{ teacher.email }}
-      </p>
-      <p *ngIf="teacher.phone"><b>Номер телефону: </b> {{ teacher.phone }}</p>
+    <h2>{{ teacher.lastname + ' ' + teacher.firstname }}</h2>
+    <h3>{{ teacher.patronymic }}</h3>
+    <div style="display: flex">
+      <div style="margin: auto">
+        <div>
+          <p><b>Дата народження: </b> {{ teacher.dateOfBirth }}</p>
+          <p *ngIf="teacher.email">
+            <b>Электронна скринька: </b> {{ teacher.email }}
+          </p>
+          <p *ngIf="teacher.phone">
+            <b>Номер телефону: </b> {{ teacher.phone }}
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+<br />
+<mat-divider></mat-divider>
+<br />
 
-<div style="display: flex; justify-content: space-evenly;">
-  <button mat-raised-button color="accent" (click)="onEditClick()">Редагувати</button>
+<mat-accordion *ngIf="teacherJournal?.length > 0">
+  <mat-expansion-panel
+    *ngFor="let class of teacherJournal"
+    (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ class.className }}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{ class.academicYear }}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-divider></mat-divider>
+    <ng-container *ngFor="let subject of class.subjectName; let i = index">
+      <p>{{ i + 1 }}. {{ subject }}</p>
+      <mat-divider></mat-divider>
+    </ng-container>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<h1
+  *ngIf="!teacherJournal?.length"
+  style="color: rgb(107, 103, 103); text-align: center;"
+>
+  За обраним викладачем не закріплено жодного класу
+</h1>
+
+<div
+  style="display: flex; justify-content: space-evenly; text-align: center; margin: 1em 0"
+>
+  <button mat-raised-button color="accent" (click)="onEditClick()">
+    Редагувати
+  </button>
   <button mat-raised-button (click)="onBackClick()">Назад</button>
 </div>

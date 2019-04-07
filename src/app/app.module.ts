@@ -11,7 +11,7 @@ import { MaterialModule } from './material';
 import { TeachersStorageService } from './services/teachers-storage.service';
 import { TeachersService } from './admin-panel/teachers/teachers.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-list/dialog/dialog-overview';
+import { DetailsDialogOverviewComponent } from './admin-panel/teachers/teachers-list/dialog/dialog-overview';
 import { EditDialogOverviewComponent } from './admin-panel/teachers/teachers-list/dialogs/edit-dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationDialogComponent } from './admin-panel/teachers/teachers-list/teachers-list.component';
@@ -19,12 +19,12 @@ import { ConfirmationDialogComponent } from './admin-panel/teachers/teachers-lis
 @NgModule({
   declarations: [
     AppComponent,
-    DialogOverviewExampleDialog,
+    DetailsDialogOverviewComponent,
     EditDialogOverviewComponent,
     ConfirmationDialogComponent
   ],
   entryComponents: [
-    DialogOverviewExampleDialog,
+    DetailsDialogOverviewComponent,
     EditDialogOverviewComponent,
     ConfirmationDialogComponent
   ],
