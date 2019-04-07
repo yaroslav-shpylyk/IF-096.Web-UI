@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProgressService } from '../../services/progress.service';
 
 @Component({
   selector: 'app-progress',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProgressComponent implements OnInit {
 
-  constructor() { }
+  constructor(private progressService: ProgressService) { }
 
   ngOnInit() {
+    this.progressService.getClassesWithSubjects().subscribe(result => console.log(result));
   }
 
 }

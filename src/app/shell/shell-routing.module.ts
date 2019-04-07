@@ -20,8 +20,8 @@ const routes: Routes = [
       },
       {
         path: 'progress',
-        canActivate: [AdminPanelGuard],
-        canLoad: [AdminPanelGuard],
+/*        canActivate: [AdminPanelGuard],
+        canLoad: [AdminPanelGuard],*/
         loadChildren: '../progress/progress.module#ProgressModule'
       },
       {

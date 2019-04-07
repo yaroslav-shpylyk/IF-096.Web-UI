@@ -15,10 +15,12 @@ export class ClassService {
   /**
    * Method gets data about classes
    * @param type - Type of classes(all, active, inActive)
+   * @param subjectId - Request options
    * @returns - Array with classes data
    */
-  public getClasses(type: string): Observable<ClassData[]> {
-    return this.http.get('/classes')
+  public getClasses(type: string, subjectId?: string): Observable<ClassData[]> {
+    const subject = subjectId || '';
+    return this.http.get(`/classes?subjectId=${subject}`)
       .pipe(
         map((result: {status: any, data: ClassData[]}) => {
           switch (type) {
