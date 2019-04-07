@@ -13,7 +13,6 @@ import { ClassInfo } from '../../models/class-info';
 })
 
 
-
 export class StudentsListComponent implements OnInit {
   activeClass: Array<ClassInfo>;
   notActiveClass: Array<ClassInfo>;
@@ -35,13 +34,18 @@ export class StudentsListComponent implements OnInit {
   }
 
   /**
-   * Method return students list from student service
-   * @returns - array with students
-   */
+   * Method return students list from one class
+   * @returns - array with students in class
+  */
 
   onSelectionClass($event): void {
     this.students.getStudents($event.value).subscribe((list: Array<Student>) => this.studentList = list);
   }
+
+   /**
+   * Method open component for add new student
+   * @returns - array with students in class
+  */
 
   AddStudent(): void {
     console.log('button add student')
