@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy, Inject, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
-import { TeachersService } from '../teachers.service';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import {
   MatDialog,
   MatDialogRef,
@@ -23,7 +22,6 @@ export class TeachersListComponent implements OnInit, OnDestroy {
 
   constructor(
     private teachersStorageService: TeachersStorageService,
-    private teachersService: TeachersService,
     private router: Router,
     private route: ActivatedRoute,
     public dialog: MatDialog
@@ -47,7 +45,7 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   }
 
   onTeacherDetails(id) {
-    this.teachersService.modalsId = id;
+    this.teachersStorageService.modalsId = id;
     this.router.navigate([id], { relativeTo: this.route });
   }
 
@@ -73,7 +71,7 @@ export class TeachersListComponent implements OnInit, OnDestroy {
 
 @Component({
   selector: 'app-confirmation-dialog',
-  templateUrl: 'app-confirmation-dialog.html'
+  templateUrl: './confirmation-dialog/app-confirmation-dialog.html'
 })
 export class ConfirmationDialogComponent {
   constructor(
@@ -90,7 +88,7 @@ export class ConfirmationDialogComponent {
       .subscribe(response => {
         this.teachersStorageService.getTeachers();
         this.dialogRef.close();
-        this.openSnackBar(`Викладач ${response.firstname} видалений`);
+        this.openSnackBar(`Викладач ${response.lastname} ${response.firstname}видалений`);
       });
   }
 

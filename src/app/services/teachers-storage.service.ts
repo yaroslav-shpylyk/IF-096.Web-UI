@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class TeachersStorageService {
   public modalsId: number;
+  public editMode: boolean;
   constructor(private httpClient: HttpClient) {}
 
   public defaultAvatar = 'https://png.pngtree.com/svg/20161212/f93e57629c.svg';

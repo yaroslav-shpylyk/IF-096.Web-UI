@@ -33,7 +33,6 @@
 </div>
 <br />
 <mat-divider></mat-divider>
-<br />
 
 <mat-accordion *ngIf="teacherJournal?.length > 0">
   <mat-expansion-panel
@@ -57,12 +56,12 @@
   </mat-expansion-panel>
 </mat-accordion>
 
-<h1
+<h2
   *ngIf="!teacherJournal?.length"
   style="color: rgb(107, 103, 103); text-align: center;"
 >
   За обраним викладачем не закріплено жодного класу
-</h1>
+</h2>
 
 <div
   style="display: flex; justify-content: space-evenly; text-align: center; margin: 1em 0"

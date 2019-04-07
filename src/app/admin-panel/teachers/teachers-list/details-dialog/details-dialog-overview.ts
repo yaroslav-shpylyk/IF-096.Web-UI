@@ -2,10 +2,9 @@ import { Component, Injectable, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { TeachersService } from '../../teachers.service';
 import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { Teacher } from '../../teacher.model';
+import { Teacher } from '../../helpers/teacher.model';
 
 @Injectable()
 @Component({
@@ -29,13 +28,12 @@ export class DialogEntryComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.id = +params.id;
       this.teachersStorageService.modalsId = this.id;
-      console.log(this.id);
     });
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DetailsDialogOverviewComponent, {
-      panelClass: 'details-dialog'
+      width: '400px'
     });
     dialogRef.afterClosed().subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });
@@ -45,7 +43,7 @@ export class DialogEntryComponent implements OnInit {
 
 @Component({
   selector: 'app-dialog-overview',
-  templateUrl: 'dialog-overview.html'
+  templateUrl: 'details-dialog-overview.html'
 })
 export class DetailsDialogOverviewComponent implements OnInit {
   teacher: Teacher;
@@ -65,7 +63,6 @@ export class DetailsDialogOverviewComponent implements OnInit {
       .getTeacher(this.teachersStorageService.modalsId)
       .subscribe(
         teacher => {
-          console.log(teacher);
           this.teacher = teacher;
           this.teacher.id = this.teachersStorageService.modalsId;
         },

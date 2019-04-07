@@ -9,24 +9,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material';
 import { TeachersStorageService } from './services/teachers-storage.service';
-import { TeachersService } from './admin-panel/teachers/teachers.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { DetailsDialogOverviewComponent } from './admin-panel/teachers/teachers-list/dialog/dialog-overview';
-import { EditDialogOverviewComponent } from './admin-panel/teachers/teachers-list/dialogs/edit-dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ConfirmationDialogComponent } from './admin-panel/teachers/teachers-list/teachers-list.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    DetailsDialogOverviewComponent,
-    EditDialogOverviewComponent,
-    ConfirmationDialogComponent
-  ],
-  entryComponents: [
-    DetailsDialogOverviewComponent,
-    EditDialogOverviewComponent,
-    ConfirmationDialogComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +30,6 @@ import { ConfirmationDialogComponent } from './admin-panel/teachers/teachers-lis
   providers: [
     AuthService,
     TeachersStorageService,
-    TeachersService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

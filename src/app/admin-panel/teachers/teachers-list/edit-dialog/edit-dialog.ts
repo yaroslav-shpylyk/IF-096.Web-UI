@@ -3,7 +3,6 @@ import { MatDialog, MatDialogRef, MatSnackBarConfig } from '@angular/material';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { TeachersService } from '../../teachers.service';
 import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
 import {
   MustMatch,
@@ -11,8 +10,8 @@ import {
   validEmail,
   validPhone,
   validDate
-} from '../../validators';
-import { Teacher } from '../../teacher.model';
+} from '../../helpers/validators';
+import { Teacher } from '../../helpers/teacher.model';
 import { MatSnackBar } from '@angular/material';
 
 @Injectable()
@@ -28,7 +27,7 @@ export class EditDialogEntryComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
-    private teachersService: TeachersService
+    private teachersStorageService: TeachersStorageService
   ) {
     this.openDialog();
   }
@@ -36,14 +35,16 @@ export class EditDialogEntryComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.id = +params.id;
-      this.teachersService.editMode = params.id != null;
-      this.teachersService.modalsId = this.id;
+      this.teachersStorageService.editMode = params.id != null;
+      this.teachersStorageService.modalsId = this.id;
     });
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(EditDialogOverviewComponent);
-    dialogRef.afterClosed().subscribe(result => {
+    const dialogRef = this.dialog.open(EditDialogOverviewComponent, {
+      maxWidth: '90vw'
+    });
+    dialogRef.afterClosed().subscribe(() => {
       this.router.navigate(['/admin', 'teachers'], { relativeTo: this.route });
     });
   }
@@ -63,7 +64,6 @@ export class EditDialogOverviewComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<EditDialogOverviewComponent>,
-    private teachersService: TeachersService,
     private teachersStorageService: TeachersStorageService,
     private router: Router,
     private route: ActivatedRoute,
@@ -72,10 +72,10 @@ export class EditDialogOverviewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.editMode = this.teachersService.editMode;
+    this.editMode = this.teachersStorageService.editMode;
     if (this.editMode) {
       this.teachersStorageService
-        .getTeacher(this.teachersService.modalsId)
+        .getTeacher(this.teachersStorageService.modalsId)
         .subscribe(
           teacher => {
             this.teacher = teacher;
@@ -147,20 +147,21 @@ export class EditDialogOverviewComponent implements OnInit {
     if (!this.editMode) {
       this.teachersStorageService.addTeacher(newValues).subscribe(res => {
         this.teachersStorageService.getTeachers();
+        this.openSnackBar(`Викладач ${newValues.lastname} ${newValues.lastname} створений`);
       });
     } else {
       this.teachersStorageService
-        .updateTeacher(this.teachersService.modalsId, newValues)
+        .updateTeacher(this.teachersStorageService.modalsId, newValues)
         .subscribe(
           () => {
             this.teachersStorageService.getTeachers();
+            this.openSnackBar(`Нові дані внесено`);
           },
           error => console.log(error)
         );
     }
     this.dialogRef.close();
     this.router.navigate(['/admin/teachers/']);
-    this.openSnackBar(this.editMode ? 'Нові дані внесено' : `Викладач ${newValues.lastname} ${newValues.lastname} створений`);
   }
 
   onCancel(): void {

@@ -21,11 +21,15 @@ body {
   justify-content: center;
 }
 
-.mat-dialog-container h2,
-h3 {
+.mat-dialog-container h3 {
   text-align: center;
   line-height: 0.6em;
 }
+
+.mat-dialog-container h2 {
+  text-align: center;
+}
+
 .mat-dialog-container img {
   border-radius: 6.25em;
   padding: 0.2em;
@@ -49,3 +53,11 @@ mat-dialog-container {
   justify-content: center !important;
   color: white !important;
 }
+
+app-dialog-overview {
+  margin: auto !important;
+}
+
+// .ng-star-inserted {
+//   margin: auto !important;
+// }
