@@ -2,13 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ShellComponent } from './shell/shell.component';
 import { AdminPanelGuard } from '../admin-panel/admin-panel.guard';
-import { StudentGuard } from '../student-book/student.guard';
+import { StudentGuard } from '../services/student.guard';
+import { TeachersGuard } from '../services/teachers.guard';
 
 const routes: Routes = [
   {
     path: 'admin-panel',
-    canActivate: [StudentGuard],
-    canLoad: [StudentGuard],
+    canActivate: [StudentGuard, TeachersGuard],
+    canLoad: [StudentGuard, TeachersGuard],
     loadChildren: '../admin-panel/admin-panel.module#AdminPanelModule'
   },
   {
@@ -25,8 +26,8 @@ const routes: Routes = [
   },
   {
     path: 'student-book',
-    canActivate: [AdminPanelGuard],
-    canLoad: [AdminPanelGuard],
+    canActivate: [AdminPanelGuard, TeachersGuard],
+    canLoad: [AdminPanelGuard, TeachersGuard],
     loadChildren: '../student-book/student-book.module#StudentBookModule'
   },
   {
