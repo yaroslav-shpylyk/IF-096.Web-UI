@@ -10,34 +10,40 @@ import { ClassData } from '../../models/class-info';
 })
 
 export class NewYearComponent implements OnInit {
+
   public allClasses: ClassData[] = [];
   public activeClasses: ClassData[] = [];
   public transititionForm: FormGroup;
+  public currentClassYear: number;
+  public currentClassTitle: string;
   panelOpenState = [];
 
-  constructor(
-    private newYearTransitition: NewYearService) {  }
+  constructor( private newYearTransitition: NewYearService) {  }
 
-ngOnInit() {
-  this.createTransititionForm();
-  this.newYearTransitition.getAllClasesInfo().subscribe(
-    data => {
-      const Info = data;
-      data.forEach(
-         (schoolClass) => {
-            if (schoolClass.isActive && schoolClass.numOfStudents > 0) {
-              this.activeClasses.push(schoolClass);
-              this.panelOpenState.push(false);
-              this.addNewClassTitleInput();
+  ngOnInit() {
+    this.createTransititionForm();
+    this.newYearTransitition.getAllClasesInfo().subscribe(
+      data => {
+        data.forEach(
+          (schoolClass) => {
+              this.allClasses.push(schoolClass);
+              if (schoolClass.isActive && schoolClass.numOfStudents > 0) {
+                this.activeClasses.push(schoolClass);
+                this.panelOpenState.push(false);
+                this.addNewClassTitleInput();
+                }
               }
-            }
-          );
-      this.allClasses = Info;
-        }
-    );
-  this.createTransititionForm();
+            );
 
-}
+          }
+      );
+  }
+
+  focusToFormControl(event) {
+    this.currentClassYear = +event.target.dataset.classYear;
+    this.currentClassTitle = event.target.dataset.classTitle;
+  }
+
 
   createTransititionForm(): void {
     this.transititionForm = new FormGroup({
@@ -45,9 +51,27 @@ ngOnInit() {
     });
   }
 
+  classExistValidator = (allClasses: ClassData[]) => {
+    return (control: FormControl) => {
+      if (this.currentClassTitle === control.value) {
+        return {title_dublicate: {valid: false}};
+      }
+      const error = allClasses.some(
+         (item) => (item.classYear === this.currentClassYear + 1 && item.className === control.value)
+       );
+      if (error )  {
+        return { class_exist: {valid: false}  };
+      }
+      return null;
+    };
+  }
+
   addNewClassTitleInput() {
-    const newInput = new FormControl('', [Validators.pattern('^([1-9]|1[0-2])-[А-Я]{1}$')]);
-    ( this.transititionForm.controls.newClassTitle as FormArray).push(newInput);  }
+    const newInput = new FormControl('', [
+      Validators.pattern('^([1-9]|1[0-2])-[А-Я]{1}$'),
+      this.classExistValidator(this.allClasses)]);
+    (this.transititionForm.controls.newClassTitle as FormArray).push(newInput);
+  }
   get newClassTitle() { return this.transititionForm.get('newClassTitle'); }
 
   formSubmit() {

@@ -19,10 +19,12 @@
               </mat-list>
           </mat-expansion-panel>
         </mat-accordion>
-        <input class="new-class-name" id={{index}} placeholder="нова назва класу" [formControlName]="index" />
+        <input attr.data-class-year="{{activeClasses[index].classYear}}" attr.data-class-title="{{activeClasses[index].className}}" (click)="focusToFormControl($event)" class="new-class-name" id={{index}} placeholder="нова назва класу" [formControlName]="index" />
         <div class="validation-error"
           *ngIf="feature.invalid">
-          <p>Недопустима назва (Приклад: "8-А")</p>
+          <p *ngIf="feature.errors.pattern">Недопустима назва (Приклад: "8-А")</p>
+          <p *ngIf="feature.errors.class_exist">Клас вже існує в наступному н. р.</p>
+          <p *ngIf="feature.errors.title_dublicate">Назви класів співпадають</p>
         </div>
       </mat-card>  
     </div>
