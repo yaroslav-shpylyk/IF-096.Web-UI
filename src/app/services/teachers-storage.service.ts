@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { TeachersService } from '../admin-panel/teachers/teachers.service';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable()
 export class TeachersStorageService {
-  constructor(
-    private httpClient: HttpClient,
-    private teachersService: TeachersService
-  ) {}
+  constructor(private httpClient: HttpClient) {}
 
   public defaultAvatar = 'https://png.pngtree.com/svg/20161212/f93e57629c.svg';
   teachersChanged = new Subject();
@@ -62,15 +58,6 @@ export class TeachersStorageService {
    * @param id - number representing id of requested teacher.
    */
   getTeacher(id) {
-    // let cachedTeachers = this.teachersService.getTeachers();
-
-    // if (cachedTeachers.length) {
-    //   for (let teacher of cachedTeachers) {
-    //     if (teacher.id == id) {
-    //       return teacher;
-    //     }
-    //   }
-    // }
     return this.httpClient.get<any>(`/teachers/${id}`).pipe(
       map(response => {
         const teacher = response.data;
@@ -126,4 +113,25 @@ export class TeachersStorageService {
   addTeacher(newTeacher) {
     return this.httpClient.post(`/teachers`, newTeacher);
   }
+
+  getTeacherJournal(teacherId) {
+    return this.httpClient.get<any>(`/journals/teachers/${teacherId}`).pipe(
+      map(response => {
+        const journalData = {};
+        for (const item of response.data) {
+          if (journalData[item.idClass]) {
+            journalData[item.idClass].subjectName.push(item.subjectName);
+            continue;
+          }
+          journalData[item.idClass] = {
+            className: item.className,
+            subjectName: [item.subjectName]
+          };
+        }
+
+        return Object.values(journalData);
+      })
+    );
+  }
 }
+ 

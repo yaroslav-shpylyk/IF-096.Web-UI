@@ -3,8 +3,13 @@ import { Subscription } from 'rxjs';
 import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
 import { TeachersService } from '../teachers.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatSnackBarConfig } from '@angular/material';
-
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatSnackBar,
+  MatSnackBarConfig
+} from '@angular/material';
 
 @Component({
   selector: 'app-teachers-list',
@@ -41,9 +46,9 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     this.router.navigate(['new'], { relativeTo: this.route });
   }
 
-  onTeacherDetails(teacher) {
-    this.teachersService.modalsId = teacher.id;
-    this.router.navigate([teacher.id], { relativeTo: this.route });
+  onTeacherDetails(id) {
+    this.teachersService.modalsId = id;
+    this.router.navigate([id], { relativeTo: this.route });
   }
 
   onEdit(id) {
@@ -53,7 +58,7 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   onDelete(teacher): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '20em',
-      height: '11em',
+      height: '12em',
       panelClass: ['confirmation-dialog'],
       data: {
         id: teacher.id,
@@ -62,8 +67,7 @@ export class TeachersListComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-    });
+    dialogRef.afterClosed().subscribe(() => {});
   }
 }
 
@@ -81,11 +85,13 @@ export class ConfirmationDialogComponent {
   ) {}
 
   onDeleteClick() {
-    this.teachersStorageService.deleteTeacher(this.data.id).subscribe((response) => {
-      this.teachersStorageService.getTeachers();
-      this.dialogRef.close();
-      this.openSnackBar(`Викладач ${response.firstname} видалений`);
-    });
+    this.teachersStorageService
+      .deleteTeacher(this.data.id)
+      .subscribe(response => {
+        this.teachersStorageService.getTeachers();
+        this.dialogRef.close();
+        this.openSnackBar(`Викладач ${response.firstname} видалений`);
+      });
   }
 
   onNoClick(): void {

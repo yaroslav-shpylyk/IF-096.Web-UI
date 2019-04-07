@@ -1,6 +1,6 @@
 <div class="container">
-  <mat-list>
-    <mat-form-field>
+  <mat-nav-list>
+    <mat-form-field style="display: block">
       <input
         autocomplete="off"
         placeholder="Шукати за прізвищем"
@@ -14,32 +14,38 @@
     <ng-container
       *ngFor="let teacher of (teachers | filter: filteredTeachers:'lastname')"
     >
-      <mat-list-item routerLinkActive="active">
+      <div style="display: flex">
+        <mat-list-item
+          routerLinkActive="active"
+          (click)="onTeacherDetails(teacher.id)"
+        >
+          <img
+            matListAvatar
+            [src]="teacher.avatar"
+            alt="{{ teacher.lastname }}"
+          />
+          <p matLine>
+            {{ teacher.lastname }} {{ teacher.firstname }}
+            {{ teacher.patronymic }}
+          </p>
+        </mat-list-item>
+
         <button
+          style="margin: auto"
           mat-icon-button
           #menuTrigger="matMenuTrigger"
           [matMenuTriggerFor]="menu"
         >
           <mat-icon>more_vert</mat-icon>
         </button>
-
-        <img
-          matListAvatar
-          [src]="teacher.avatar"
-          alt="{{ teacher.lastname }}"
-        />
-        <p matLine>
-          {{ teacher.lastname }} {{ teacher.firstname }}
-          {{ teacher.patronymic }}
-        </p>
-      </mat-list-item>
+      </div>
 
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="onEdit(teacher.id)">Редагувати</button>
         <button mat-menu-item (click)="onDelete(teacher)">Видалити</button>
       </mat-menu>
     </ng-container>
-  </mat-list>
+  </mat-nav-list>
   <button id="mine" mat-fab color="primary" (click)="onNewTeacher()">
     <i class="material-icons">
       person_add

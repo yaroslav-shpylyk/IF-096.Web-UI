@@ -131,18 +131,23 @@
           <mat-error> Паролі не співпадають </mat-error>
         </mat-form-field>
 
-        <button
-          [disabled]="!teacherForm.valid || teacherForm.pristine"
-          mat-raised-button
-          color="primary"
-          type="submit"
+        <div
+          mat-dialog-actions
+          style="display: flex; justify-content: space-evenly; flex-wrap: nowrap;"
         >
-          Зберегти
-        </button>
+          <button
+            [disabled]="!teacherForm.valid || teacherForm.pristine"
+            mat-raised-button
+            color="primary"
+            type="submit"
+          >
+            Зберегти
+          </button>
 
-        <button mat-raised-button type="button" (click)="onCancel()">
-          Відмінити
-        </button>
+          <button mat-raised-button type="button" (click)="onCancel()">
+            Відмінити
+          </button>
+        </div>
       </div>
     </form>
   </div>
