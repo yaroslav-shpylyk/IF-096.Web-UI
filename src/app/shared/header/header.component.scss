@@ -9,10 +9,12 @@
   background-color: $main-color;
   font-size: 2rem;
   height: 75px;
-  transition: top 400ms ease-in-out;
+  opacity: 1;
+  transition: top 400ms ease-in-out, opacity 400ms ease-in-out;
 
   &.hide {
     top: -75px;
+    opacity: 0;
   }
 
   &.notransition {
