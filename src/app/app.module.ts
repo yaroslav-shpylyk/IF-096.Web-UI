@@ -32,7 +32,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   providers: [
     AuthService,
     TeachersStorageService,
-    TeachersService,
     JournalsStorageService,
     JournalsService,
     {
