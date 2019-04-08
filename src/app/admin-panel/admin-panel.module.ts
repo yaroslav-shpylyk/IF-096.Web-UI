@@ -14,7 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GroupsComponent } from './admin-panel/groups/groups.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { AddModifyGroupsComponent } from './admin-panel/groups/add-modify/add-modify.component';
+import { AddModifyComponent } from './admin-panel/groups/add-modify/add-modify.component';
 import { MatInputModule, MatDialogModule, MatIconModule, MatSelectModule } from '@angular/material';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -27,7 +27,7 @@ import { MatSortModule } from '@angular/material/sort';
   declarations: [
     AdminPanelComponent,
     GroupsComponent,
-    AddModifyGroupsComponent,
+    AddModifyComponent,
     TeachersComponent,
     TeachersListComponent,
     TeacherEditComponent,
@@ -57,7 +57,7 @@ import { MatSortModule } from '@angular/material/sort';
     MaterialModule
   ],
   entryComponents: [
-    AddModifyGroupsComponent
+    AddModifyComponent
   ],
   providers: [GroupsComponent]
 })
