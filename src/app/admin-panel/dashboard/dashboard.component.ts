@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SubjectService } from '../../services/subject.service';
 import { TeacherService } from '../../services/teacher.service';
 import { TeacherData } from '../../models/teacher-data';
@@ -84,7 +84,7 @@ export class DashboardComponent implements OnInit {
    */
   public dataValues(): number[] {
     return Object.values(this.data);
-}
+  }
   ngOnInit(): void {
     this.createStreamClassesForm();
     this.subjectService.getSubjects().subscribe((result: SubjectData[]) => this.data.subjects = result.length);
