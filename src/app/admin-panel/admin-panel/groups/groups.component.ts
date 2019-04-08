@@ -26,6 +26,15 @@ export class GroupsComponent implements OnInit {
     this.refreshGroups()
   }
 
+  applyFilterForActiveClass(filterValue: string) {
+    this.dataSourceActivClass.filter = filterValue.trim().toLowerCase();
+  }
+
+  applyFilterForCloseClass(filterValue: string) {
+    this.dataSourceCloseClass.filter = filterValue.trim().toLowerCase();
+  }
+
+
   /**
   * Method open bottom sheet, send data to the bottom sheet,
   *  updates list of class after closing bottom sheet
