@@ -15,26 +15,3 @@ body {
 }
 
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
-
-.mat-dialog-container .avatar {
-  display: flex;
-  justify-content: center;
-}
-
-.mat-dialog-container h2,
-h3 {
-  text-align: center;
-  line-height: 0.6em;
-}
-.mat-dialog-container img {
-  display: flex;
-  border-radius: 6.25em;
-  padding: 0.2em;
-  border: 0.2em solid #09dfbb;
-  overflow: hidden;
-  height: 9.375em;
-  width: 9.375em;
-  position: relative;
-  margin: auto;
-}
-
