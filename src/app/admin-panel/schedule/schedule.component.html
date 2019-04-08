@@ -1,12 +1,15 @@
+<div class="title-schedule">
+  <h5>РОЗКЛАД УРОКІВ</h5>
+</div>
 <form [formGroup] = "frmSchedule" (submit) = "onSubmit()">
   <div class="schedule-top">
-    <mat-form-field>
+    <mat-form-field class="datePiker">
       <input matInput [matDatepicker]="pickerStart" [placeholder]="dateTermStartMsg" formControlName="dateTermStart">
       <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
       <mat-datepicker #pickerStart></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field class="datePiker">
         <input matInput [matDatepicker]="pickerEnd" [placeholder]="dateTermEndMsg" formControlName="dateTermEnd">
         <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker #pickerEnd></mat-datepicker>
@@ -19,25 +22,27 @@
     </mat-form-field>
   </div> <!--end of top-->
 
-  <fieldset formArrayName="mondaySchedule">
-    <legend>Понеділок</legend>
-    <div *ngFor="let lesson of mondaySchedule.controls; let i=index">
-      <span>{{i+1}}. </span>
-      <mat-form-field>
-        <mat-select placeholder="Виберіть предмет" [formControlName]="i">
-          <mat-option *ngFor="let subj of arrSubjectsList" [value]="subj.subjectId">{{ subj.subjectName }}</mat-option>
-        </mat-select>
-      </mat-form-field>
+  <div class="week-schedule">
+    <fieldset formArrayName="mondaySchedule">
+      <legend>Понеділок</legend>
+      <div *ngFor="let lesson of mondaySchedule.controls; let i=index">
+        <span>{{i+1}}. </span>
+        <mat-form-field>
+          <mat-select placeholder="Виберіть предмет" [formControlName]="i">
+            <mat-option *ngFor="let subj of arrSubjectsList" [value]="subj.subjectId">{{ subj.subjectName }}</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-      <button mat-icon-button (click)="addSubjest()">
-        <mat-icon>add_box</mat-icon>
-      </button>
-      <button mat-icon-button>
-          <mat-icon>delete</mat-icon>
-      </button>
+        <button mat-icon-button (click)="addSubjest()">
+          <mat-icon>add_box</mat-icon>
+        </button>
+        <button mat-icon-button (click)="removeSubjest(i)">
+            <mat-icon>delete</mat-icon>
+        </button>
 
-    </div>
-  </fieldset>
+      </div>
+    </fieldset>
+  </div>
 
   <button mat-button>Click me!</button>
 </form>

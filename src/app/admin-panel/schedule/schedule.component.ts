@@ -56,10 +56,19 @@ export class ScheduleComponent implements OnInit {
   get mondaySchedule() {
     return this.frmSchedule.get('mondaySchedule') as FormArray;
   }
-  /** Method adds the subject to the day schedule */
+
+  /** Method dynamically adds the subject to the day schedule */
   public addSubjest(): void {
-    this.mondaySchedule.push(this.frmBld.control(''))
+    this.mondaySchedule.push(this.frmBld.control(''));
   }
+
+  /** Method removes the subject from the day schedule
+   * @param i - index of the control which to be deleted
+   */
+  public removeSubjest(i: number): void {
+    this.mondaySchedule.removeAt(i);
+  }
+
   /**
    * The method checks the data in the control for validity
    * @param cntrName - Control's name

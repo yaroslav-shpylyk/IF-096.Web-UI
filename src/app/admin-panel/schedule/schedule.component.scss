@@ -1,6 +1,17 @@
-$invalid-color: rgb(112, 5, 5);
+$title-color: rgba(210, 230, 240, 0.5);
 $icon-color: rgb(133, 133, 184);
+$invalid-color: rgb(112, 5, 5);
 
+.title-schedule {
+    background-color: $title-color;
+    margin: 0%;
+    box-shadow: 1px 1px 5px #000;
+}
+.title-schedule h5 {
+    margin: 0%;
+    padding: 0.3em;
+    text-align: center;
+}
 form {
     font-size: 0.8em;
 }
@@ -8,6 +19,9 @@ form {
     display: flex;
     width: 95%;
     justify-content: space-around;
+}
+.datePiker {
+    width: 30%;
 }
 input.ng-touched.ng-invalid{
     border-color: $invalid-color;
@@ -20,5 +34,8 @@ mat-icon {
 @media (min-width: 320px) and (max-width: 480px) {
     .schedule-top {
         flex-direction: column;
+    }
+    .datePiker {
+        width: 100%;
     }
 }
