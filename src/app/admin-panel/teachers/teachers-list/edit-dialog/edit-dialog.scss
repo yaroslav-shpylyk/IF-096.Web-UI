@@ -63,3 +63,31 @@ p {
   justify-content: center !important;
   color: white !important;
 }
+
+form {
+  display: flex;
+  max-width: 400px;
+}
+
+form > div {
+  flex-direction: column;
+  text-align: center;
+}
+
+div > input {
+  margin: 1.5em 0em;
+}
+
+#setWidth {
+  width: 100%;
+}
+
+#latInp {
+  margin-bottom: 0;
+}
+
+#button-section {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: nowrap;
+}

@@ -13,7 +13,6 @@ import {
 } from '../../helpers/validators';
 import { Teacher } from '../../helpers/teacher.model';
 import { MatSnackBar } from '@angular/material';
-// import { imageEncoder } from '../../helpers/button-scroller';
 
 @Injectable()
 @Component({

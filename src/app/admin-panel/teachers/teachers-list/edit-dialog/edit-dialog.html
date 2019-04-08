@@ -3,36 +3,24 @@
     <div class="avatar">
       <img
         *ngIf="editMode"
-        [src]="
-          teacher
-            ? teacher.avatar
-            : 'assets/default-avatar.svg'
-        "
+        [src]="teacher ? teacher.avatar : 'assets/default-avatar.svg'"
         height="150"
         width="150"
       />
       <img
         *ngIf="!editMode"
-        [src]="
-          ava ? ava : 'assets/default-avatar.svg'
-        "
+        [src]="ava ? ava : 'assets/default-avatar.svg'"
         height="150"
         width="150"
       />
     </div>
 
-    <form
-      class="form"
-      [formGroup]="teacherForm"
-      style="display: flex; max-width: 400px; "
-      (ngSubmit)="onSubmit()"
-    >
-      <div style="flex-direction: column; text-align: center;">
+    <form [formGroup]="teacherForm" (ngSubmit)="onSubmit()">
+      <div>
         <input
           formControlName="teacherAvatar"
           type="file"
           (change)="onFileSelected($event)"
-          style="margin: 1.5em 0em"
         />
 
         <mat-form-field>
@@ -51,7 +39,7 @@
             matInput
             placeholder="Прізвище"
             formControlName="teacherLastname"
-            style="width: 100%"
+            id="setWidth"
           />
         </mat-form-field>
 
@@ -122,7 +110,7 @@
           />
         </mat-form-field>
 
-        <mat-form-field *ngIf="editMode" style="margin-bottom: 0">
+        <mat-form-field *ngIf="editMode" id="latInp">
           <input
             type="password"
             matInput
@@ -132,10 +120,7 @@
           <mat-error> Паролі не співпадають </mat-error>
         </mat-form-field>
 
-        <div
-          mat-dialog-actions
-          style="display: flex; justify-content: space-evenly; flex-wrap: nowrap;"
-        >
+        <div mat-dialog-actions id="button-section">
           <button
             [disabled]="!teacherForm.valid || teacherForm.pristine"
             mat-raised-button

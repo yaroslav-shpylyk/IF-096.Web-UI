@@ -72,7 +72,8 @@ export class TeachersListComponent implements OnInit, OnDestroy {
 
 @Component({
   selector: 'app-confirmation-dialog',
-  templateUrl: './confirmation-dialog/app-confirmation-dialog.html'
+  templateUrl: './confirmation-dialog/app-confirmation-dialog.html',
+  styleUrls: ['./confirmation-dialog/app-confirmation-dialog.scss']
 })
 export class ConfirmationDialogComponent {
   constructor(

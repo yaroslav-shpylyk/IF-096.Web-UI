@@ -32,3 +32,33 @@
 ::ng-deep app-dialog-overview {
   margin: auto !important;
 }
+
+#not-assigned {
+  color: rgb(107, 103, 103);
+  text-align: center;
+}
+
+#buttons-area {
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  margin: 1em 0;
+}
+
+#info-area {
+  display: flex;
+}
+
+#info-area > div {
+  margin: auto;
+}
+
+p,
+h2,
+h3 {
+  color: rgb(107, 103, 103);
+}
+
+p {
+  margin: 0.4em 0;
+}

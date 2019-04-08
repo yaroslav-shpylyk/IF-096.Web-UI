@@ -1,7 +1,7 @@
 <div class="container">
-  <div style="min-width: 16.6em; max-width: 18.8em; ">
+  <div>
     <mat-nav-list>
-      <mat-form-field style="display: block">
+      <mat-form-field>
         <input
           autocomplete="off"
           placeholder="Шукати за прізвищем"
@@ -15,7 +15,7 @@
       <ng-container
         *ngFor="let teacher of (teachers | filter: filteredTeachers:'lastname')"
       >
-        <div style="display: flex">
+        <div id="wrapper">
           <mat-list-item
             routerLinkActive="active"
             (click)="onTeacherDetails(teacher.id)"
@@ -32,7 +32,7 @@
           </mat-list-item>
 
           <button
-            style="margin: auto"
+            id="menu-trigger"
             mat-icon-button
             #menuTrigger="matMenuTrigger"
             [matMenuTriggerFor]="menu"
