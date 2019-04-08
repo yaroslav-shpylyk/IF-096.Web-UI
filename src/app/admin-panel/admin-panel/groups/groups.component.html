@@ -13,7 +13,7 @@
       <td mat-cell *matCellDef="let element"> {{element.classYear}} </td>
     </ng-container>
 
-      <!-- Name Column -->
+    <!-- Name Column -->
     <ng-container matColumnDef="isActive">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Стан класу </th>
       <td mat-cell *matCellDef="let element"><span *ngIf = "element.isActive">Відкритий</span><span *ngIf = "!element.isActive">Закритий</span></td>

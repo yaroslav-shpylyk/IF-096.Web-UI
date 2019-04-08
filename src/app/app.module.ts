@@ -12,7 +12,7 @@ import { TeachersStorageService } from './services/teachers-storage.service';
 import { TeachersService } from './admin-panel/teachers/teachers.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-list/dialog/dialog-overview';
-import { GroupsService } from './services/groups.service';
+
 
 @NgModule({
   declarations: [
@@ -33,7 +33,7 @@ import { GroupsService } from './services/groups.service';
     AuthService,
     TeachersStorageService,
     TeachersService,
-    GroupsService,
+    
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
