@@ -13,6 +13,9 @@ import { JournalsStorageService } from './services/journals-storage.service';
 import { JournalsService } from './journal/journals.service';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TeacherService } from './services/teacher.service';
+import { SubjectService } from './services/subject.service';
+
 
 
 @NgModule({
@@ -34,6 +37,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TeachersStorageService,
     JournalsStorageService,
     JournalsService,
+    SubjectService,
+    TeacherService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

@@ -1,0 +1,26 @@
+<mat-card>
+    <img mat-card-image *ngIf="studentInfo?.avatar; else avatar" src="{{studentInfo?.avatar}}">
+    <mat-card-title>
+        <span>{{studentInfo?.lastname}}</span>
+        <span>{{studentInfo?.firstname}}</span>
+        <span>{{studentInfo?.patronymic}}</span>
+    </mat-card-title>
+    <mat-card-content>
+        <span *ngIf="studentInfo?.dateOfBirth">Дата народження:{{studentInfo?.dateOfBirth}}</span>
+        <span *ngIf="studentInfo?.email">Email: {{studentInfo?.email}}</span>
+        <span *ngIf="studentInfo?.login">Логін: {{studentInfo?.login}}</span>
+        <span *ngIf="studentInfo?.phone">Телефон: {{studentInfo?.phone}}</span>
+        <span *ngIf="studentInfo?.classe">Клас: {{studentInfo?.classe}}</span>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button (click)="goBack()">Назад</button>
+        <button mat-button (click)="editStudent()" cdkFocusInitial>Редагувати</button>
+    </mat-card-actions>
+</mat-card>
+<ng-template #avatar>
+    <div class="iconAvatar">
+        <i class="material-icons" style="font-size: 8em;">
+            person
+        </i>
+    </div>
+</ng-template>
