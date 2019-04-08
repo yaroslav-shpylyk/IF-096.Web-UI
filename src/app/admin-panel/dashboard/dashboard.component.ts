@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit {
     responsive: true,
     tooltips: {
       callbacks: {
-        title: (tooltipItem, data) => {
+        title: () => {
           return '';
         }
       }
