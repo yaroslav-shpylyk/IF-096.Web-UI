@@ -9,8 +9,7 @@ import {
   MatSnackBar,
   MatSnackBarConfig
 } from '@angular/material';
-// import { scroll } from '../helpers/button-scroller';
-// scroll();
+
 
 @Component({
   selector: 'app-teachers-list',

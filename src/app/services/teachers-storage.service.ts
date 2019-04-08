@@ -7,13 +7,14 @@ import { Subject } from 'rxjs';
 export class TeachersStorageService {
   public modalsId: number;
   public editMode: boolean;
+  public defaultAvatar = 'assets/default-avatar.svg';
+  teachersChanged = new Subject();
+
   constructor(private httpClient: HttpClient) {}
 
-  public defaultAvatar = 'https://png.pngtree.com/svg/20161212/f93e57629c.svg';
-  teachersChanged = new Subject();
   /**
    * Method fetches from server an array of teachers
-   * and passes it to the teachersService.
+   * passes it to the subject teachersChanged.
    */
   getTeachers() {
     this.httpClient
@@ -38,26 +39,11 @@ export class TeachersStorageService {
       );
   }
 
-  getTeache() {
-    return this.httpClient.get<any>('/teachers').pipe(
-      map(response => {
-        const teachers = response.data;
-        for (const teacher of teachers) {
-          if (!teacher.avatar) {
-            teacher.avatar = this.defaultAvatar;
-          }
-        }
-        return teachers;
-      })
-    );
-  }
-
   /**
-   * Method gets id, pulls an array of locally stored teachers from
-   * teachersService service and serches through it requested object.
-   * If no math found it makes a request to the server by
-   * provided id and then stores it to the teachersService service.
+   * Method fetches from the server a single
+   * teacher object by provided id
    * @param id - number representing id of requested teacher.
+   * @returns - object representing teacher.
    */
   getTeacher(id) {
     return this.httpClient.get<any>(`/teachers/${id}`).pipe(
@@ -80,7 +66,7 @@ export class TeachersStorageService {
    * with new values. Then passes it to the server in put request.
    * @param id - number representing id of the teacher.
    * @param teacher - object with new values.
-   * @returns - Observable with updated data.
+   * @returns - object representing teacher.
    */
   updateTeacher(id, updTeacher) {
     return this.httpClient.put<any>(`/admin/teachers/${id}`, updTeacher).pipe(
@@ -94,6 +80,12 @@ export class TeachersStorageService {
     );
   }
 
+  /**
+   * Method gets id of the teacher to be deleted
+   * and passes it to the server in patch request.
+   * @param id - number representing id of the teacher.
+   * @returns - object representing deleted teacher.
+   */
   deleteTeacher(id) {
     return this.httpClient.patch<any>(`/users/${id}`, { observe: 'response' });
   }
@@ -102,12 +94,18 @@ export class TeachersStorageService {
    * Method gets object representing a teacher to be created
    * and passes it to the server in post request
    * @param newTeacher - object with new values.
-   * @returns - Observable with values of newly created teacher.
+   * @returns - object representing newly created teacher.
    */
   addTeacher(newTeacher) {
     return this.httpClient.post(`/teachers`, newTeacher);
   }
 
+  /**
+   * Method fetches journal by given id, groups subjects by classes
+   * and returns the result.
+   * @param teacherId - number representing id of the journal.
+   * @returns - an array of objects with subjects grouped by classes.
+   */
   getTeacherJournal(teacherId) {
     return this.httpClient.get<any>(`/journals/teachers/${teacherId}`).pipe(
       map(response => {
