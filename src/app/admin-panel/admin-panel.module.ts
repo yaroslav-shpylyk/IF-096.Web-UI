@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AdminPanelRoutingModule } from './admin-panel-routing.module';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { TeachersComponent } from './teachers/teachers.component';
-import { MaterialModule } from '../material';
+import { MaterialModule } from '../material.module';
 import { TeachersListComponent, ConfirmationDialogComponent } from './teachers/teachers-list/teachers-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

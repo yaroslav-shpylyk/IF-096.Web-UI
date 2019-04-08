@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material';
 import { TeachersStorageService } from './services/teachers-storage.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,7 +21,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MaterialModule,
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule
