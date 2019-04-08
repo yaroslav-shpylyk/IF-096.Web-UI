@@ -27,7 +27,7 @@ export class GroupsService {
   /**
   * Method send changes in class or creates a new class
   * @param group - data about the class that we want to change or create
-  * @returns - edit class - if "id" is true, or add new class  - if there is't "id"
+  * @returns - object with two properties: "status" - response status; "data" - data about the class that we want to change or create
   */
   addGrup(group: Group) {
     if (Number(group.id)) {
