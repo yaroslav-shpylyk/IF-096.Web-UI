@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { AdminPanelRoutingModule } from './admin-panel-routing.module';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { TeachersComponent } from './teachers/teachers.component';
-import { MaterialModule } from '../material';
 import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.component';
@@ -22,9 +21,11 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
-import { MatListModule } from '@angular/material/list';
 import { MatSortModule } from '@angular/material/sort';
-
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { MatCardModule } from '@angular/material';
+import { ChartsModule } from 'ng2-charts';
+import { MatMenuModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -37,9 +38,9 @@ import { MatSortModule } from '@angular/material/sort';
     DialogEntryComponent,
     StudentsListComponent,
     StudentDatails,
-    StudentDetailModalComponent
+    StudentDetailModalComponent,
+    DashboardComponent
   ],
-  
   imports: [
     CommonModule,
     AdminPanelRoutingModule,
@@ -59,12 +60,21 @@ import { MatSortModule } from '@angular/material/sort';
     MatSelectModule,
     PlatformModule,
     FlexLayoutModule,
-    MaterialModule
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    MatMenuModule,
+    ChartsModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule
   ],
-  entryComponents: 
-  [AddModifyGroupComponent],
-  [StudentDetailModalComponent],
+  entryComponents: [
+    AddModifyGroupComponent,
+    StudentDetailModalComponent
+  ],
   providers: [GroupsComponent]
-
 })
 export class AdminPanelModule { }

@@ -7,39 +7,41 @@ import { TeachersListComponent } from './teachers/teachers-list/teachers-list.co
 import { StudentsListComponent } from './students-list/students-list.component';
 import { GroupsComponent } from './admin-panel/groups/groups.component';
 import { StudentDatails } from './students-list/student-detail-modal/student-detail-modal.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: AdminPanelComponent
-  },
-  {
-    path: 'groups',
-    component: GroupsComponent
-  },
-  {
-    path: 'students',
-    component: StudentsListComponent,
+    component: AdminPanelComponent,
     children: [
       {
-        path: ':id',
-        component: StudentDatails
-      }
-    ]
-  },
-  { path: 'teachers/new', component: TeacherEditComponent },
-  {
-    path: 'teachers',
-    component: TeachersListComponent,
-    children: [
+        path: 'students',
+        component: StudentsListComponent
+      },
       {
-        path: ':id',
-        component: DialogEntryComponent
+        path: 'groups',
+        component: GroupsComponent
+      },
+      {
+        path: 'teachers/new',
+        component: TeacherEditComponent
+      },
+      {
+        path: 'teachers',
+        component: TeachersListComponent,
+        children: [
+          {
+            path: ':id',
+            component: DialogEntryComponent
+          }
+        ]
+      },
+      {
+        path: '',
+        component: DashboardComponent
       }
     ]
-  },
-  { path: 'teachers/:id/edit', component: TeacherEditComponent }
-
+  }
 ];
 
 @NgModule({

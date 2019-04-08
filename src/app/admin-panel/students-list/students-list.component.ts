@@ -26,7 +26,6 @@ export class StudentsListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.classList.getClasses('active').subscribe((data: Array<ClassInfo>) =>
       this.activeClass = data);
     this.classList.getClasses('inActive').subscribe((data: Array<ClassInfo>) =>
@@ -36,20 +35,17 @@ export class StudentsListComponent implements OnInit {
   /**
    * Method return students list from one class
    * @returns - array with students in class
-  */
-
+   */
   onSelectionClass($event): void {
     this.students.getStudents($event.value).subscribe((list: Array<Student>) => this.studentList = list);
   }
 
-   /**
+  /**
    * Method open component for add new student
    * @returns - array with students in class
-  */
-
+   */
   AddStudent(): void {
-    console.log('button add student')
+    console.log('button add student');
     this.router.navigate(['add'], { relativeTo: this.route });
   }
-
 }
