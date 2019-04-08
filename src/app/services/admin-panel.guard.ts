@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanLoad } from '@angular/router';
 import { TokenInfo } from '../models/token-info';
 import * as JWTDecoder from 'jwt-decode';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +21,9 @@ export class AdminPanelGuard implements CanLoad, CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean  {
     if (this.isAdmin()) {
-      return false;
+      return true;
     }
-    return true;
+    return false;
   }
 
   /**
@@ -34,9 +34,9 @@ export class AdminPanelGuard implements CanLoad, CanActivate {
    */
   canLoad(): boolean {
     if (this.isAdmin()) {
-      return false;
+      return true;
     }
-    return true;
+    return false;
   }
 
   /**

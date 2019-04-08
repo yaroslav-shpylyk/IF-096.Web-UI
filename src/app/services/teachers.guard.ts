@@ -15,9 +15,9 @@ export class TeachersGuard implements CanActivate, CanLoad {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
     if (this.isTeacher()) {
-      return false;
+      return true;
     }
-    return true;
+    return false;
   }
 
   /**
@@ -28,9 +28,9 @@ export class TeachersGuard implements CanActivate, CanLoad {
    */
   canLoad(route: Route): boolean {
     if (this.isTeacher()) {
-      return false;
+      return true;
     }
-    return true;
+    return false;
   }
 
   /**

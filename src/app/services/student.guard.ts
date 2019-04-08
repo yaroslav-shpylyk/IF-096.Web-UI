@@ -17,9 +17,9 @@ export class StudentGuard implements CanActivate, CanLoad {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
     if (this.isStudent()) {
-      return false;
+      return true;
     }
-    return true;
+    return false;
   }
 
   /**
@@ -30,9 +30,9 @@ export class StudentGuard implements CanActivate, CanLoad {
    */
   canLoad(route: Route): boolean {
     if (this.isStudent()) {
-      return false;
+      return true;
     }
-    return true;
+    return false;
   }
 
   /**
