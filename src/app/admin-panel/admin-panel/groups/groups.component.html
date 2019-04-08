@@ -1,0 +1,35 @@
+<div>
+  <table  mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="className">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Назва класу </th>
+      <td mat-cell *matCellDef="let element"> {{element.className}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="classYear">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Рік класа </th>
+      <td mat-cell *matCellDef="let element"> {{element.classYear}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="isActive">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Стан класу </th>
+      <td mat-cell *matCellDef="let element"><span *ngIf = "element.isActive">Відкритий</span><span *ngIf = "!element.isActive">Закритий</span></td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Ред. </th>
+      <td mat-cell *matCellDef="let element"> <a (click)="openBottomSheet(element)" class="edit" title="Редагувати">⋮</a> </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
+<div class="example-button-row">
+  <button mat-fab color="primary"  mat-raised-button (click)="openBottomSheet()">+</button>
+</div>

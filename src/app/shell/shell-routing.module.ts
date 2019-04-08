@@ -7,32 +7,34 @@ import { TeachersGuard } from '../services/teachers.guard';
 
 const routes: Routes = [
   {
-    path: 'admin-panel',
-    canActivate: [AdminPanelGuard],
-    canLoad: [AdminPanelGuard],
-    loadChildren: '../admin-panel/admin-panel.module#AdminPanelModule'
-  },
-  {
-    path: 'journal',
-    canActivate: [TeachersGuard],
-    canLoad: [TeachersGuard],
-    loadChildren: '../journal/journal.module#JournalModule'
-  },
-  {
-    path: 'progress',
-    canActivate: [TeachersGuard],
-    canLoad: [TeachersGuard],
-    loadChildren: '../progress/progress.module#ProgressModule'
-  },
-  {
-    path: 'student-book',
-    canActivate: [StudentGuard],
-    canLoad: [StudentGuard],
-    loadChildren: '../student-book/student-book.module#StudentBookModule'
-  },
-  {
     path: '',
-    component: ShellComponent
+    component: ShellComponent,
+    children: [
+      {
+        path: 'admin-panel',
+        canActivate: [AdminPanelGuard],
+        canLoad: [AdminPanelGuard],
+        loadChildren: '../admin-panel/admin-panel.module#AdminPanelModule'
+      },
+      {
+        path: 'journal',
+        canActivate: [TeachersGuard],
+        canLoad: [TeachersGuard],
+        loadChildren: '../journal/journal.module#JournalModule'
+      },
+      {
+        path: 'progress',
+        canActivate: [TeachersGuard],
+        canLoad: [TeachersGuard],
+        loadChildren: '../progress/progress.module#ProgressModule'
+      },
+      {
+        path: 'student-book',
+        canActivate: [StudentGuard],
+        canLoad: [StudentGuard],
+        loadChildren: '../student-book/student-book.module#StudentBookModule'
+      },
+    ]
   }
 ];
 

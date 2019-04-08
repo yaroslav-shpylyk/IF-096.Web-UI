@@ -4,7 +4,7 @@ import {
   Router, RouterStateSnapshot
 } from '@angular/router';
 import { AuthService } from './auth.service';
-import {TokenInfo} from '../models/token-info';
+import { TokenInfo } from '../models/token-info';
 import * as JWTDecoder from 'jwt-decode';
 
 @Injectable({
