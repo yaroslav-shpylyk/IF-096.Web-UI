@@ -15,6 +15,8 @@ import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-lis
 import { TeacherService } from './services/teacher.service';
 import { SubjectService } from './services/subject.service';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
