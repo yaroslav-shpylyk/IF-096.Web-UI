@@ -9,6 +9,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.component';
 import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-overview';
 import { StudentsListComponent } from './students-list/students-list.component';
+import { StudentDatails, StudentDetailModalComponent } from './students-list/student-detail-modal/student-detail-modal.component';
+import { MatListModule } from '@angular/material/list';
 import { PlatformModule } from '@angular/cdk/platform';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GroupsComponent } from './admin-panel/groups/groups.component';
@@ -23,6 +25,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
 import { MatSortModule } from '@angular/material/sort';
 
+
 @NgModule({
   declarations: [
     AdminPanelComponent,
@@ -32,7 +35,9 @@ import { MatSortModule } from '@angular/material/sort';
     TeachersListComponent,
     TeacherEditComponent,
     DialogEntryComponent,
-    StudentsListComponent
+    StudentsListComponent,
+    StudentDatails,
+    StudentDetailModalComponent
   ],
   
   imports: [
@@ -56,9 +61,10 @@ import { MatSortModule } from '@angular/material/sort';
     FlexLayoutModule,
     MaterialModule
   ],
-  entryComponents: [
-    AddModifyGroupComponent
-  ],
+  entryComponents: 
+  [AddModifyGroupComponent],
+  [StudentDetailModalComponent],
   providers: [GroupsComponent]
+
 })
-export class AdminPanelModule {}
+export class AdminPanelModule { }
