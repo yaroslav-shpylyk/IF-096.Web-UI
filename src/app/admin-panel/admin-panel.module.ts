@@ -10,11 +10,13 @@ import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.compo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-overview';
 import { StudentsListComponent } from './students-list/students-list.component';
+import { StudentDatails, StudentDetailModalComponent } from './students-list/student-detail-modal/student-detail-modal.component';
 import { MatListModule } from '@angular/material/list';
 import { PlatformModule } from '@angular/cdk/platform';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';    
 import { SubjectsComponent } from './admin-panel/subjects/subjects.component';
+
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { SubjectsComponent } from './admin-panel/subjects/subjects.component';
     TeacherEditComponent,
     DialogEntryComponent,
     StudentsListComponent,
+    StudentDatails,
+    StudentDetailModalComponent,
     SubjectsComponent
   ],
   imports: [
@@ -38,7 +42,8 @@ import { SubjectsComponent } from './admin-panel/subjects/subjects.component';
     MatButtonModule,
     MatSelectModule,
 
-  ]
+  ],
+  entryComponents: [StudentDetailModalComponent],
 
 })
-export class AdminPanelModule {}
+export class AdminPanelModule { }
