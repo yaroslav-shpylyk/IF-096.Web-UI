@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -9,6 +9,8 @@ import {
   MatSnackBar,
   MatSnackBarConfig
 } from '@angular/material';
+// import { scroll } from '../helpers/button-scroller';
+// scroll();
 
 @Component({
   selector: 'app-teachers-list',
@@ -88,7 +90,10 @@ export class ConfirmationDialogComponent {
       .subscribe(response => {
         this.teachersStorageService.getTeachers();
         this.dialogRef.close();
-        this.openSnackBar(`Викладач ${response.lastname} ${response.firstname}видалений`);
+        this.openSnackBar(
+          `Викладач ${response.lastname} ${response.firstname} видалений`,
+          'snack-class-success'
+        );
       });
   }
 
@@ -96,9 +101,9 @@ export class ConfirmationDialogComponent {
     this.dialogRef.close();
   }
 
-  openSnackBar(message: string) {
+  openSnackBar(message: string, classMessage: string) {
     const config = new MatSnackBarConfig();
-    config.panelClass = ['snack-class'];
+    config.panelClass = [classMessage];
     config.duration = 2000;
     config.verticalPosition = 'top';
     this.snackBar.open(message, null, config);

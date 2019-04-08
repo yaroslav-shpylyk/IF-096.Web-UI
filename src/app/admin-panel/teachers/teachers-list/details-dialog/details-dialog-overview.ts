@@ -43,7 +43,8 @@ export class DialogEntryComponent implements OnInit {
 
 @Component({
   selector: 'app-dialog-overview',
-  templateUrl: 'details-dialog-overview.html'
+  templateUrl: 'details-dialog-overview.html',
+  styleUrls: ['./details-dialog-overview.scss']
 })
 export class DetailsDialogOverviewComponent implements OnInit {
   teacher: Teacher;

@@ -13,6 +13,7 @@ import {
 } from '../../helpers/validators';
 import { Teacher } from '../../helpers/teacher.model';
 import { MatSnackBar } from '@angular/material';
+// import { imageEncoder } from '../../helpers/button-scroller';
 
 @Injectable()
 @Component({
@@ -62,6 +63,8 @@ export class EditDialogOverviewComponent implements OnInit {
   editMode: boolean;
   ava;
 
+  // imageEn = imageEncoder;
+
   constructor(
     public dialogRef: MatDialogRef<EditDialogOverviewComponent>,
     private teachersStorageService: TeachersStorageService,
@@ -82,7 +85,13 @@ export class EditDialogOverviewComponent implements OnInit {
             this.initForm();
             return;
           },
-          error => console.log(error)
+          error => {
+            console.log(error);
+            this.openSnackBar(
+              `На сервері відбулась помилка`,
+              'snack-class-fail'
+            );
+          }
         );
       this.initForm();
     }
@@ -113,7 +122,10 @@ export class EditDialogOverviewComponent implements OnInit {
         teacherFirstname: [teacherFirstname, validConfig],
         teacherLastname: [teacherLastname, validConfig],
         teacherPatronymic: [teacherPatronymic, validConfig],
-        teacherDateOfBirth: [teacherDateOfBirth, [Validators.required, validDate]],
+        teacherDateOfBirth: [
+          teacherDateOfBirth,
+          [Validators.required, validDate]
+        ],
         teacherEmail: [teacherEmail, validEmail],
         teacherPhone: [teacherPhone, validPhone],
         teacherLogin: [teacherLogin, Validators.required],
@@ -145,19 +157,34 @@ export class EditDialogOverviewComponent implements OnInit {
       phone: this.teacherForm.value.teacherPhone
     };
     if (!this.editMode) {
-      this.teachersStorageService.addTeacher(newValues).subscribe(res => {
-        this.teachersStorageService.getTeachers();
-        this.openSnackBar(`Викладач ${newValues.lastname} ${newValues.lastname} створений`);
-      });
+      this.teachersStorageService.addTeacher(newValues).subscribe(
+        () => {
+          this.teachersStorageService.getTeachers();
+          this.openSnackBar(
+            `Викладач ${newValues.lastname} ${newValues.lastname} створений`,
+            'snack-class-success'
+          );
+        },
+        error => {
+          console.log(error);
+          this.openSnackBar(`На сервері відбулась помилка`, 'snack-class-fail');
+        }
+      );
     } else {
       this.teachersStorageService
         .updateTeacher(this.teachersStorageService.modalsId, newValues)
         .subscribe(
           () => {
             this.teachersStorageService.getTeachers();
-            this.openSnackBar(`Нові дані внесено`);
+            this.openSnackBar(`Нові дані внесено`, 'snack-class-success');
           },
-          error => console.log(error)
+          error => {
+            console.log(error);
+            this.openSnackBar(
+              `На сервері відбулась помилка`,
+              'snack-class-fail'
+            );
+          }
         );
     }
     this.dialogRef.close();
@@ -187,9 +214,9 @@ export class EditDialogOverviewComponent implements OnInit {
     }
   }
 
-  openSnackBar(message: string) {
+  openSnackBar(message: string, classMessage: string) {
     const config = new MatSnackBarConfig();
-    config.panelClass = ['snack-class'];
+    config.panelClass = [classMessage];
     config.duration = 2000;
     config.verticalPosition = 'top';
     this.snackBar.open(message, null, config);

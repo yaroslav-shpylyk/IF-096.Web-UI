@@ -26,3 +26,10 @@ mat-list-item {
 mat-select {
   width: 2em;
 }
+
+::ng-deep .snack-class-success {
+  background-color: rgb(24, 168, 72);
+  display: flex !important;
+  justify-content: center !important;
+  color: white !important;
+}
