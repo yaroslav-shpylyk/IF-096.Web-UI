@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ShellComponent } from '../shell/shell/shell.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.component';
 import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-overview';
 import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
 import { StudentsListComponent } from './students-list/students-list.component';
- 
+import { StudentDatails } from './students-list/student-detail-modal/student-detail-modal.component';
+
+
 const routes: Routes = [
   {
     path: '',
@@ -14,7 +15,13 @@ const routes: Routes = [
   },
   {
     path: 'students',
-    component: StudentsListComponent
+    component: StudentsListComponent,
+    children: [
+      {
+        path: ':id',
+        component: StudentDatails
+      }
+    ]
   },
   { path: 'teachers/new', component: TeacherEditComponent },
   {
@@ -35,4 +42,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AdminPanelRoutingModule {}
+export class AdminPanelRoutingModule { }
