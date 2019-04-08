@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SubjectService } from '../../services/subject.service';
 import { SubjectData } from '../../models/subject-data';
 import { ClassService } from '../../services/class.service';
-import {ClassData} from '../../models/class-data';
+import { ClassData } from '../../models/class-data';
 import { StudentsService } from '../../services/students.service';
-import {StudentData} from '../../models/student-data';
+import { Student } from '../../models/student';
 
 @Component({
   selector: 'app-progress',
@@ -16,7 +16,7 @@ export class ProgressComponent implements OnInit {
   public chartOptions: FormGroup;
   public subjects: SubjectData[];
   public classes: ClassData[];
-  public students: StudentData[];
+  public students: Student[];
   constructor(private subjectService: SubjectService, private classService: ClassService, private studentService: StudentsService) { }
 
   ngOnInit() {
