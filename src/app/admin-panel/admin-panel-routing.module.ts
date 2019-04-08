@@ -5,13 +5,17 @@ import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.compo
 import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-overview';
 import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
 import { StudentsListComponent } from './students-list/students-list.component';
+import { GroupsComponent } from './admin-panel/groups/groups.component';
 import { StudentDatails } from './students-list/student-detail-modal/student-detail-modal.component';
-
 
 const routes: Routes = [
   {
     path: '',
     component: AdminPanelComponent
+  },
+  {
+    path: 'groups',
+    component: GroupsComponent
   },
   {
     path: 'students',
