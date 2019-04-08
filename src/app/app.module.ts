@@ -14,6 +14,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-list/dialog/dialog-overview';
 import { TeacherService } from './services/teacher.service';
 import { SubjectService } from './services/subject.service';
+import { MatNativeDateModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { SubjectService } from './services/subject.service';
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatNativeDateModule
   ],
   providers: [
     AuthService,

@@ -15,14 +15,14 @@ export class ClassService {
   /**
    * Method gets data about classes
    * @param type - Type of classes(all, active, inActive)
-   * @param subjectId - Request options
+   * @param subjectNumber - Id of the subject
    * @returns - Array with classes data
    */
-  public getClasses(type: string, subjectId?: string): Observable<ClassData[]> {
-    const subject = subjectId || '';
-    return this.http.get(`/classes?subjectId=${subject}`)
+  public getClasses(type: string, subjectNumber?: string): Observable<ClassData[]> {
+    const subjectId = subjectNumber || '';
+    return this.http.get(`/classes?subjectId=${subjectId}`)
       .pipe(
-        map((result: {status: any, data: ClassData[]}) => {
+        map((result: {status: any, data: ClassData[] | null}) => {
           switch (type) {
             case 'all': {
               return result.data;

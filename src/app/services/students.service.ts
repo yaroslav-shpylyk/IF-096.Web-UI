@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ClassData} from '../models/class-data';
 import { ClassService } from './class.service';
+import { StudentData } from '../models/student-data';
 
 
 @Injectable({
@@ -17,9 +18,9 @@ export class StudentsService {
   * Method returns data with students from backend,where id is class
   */
 
-  getStudents(id): Observable<any> {
+  getStudents(id): Observable<StudentData[]> {
     return this.http.get(`/students/classes/${id}`).
-      pipe(map((res: any) => res.data));
+      pipe(map((res: {status: any, data: StudentData[] | null}) => res.data));
   }
 
   /**
