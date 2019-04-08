@@ -15,6 +15,7 @@ import { PlatformModule } from '@angular/cdk/platform';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';   
 import { TeacherConnectionComponent } from './teacher-connection/teacher-connection.component'; 
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { TeacherConnectionComponent } from './teacher-connection/teacher-connect
     PlatformModule,
     MatButtonModule,
     MatSelectModule,
+    SharedModule,
 
   ]
 

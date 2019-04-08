@@ -20,5 +20,13 @@ export class TeacherService {
     return this.http.get(`/teachers`)
       .pipe(map((res: any) => res.data))
   }
+  getSubjects() : Observable<any> {
+    return this.http.get(`/subjects`)
+      .pipe(map((res: any) => res.data))
+  }
+  getClases() : Observable<any> {
+    return this.http.get(`/classes`)
+      .pipe(map((res: any) => res.data))
+  }
 }
 

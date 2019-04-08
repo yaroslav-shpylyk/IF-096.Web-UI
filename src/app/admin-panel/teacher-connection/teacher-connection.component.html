@@ -1,15 +1,41 @@
 <p>
   teacher-connection works!
 </p>
-<!-- <div>
-  <p>All: {{result | json}}</p>
-</div> -->
+
+<!--header-->
+<app-header></app-header>
+<div class="wrap-content"> 
+    <div class="container">
+        <mat-form-field id="child1">
+          <mat-select placeholder="Виберіть вчителя">
+            <mat-option *ngFor="let item of teachers" [value]="item.firstname + item.lastname">{{item.firstname + " " + item.lastname }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field id="child2">
+          <mat-select placeholder="Виберіть предмет">
+            <mat-option *ngFor="let item of subjects" [value]="item.subjectName">{{item.subjectName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field id="child2">
+          <mat-select placeholder="Виберіть клас">
+            <mat-option *ngFor="let item of classes" [value]="item.className">{{item.className}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <button mat-raised-button color="primary">Зберегти</button>
+        
+        </div>
+
+</div>
+<footer>
+<div fxHide.gt-xs> <!-- show only for mobile devices-->
+  <app-footer></app-footer>
+</div>
 
 
-<tbody>
-  <tr *ngFor="let item of result">
-     <td>Ім'я: {{item.firstname}}</td>
-     <td>Прізвище: {{item.lastname}}</td>
-  </tr>
-</tbody>
 
+  
+  
+  

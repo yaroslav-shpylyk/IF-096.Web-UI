@@ -8,16 +8,23 @@ import { TeacherService } from "src/app/services/teacher.service";
 })
 export class TeacherConnectionComponent implements OnInit {
 
-  result;
+  teachers;
+  subjects;
+  classes;
 
   constructor(private teacherService: TeacherService) {
     
   }
 
   ngOnInit() {
-    this.teacherService.getTeachers().subscribe(result => this.result = result);
-    console.log('works');
-   
+    this.teacherService.getTeachers()
+      .subscribe(teachers => this.teachers = teachers);
+    
+    this.teacherService.getSubjects()
+      .subscribe(subjects => this.subjects = subjects);
+
+    this.teacherService.getClases()
+      .subscribe(classes => this.classes = classes);
       
   }
 
