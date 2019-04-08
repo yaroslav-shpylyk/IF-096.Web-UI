@@ -36,7 +36,10 @@ export class DialogEntryComponent implements OnInit {
       width: '400px'
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.router.navigate(['../'], {
+        relativeTo: this.route,
+        replaceUrl: true
+      });
     });
   }
 }
@@ -87,7 +90,8 @@ export class DetailsDialogOverviewComponent implements OnInit {
   onEditClick(): void {
     this.dialogRef.close();
     this.router.navigate(['admin', 'teachers', this.teacher.id, 'edit'], {
-      relativeTo: this.route
+      relativeTo: this.route,
+      replaceUrl: true
     });
   }
 }

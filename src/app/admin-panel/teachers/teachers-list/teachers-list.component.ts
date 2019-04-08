@@ -10,7 +10,6 @@ import {
   MatSnackBarConfig
 } from '@angular/material';
 
-
 @Component({
   selector: 'app-teachers-list',
   templateUrl: './teachers-list.component.html',
@@ -42,16 +41,16 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   }
 
   onNewTeacher() {
-    this.router.navigate(['new'], { relativeTo: this.route });
+    this.router.navigate(['new'], { relativeTo: this.route, replaceUrl: true });
   }
 
   onTeacherDetails(id) {
     this.teachersStorageService.modalsId = id;
-    this.router.navigate([id], { relativeTo: this.route });
+    this.router.navigate([id], { relativeTo: this.route, replaceUrl: true });
   }
 
   onEdit(id) {
-    this.router.navigate([id, 'edit'], { relativeTo: this.route });
+    this.router.navigate([id, 'edit'], { relativeTo: this.route, replaceUrl: true });
   }
 
   onDelete(teacher): void {
