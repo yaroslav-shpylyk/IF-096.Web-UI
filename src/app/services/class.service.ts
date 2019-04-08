@@ -9,17 +9,28 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ClassService {
-  
   constructor(private http: HttpClient) { }
 
   /**
-     * Method returns data with all classes from backend
-  */
+   * Method returns data with all classes from backend
+   */
 
-  getClasses(): Observable<any> {
-    return this.http.get(`/classes`)
-      .pipe(map((res: any) => {
-        return res.data;
-      }));
+  public getClasses(type: string): Observable<any> {
+    return this.http.get('/classes')
+      .pipe(
+        map((result: any) => {
+          switch (type) {
+            case 'all': {
+              return result.data;
+            }
+            case 'active': {
+              return result.data.filter(currClass => currClass.isActive);
+            }
+            case 'inActive': {
+              return result.data.filter(currClass => !currClass.isActive);
+            }
+          }
+        })
+      );
   }
 }
