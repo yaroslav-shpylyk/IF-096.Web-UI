@@ -26,8 +26,8 @@ export class ScheduleComponent implements OnInit {
     private subjectsList: SubjectsService) { }
 
   ngOnInit() {
-    this.classList.getClasses().subscribe(data => {
-      this.arrClassList = data.filter((items: Class) => items.isActive == true);
+    this.classList.getClasses('active').subscribe(data => {
+      this.arrClassList = data;
     });
     this.subjectsList.getSubjects().subscribe(data => {
       this.arrSubjectsList = data;

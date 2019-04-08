@@ -11,6 +11,9 @@ import { MaterialModule } from './material.module';
 import { TeachersStorageService } from './services/teachers-storage.service';
 import { TeachersService } from './admin-panel/teachers/teachers.service';
 import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-list/dialog/dialog-overview';
+import { TeacherService } from './services/teacher.service';
+import { SubjectService } from './services/subject.service';
+
 
 @NgModule({
   declarations: [
@@ -29,6 +32,8 @@ import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-lis
     AuthService,
     TeachersStorageService,
     TeachersService,
+    SubjectService,
+    TeacherService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
