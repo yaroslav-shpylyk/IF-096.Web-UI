@@ -1,0 +1,24 @@
+$invalid-color: rgb(112, 5, 5);
+$icon-color: rgb(133, 133, 184);
+
+form {
+    font-size: 0.8em;
+}
+.schedule-top {
+    display: flex;
+    width: 95%;
+    justify-content: space-around;
+}
+input.ng-touched.ng-invalid{
+    border-color: $invalid-color;
+}
+mat-icon {
+    color: $icon-color;
+}
+
+/* Screen = B/w 320px to 479px */
+@media (min-width: 320px) and (max-width: 480px) {
+    .schedule-top {
+        flex-direction: column;
+    }
+}

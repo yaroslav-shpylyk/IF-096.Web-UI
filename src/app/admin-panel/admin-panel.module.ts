@@ -12,7 +12,10 @@ import { StudentsListComponent } from './students-list/students-list.component';
 import { MatListModule } from '@angular/material/list';
 import { PlatformModule } from '@angular/cdk/platform';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';    
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,9 @@ import { MatSelectModule } from '@angular/material/select';
     PlatformModule,
     MatButtonModule,
     MatSelectModule,
-
+    MatDatepickerModule,
+    MatInputModule,
+    MatIconModule
   ]
 
 })

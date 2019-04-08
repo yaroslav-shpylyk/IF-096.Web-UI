@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ClassService {
-  
+
   constructor(private http: HttpClient) { }
 
   /**

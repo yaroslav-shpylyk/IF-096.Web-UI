@@ -1,8 +1,49 @@
-<p>
-  schedule works!
-</p>
-<mat-form-field>
-  <input matInput [matDatepicker]="picker" placeholder="Choose a date">
-  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
-</mat-form-field>
+<form [formGroup] = "frmSchedule" (submit) = "onSubmit()">
+  <div class="schedule-top">
+    <mat-form-field>
+      <input matInput [matDatepicker]="pickerStart" [placeholder]="dateTermStartMsg" formControlName="dateTermStart">
+      <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+      <mat-datepicker #pickerStart></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput [matDatepicker]="pickerEnd" [placeholder]="dateTermEndMsg" formControlName="dateTermEnd">
+        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+        <mat-datepicker #pickerEnd></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select [placeholder]="selectClassMsg" formControlName="selectedClass">
+        <mat-option *ngFor="let class of arrClassList" [value]="class.id">{{ class.className }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div> <!--end of top-->
+
+  <fieldset formArrayName="mondaySchedule">
+    <legend>Понеділок</legend>
+    <div *ngFor="let lesson of mondaySchedule.controls; let i=index">
+      <span>{{i+1}}. </span>
+      <mat-form-field>
+        <mat-select placeholder="Виберіть предмет" [formControlName]="i">
+          <mat-option *ngFor="let subj of arrSubjectsList" [value]="subj.subjectId">{{ subj.subjectName }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-icon-button (click)="addSubjest()">
+        <mat-icon>add_box</mat-icon>
+      </button>
+      <button mat-icon-button>
+          <mat-icon>delete</mat-icon>
+      </button>
+
+    </div>
+  </fieldset>
+
+  <button mat-button>Click me!</button>
+</form>
+
+<!-- for test -->
+<div> {{ frmSchedule.value | json }}</div>
+<div class=errorMsg *ngIf="isInputInvalid('selectedClass')">
+  invalid class - Error
+</div>

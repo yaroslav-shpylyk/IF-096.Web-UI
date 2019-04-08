@@ -6,13 +6,11 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material.module';
 import { TeachersStorageService } from './services/teachers-storage.service';
 import { TeachersService } from './admin-panel/teachers/teachers.service';
 import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-list/dialog/dialog-overview';
-
-import { MaterialModule } from './material.module';
-import { ClassListService } from './services/class-list.service';
 
 @NgModule({
   declarations: [
@@ -35,8 +33,7 @@ import { ClassListService } from './services/class-list.service';
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true
-    },
-    ClassListService
+    }
   ],
   bootstrap: [AppComponent]
 })
