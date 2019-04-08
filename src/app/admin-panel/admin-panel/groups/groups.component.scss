@@ -1,0 +1,24 @@
+table {
+  width: 100%;
+}
+
+.example-button-row button,
+.example-button-row a {
+  margin-right: 8px;
+  font-size: 1.6em;
+}
+
+.example-button-row {
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+.edit {
+  font-size: 1.8em;
+  cursor: pointer;
+} 
