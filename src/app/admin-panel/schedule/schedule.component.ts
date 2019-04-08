@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ClassService } from '../../services/class.service';
-import { SubjectsService } from '../../services/subjects.service';
-import { Class } from '../../models/class';
-import { Subjects } from '../../models/subjects';
+import { SubjectService } from '../../services/subject.service';
+import { ClassData } from '../../models/class-data';
+import { SubjectData } from '../../models/subject-data';
 import { FormGroup, FormArray, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 /*Понеділок Вівторок Середа Четвер П'ятниця Субота
@@ -15,15 +15,15 @@ Monday Tuesday Wednesday Thursday Friday Saturday */
 })
 export class ScheduleComponent implements OnInit {
   frmSchedule: FormGroup;
-  arrClassList: Class[] = [];
-  arrSubjectsList: Subjects[] = [];
+  arrClassList: ClassData[] = [];
+  arrSubjectsList: SubjectData[] = [];
   selectClassMsg: string;
   dateTermStartMsg: string;
   dateTermEndMsg: string;
 
   constructor(private frmBld: FormBuilder,
     private classList: ClassService,
-    private subjectsList: SubjectsService) { }
+    private subjectsList: SubjectService) { }
 
   ngOnInit() {
     this.classList.getClasses('active').subscribe(data => {

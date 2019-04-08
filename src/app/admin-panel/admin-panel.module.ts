@@ -28,8 +28,9 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatSortModule } from '@angular/material/sort';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatCardModule } from '@angular/material';
-//import { ChartsModule } from 'ng2-charts';
+import { ChartsModule } from 'ng2-charts';
 import { MatMenuModule } from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,7 @@ import { MatMenuModule } from '@angular/material';
     MatSortModule,
     MatSelectModule,
     PlatformModule,
-    //FlexLayoutModule,
+    FlexLayoutModule,
     MatCardModule,
     MatIconModule,
     MatButtonModule,
@@ -73,7 +74,7 @@ import { MatMenuModule } from '@angular/material';
     MatInputModule,
     MatIconModule,
     MatMenuModule,
-    //ChartsModule,
+    ChartsModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
