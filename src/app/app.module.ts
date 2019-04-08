@@ -13,7 +13,6 @@ import { TeachersService } from './admin-panel/teachers/teachers.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-list/dialog/dialog-overview';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +32,6 @@ import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-lis
     AuthService,
     TeachersStorageService,
     TeachersService,
-    
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
