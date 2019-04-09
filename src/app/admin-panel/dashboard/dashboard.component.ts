@@ -117,7 +117,6 @@ export class DashboardComponent implements OnInit {
   public submitChartChange(form: FormGroup): void {
     const controls = form.controls;
     const values = form.value;
-    console.log(form);
     if (controls.graphType.errors || controls.classes.errors) {
       return;
     }
