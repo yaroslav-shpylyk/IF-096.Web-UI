@@ -23,6 +23,8 @@ import { EditDialogEntryComponent, EditDialogOverviewComponent } from './teacher
 import { FilterPipe } from './teachers/helpers/filter.pipe';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ChartsModule } from 'ng2-charts';
+import { MatMenuModule } from '@angular/material';
+import { SubjectsComponent } from './subjects/subjects.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { ChartsModule } from 'ng2-charts';
     ConfirmationDialogComponent,
     StudentDatails,
     StudentDetailModalComponent,
-    DashboardComponent
+    DashboardComponent,
+    SubjectsComponent
   ],
   imports: [
     CommonModule,

@@ -34,10 +34,22 @@ export class TeachersListComponent implements OnInit, OnDestroy {
         this.teachers = teachers;
       }
     );
+
+    let prevScrollpos = window.pageYOffset;
+    window.onscroll = () => {
+      const currentScrollPos = window.pageYOffset;
+      if (prevScrollpos > currentScrollPos) {
+        document.getElementById('mine').style.bottom = '3.5em';
+      } else {
+        document.getElementById('mine').style.bottom = '-75px';
+      }
+      prevScrollpos = currentScrollPos;
+    };
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    window.onscroll = null;
   }
 
   onNewTeacher() {
@@ -50,7 +62,10 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   }
 
   onEdit(id) {
-    this.router.navigate([id, 'edit'], { relativeTo: this.route, replaceUrl: true });
+    this.router.navigate([id, 'edit'], {
+      relativeTo: this.route,
+      replaceUrl: true
+    });
   }
 
   onDelete(teacher): void {
@@ -108,14 +123,3 @@ export class ConfirmationDialogComponent {
     this.snackBar.open(message, null, config);
   }
 }
-
-let prevScrollpos = window.pageYOffset;
-window.onscroll = () => {
-  const currentScrollPos = window.pageYOffset;
-  if (prevScrollpos > currentScrollPos) {
-    document.getElementById('mine').style.bottom = '3.5em';
-  } else {
-    document.getElementById('mine').style.bottom = '-75px';
-  }
-  prevScrollpos = currentScrollPos;
-};
