@@ -40,7 +40,10 @@ export class ScheduleComponent implements OnInit {
       dateTermEnd: [''],
       selectedClass: ['', Validators.required],
       mondaySchedule: this.frmBld.array([
-        this.frmBld.control('')
+        this.frmBld.group({
+          firstGroup: this.frmBld.control(''),
+          secondGroup: this.frmBld.control('')
+        })
       ])
 
 
@@ -55,12 +58,26 @@ export class ScheduleComponent implements OnInit {
     return this.frmSchedule.get('mondaySchedule') as FormArray;
   }
 
-  /** Method dynamically adds the subject to the day schedule */
-  public addSubjest(): void {
-    this.mondaySchedule.push(this.frmBld.control(''));
+  /**
+   * Method dynamically adds the subject to the day schedule
+   * if the click was on the last element
+   * @param i - Index of the element on which the click occurred
+   */
+  public addSubjest(i: number): void {
+    if((i + 1) == this.mondaySchedule.length) {
+      this.mondaySchedule.push(this.frmBld.group({
+        firstGroup: this.frmBld.control(''),
+        secondGroup: this.frmBld.control('')
+      }));
+    }
+
+
+    console.log(i + " " + this.mondaySchedule.length);
+    //console.log(this.mondaySchedule.statusChanges);
   }
 
-  /** Method removes the subject from the day schedule
+  /**
+   * Method removes the subject from the day schedule
    * @param i - index of the control which to be deleted
    */
   public removeSubjest(i: number): void {

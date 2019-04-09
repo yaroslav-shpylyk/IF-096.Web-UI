@@ -27,11 +27,21 @@
       <legend>Понеділок</legend>
       <div *ngFor="let lesson of mondaySchedule.controls; let i=index">
         <span>{{i+1}}. </span>
-        <mat-form-field>
-          <mat-select placeholder="Виберіть предмет" [formControlName]="i">
-            <mat-option *ngFor="let subj of arrSubjectsList" [value]="subj.subjectId">{{ subj.subjectName }}</mat-option>
-          </mat-select>
-        </mat-form-field>
+
+        <div>
+
+          <mat-form-field>
+            <mat-select placeholder="Виберіть предмет" [formControl]="lesson.controls['firstGroup']" (click)="addSubjest(i)">
+              <mat-option *ngFor="let subj of arrSubjectsList" [value]="subj.subjectId">{{ subj.subjectName }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select placeholder="Виберіть предмет" [formControl]="lesson.controls['secondGroup']">
+              <mat-option *ngFor="let subj of arrSubjectsList" [value]="subj.subjectId">{{ subj.subjectName }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
         <button mat-icon-button (click)="addSubjest()">
           <mat-icon>add_box</mat-icon>
