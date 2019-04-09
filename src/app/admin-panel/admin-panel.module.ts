@@ -26,6 +26,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatCardModule } from '@angular/material';
 import { ChartsModule } from 'ng2-charts';
 import { MatMenuModule } from '@angular/material';
+import { SubjectsComponent } from './subjects/subjects.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { MatMenuModule } from '@angular/material';
     StudentsListComponent,
     StudentDatails,
     StudentDetailModalComponent,
-    DashboardComponent
+    DashboardComponent,
+    SubjectsComponent
   ],
   imports: [
     CommonModule,
