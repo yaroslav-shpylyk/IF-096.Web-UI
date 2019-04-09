@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TeachersStorageService } from './services/teachers-storage.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SubjectService } from './services/subject.service';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   providers: [
     AuthService,
     TeachersStorageService,
+    SubjectService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

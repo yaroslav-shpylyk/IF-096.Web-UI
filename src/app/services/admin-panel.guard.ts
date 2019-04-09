@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanLoad } from '@angular/router';
 import { TokenInfo } from '../models/token-info';
 import * as JWTDecoder from 'jwt-decode';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,31 +12,25 @@ export class AdminPanelGuard implements CanLoad, CanActivate {
   }
 
   /**
-   * Function that allow user to navigate to other route modules if it returns true
+   * Function that allows user to navigate to the current route module if it returns true
    * checks permission every time
-   * @returns true if user's role is not ROLE_ADMIN
-   * @returns false if user's role is ROLE_ADMIN
+   * @returns true if user's role is ROLE_ADMIN
+   * @returns false if user's role is not ROLE_ADMIN
    */
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean  {
-    if (this.isAdmin()) {
-      return false;
-    }
-    return true;
+    return this.isAdmin();
   }
 
   /**
-   * Function that allows user to navigate to other route modules if it returns true
+   * Function that allows user to navigate to current route modules if it returns true
    * checks permissions only first time
-   * @returns true if user's role is not ROLE_ADMIN
-   * @returns false if user's role is ROLE_ADMIN
+   * @returns true if user's role is ROLE_ADMIN
+   * @returns false if user's role is not ROLE_ADMIN
    */
   canLoad(): boolean {
-    if (this.isAdmin()) {
-      return false;
-    }
-    return true;
+    return this.isAdmin();
   }
 
   /**
