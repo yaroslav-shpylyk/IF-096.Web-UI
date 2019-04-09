@@ -26,6 +26,8 @@ export class JournalComponent implements OnInit {
   displayedColumns: string[] = ['num', 'className', 'academicYear'];
   dataSource;
 
+  @ViewChild(MatSort) sort: MatSort;
+
   constructor(
     private journalsStorageService: JournalsStorageService,
     private teachersStorageService: TeachersStorageService
@@ -35,6 +37,7 @@ export class JournalComponent implements OnInit {
     this.journalsStorageService.getAllJournals().subscribe(journals => {
       this.journals = this.journalsStorageService.distinctJournals(journals);
       this.dataSource = new MatTableDataSource(this.journals);
+      this.dataSource.sort = this.sort;
     });
     this.teachersStorageService.getTeacherS().subscribe(teachers => {
       console.log(teachers);
