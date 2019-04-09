@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ClassService } from '../../services/class.service';
-import { SubjectService } from '../../services/subject.service';
+import { DataService } from '../../services/data.service';
 import { ClassData } from '../../models/class-data';
 import { SubjectData } from '../../models/subject-data';
 import { FormGroup, FormArray, FormControl, FormBuilder, Validators } from '@angular/forms';
@@ -22,14 +21,13 @@ export class ScheduleComponent implements OnInit {
   dateTermEndMsg: string;
 
   constructor(private frmBld: FormBuilder,
-    private classList: ClassService,
-    private subjectsList: SubjectService) { }
+    private dataList: DataService) { }
 
   ngOnInit() {
-    this.classList.getClasses('active').subscribe(data => {
-      this.arrClassList = data;
+    this.dataList.getData('/classes').subscribe(data => {
+      this.arrClassList = data.filter(currentClass => currentClass.isActive);
     });
-    this.subjectsList.getSubjects().subscribe(data => {
+    this.dataList.getData('/subjects').subscribe(data => {
       this.arrSubjectsList = data;
     });
     this.initForm();
