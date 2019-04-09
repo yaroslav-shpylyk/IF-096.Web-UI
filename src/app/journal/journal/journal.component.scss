@@ -14,9 +14,13 @@ mat-accordion {
   padding: 0px !important;
 }
 
-mat-form-field {
+mat-form-field,
+mat-radio-group {
   display: flex;
   justify-content: center;
+}
+mat-radio-group {
+  justify-content: space-evenly;
 }
 
 ::ng-deep .mat-form-field-wrapper {
@@ -28,7 +32,8 @@ mat-form-field {
 }
 
 .cdk-column-num,
-.cdk-column-academicYear {
+.cdk-column-academicYear,
+mat-radio-group {
   color: #6b6767;
 }
 
