@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { ClassData } from '../../models/class-data';
 import { SubjectData } from '../../models/subject-data';
-import { FormGroup, FormArray, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 
 /*Понеділок Вівторок Середа Четвер П'ятниця Субота
 Monday Tuesday Wednesday Thursday Friday Saturday */
@@ -20,8 +20,11 @@ export class ScheduleComponent implements OnInit {
   dateTermStartMsg: string;
   dateTermEndMsg: string;
 
+  @ViewChild("buttonAdd")
+  buttonAdd: ElementRef;
+
   constructor(private frmBld: FormBuilder,
-    private dataList: DataService) { }
+    private dataList: DataService, private renderer: Renderer2) { }
 
   ngOnInit() {
     this.dataList.getData('/classes').subscribe(data => {
@@ -45,9 +48,6 @@ export class ScheduleComponent implements OnInit {
           secondGroup: this.frmBld.control('')
         })
       ])
-
-
-
     });
     this.selectClassMsg = 'Виберіть клас';
     this.dateTermStartMsg = "Дата початку семестру";
@@ -59,25 +59,32 @@ export class ScheduleComponent implements OnInit {
   }
 
   /**
-   * Method dynamically adds the subject to the day schedule
+   * Method dynamically adds the subject to the daily schedule
    * if the click was on the last element
    * @param i - Index of the element on which the click occurred
    */
   public addSubjest(i: number): void {
-    if((i + 1) == this.mondaySchedule.length) {
+    if(i == (this.mondaySchedule.length - 1)) {
       this.mondaySchedule.push(this.frmBld.group({
         firstGroup: this.frmBld.control(''),
         secondGroup: this.frmBld.control('')
       }));
     }
 
-
-    console.log(i + " " + this.mondaySchedule.length);
-    //console.log(this.mondaySchedule.statusChanges);
+    //this.renderer.addClass(this.buttonAdd.nativeElement, 'nameclass');
+    console.log(i + " " + this.buttonAdd.nativeElement);
   }
 
   /**
-   * Method removes the subject from the day schedule
+   * Method dynamically adds the subject to the daily schedule for second group
+   * @param i - Index of the element which needs the second group
+   */
+  public addSecondGroup(i: number): void {
+    //console.log(i + " " + this.mondaySchedule[i].secondGroup.value);
+  }
+
+  /**
+   * Method removes the subject from the daily schedule
    * @param i - index of the control which to be deleted
    */
   public removeSubjest(i: number): void {
@@ -94,7 +101,6 @@ export class ScheduleComponent implements OnInit {
     const result = control.invalid && control.touched;
     return result;
   }
-
 
   /**
    * The method checks the form for validity and then handle form data

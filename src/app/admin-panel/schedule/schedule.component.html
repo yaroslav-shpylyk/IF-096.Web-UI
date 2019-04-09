@@ -26,29 +26,28 @@
     <fieldset formArrayName="mondaySchedule">
       <legend>Понеділок</legend>
       <div *ngFor="let lesson of mondaySchedule.controls; let i=index">
-        <span>{{i+1}}. </span>
-
         <div>
+          <span>{{ i + 1 }}. </span>
 
-          <mat-form-field>
+          <mat-form-field class="select-subject">
             <mat-select placeholder="Виберіть предмет" [formControl]="lesson.controls['firstGroup']" (click)="addSubjest(i)">
               <mat-option *ngFor="let subj of arrSubjectsList" [value]="subj.subjectId">{{ subj.subjectName }}</mat-option>
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field class="select-subject second-group">
             <mat-select placeholder="Виберіть предмет" [formControl]="lesson.controls['secondGroup']">
               <mat-option *ngFor="let subj of arrSubjectsList" [value]="subj.subjectId">{{ subj.subjectName }}</mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
 
-        <button mat-icon-button (click)="addSubjest()">
-          <mat-icon>add_box</mat-icon>
-        </button>
-        <button mat-icon-button (click)="removeSubjest(i)">
-            <mat-icon>delete</mat-icon>
-        </button>
+          <button mat-icon-button (click)="addSecondGroup(i)" class="button-add" #buttonAdd>
+            <mat-icon>add_box</mat-icon>
+          </button>
+          <button mat-icon-button (click)="removeSubjest(i)" class="button-del">
+              <mat-icon>delete</mat-icon>
+          </button>
+        </div>
 
       </div>
     </fieldset>
