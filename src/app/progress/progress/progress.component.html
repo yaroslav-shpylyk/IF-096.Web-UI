@@ -2,7 +2,7 @@
   <form class="chartOptions" [formGroup]="chartOptions">
     <mat-form-field>
       <mat-label>Предмет</mat-label>
-      <mat-select formControlName="subjects" (selectionChange)="chartOptionChange('subjects', $event)">
+      <mat-select formControlName="subjectId" (selectionChange)="chartOptionChange('subjects', $event)">
         <mat-option [value]="''">--</mat-option>
         <mat-option *ngFor="let item of subjects" [value]="item.subjectId" >
           {{item.subjectName}}
@@ -11,7 +11,7 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Клас</mat-label>
-      <mat-select formControlName="classes" (selectionChange)="chartOptionChange('classes', $event)">
+      <mat-select formControlName="classId" (selectionChange)="chartOptionChange('classes', $event)">
         <mat-option [value]="''">--</mat-option>
         <mat-option *ngFor="let item of classes" [value]="item.id">
           {{item.className}}
@@ -20,24 +20,30 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Учень</mat-label>
-      <mat-select formControlName="students" (selectionChange)="chartOptionChange('students', $event)">
+      <mat-select formControlName="studentId" (selectionChange)="chartOptionChange('students', $event)">
         <mat-option *ngFor="let item of students" [value]="item.id">
           {{item.firstname}} {{item.lastname}}
         </mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <input matInput [matDatepicker]="startDate" formControlName="startDate" placeholder="Початок періоду" (dateInput)="chartOptionChange('startDate', $event)">
-      <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
-      <mat-datepicker #startDate></mat-datepicker>
+      <input matInput [matDatepicker]="periodStart" formControlName="periodStart" placeholder="Початок періоду" (dateInput)="chartOptionChange('startDate', $event)">
+      <mat-datepicker-toggle matSuffix [for]="periodStart"></mat-datepicker-toggle>
+      <mat-datepicker #periodStart></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
-      <input matInput [matDatepicker]="endDate" formControlName="endDate" placeholder="Кінець періоду" (dateInput)="chartOptionChange('endDate', $event)">
-      <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-      <mat-datepicker #endDate></mat-datepicker>
+      <input matInput [matDatepicker]="periodEnd" formControlName="periodEnd" placeholder="Кінець періоду" (dateInput)="chartOptionChange('endDate', $event)">
+      <mat-datepicker-toggle matSuffix [for]="periodEnd"></mat-datepicker-toggle>
+      <mat-datepicker #periodEnd></mat-datepicker>
     </mat-form-field>
   </form>
   <mat-card>
-
+    <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType">
+    </canvas>
   </mat-card>
 </div>

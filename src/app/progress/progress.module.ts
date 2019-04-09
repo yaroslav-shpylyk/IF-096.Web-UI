@@ -4,6 +4,8 @@ import { ProgressRoutingModule } from './progress-routing.module';
 import { ProgressComponent } from './progress/progress.component';
 import { MatSelectModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatCardModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ChartsModule } from 'ng2-charts';
+import { ProgressService } from './progress.service';
 
 @NgModule({
   declarations: [ProgressComponent],
@@ -15,7 +17,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    ChartsModule,
+  ],
+  providers: [
+    ProgressService
   ]
 })
 export class ProgressModule { }
