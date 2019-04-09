@@ -37,7 +37,6 @@ export class SubjectsComponent implements OnInit {
 
   openDialog(g): void {
     const dialogRef = this.dialog.open(ModifySubjectsComponent, {
-      width: '250px',
       data: g
     });
 

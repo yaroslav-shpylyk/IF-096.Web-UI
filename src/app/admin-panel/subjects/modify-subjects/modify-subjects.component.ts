@@ -1,31 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { SubjectData } from 'src/app/models/subject-data';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-
-/**
-   * This component have empty html.Its need for create modal window with own Id
-*/
-
-@Component({
-  template: ''
-})
-export class SubjectsDatails {
-
-  constructor(public dialog: MatDialog) {this.openDialog();}
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(ModifySubjectsComponent, {
-      width: '250px',
-      data: {}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      
-    });
-  }
-
-}
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-modify-subjects',
@@ -40,5 +15,4 @@ export class ModifySubjectsComponent {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
 }
