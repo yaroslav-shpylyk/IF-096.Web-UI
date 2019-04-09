@@ -20,10 +20,7 @@ export class TeachersGuard implements CanActivate, CanLoad {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-    if (this.isTeacher()) {
-      return true;
-    }
-    return false;
+    return this.isTeacher();
   }
 
   /**
@@ -33,10 +30,7 @@ export class TeachersGuard implements CanActivate, CanLoad {
    * @returns false if user's role is not ROLE_TEACHER
    */
   canLoad(route: Route): boolean {
-    if (this.isTeacher()) {
-      return true;
-    }
-    return false;
+    return this.isTeacher();
   }
 
   /**

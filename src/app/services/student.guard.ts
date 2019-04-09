@@ -22,10 +22,7 @@ export class StudentGuard implements CanActivate, CanLoad {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-    if (this.isStudent()) {
-      return true;
-    }
-    return false;
+    return this.isStudent();
   }
 
   /**
@@ -35,10 +32,7 @@ export class StudentGuard implements CanActivate, CanLoad {
    * @returns false if user's role is not ROLE_USER
    */
   canLoad(route: Route): boolean {
-    if (this.isStudent()) {
-      return true;
-    }
-    return false;
+    return this.isStudent();
   }
 
   /**

@@ -20,10 +20,7 @@ export class AdminPanelGuard implements CanLoad, CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean  {
-    if (this.isAdmin()) {
-      return true;
-    }
-    return false;
+    return this.isAdmin();
   }
 
   /**
@@ -33,10 +30,7 @@ export class AdminPanelGuard implements CanLoad, CanActivate {
    * @returns false if user's role is not ROLE_ADMIN
    */
   canLoad(): boolean {
-    if (this.isAdmin()) {
-      return true;
-    }
-    return false;
+    return this.isAdmin();
   }
 
   /**
