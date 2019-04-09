@@ -35,10 +35,10 @@ export class SubjectsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  openDialog(): void {
+  openDialog(g): void {
     const dialogRef = this.dialog.open(ModifySubjectsComponent, {
       width: '250px',
-      data: {}
+      data: g
     });
 
     dialogRef.afterClosed().subscribe(result => {

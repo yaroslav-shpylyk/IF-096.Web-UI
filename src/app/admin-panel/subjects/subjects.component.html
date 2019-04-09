@@ -15,7 +15,7 @@
 
   <ng-container matColumnDef="edit">
     <th mat-header-cell *matHeaderCellDef> Ред. </th>
-    <td class="editDot" mat-cell *matCellDef="let element"><a (click)="openDialog()">⋮</a></td>
+    <td class="editDot" mat-cell *matCellDef="let element"><a (click)="openDialog(element)">⋮</a></td>
   </ng-container>
   
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

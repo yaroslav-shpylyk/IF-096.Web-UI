@@ -1,3 +1,12 @@
-<p>
-  modify-subjects works!
-</p>
+<form class="example-form" #form = "ngForm">
+  <mat-form-field>
+   <input matInput placeholder="Предмет" name="subjectName" [(ngModel)]="data.subjectName">
+  </mat-form-field>
+  <mat-form-field>
+    <textarea matInput placeholder="Опис" name="subjectDescription" [(ngModel)]="data.subjectDescription"></textarea>
+  </mat-form-field>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Відмінити</button>
+    <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Зберегти</button>
+  </div>
+</form>
