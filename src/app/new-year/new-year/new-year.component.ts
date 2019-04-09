@@ -16,6 +16,10 @@ export class NewYearComponent implements OnInit {
   public transititionForm: FormGroup;
   public currentClassYear: number;
   public currentClassTitle: string;
+  public isNotEmpty = true;
+  public isActive = true;
+  public isCurrentYear = true;
+  public filterParams = [this.isNotEmpty, this.isCurrentYear, this.isActive];
   panelOpenState = [];
 
   constructor( private newYearTransitition: NewYearService) {  }
@@ -27,11 +31,11 @@ export class NewYearComponent implements OnInit {
         data.forEach(
           (schoolClass) => {
               this.allClasses.push(schoolClass);
-              if (schoolClass.isActive && schoolClass.numOfStudents > 0) {
-                this.activeClasses.push(schoolClass);
-                this.panelOpenState.push(false);
-                this.addNewClassTitleInput();
-                }
+              // if (schoolClass.isActive && schoolClass.numOfStudents > 0) {
+              this.activeClasses.push(schoolClass);
+              this.panelOpenState.push(false);
+              this.addNewClassTitleInput();
+                // }
               }
             );
 
@@ -42,6 +46,13 @@ export class NewYearComponent implements OnInit {
   focusToFormControl(event) {
     this.currentClassYear = +event.target.dataset.classYear;
     this.currentClassTitle = event.target.dataset.classTitle;
+
+    this.activeClasses.forEach(
+      (item) => {
+        if (item.classYear == 2019) {console.log((this.transititionForm.controls.newClassTitle as FormArray).controls[0].value); }
+      }
+    );
+
   }
 
 
@@ -67,16 +78,16 @@ export class NewYearComponent implements OnInit {
   }
 
   addNewClassTitleInput() {
-    const newInput = new FormControl('', [
+    const newInput = new FormControl('',  [
       Validators.pattern('^([1-9]|1[0-2])-[А-Я]{1}$'),
       this.classExistValidator(this.allClasses)]);
     (this.transititionForm.controls.newClassTitle as FormArray).push(newInput);
   }
   get newClassTitle() { return this.transititionForm.get('newClassTitle'); }
-
   formSubmit() {
     if (this.transititionForm.status === 'VALID') {
-    this.newYearTransitition.transitClasses(this.transititionForm.value.newClassTitle, this.activeClasses);
+      console.log(this.transititionForm.value.newClassTitle);
+    // this.newYearTransitition.transitClasses(this.transititionForm.value.newClassTitle, this.activeClasses);
     }
   }
 }

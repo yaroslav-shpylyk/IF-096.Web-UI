@@ -1,14 +1,17 @@
+<mat-checkbox [(ngModel)]="isActive" >Active</mat-checkbox>
+<mat-checkbox [(ngModel)]="isNotEmpty" >NotEmpty</mat-checkbox>
+<mat-checkbox [(ngModel)]="isCurrentYear" >CurYear</mat-checkbox>
 <div class="container">
   <h2>Перехід на новий навчальний рік</h2>
   <form [formGroup]="transititionForm"  class="component" (ngSubmit)="formSubmit()">
     <div formArrayName="newClassTitle">
-      <mat-card *ngFor="let feature of newClassTitle.controls; let index = index">
+      <mat-card *ngFor="let class of activeClasses | filter:isActive:isNotEmpty:isCurrentYear; let index = index">
         <mat-accordion>
           <mat-expansion-panel (opened)="panelOpenState[index] = true" (closed)="panelOpenState[index] = false">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                <div class="className">{{activeClasses[index].className}}</div> 
-                <div class="currentYear">{{activeClasses[index].classYear}}</div>
+                <div class="className">{{class.className}}</div> 
+                <div class="currentYear">{{class.classYear}}</div>
               </mat-panel-title> 
               <mat-panel-description>
                 {{panelOpenState[index] ? 'Список учнів' : 'Переглянути список учнів'}}
@@ -21,10 +24,10 @@
         </mat-accordion>
         <input attr.data-class-year="{{activeClasses[index].classYear}}" attr.data-class-title="{{activeClasses[index].className}}" (click)="focusToFormControl($event)" class="new-class-name" id={{index}} placeholder="нова назва класу" [formControlName]="index" />
         <div class="validation-error"
-          *ngIf="feature.invalid">
-          <p *ngIf="feature.errors.pattern">Недопустима назва (Приклад: "8-А")</p>
-          <p *ngIf="feature.errors.class_exist">Клас вже існує в наступному н. р.</p>
-          <p *ngIf="feature.errors.title_dublicate">Назви класів співпадають</p>
+          *ngIf="newClassTitle.controls[index].invalid">
+          <p *ngIf="newClassTitle.controls[index].errors.pattern">Недопустима назва (Приклад: "8-А")</p>
+          <p *ngIf="newClassTitle.controls[index].errors.class_exist">Клас вже існує в наступному н. р.</p>
+          <p *ngIf="newClassTitle.controls[index].errors.title_dublicate">Назви класів співпадають</p>
         </div>
       </mat-card>  
     </div>
