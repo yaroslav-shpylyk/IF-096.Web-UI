@@ -6,6 +6,7 @@ import { StudentsService } from './students.service';
 import { MarksRequestOptions } from '../models/marks-request-options';
 import { map, switchMap, tap} from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
+import { MarkData } from '../models/mark-data';
 
 @Injectable({
   providedIn: 'root'
@@ -29,23 +30,31 @@ export class MarkService {
     } else {
       requestParams = '';
     }
-    console.log(requestParams);
-    return this.http.get(`/marks${requestParams}`);
+    return this.http.get(`/marks${requestParams}`)
+      .pipe(
+        map((result: {status: any, data: MarkData[]}) => result.data)
+      );
   }
   public getProgressMarks(options?: MarksRequestOptions): Observable<any> {
+    const students = [];
     return options.student_id ?
       this.getMarks(options) :
       this.studentService.getStudents(options.class_id)
         .pipe(
           map(result => {
             return result.map(item => {
+              students.push(item);
               options.student_id = item.id;
               return this.getMarks(options);
             });
           }),
           switchMap(result => combineLatest(...result)),
-          map(result => result.map(item => item.data)),
-          tap(result => console.log(result))
+          map(result => result.map((item, index) => {
+            return {
+              student: students[index],
+              data: item
+            };
+          }))
         );
 
   }

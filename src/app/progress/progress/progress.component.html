@@ -1,5 +1,5 @@
 <div class="component">
-  <form class="chartOptions" [formGroup]="chartOptions">
+  <form class="chartOptions" [formGroup]="chartOptionsForm">
     <mat-form-field>
       <mat-label>Предмет</mat-label>
       <mat-select formControlName="subjectId" (selectionChange)="chartOptionChange('subjects', $event)">
@@ -27,23 +27,23 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <input matInput [matDatepicker]="periodStart" formControlName="periodStart" placeholder="Початок періоду" (dateInput)="chartOptionChange('startDate', $event)">
+      <input matInput [matDatepicker]="periodStart" formControlName="periodStart" placeholder="Початок періоду">
       <mat-datepicker-toggle matSuffix [for]="periodStart"></mat-datepicker-toggle>
       <mat-datepicker #periodStart></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
-      <input matInput [matDatepicker]="periodEnd" formControlName="periodEnd" placeholder="Кінець періоду" (dateInput)="chartOptionChange('endDate', $event)">
+      <input matInput [matDatepicker]="periodEnd" formControlName="periodEnd" placeholder="Кінець періоду">
       <mat-datepicker-toggle matSuffix [for]="periodEnd"></mat-datepicker-toggle>
       <mat-datepicker #periodEnd></mat-datepicker>
     </mat-form-field>
   </form>
   <mat-card>
     <canvas baseChart
-            [datasets]="barChartData"
-            [labels]="barChartLabels"
-            [options]="barChartOptions"
-            [legend]="barChartLegend"
-            [chartType]="barChartType">
+            [datasets]="chartData"
+            [labels]="chartLabels"
+            [options]="chartOptions"
+            [legend]="chartLegend"
+            [chartType]="chartType">
     </canvas>
   </mat-card>
 </div>

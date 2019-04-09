@@ -9,6 +9,7 @@ import { Student } from '../../models/student';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { MarkService } from '../../services/mark.service';
+import { MarkData } from '../../models/mark-data';
 
 @Component({
   selector: 'app-progress',
@@ -16,27 +17,29 @@ import { MarkService } from '../../services/mark.service';
   styleUrls: ['./progress.component.scss']
 })
 export class ProgressComponent implements OnInit {
-  public chartOptions: FormGroup;
+  public chartOptionsForm: FormGroup;
   public subjects: SubjectData[];
   public classes: ClassData[];
   public students: Student[];
-  public barChartOptions: ChartOptions = {
+  public chartOptions: ChartOptions = {
     responsive: true,
-    scales: { xAxes: [{}], yAxes: [{}] },
-    plugins: {
-      datalabels: {
-        anchor: 'end',
-        align: 'end',
-      }
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true,
+          max: 12,
+          maxTicksLimit: 24
+        }
+      }]
     }
   };
-  public barChartLabels: Label[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-  public barChartType: ChartType = 'bar';
-  public barChartLegend = true;
-  public barChartData: ChartDataSets[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
-  ];
+  public chartLabels: Label[] = [''];
+  public chartType: ChartType = 'bar';
+  public chartLegend = true;
+  public chartData: ChartDataSets[] = [{
+    data: [],
+    label: ''
+  }];
   constructor(private subjectService: SubjectService, private classService: ClassService,
               private studentService: StudentsService, private markService: MarkService) { }
 
@@ -45,9 +48,9 @@ export class ProgressComponent implements OnInit {
     this.subjectService.getSubjects().subscribe(result => this.subjects = result);
     this.classService.getClasses('active').subscribe(result => this.classes = result);
     this.markService.getMarks().subscribe(result => console.log(result));
-    this.chartOptions.statusChanges.subscribe(result => {
+    this.chartOptionsForm.statusChanges.subscribe(result => {
       if (result === 'VALID') {
-        const {subjectId, classId, studentId, periodStart, periodEnd} = this.chartOptions.value;
+        const {subjectId, classId, studentId, periodStart, periodEnd} = this.chartOptionsForm.value;
         const options = {
           subject_id: subjectId,
           student_id: studentId,
@@ -55,13 +58,14 @@ export class ProgressComponent implements OnInit {
           period_start: this.formatDate(periodStart),
           period_end: this.formatDate(periodEnd)
         };
-        this.markService.getProgressMarks(options)
-          .subscribe(result => console.log(result));
+        this.markService.getProgressMarks(options).subscribe(result => {
+          this.updateChart(result);
+        });
       }
     });
   }
   private createForm(): void {
-    this.chartOptions = new FormGroup({
+    this.chartOptionsForm = new FormGroup({
       subjectId: new FormControl('', [
         Validators.required
       ]),
@@ -88,19 +92,24 @@ export class ProgressComponent implements OnInit {
         this.studentService.getStudents(event.value).subscribe(result => this.students = result);
         break;
       }
-      case 'startDate': {
-        const formatedDate = this.formatDate(event.value);
-        console.log(formatedDate);
-        break;
-      }
-      case 'endDate': {
-        const formatedDate = this.formatDate(event.value);
-        console.log(formatedDate);
-        break;
-      }
     }
   }
   private formatDate(date: any): any {
     return date.toISOString().slice(0, 10);
+  }
+  private updateChart(data: MarkData[]): void {
+    this.chartLabels = [];
+    this.chartData = [];
+    const newData: number[] = [];
+    const newLabels = [];
+    data.forEach(item => {
+      newData.push(item.y);
+      newLabels.push(item.x.reverse().join('-'));
+    });
+    this.chartLabels = newLabels;
+    this.chartData = [{
+      data: newData,
+      label: ''
+    }];
   }
 }
