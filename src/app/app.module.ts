@@ -10,7 +10,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TeachersStorageService } from './services/teachers-storage.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { JournalsStorageService } from './services/journals-storage.service';
-import { JournalsService } from './journal/journals.service';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TeacherService } from './services/teacher.service';
@@ -32,7 +31,6 @@ import { SubjectService } from './services/subject.service';
     AuthService,
     TeachersStorageService,
     JournalsStorageService,
-    JournalsService,
     SubjectService,
     TeacherService,
     {

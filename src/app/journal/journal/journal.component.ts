@@ -1,8 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { JournalsService } from '../journals.service';
 import { JournalsStorageService } from 'src/app/services/journals-storage.service';
 import { MatSort, MatTableDataSource } from '@angular/material';
+import { TeacherService } from 'src/app/services/teacher.service';
+import { Teacher } from 'src/app/admin-panel/teachers/helpers/teacher.model';
+import { TeacherData } from 'src/app/models/teacher-data';
+import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
 
 export interface PeriodicElement {
   name: string;
@@ -18,26 +21,25 @@ export interface PeriodicElement {
 })
 export class JournalComponent implements OnInit {
   journals;
-  distJournals = [];
+  teachers: TeacherData[];
 
-  displayedColumns: string[] = ['idClass', 'className', 'academicYear'];
+  displayedColumns: string[] = ['num', 'className', 'academicYear'];
   dataSource;
 
   constructor(
-    private journalsService: JournalsService,
-    private journalsStorageService: JournalsStorageService
+    private journalsStorageService: JournalsStorageService,
+    private teachersStorageService: TeachersStorageService
   ) {}
 
   ngOnInit() {
-    this.journalsStorageService.getAllJournals()
-    .subscribe(
-      journals => {
-        this.journals = this.journalsStorageService.distinctJournals(journals);
-        this.dataSource = new MatTableDataSource(
-          this.journalsService.distinctJournals(this.journals)
-        );
-      }
-    );
+    this.journalsStorageService.getAllJournals().subscribe(journals => {
+      this.journals = this.journalsStorageService.distinctJournals(journals);
+      this.dataSource = new MatTableDataSource(this.journals);
+    });
+    this.teachersStorageService.getTeacherS().subscribe(teachers => {
+      console.log(teachers);
+      this.teachers = teachers;
+    });
   }
 
   applyFilter(filterValue: string) {

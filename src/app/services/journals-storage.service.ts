@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { JournalsService } from '../journal/journals.service';
+import { Observable } from 'rxjs';
+import { Journal } from '../models/journal-data';
 
 @Injectable()
 export class JournalsStorageService {
-  constructor(
-    private httpClient: HttpClient,
-    private journalsService: JournalsService
-  ) {}
+  constructor(private httpClient: HttpClient) {}
 
-  getAllJournals() {
+  getAllJournals(): Observable<Journal[]> {
     return this.httpClient.get<any>('/journals').pipe(
-      map(response => {
+      map((response: { status: any; data: Journal[] }) => {
         const journals = response.data;
         return journals;
       })

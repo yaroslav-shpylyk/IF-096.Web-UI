@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
+import { TeacherData } from '../models/teacher-data';
 
 @Injectable()
 export class TeachersStorageService {
@@ -37,6 +38,12 @@ export class TeachersStorageService {
         },
         error => console.log(error)
       );
+  }
+
+  getTeacherS(): Observable<TeacherData[]> {
+    return this.httpClient
+      .get('/teachers')
+      .pipe(map((result: { status: any; data: TeacherData[] }) => result.data));
   }
 
   /**
