@@ -11,16 +11,15 @@
   height: 75px;
   opacity: 1;
   transition: top 400ms ease-in-out, opacity 400ms ease-in-out;
-}
 
+  &.hide {
+    top: -75px;
+    opacity: 0;
+  }
 
-.hide {
-  top: -75px;
-  opacity: 0;
-}
-
-.notransition {
-  transition: none;
+  &.notransition {
+    transition: none;
+  }
 }
 
 .header-list { // menu list
