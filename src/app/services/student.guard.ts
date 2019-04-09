@@ -13,6 +13,12 @@ import * as JWTDecoder from 'jwt-decode';
 export class StudentGuard implements CanActivate, CanLoad {
   constructor(private authService: AuthService, private router: Router) {}
 
+  /**
+   * Function that allows user to access to current route (declared in routing module),
+   * checks permission every time
+   * @returns true if user's role is ROLE_USER
+   * @returns false if user's role isn't ROLE_USER
+   */
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
@@ -23,10 +29,10 @@ export class StudentGuard implements CanActivate, CanLoad {
   }
 
   /**
-   * Function that allows user to navigate to other route modules if it returns true
+   * Function that allows user to access to current route module if it returns true
    * checks permissions only first time
-   * @returns true if user's role is not ROLE_USER
-   * @returns false if user's role is ROLE_USER
+   * @returns true if user's role is ROLE_USER
+   * @returns false if user's role is not ROLE_USER
    */
   canLoad(route: Route): boolean {
     if (this.isStudent()) {

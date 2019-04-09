@@ -12,10 +12,10 @@ export class AdminPanelGuard implements CanLoad, CanActivate {
   }
 
   /**
-   * Function that allow user to navigate to other route modules if it returns true
+   * Function that allows user to navigate to the current route module if it returns true
    * checks permission every time
-   * @returns true if user's role is not ROLE_ADMIN
-   * @returns false if user's role is ROLE_ADMIN
+   * @returns true if user's role is ROLE_ADMIN
+   * @returns false if user's role is not ROLE_ADMIN
    */
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -27,10 +27,10 @@ export class AdminPanelGuard implements CanLoad, CanActivate {
   }
 
   /**
-   * Function that allows user to navigate to other route modules if it returns true
+   * Function that allows user to navigate to current route modules if it returns true
    * checks permissions only first time
-   * @returns true if user's role is not ROLE_ADMIN
-   * @returns false if user's role is ROLE_ADMIN
+   * @returns true if user's role is ROLE_ADMIN
+   * @returns false if user's role is not ROLE_ADMIN
    */
   canLoad(): boolean {
     if (this.isAdmin()) {
