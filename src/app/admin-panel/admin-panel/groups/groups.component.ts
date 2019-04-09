@@ -26,20 +26,25 @@ export class GroupsComponent implements OnInit {
     this.refreshGroups()
   }
 
+  /**
+  * Method filters the search for open classes
+  */
   applyFilterForActiveClass(filterValue: string) {
     this.dataSourceActivClass.filter = filterValue.trim().toLowerCase();
   }
 
+  /**
+  * Method filters the search for closed classes
+  */
   applyFilterForCloseClass(filterValue: string) {
     this.dataSourceCloseClass.filter = filterValue.trim().toLowerCase();
   }
 
-
   /**
-  * Method open bottom sheet, send data to the bottom sheet,
-  *  updates list of class after closing bottom sheet
+  * Method open popups sheet, send data to the popups sheet,
+  *  updates list of class after closing popups sheet
   */
-  openBottomSheet(element:Object) {
+  openPopupsSheet(element:Object) {
     let sheet = this.dialog.open(AddModifyGroupComponent,{
       hasBackdrop: true,
       data: (element) ? element : Group   
@@ -54,14 +59,10 @@ export class GroupsComponent implements OnInit {
     this.groupServices.getGroups().subscribe( data =>  {
       this.groups = data;
       this.dataSourceActivClass = new MatTableDataSource(this.groups
-        .filter((value: Group, index: number, array: Group[]) => {
-         return array[index].isActive;
-      }));
+        .filter((value: Group, index: number, array: Group[]) => array[index].isActive));
       this.dataSourceActivClass.sort = this.sort;
       this.dataSourceCloseClass = new MatTableDataSource(this.groups
-        .filter((value: Group, index: number, array: Group[]) => {
-         return !array[index].isActive;
-      }));
+        .filter((value: Group, index: number, array: Group[]) => !array[index].isActive));
       this.dataSourceCloseClass.sort = this.sort;
     });
   }
