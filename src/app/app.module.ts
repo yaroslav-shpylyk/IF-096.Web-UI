@@ -13,7 +13,8 @@ import { TeachersService } from './admin-panel/teachers/teachers.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-list/dialog/dialog-overview';
 import { TeacherService } from './services/teacher.service';
-
+import { FormsModule }   from '@angular/forms';
+import { ReactiveFormsModule }   from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,9 @@ import { TeacherService } from './services/teacher.service';
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    FormsModule, 
+    ReactiveFormsModule,
   ],
   providers: [
     AuthService,
