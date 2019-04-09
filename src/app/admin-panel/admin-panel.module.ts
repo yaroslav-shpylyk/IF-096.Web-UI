@@ -27,6 +27,7 @@ import { MatCardModule } from '@angular/material';
 import { ChartsModule } from 'ng2-charts';
 import { MatMenuModule } from '@angular/material';
 import { SubjectsComponent } from './subjects/subjects.component';
+import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subjects.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { SubjectsComponent } from './subjects/subjects.component';
     StudentDatails,
     StudentDetailModalComponent,
     DashboardComponent,
-    SubjectsComponent
+    SubjectsComponent,
+    ModifySubjectsComponent
   ],
   imports: [
     CommonModule,
@@ -75,7 +77,8 @@ import { SubjectsComponent } from './subjects/subjects.component';
   ],
   entryComponents: [
     AddModifyGroupComponent,
-    StudentDetailModalComponent
+    StudentDetailModalComponent,
+    ModifySubjectsComponent
   ],
   providers: [GroupsComponent]
 })
