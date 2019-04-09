@@ -22,9 +22,11 @@ export class SubjectsComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.subjects);
     });
   }
+  
   /**
    * Method which filter value in table,removes the leading
    * and trailing white space and line terminator characters from a string.
+   * @param filterValue - input value for which is filtered
    */
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
