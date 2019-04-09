@@ -18,7 +18,6 @@ export interface PeriodicElement {
 })
 export class JournalComponent implements OnInit {
   journals;
-  subscription: Subscription;
   distJournals = [];
 
   displayedColumns: string[] = ['idClass', 'className', 'academicYear'];
@@ -30,12 +29,10 @@ export class JournalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.journals = this.journalsService.getJournals();
-    if (!this.journals.length)
-      this.journals = this.journalsStorageService.getAllJournals();
-    this.subscription = this.journalsService.journalsChanged.subscribe(
+    this.journalsStorageService.getAllJournals()
+    .subscribe(
       journals => {
-        this.journals = journals;
+        this.journals = this.journalsStorageService.distinctJournals(journals);
         this.dataSource = new MatTableDataSource(
           this.journalsService.distinctJournals(this.journals)
         );

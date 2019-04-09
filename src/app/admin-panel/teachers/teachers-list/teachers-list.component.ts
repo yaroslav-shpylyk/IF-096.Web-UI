@@ -10,7 +10,6 @@ import {
   MatSnackBarConfig
 } from '@angular/material';
 
-
 @Component({
   selector: 'app-teachers-list',
   templateUrl: './teachers-list.component.html',
@@ -35,23 +34,38 @@ export class TeachersListComponent implements OnInit, OnDestroy {
         this.teachers = teachers;
       }
     );
+
+    let prevScrollpos = window.pageYOffset;
+    window.onscroll = () => {
+      const currentScrollPos = window.pageYOffset;
+      if (prevScrollpos > currentScrollPos) {
+        document.getElementById('mine').style.bottom = '3.5em';
+      } else {
+        document.getElementById('mine').style.bottom = '-75px';
+      }
+      prevScrollpos = currentScrollPos;
+    };
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    window.onscroll = null;
   }
 
   onNewTeacher() {
-    this.router.navigate(['new'], { relativeTo: this.route });
+    this.router.navigate(['new'], { relativeTo: this.route, replaceUrl: true });
   }
 
   onTeacherDetails(id) {
     this.teachersStorageService.modalsId = id;
-    this.router.navigate([id], { relativeTo: this.route });
+    this.router.navigate([id], { relativeTo: this.route, replaceUrl: true });
   }
 
   onEdit(id) {
-    this.router.navigate([id, 'edit'], { relativeTo: this.route });
+    this.router.navigate([id, 'edit'], {
+      relativeTo: this.route,
+      replaceUrl: true
+    });
   }
 
   onDelete(teacher): void {
@@ -109,14 +123,3 @@ export class ConfirmationDialogComponent {
     this.snackBar.open(message, null, config);
   }
 }
-
-let prevScrollpos = window.pageYOffset;
-window.onscroll = () => {
-  const currentScrollPos = window.pageYOffset;
-  if (prevScrollpos > currentScrollPos) {
-    document.getElementById('mine').style.bottom = '3.5em';
-  } else {
-    document.getElementById('mine').style.bottom = '-75px';
-  }
-  prevScrollpos = currentScrollPos;
-};

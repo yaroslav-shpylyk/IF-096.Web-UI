@@ -45,7 +45,10 @@ export class EditDialogEntryComponent implements OnInit {
       maxWidth: '90vw'
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['/admin', 'teachers'], { relativeTo: this.route });
+      this.router.navigate(['/admin', 'teachers'], {
+        relativeTo: this.route,
+        replaceUrl: true
+      });
     });
   }
 }
@@ -193,7 +196,8 @@ export class EditDialogOverviewComponent implements OnInit {
   onCancel(): void {
     this.dialogRef.close();
     this.router.navigate(['admin', 'teachers'], {
-      relativeTo: this.route
+      relativeTo: this.route,
+      replaceUrl: true
     });
   }
 

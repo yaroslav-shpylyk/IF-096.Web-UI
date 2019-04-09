@@ -8,6 +8,10 @@ const routes: Routes = [
     loadChildren: './login/login.module#LoginModule'
   },
   {
+    path: 'journal',
+    loadChildren: './journal/journal.module#JournalModule'
+  },
+  {
     path: '',
     loadChildren: './shell/shell.module#ShellModule',
     canActivate: [ShellGuard],
@@ -17,10 +21,6 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: './admin-panel/admin-panel.module#AdminPanelModule'
   },
-  {
-    path: 'journal',
-    loadChildren: './journal/journal.module#JournalModule'
-  }
 ];
 
 @NgModule({

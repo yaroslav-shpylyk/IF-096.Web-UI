@@ -11,20 +11,28 @@ export class JournalsStorageService {
   ) {}
 
   getAllJournals() {
-    this.httpClient
-      .get('/journals')
-      .pipe(
-        map(response => {
-          let journals = response['data'];
-          return journals;
-        })
-      )
+    return this.httpClient.get<any>('/journals').pipe(
+      map(response => {
+        const journals = response.data;
+        return journals;
+      })
+    );
+  }
 
-      .subscribe(
-        journals => {
-          this.journalsService.setJournals(journals);
-        },
-        error => console.log(error)
-      );
+  distinctJournals(journals) {
+    const result = [];
+    const mapped = new Map();
+    for (const item of journals) {
+      if (!mapped.has(item.idClass)) {
+        mapped.set(item.idClass, true);
+        result.push({
+          idClass: item.idClass,
+          className: item.className,
+          academicYear: item.academicYear
+        });
+      }
+    }
+
+    return result;
   }
 }

@@ -9,7 +9,6 @@ export class JournalsService {
   private journals = [];
 
   setJournals(journals) {
-
     this.journals = journals;
     this.journalsChanged.next(this.journals.slice());
   }
@@ -23,7 +22,7 @@ export class JournalsService {
     const map = new Map();
     for (const item of journals) {
       if (!map.has(item.idClass)) {
-        map.set(item.idClass, true); 
+        map.set(item.idClass, true);
         result.push({
           idClass: item.idClass,
           className: item.className,

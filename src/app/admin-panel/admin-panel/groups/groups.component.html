@@ -1,35 +1,76 @@
-<div>
-  <table  mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="className">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Назва класу </th>
-      <td mat-cell *matCellDef="let element"> {{element.className}} </td>
-    </ng-container>
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="classYear">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Рік класа </th>
-      <td mat-cell *matCellDef="let element"> {{element.classYear}} </td>
-    </ng-container>
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="isActive">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Стан класу </th>
-      <td mat-cell *matCellDef="let element"><span *ngIf = "element.isActive">Відкритий</span><span *ngIf = "!element.isActive">Закритий</span></td>
-    </ng-container>
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> Ред. </th>
-      <td mat-cell *matCellDef="let element"> <a (click)="openBottomSheet(element)" class="edit" title="Редагувати">⋮</a> </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-</div>
-
 <div class="example-button-row">
-  <button mat-fab color="primary"  mat-raised-button (click)="openBottomSheet()">+</button>
+  <button mat-fab color="primary"  mat-raised-button (click)="openPopupsSheet()">+</button>
 </div>
+
+<mat-form-field>
+  <input matInput (keyup)="applyFilterForActiveClass($event.target.value)" placeholder="Введіть назву класу">
+</mat-form-field>
+
+<table  mat-table [dataSource]="dataSourceActivClass" matSort class="mat-elevation-z8">
+
+  <ng-container matColumnDef="className">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Назва класу </th>
+    <td mat-cell *matCellDef="let element"> {{element.className}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="classYear">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Рік класу </th>
+    <td mat-cell *matCellDef="let element"> {{element.classYear}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="isActive">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Стан класу </th>
+    <td mat-cell *matCellDef="let element"><span *ngIf = "element.isActive">Відкритий</span><span *ngIf = "!element.isActive">Закритий</span></td>
+  </ng-container>
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> Ред. </th>
+    <td mat-cell *matCellDef="let element"> <a (click)="openPopupsSheet(element)" class="edit" title="Редагувати">⋮</a> </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-accordion>
+  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+     <mat-expansion-panel-header>
+      <mat-panel-title>
+       Список закритих класів
+      </mat-panel-title>
+      <mat-panel-description>
+       {{panelOpenState ? 'Приховати' : 'Показати'}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+   
+    <mat-form-field>
+      <input matInput (keyup)="applyFilterForCloseClass($event.target.value)" placeholder="Введіть назву класу">
+    </mat-form-field>
+
+    <table  mat-table [dataSource]="dataSourceCloseClass" matSort class="mat-elevation-z8">
+
+      <ng-container matColumnDef="className">
+        <th mat-header-cell *matHeaderCellDef > Назва класу </th>
+        <td mat-cell *matCellDef="let element"> {{element.className}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="classYear">
+        <th mat-header-cell *matHeaderCellDef > Рік класа </th>
+        <td mat-cell *matCellDef="let element"> {{element.classYear}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="isActive">
+        <th mat-header-cell *matHeaderCellDef > Стан класу </th>
+        <td mat-cell *matCellDef="let element"><span *ngIf = "element.isActive">Відкритий</span><span *ngIf = "!element.isActive">Закритий</span></td>
+      </ng-container>
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Ред. </th>
+        <td mat-cell *matCellDef="let element"> <a (click)="openPopupsSheet(element)" class="edit" title="Редагувати">⋮</a> </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-expansion-panel>
+</mat-accordion>

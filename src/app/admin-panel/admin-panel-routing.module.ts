@@ -8,6 +8,7 @@ import { GroupsComponent } from './admin-panel/groups/groups.component';
 import { StudentDatails } from './students-list/student-detail-modal/student-detail-modal.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditDialogEntryComponent } from './teachers/teachers-list/edit-dialog/edit-dialog';
+import { SubjectsComponent } from './subjects/subjects.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,10 @@ const routes: Routes = [
       {
         path: '',
         component: DashboardComponent
+      },
+      {
+        path: 'subjects',
+        component: SubjectsComponent
       }
     ]
   }

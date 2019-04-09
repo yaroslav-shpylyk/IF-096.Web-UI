@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LayoutModule } from '@angular/cdk/layout';
+import { MatSelectModule } from '@angular/material/select';
 import {
   MatButtonModule,
   MatFormFieldModule,
@@ -35,7 +36,8 @@ import {
     MatExpansionModule,
     MatSnackBarModule,
     MatMenuModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSelectModule
   ],
   exports: [
     MatButtonModule,
@@ -53,7 +55,8 @@ import {
     MatExpansionModule,
     MatSnackBarModule,
     MatMenuModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSelectModule
   ]
 })
 export class MaterialModule {}
