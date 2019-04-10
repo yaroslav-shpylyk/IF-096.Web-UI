@@ -1,0 +1,33 @@
+<div mat-dialog-content>
+  <form class="example-form" #form = "ngForm">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Назва класу:"  name="className" [(ngModel)]="data.className"
+      required #className="ngModel" [class.is-invalid]="className.invalid && className.touched"
+      minlength="1" maxlength="7"
+      pattern="^(([1-9]|1[0-9])[-][А-За-з]{1})|([1-9][(]([1-9]|1[0-9])[)][-][А-За-з]{1})|([1-9][(]([1-9]|1[0-9])[)])$">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Навчальний рік:" name="classYear" [(ngModel)]="data.classYear"
+      required #classYear="ngModel" [class.is-invalid]="classYear.invalid && classYear.touched"
+      minlength="4" maxlength="4"
+      pattern='^(20|29)\d{2}$'>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Додадкова інформація:" name="classDescription" [(ngModel)]="data.classDescription">
+    </mat-form-field>
+    <mat-form-field class="example-full-width" id="displayNone">
+      <input matInput placeholder="ID:" name="id" [(ngModel)]="data.id">
+    </mat-form-field>
+    <mat-form-field class="example-full-width" >
+      <mat-select  placeholder="Стан класу" name="isActive" [(ngModel)]="data.isActive">
+        <mat-option value="true" >Відкритий</mat-option>
+        <mat-option value="false">Закритий</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <button mat-stroked-button color="primary" type="submit" (click)="save(form.value)" (click)="abort()"
+    [disabled]="classYear.invalid">Зберегти</button>
+    <button mat-stroked-button color="primary" type="submit" (click)="abort()">Відміна</button>
+     
+  </form>
+</div>
