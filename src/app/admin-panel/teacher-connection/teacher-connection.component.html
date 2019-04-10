@@ -6,28 +6,32 @@
 <app-header></app-header>
 <div class="wrap-content"> 
   <div class="container">
+    <br>
+    <p>{{title}}</p>
+    <br>
     <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)">
         <div class="form-group">              
             <mat-form-field>
-                <mat-select   formControlName='teacherId'>
-                  <mat-option>--</mat-option>
+                <mat-select placeholder="Виберіть вчителя" formControlName='teacherId'>
                   <mat-option *ngFor="let item of teachers" [value]="item.id">{{item.firstname + " " + item.lastname }}</mat-option>
                 </mat-select>
               </mat-form-field>
               <br>
               <mat-form-field>
-              <mat-select   formControlName='subjectId'>
+              <mat-select placeholder="Виберіть предмет" formControlName='subjectId'>
                   <mat-option *ngFor="let item of subjects" [value]="item.subjectId">{{item.subjectName}}</mat-option>
                 </mat-select>
               </mat-form-field>
               <br>
               <mat-form-field>
-                  <mat-select  formControlName='classId'>
+                  <mat-select placeholder="Виберіть клас" formControlName='classId'>
                     <mat-option *ngFor="let item of classes" [value]="item.id">{{item.className}}</mat-option>
                   </mat-select>
                 </mat-form-field>
                 <br>
-                <button type="submit" [disabled]="!myForm">Save</button>
+              <button mat-raised-button color="primary" type="submit" [disabled]="!myForm">
+                  <mat-icon>save_alt</mat-icon>
+                  Зберегти</button>
         </div>
     </form>
   </div>

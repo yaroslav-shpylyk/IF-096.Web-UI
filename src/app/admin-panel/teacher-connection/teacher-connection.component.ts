@@ -15,12 +15,14 @@ import { from } from 'rxjs';
 })
 export class TeacherConnectionComponent implements OnInit {
 
+  public title = "Приєднання вчителя до журналу";
   teachers;
   subjects;
   classes; 
 
   constructor(
-    private teacherService: TeacherService, private classService: ClassService,
+    private teacherService: TeacherService, 
+    private classService: ClassService,
     private fb: FormBuilder
     ) {
     
