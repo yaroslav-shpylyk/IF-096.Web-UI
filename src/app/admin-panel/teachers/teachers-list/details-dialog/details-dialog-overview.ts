@@ -89,7 +89,7 @@ export class DetailsDialogOverviewComponent implements OnInit {
 
   onEditClick(): void {
     this.dialogRef.close();
-    this.router.navigate(['admin', 'teachers', this.teacher.id, 'edit'], {
+    this.router.navigate(['admin-panel', 'teachers', this.teacher.id, 'edit'], {
       relativeTo: this.route,
       replaceUrl: true
     });

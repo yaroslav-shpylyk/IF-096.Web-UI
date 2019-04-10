@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogRef, MatSnackBarConfig } from '@angular/material';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -18,7 +18,7 @@ import { MatSnackBar } from '@angular/material';
 @Component({
   template: ''
 })
-export class EditDialogEntryComponent implements OnInit {
+export class EditDialogEntryComponent implements OnInit, OnDestroy {
   teacher;
   id: number;
   subscription: Subscription;
@@ -40,12 +40,18 @@ export class EditDialogEntryComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(EditDialogOverviewComponent, {
       maxWidth: '90vw'
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['/admin', 'teachers'], {
+      this.router.navigate(['/admin-panel', 'teachers'], {
         relativeTo: this.route,
         replaceUrl: true
       });
@@ -64,8 +70,6 @@ export class EditDialogOverviewComponent implements OnInit {
   teacherForm: FormGroup;
   editMode: boolean;
   ava;
-
-  // imageEn = imageEncoder;
 
   constructor(
     public dialogRef: MatDialogRef<EditDialogOverviewComponent>,
@@ -190,12 +194,14 @@ export class EditDialogOverviewComponent implements OnInit {
         );
     }
     this.dialogRef.close();
-    this.router.navigate(['/admin/teachers/']);
+    this.router.navigate(['/admin-panel/teachers/'], {
+      replaceUrl: true
+    });
   }
 
   onCancel(): void {
     this.dialogRef.close();
-    this.router.navigate(['admin', 'teachers'], {
+    this.router.navigate(['admin-panel', 'teachers'], {
       relativeTo: this.route,
       replaceUrl: true
     });
