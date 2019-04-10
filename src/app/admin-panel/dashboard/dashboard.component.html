@@ -1,3 +1,12 @@
+<!-- not final menu!!! for easier routing when we working!!! -->
+<button mat-button [matMenuTriggerFor]="menu">Menu</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item routerLink = 'students'>Учні</button>
+  <button mat-menu-item routerLink = 'groups'>Класи</button>
+  <button mat-menu-item routerLink = 'teachers'>Учителі</button>
+  <button mat-menu-item routerLink = 'subjects'>Придмети</button>
+</mat-menu>
+<!-- -->
 <div class="component">
   <div class="graph">
     <mat-card class="chart" [ngSwitch]="chartType" *ngIf="chartData.length">
