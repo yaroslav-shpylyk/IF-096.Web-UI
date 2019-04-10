@@ -19,7 +19,7 @@ import { Subscription } from 'rxjs';
 export class AddStudentModalComponent {
   paramId: number;
   studentData: Student;
-  probaStudent;
+  // probaStudent;
 
   constructor(public dialog: MatDialog,
     private router: Router,
@@ -29,19 +29,24 @@ export class AddStudentModalComponent {
       this.paramId = params.id;
       // this.studentService.idStudent = params.id;
     });
-    this.studentService.getOneStudent(this.paramId)
-      .subscribe((student: Student) => this.studentData = student);
+    
 
+  
 
-
-    this.studentService.StudentSubject.subscribe(
-      (proba: any) => {
-        console.log('proba', proba);
-      });
+    // this.studentService.StudentSubject.subscribe(
+    //   (proba: any) => {
+    //     console.log('proba', proba);
+    //   });
 
     
 
     this.openDialog();
+  }
+
+  ngOnInit(){
+    this.studentService.getOneStudent(this.paramId)
+    .subscribe((student: Student) => this.studentData = student);
+    console.log(this.studentData)
   }
 
 /*
@@ -104,6 +109,7 @@ export class AddStudentComponent {
     private classService: ClassService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.classService.getClasses('all').subscribe((res: Array<ClassInfo>) => this.allClasses = res);
+    console.log(this.data)
     // this.studentService.getOneStudent(this.data.paramId)
     //   .subscribe((student: Student) => this.studentData = student);
     // this.id = this.data.paramId;

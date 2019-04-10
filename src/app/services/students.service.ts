@@ -12,20 +12,20 @@ import { Subject } from 'rxjs';
 export class StudentsService {
 
   // idStudent: any;
-   StudentSubject = new Subject<any>();
+  //  StudentSubject = new Subject<any>();
 
   constructor(private http: HttpClient) {
-    this.sendStudentSubject(235);
+    // this.sendStudentSubject(235);
   }
 
-  sendStudentSubject(idStudent): any {
-    //  return this.StudentSubject.next(this.getOneStudent(this.idStudent));
+  // sendStudentSubject(idStudent): any {
+  //   //  return this.StudentSubject.next(this.getOneStudent(this.idStudent));
 
 
-    this.getOneStudent(idStudent).subscribe(res => this.StudentSubject.next(res));
+  // //   this.getOneStudent(idStudent).subscribe(res => this.StudentSubject.next(res));
 
 
-  }
+  // }
 
   /**
     * Method return data with students, that are in this class, where id is class id
