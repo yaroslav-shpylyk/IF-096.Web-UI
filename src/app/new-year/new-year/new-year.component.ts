@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NewYearService } from '../../services/new-year.service';
 import { ClassData } from '../../models/class-info';
@@ -12,7 +12,7 @@ import { ClassData } from '../../models/class-info';
 export class NewYearComponent implements OnInit {
 
   public allClasses: ClassData[] = [];
-  public activeClasses: ClassData[] = [];
+  // public activeClasses: ClassData[] = [];
   public transititionForm: FormGroup;
   public currentClassYear: number;
   public currentClassTitle: string;
@@ -32,7 +32,7 @@ export class NewYearComponent implements OnInit {
           (schoolClass) => {
               this.allClasses.push(schoolClass);
               // if (schoolClass.isActive && schoolClass.numOfStudents > 0) {
-              this.activeClasses.push(schoolClass);
+              // this.activeClasses.push(schoolClass);
               this.panelOpenState.push(false);
               this.addNewClassTitleInput();
                 // }
@@ -46,13 +46,6 @@ export class NewYearComponent implements OnInit {
   focusToFormControl(event) {
     this.currentClassYear = +event.target.dataset.classYear;
     this.currentClassTitle = event.target.dataset.classTitle;
-
-    this.activeClasses.forEach(
-      (item) => {
-        if (item.classYear == 2019) {console.log((this.transititionForm.controls.newClassTitle as FormArray).controls[0].value); }
-      }
-    );
-
   }
 
 

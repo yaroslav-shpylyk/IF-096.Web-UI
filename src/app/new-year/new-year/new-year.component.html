@@ -2,7 +2,7 @@
   <h2>Перехід на новий навчальний рік</h2>
   <form [formGroup]="transititionForm"  class="component" (ngSubmit)="formSubmit()">
     <div formArrayName="newClassTitle">
-      <mat-card *ngFor="let class of activeClasses | filter:isActive:isNotEmpty:isCurrentYear; let index = index">
+      <mat-card *ngFor="let class of allClasses | filter:isActive:isNotEmpty:isCurrentYear; let index = index">
         <mat-accordion>
           <mat-expansion-panel (opened)="panelOpenState[index] = true" (closed)="panelOpenState[index] = false">
             <mat-expansion-panel-header>
@@ -14,12 +14,12 @@
                 {{panelOpenState[index] ? 'Список учнів' : 'Переглянути список учнів'}}
               </mat-panel-description>
             </mat-expansion-panel-header>
-              <mat-list role="list" *ngFor="let pupil of activeClasses[index]['pupilList'] | keyvalue; let i = index">
+              <mat-list role="list" *ngFor="let pupil of allClasses[index]['pupilList'] | keyvalue; let i = index">
                 <mat-list-item role="listitem"><span>{{i+1}})</span><a href="students/{{pupil.id}}" target="_blank">{{(pupil.value).lastname}} {{(pupil.value).firstname}}</a></mat-list-item>
               </mat-list>
           </mat-expansion-panel>
         </mat-accordion>
-        <input attr.data-class-year="{{activeClasses[index].classYear}}" attr.data-class-title="{{activeClasses[index].className}}" (click)="focusToFormControl($event)" class="new-class-name" id={{index}} placeholder="нова назва класу" [formControlName]="index" />
+        <input attr.data-class-year="{{allClasses[index].classYear}}" attr.data-class-title="{{allClasses[index].className}}" (click)="focusToFormControl($event)" class="new-class-name" id={{index}} placeholder="нова назва класу" [formControlName]="index" />
         <div class="validation-error"
           *ngIf="newClassTitle.controls[index].invalid">
           <p *ngIf="newClassTitle.controls[index].errors.pattern">Недопустима назва (Приклад: "8-А")</p>
