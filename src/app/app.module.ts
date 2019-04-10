@@ -6,38 +6,49 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MaterialModule } from './material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TeachersStorageService } from './services/teachers-storage.service';
-import { TeachersService } from './admin-panel/teachers/teachers.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
+<<<<<<< HEAD
 import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-list/dialog/dialog-overview';
 import { TeacherService } from './services/teacher.service';
 import { FormsModule }   from '@angular/forms';
 import { ReactiveFormsModule }   from '@angular/forms';
+=======
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SubjectService } from './services/subject.service';
+>>>>>>> master
 
 @NgModule({
   declarations: [
-    AppComponent,
-    DialogOverviewExampleDialog
+    AppComponent
   ],
-  entryComponents: [DialogOverviewExampleDialog],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+<<<<<<< HEAD
     MaterialModule,
     FlexLayoutModule,
     FormsModule, 
     ReactiveFormsModule,
+=======
+    FlexLayoutModule,
+    FormsModule,
+    ReactiveFormsModule
+>>>>>>> master
   ],
   providers: [
     AuthService,
     TeachersStorageService,
+<<<<<<< HEAD
     TeachersService,
     TeacherService,
+=======
+    SubjectService,
+>>>>>>> master
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
@@ -46,4 +57,4 @@ import { ReactiveFormsModule }   from '@angular/forms';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

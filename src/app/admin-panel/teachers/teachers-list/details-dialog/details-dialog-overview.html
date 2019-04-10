@@ -1,0 +1,57 @@
+<div>
+  <div *ngIf="teacher">
+    <div class="avatar">
+      <img [src]="teacher.avatar" height="150" width="150" />
+    </div>
+    <h2>{{ teacher.lastname + ' ' + teacher.firstname }}</h2>
+    <h3>{{ teacher.patronymic }}</h3>
+    <div id="info-area">
+      <div>
+        <div>
+          <p><b>Дата народження: </b> {{ teacher.dateOfBirth }}</p>
+          <p *ngIf="teacher.email">
+            <b>Электронна скринька: </b> {{ teacher.email }}
+          </p>
+          <p *ngIf="teacher.phone">
+            <b>Номер телефону: </b> {{ teacher.phone }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<mat-divider></mat-divider>
+
+<mat-accordion *ngIf="teacherJournal?.length > 0">
+  <mat-expansion-panel
+    *ngFor="let class of teacherJournal"
+    (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ class.className }}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{ class.academicYear }}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-divider></mat-divider>
+    <ng-container *ngFor="let subject of class.subjectName; let i = index">
+      <p>{{ i + 1 }}. {{ subject }}</p>
+      <mat-divider></mat-divider>
+    </ng-container>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<h2 id="not-assigned" *ngIf="!teacherJournal?.length">
+  За обраним викладачем не закріплено жодного класу
+</h2>
+
+<div id="buttons-area">
+  <button mat-raised-button color="accent" (click)="onEditClick()">
+    Редагувати
+  </button>
+  <button mat-raised-button (click)="onBackClick()">Назад</button>
+</div>
