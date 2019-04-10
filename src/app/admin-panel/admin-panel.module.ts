@@ -15,6 +15,8 @@ import { MatListModule } from '@angular/material/list';
 import { PlatformModule } from '@angular/cdk/platform';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { AddStudentComponent } from './students-list/add-student/add-student.component';
+import { AddStudentModalComponent } from './students-list/add-student/add-student.component';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import { MatSelectModule } from '@angular/material/select';
     DialogEntryComponent,
     StudentsListComponent,
     StudentDatails,
-    StudentDetailModalComponent
+    StudentDetailModalComponent,
+    AddStudentComponent,
+    AddStudentModalComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +45,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatSelectModule,
 
   ],
-  entryComponents: [StudentDetailModalComponent],
+  entryComponents: [StudentDetailModalComponent, AddStudentComponent],
 
 })
 export class AdminPanelModule { }

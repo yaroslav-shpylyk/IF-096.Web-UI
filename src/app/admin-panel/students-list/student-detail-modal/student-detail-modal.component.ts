@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Student } from '../../../models/student';
 
-/**
+/*
    * This component have empty html.Its need for create modal window with own Id
 */
 
@@ -21,9 +21,9 @@ export class StudentDatails {
     this.openDialog();
   }
 
-  /**
-   * Method open and close modal window.In data you can sent
-   * object with data to modal window
+  /*
+    *Method open and close modal window.In data you can sent
+    *object with data to modal window
   */
 
   openDialog(): void {
@@ -37,7 +37,7 @@ export class StudentDatails {
   }
 }
 
-/**
+/*
  * This component its modal window
 */
 
@@ -60,8 +60,8 @@ export class StudentDetailModalComponent {
     this.studentServise.getOneStudent(this.data.paramId)
       .subscribe((student: Student) => this.studentInfo = student);
   }
- 
-  /**
+
+  /*
   * This method close modal window, and redirect back
   */
 
@@ -69,12 +69,12 @@ export class StudentDetailModalComponent {
     this.dialogRef.close();
   }
 
-  /**
+  /*
   * This method redirect for edit component, where you can edit students data 
   */
 
   editStudent() {
-    this.router.navigate(['edit', this.studentInfo.id], { relativeTo: this.route })
+    this.router.navigate(['admin', 'students', this.data.paramId, 'edit'], { relativeTo: this.route, replaceUrl: true });
   }
 
 }

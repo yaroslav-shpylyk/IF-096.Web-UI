@@ -31,8 +31,8 @@
 <div class="students">
   <mat-nav-list *ngIf="studentList">
     <mat-list-item class="oneStudent" [routerLink]="['./', student.id]" *ngFor="let student of studentList">
-      <span>{{student.firstname}}</span>
       <span>{{student.lastname}}</span>
+      <span>{{student.firstname}}</span>
       <span>{{student.patronymic}}</span>
       <span>{{student.classe}}</span>
     </mat-list-item>

@@ -6,7 +6,9 @@ import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-ove
 import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
 import { StudentsListComponent } from './students-list/students-list.component';
 import { StudentDatails } from './students-list/student-detail-modal/student-detail-modal.component';
-
+import { AddStudentComponent } from './students-list/add-student/add-student.component';
+import { AddStudentModalComponent } from './students-list/add-student/add-student.component';
+import { FullscreenOverlayContainer } from '@angular/cdk/overlay';
 
 const routes: Routes = [
   {
@@ -18,11 +20,27 @@ const routes: Routes = [
     component: StudentsListComponent,
     children: [
       {
+        path: 'add',
+        component: AddStudentModalComponent
+      },
+      {
         path: ':id',
-        component: StudentDatails
-      }
-    ]
+        component: StudentDatails,
+        pathMatch: 'full'
+      },
+      {
+        path: ':id/edit',
+        component: AddStudentModalComponent
+      },
+    ],
   },
+
+  {
+    path: 'students/:id/edit',
+    component: AddStudentModalComponent
+  },
+
+
   { path: 'teachers/new', component: TeacherEditComponent },
   {
     path: 'teachers',
