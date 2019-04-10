@@ -58,6 +58,7 @@ export class AddStudentModalComponent {
 export class AddStudentComponent implements OnInit {
 
   allClasses: Array<ClassInfo>;
+  avatar: string | ArrayBuffer = '';
 
   constructor(
     private fb: FormBuilder,
@@ -83,7 +84,7 @@ export class AddStudentComponent implements OnInit {
       this.studentService.getOneStudent(this.data.paramId)
         .subscribe((student: Student) => {
           this.addStudent = this.fb.group({
-            avatar: [student.avatar],
+            avatar: [this.checkAvatar(student.avatar)],
             dateOfBirth: [student.dateOfBirth],
             email: [student.email],
             firstname: [student.firstname],
@@ -94,8 +95,26 @@ export class AddStudentComponent implements OnInit {
             patronymic: [student.patronymic],
             phone: [student.phone],
           });
-          setTimeout(() => console.log(this.addStudent), 2000);
+          setTimeout(() => console.log(student), 2000);
         });
+    }
+  }
+
+  onUpload($event) {
+    const file = $event.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      this.avatar = reader.result;
+    };
+    reader.readAsDataURL(file);
+    // this.ngOnInit();
+  }
+
+  checkAvatar(img) {
+    if (img === null || img === '') {
+      return this.avatar;
+    } else {
+      return img;
     }
   }
 

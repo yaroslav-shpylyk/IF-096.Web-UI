@@ -17,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { AddStudentComponent } from './students-list/add-student/add-student.component';
 import { AddStudentModalComponent } from './students-list/add-student/add-student.component';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -43,7 +44,7 @@ import { AddStudentModalComponent } from './students-list/add-student/add-studen
     PlatformModule,
     MatButtonModule,
     MatSelectModule,
-
+    MatInputModule
   ],
   entryComponents: [StudentDetailModalComponent, AddStudentComponent],
 

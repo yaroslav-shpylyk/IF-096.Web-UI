@@ -24,7 +24,10 @@
   <mat-form-field><input placeholder="Логін" matInput type="text" class="form-input" formControlName="login"></mat-form-field>
   <mat-form-field><input placeholder="Телефон" matInput type="tel" class="form-input" formControlName="phone"></mat-form-field>
   <mat-form-field><input placeholder="Електронна адреса" matInput type="email" class="form-input" formControlName="email"></mat-form-field>
-  <!-- <mat-form-field><input placeholder="Додати аватар" matInput type="button" class="form-input" formControlName="avatar"></mat-form-field> -->
+
+
+  <input  placeholder="Додати аватар"   type="file" (change)="onUpload($event)" class="form-input" formControlName="avatar">
+ 
 
 
   <button mat-raised-button type="submit" [disabled]="!addStudent.valid">Submit</button>
