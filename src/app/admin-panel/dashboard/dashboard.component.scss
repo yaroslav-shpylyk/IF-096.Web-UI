@@ -348,44 +348,10 @@ $background-gradient:
 
     .chartOptions {
 
-      mat-card-header {
-
-      }
-
       mat-card-content {
 
         form {
           font-size: 1.4em;
-          mat-form-field {
-
-            mat-label {
-
-            }
-
-            mat-select {
-            }
-            mat-error {
-            }
-          }
-
-          .graphType {
-
-            mat-radio-group {
-            }
-
-            label {
-
-            }
-
-          }
-
-          mat-radio-button {
-
-          }
-
-          button {
-
-          }
         }
       }
     }
@@ -441,10 +407,6 @@ $background-gradient:
       height: 13em;
       margin-top: 4rem;
 
-      mat-card-header {
-
-      }
-
       mat-card-content {
 
         form {
@@ -452,15 +414,6 @@ $background-gradient:
 
           mat-form-field {
             width: 18em;
-
-            mat-label {
-
-            }
-
-            mat-select {
-            }
-            mat-error {
-            }
           }
 
           .graphType {
@@ -469,57 +422,14 @@ $background-gradient:
             mat-radio-group {
               flex-direction: row;
             }
-
-            label {
-
-            }
-
-          }
-
-          mat-radio-button {
-
-          }
-
-          button {
-
           }
         }
       }
     }
   }
+
   .stats {
     flex-wrap: wrap;
-    mat-card {
-
-      span {
-      }
-    }
-
-    .cardHeader {
-
-      mat-icon {
-
-      }
-    }
-
-    mat-card-content {
-
-      span {
-
-      }
-    }
-
-    mat-card-actions {
-
-
-      button {
-
-      }
-
-      mat-icon {
-
-      }
-    }
   }
 }
 
@@ -532,6 +442,7 @@ $background-gradient:
       font-size: 1.2em;
       height: auto;
     }
+
     .chartOptions {
       margin-top: 4rem;
       width: 70%;
@@ -545,22 +456,12 @@ $background-gradient:
           flex-direction: column;
           justify-content: space-around;
           mat-form-field {
-
-
             mat-label {
               font-size: 1.2em;
-            }
-
-            mat-select {
-
-            }
-            mat-error {
-
             }
           }
 
           .graphType {
-
 
             mat-radio-group {
               font-size: 1.2em;
@@ -572,12 +473,6 @@ $background-gradient:
 
           }
 
-          mat-radio-button {
-
-          }
-
-          button {
-          }
         }
       }
     }
@@ -589,26 +484,17 @@ $background-gradient:
       font-size: 1.2em;
       margin: 1.5em 1em;
       flex-grow: 1;
-      span {
-      }
     }
 
     .cardHeader {
       font-size: 0.8em;
-      mat-icon {
-
-      }
     }
 
     mat-card-content {
       font-size: 0.7em;
-      span {
-
-      }
     }
 
     mat-card-actions {
-
 
       button {
         font-size: 0.8em;
@@ -646,22 +532,12 @@ $background-gradient:
           flex-direction: column;
           justify-content: space-around;
           mat-form-field {
-
-
             mat-label {
               font-size: 1.2em;
-            }
-
-            mat-select {
-
-            }
-            mat-error {
-
             }
           }
 
           .graphType {
-
 
             mat-radio-group {
               font-size: 1.2em;
@@ -670,10 +546,6 @@ $background-gradient:
             label {
               font-size: 1.2em;
             }
-
-          }
-
-          mat-radio-button {
 
           }
 
@@ -691,27 +563,17 @@ $background-gradient:
     mat-card {
       font-size: 1.2em;
       width: 60%;
-
-      span {
-      }
     }
 
     .cardHeader {
       font-size: 0.8em;
-
-      mat-icon {
-      }
     }
 
     mat-card-content {
       font-size: 0.7em;
-      span {
-
-      }
     }
 
     mat-card-actions {
-
 
       button {
         font-size: 0.8em;
@@ -739,8 +601,6 @@ $background-gradient:
       width: 90%;
       font-size: 1.2em;
       height: 20em;
-      mat-card-header {
-      }
 
       mat-card-content {
 
@@ -750,21 +610,12 @@ $background-gradient:
           justify-content: space-around;
           mat-form-field {
 
-
             mat-label {
               font-size: 1.2em;
-            }
-
-            mat-select {
-
-            }
-            mat-error {
-
             }
           }
 
           .graphType {
-
 
             mat-radio-group {
               font-size: 1.2em;
@@ -776,12 +627,6 @@ $background-gradient:
 
           }
 
-          mat-radio-button {
-
-          }
-
-          button {
-          }
         }
       }
     }
@@ -799,20 +644,13 @@ $background-gradient:
 
     .cardHeader {
       font-size: 0.8em;
-      mat-icon {
-
-      }
     }
 
     mat-card-content {
       font-size: 0.7em;
-      span {
-
-      }
     }
 
     mat-card-actions {
-
 
       button {
         font-size: 0.8em;
@@ -834,10 +672,6 @@ $background-gradient:
       width: 88%;
       font-size: 1.3em;
       height: auto;
-
-      mat-card-header {
-
-      }
       mat-card-footer {
         width: 100%;
       }
@@ -848,10 +682,6 @@ $background-gradient:
       width: 88%;
       font-size: 1.3em;
       height: 20em;
-
-      mat-card-header {
-
-      }
 
       mat-card-content {
 
@@ -867,13 +697,6 @@ $background-gradient:
             mat-label {
               font-size: 1.4em;
             }
-
-            mat-select {
-
-            }
-            mat-error {
-
-            }
           }
 
           .graphType {
@@ -886,10 +709,6 @@ $background-gradient:
             label {
               font-size: 1.2em;
             }
-
-          }
-
-          mat-radio-button {
 
           }
 
@@ -909,27 +728,17 @@ $background-gradient:
       font-size: 1.2em;
       width: 88%;
       margin: 2em 0;
-      span {
-      }
     }
 
     .cardHeader {
       font-size: 0.8em;
-      mat-icon {
-
-      }
     }
 
     mat-card-content {
       font-size: 0.7em;
-      span {
-
-      }
     }
 
     mat-card-actions {
-
-
       button {
         font-size: 0.8em;
       }
