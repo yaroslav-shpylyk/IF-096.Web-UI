@@ -16,7 +16,7 @@ import { GroupsComponent } from './admin-panel/groups/groups.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AddModifyGroupComponent } from './admin-panel/groups/add-modify/add-modify.component';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableModule,  } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { EditDialogEntryComponent, EditDialogOverviewComponent } from './teachers/teachers-list/edit-dialog/edit-dialog';
@@ -25,6 +25,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ChartsModule } from 'ng2-charts';
 import { MatMenuModule } from '@angular/material';
 import { SubjectsComponent } from './subjects/subjects.component';
+import { MatSortModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { SubjectsComponent } from './subjects/subjects.component';
     ChartsModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    MatSortModule
   ],
   entryComponents: [
     AddModifyGroupComponent,
@@ -70,6 +72,6 @@ import { SubjectsComponent } from './subjects/subjects.component';
     EditDialogOverviewComponent,
     ConfirmationDialogComponent
   ],
-  providers: [GroupsComponent]
+  providers: []
 })
 export class AdminPanelModule { }
