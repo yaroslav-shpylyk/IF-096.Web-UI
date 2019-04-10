@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
   }
 
   /**
-   * Method calls login subscription and and directs for received role
+   * Method calls login subscription and directs for received role
    * @param data - Username and password
    */
   login(data): void {
