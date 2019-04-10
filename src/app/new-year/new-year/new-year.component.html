@@ -37,9 +37,14 @@
   <div class="wrap">
       <label for="toggle-1"><i class="material-icons">filter_list</i></label>
       <div class="checkbox-group">
-        <mat-checkbox [(ngModel)]="isActive" >Active</mat-checkbox>
-        <mat-checkbox [(ngModel)]="isNotEmpty" >NotEmpty</mat-checkbox>
-        <mat-checkbox [(ngModel)]="isCurrentYear" >CurYear</mat-checkbox>
-      </div>    
+        <mat-checkbox [(ngModel)]="isActive" >Активний</mat-checkbox>
+        <mat-checkbox [(ngModel)]="isNotEmpty" >З учнями</mat-checkbox>
+        <mat-checkbox [(ngModel)]="isCurrentYear" >Поточний рік</mat-checkbox>
+      </div>      
+  </div>
+  <div class="marks">
+    <div *ngIf="isActive">А</div>
+    <div *ngIf="isNotEmpty">У</div>
+    <div *ngIf="isCurrentYear">П</div>
   </div>
 </div>
