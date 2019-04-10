@@ -66,7 +66,7 @@ import { SharedModule } from '../shared/shared.module';
     ReactiveFormsModule,
     MaterialModule,
     MatSelectModule,
-    SharedModule,
+    SharedModule
   ],
   entryComponents: [
     AddModifyGroupComponent,

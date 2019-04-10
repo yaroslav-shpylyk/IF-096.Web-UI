@@ -4,17 +4,13 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { DialogEntryComponent } from './teachers/teachers-list/details-dialog/details-dialog-overview';
 import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
 import { StudentsListComponent } from './students-list/students-list.component';
-<<<<<<< HEAD
-import { TeacherConnectionComponent } from './teacher-connection/teacher-connection.component';
- 
-=======
 import { EditDialogEntryComponent } from './teachers/teachers-list/edit-dialog/edit-dialog';
 import { GroupsComponent } from './admin-panel/groups/groups.component';
 import { StudentDatails } from './students-list/student-detail-modal/student-detail-modal.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SubjectsComponent } from './subjects/subjects.component';
+import { TeacherConnectionComponent } from './teacher-connection/teacher-connection.component';
 
->>>>>>> master
 const routes: Routes = [
   {
     path: '',
@@ -49,9 +45,7 @@ const routes: Routes = [
         component: SubjectsComponent
       }
     ]
-<<<<<<< HEAD
   },
-  { path: 'teachers/:id/edit', component: TeacherEditComponent },
   {
     path: '',
     component: AdminPanelComponent,
@@ -61,8 +55,6 @@ const routes: Routes = [
         component: TeacherConnectionComponent
       }
     ]
-=======
->>>>>>> master
   }
 ];
 
