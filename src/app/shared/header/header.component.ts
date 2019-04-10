@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { fromEvent, interval } from 'rxjs';
 import { debounce } from 'rxjs/operators';
 
@@ -7,12 +7,14 @@ import { debounce } from 'rxjs/operators';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements AfterViewInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   private hide: boolean;
   private notransition: boolean;
+  private isScrolling;
+  private stoppedScrolling;
 
-  ngAfterViewInit() {
-    const isScrolling = fromEvent(window, 'scroll')
+  ngOnInit() {
+    this.isScrolling = fromEvent(window, 'scroll')
       .subscribe(() => {
         if (window.scrollY >= 0 && window.scrollY <= 50) {
           this.hide = false;
@@ -23,11 +25,16 @@ export class HeaderComponent implements AfterViewInit {
         }
       });
 
-    const stoppedScrolling = fromEvent(window, 'scroll').pipe(
+    this.stoppedScrolling = fromEvent(window, 'scroll').pipe(
       debounce(() => interval(2000))
     ).subscribe(() => {
       this.hide = false;
       this.notransition = false;
-    }); // run after scroll is finished with 1.5s delay
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.isScrolling.unsubscribe();
+    this.stoppedScrolling.unsubscribe();
   }
 }
