@@ -18,7 +18,7 @@ import { Subscription } from 'rxjs';
 })
 export class AddStudentModalComponent {
   paramId: number;
-  studentData: Student;
+  // studentData: Student;
   // probaStudent;
 
   constructor(public dialog: MatDialog,
@@ -43,11 +43,11 @@ export class AddStudentModalComponent {
     this.openDialog();
   }
 
-  ngOnInit(){
-    this.studentService.getOneStudent(this.paramId)
-    .subscribe((student: Student) => this.studentData = student);
-    console.log(this.studentData)
-  }
+  // ngOnInit(){
+  //   this.studentService.getOneStudent(this.paramId)
+  //   .subscribe((student: Student) => this.studentData = student);
+  //   console.log(this.studentData)
+  // }
 
 /*
 *Method open and close modal window.In data you can sent
@@ -59,7 +59,7 @@ openDialog(): void {
     width: '250px',
     data: {
       paramId: this.paramId,
-      student: this.studentData
+      
     }
   });
   dialogRef.afterClosed().subscribe(() => {
@@ -89,7 +89,7 @@ export class AddStudentComponent {
     avatar: [''],
   };
   id: any=55;
-  // studentData: Student;
+  studentData: Student;
   editMode: any = {
     avatar: [''],
     dateOfBirth: [''],
@@ -109,7 +109,7 @@ export class AddStudentComponent {
     private classService: ClassService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.classService.getClasses('all').subscribe((res: Array<ClassInfo>) => this.allClasses = res);
-    console.log(this.data)
+    // console.log(this.data)
     // this.studentService.getOneStudent(this.data.paramId)
     //   .subscribe((student: Student) => this.studentData = student);
     // this.id = this.data.paramId;
@@ -125,7 +125,11 @@ export class AddStudentComponent {
     return this.addMode;
   }
 
-
+ngOnInit(){
+  this.studentService.getOneStudent(this.data.paramId)
+      .subscribe((student: Student) => this.studentData = student);
+  console.log(this.studentData);    
+}
 
   onSubmit(data) {
 
