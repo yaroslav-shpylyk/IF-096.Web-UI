@@ -1,59 +1,69 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
-import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.component';
-import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-overview';
+import { DialogEntryComponent } from './teachers/teachers-list/details-dialog/details-dialog-overview';
 import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
 import { StudentsListComponent } from './students-list/students-list.component';
+import { EditDialogEntryComponent } from './teachers/teachers-list/edit-dialog/edit-dialog';
+import { GroupsComponent } from './admin-panel/groups/groups.component';
 import { StudentDatails } from './students-list/student-detail-modal/student-detail-modal.component';
 import { AddStudentComponent } from './students-list/add-student/add-student.component';
 import { AddStudentModalComponent } from './students-list/add-student/add-student.component';
 import { FullscreenOverlayContainer } from '@angular/cdk/overlay';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { SubjectsComponent } from './subjects/subjects.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: AdminPanelComponent
-  },
-  {
-    path: 'students',
-    component: StudentsListComponent,
+    component: AdminPanelComponent,
     children: [
       {
-        path: 'add',
-        component: AddStudentModalComponent
+        path: 'students',
+        component: StudentsListComponent,
+        children: [
+          {
+            path: 'add',
+            component: AddStudentModalComponent
+          },
+          {
+            path: ':id',
+            component: StudentDatails,
+            pathMatch: 'full'
+          },
+          {
+            path: ':id/edit',
+            component: AddStudentModalComponent
+          },
+        ]
+      },
+
+      {
+        path: 'groups',
+        component: GroupsComponent
       },
       {
-        path: ':id',
-        component: StudentDatails,
-        pathMatch: 'full'
+        path: 'teachers',
+        component: TeachersListComponent,
+        children: [
+          { path: 'new', component: EditDialogEntryComponent },
+          {
+            path: ':id',
+            component: DialogEntryComponent
+          },
+          { path: ':id/edit', component: EditDialogEntryComponent }
+        ]
       },
       {
-        path: ':id/edit',
-        component: AddStudentModalComponent
+        path: '',
+        component: DashboardComponent
       },
-    ],
-  },
-
-  {
-    path: 'students/:id/edit',
-    component: AddStudentModalComponent
-  },
-
-
-  { path: 'teachers/new', component: TeacherEditComponent },
-  {
-    path: 'teachers',
-    component: TeachersListComponent,
-    children: [
       {
-        path: ':id',
-        component: DialogEntryComponent
+        path: 'subjects',
+        component: SubjectsComponent
       }
     ]
-  },
-  { path: 'teachers/:id/edit', component: TeacherEditComponent }
-
+  }
 ];
 
 @NgModule({

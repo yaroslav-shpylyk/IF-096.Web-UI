@@ -38,7 +38,7 @@ export class AddStudentModalComponent {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(AddStudentComponent, {
-      width: '250px',
+      width: '300px',
       data: {
         paramId: this.paramId,
 
@@ -85,15 +85,15 @@ export class AddStudentComponent implements OnInit {
       this.studentService.getOneStudent(this.data.paramId)
         .subscribe((student: Student) => {
           this.addStudent = this.fb.group({
-            avatar: [this.checkAvatar(student.avatar)],
-            dateOfBirth: [student.dateOfBirth],
+            avatar: [this.checkAvatar(student.avatar), Validators.required],
+            dateOfBirth: [student.dateOfBirth, Validators.required],
             email: [student.email],
-            firstname: [student.firstname],
-            lastname: [student.lastname],
-            login: [student.login],
+            firstname: [student.firstname, Validators.required],
+            lastname: [student.lastname, Validators.required],
+            login: [student.login, Validators.required],
             classId: [{ value: student.classId, disabled: true }],
             newPass: [''],
-            patronymic: [student.patronymic],
+            patronymic: [student.patronymic, Validators.required],
             phone: [student.phone],
           });
           setTimeout(() => console.log(student), 2000);

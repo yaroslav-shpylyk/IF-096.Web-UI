@@ -1,6 +1,6 @@
 export interface Student {
     avatar?: string;
-    classId: number
+    classId: number;
     classe?: string;
     dateOfBirth?: string;
     email?: string;
