@@ -53,7 +53,7 @@ export class ProgressComponent implements OnInit {
         const {subjectId, classId, studentId, periodStart, periodEnd} = this.chartOptionsForm.value;
         const options = {
           subject_id: subjectId,
-          student_id: studentId,
+          student_id: studentId.length ? studentId : this.students.map(item => item.id),
           class_id: classId,
           period_start: this.formatDate(periodStart),
           period_end: this.formatDate(periodEnd)
@@ -72,7 +72,7 @@ export class ProgressComponent implements OnInit {
       classId: new FormControl('', [
         Validators.required
       ]),
-      studentId: new FormControl(''),
+      studentId: new FormControl([]),
       periodStart: new FormControl('', [
         Validators.required
       ]),

@@ -13,13 +13,13 @@ import { MarkData } from '../models/mark-data';
 })
 export class MarkService {
 
-  constructor(private http: HttpClient, private classService: ClassService, private studentService: StudentsService) { }
+  constructor(private http: HttpClient) { }
 
   /**
    * Method gets marks filtered by params
    * @param options - Object of params, which we use as query with request
    */
-  public getMarks(options?: MarksRequestOptions): Observable<any> {
+  public getMarks(options?: MarksRequestOptions): Observable<MarkData[]> {
     let requestParams;
     if (options !== undefined && Object.keys(options).length) {
       const optionKeys = Object.keys(options);
@@ -36,26 +36,41 @@ export class MarkService {
       );
   }
   public getProgressMarks(options?: MarksRequestOptions): Observable<any> {
-    const students = [];
-    return options.student_id ?
+    const uniqueDates = [];
+    return options.student_id.length === 1 ?
       this.getMarks(options) :
-      this.studentService.getStudents(options.class_id)
+      combineLatest(options.student_id.map(item => {
+        options.student_id = [item];
+        return this.getMarks(options);
+      }))
         .pipe(
-          map(result => {
-            return result.map(item => {
-              students.push(item);
-              options.student_id = item.id;
-              return this.getMarks(options);
-            });
+          tap(result => {
+            const dates = [];
+            for (const student of result) {
+              for ( const mark of student ) {
+                const date =  new Date(mark.x[0], mark.x[1], mark.x[2]);
+                dates.push(date);
+              }
+            }
+            dates
+              .sort((itemA, itemB) => itemA.getTime() - itemB.getTime())
+              .map(date => {
+                return date
+                  .toISOString()
+                  .slice(0, 10)
+                  .split('-')
+                  .reverse()
+                  .join('-');
+              })
+              .forEach(date => {
+                if (!uniqueDates.includes(date)) {
+                  uniqueDates.push(date);
+                }
+              });
           }),
-          switchMap(result => combineLatest(...result)),
-          map(result => result.map((item, index) => {
-            return {
-              student: students[index],
-              data: item
-            };
-          }))
-        );
+          map(result => {
 
+          })
+        );
   }
 }

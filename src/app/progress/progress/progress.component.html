@@ -20,7 +20,7 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Учень</mat-label>
-      <mat-select formControlName="studentId" (selectionChange)="chartOptionChange('students', $event)">
+      <mat-select formControlName="studentId" (selectionChange)="chartOptionChange('students', $event)" multiple>
         <mat-option *ngFor="let item of students" [value]="item.id">
           {{item.firstname}} {{item.lastname}}
         </mat-option>
