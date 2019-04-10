@@ -19,9 +19,11 @@ export class ScheduleComponent implements OnInit {
   selectClassMsg: string;
   dateTermStartMsg: string;
   dateTermEndMsg: string;
+  secondGroupMsg: string;
 
-  @ViewChild("buttonAdd")
-  buttonAdd: ElementRef;
+
+  //@ViewChild("buttonAdd")
+  //buttonAdd: ElementRef;
 
   constructor(private frmBld: FormBuilder,
     private dataList: DataService, private renderer: Renderer2) { }
@@ -45,13 +47,14 @@ export class ScheduleComponent implements OnInit {
       mondaySchedule: this.frmBld.array([
         this.frmBld.group({
           firstGroup: this.frmBld.control(''),
-          secondGroup: this.frmBld.control('')
+          secondGroup: this.frmBld.control({value: '', disabled: true}),
         })
       ])
     });
-    this.selectClassMsg = 'Виберіть клас';
+    this.selectClassMsg = "Виберіть клас";
     this.dateTermStartMsg = "Дата початку семестру";
     this.dateTermEndMsg = "Дата закінчення семестру";
+    this.secondGroupMsg = "Виберіть предмет";
   }
 
   get mondaySchedule() {
@@ -67,20 +70,20 @@ export class ScheduleComponent implements OnInit {
     if(i == (this.mondaySchedule.length - 1)) {
       this.mondaySchedule.push(this.frmBld.group({
         firstGroup: this.frmBld.control(''),
-        secondGroup: this.frmBld.control('')
+        secondGroup: this.frmBld.control({value: '', disabled: true})
       }));
     }
 
     //this.renderer.addClass(this.buttonAdd.nativeElement, 'nameclass');
-    console.log(i + " " + this.buttonAdd.nativeElement);
+    //console.log(i + " " + this.buttonAdd.nativeElement);
   }
 
   /**
-   * Method dynamically adds the subject to the daily schedule for second group
+   * Method makes available to fill the subject for second group
    * @param i - Index of the element which needs the second group
    */
   public addSecondGroup(i: number): void {
-    //console.log(i + " " + this.mondaySchedule[i].secondGroup.value);
+    this.mondaySchedule.at(i).get('secondGroup').enable();
   }
 
   /**
@@ -88,7 +91,12 @@ export class ScheduleComponent implements OnInit {
    * @param i - index of the control which to be deleted
    */
   public removeSubjest(i: number): void {
-    this.mondaySchedule.removeAt(i);
+    if (this.mondaySchedule.at(i).get('secondGroup').status != 'DISABLED') {
+      this.mondaySchedule.at(i).get('secondGroup').setValue('');
+      this.mondaySchedule.at(i).get('secondGroup').disable();
+    } else {
+      this.mondaySchedule.removeAt(i);
+    }
   }
 
   /**
