@@ -40,3 +40,8 @@ mat-radio-group {
 .cdk-column-className {
   font-size: 1.2em;
 }
+
+.mat-row:hover {
+  background-color: rgba(24, 151, 236, 0.685);
+  cursor: pointer;
+}

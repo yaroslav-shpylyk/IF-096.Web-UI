@@ -7,6 +7,7 @@ import { Teacher } from 'src/app/admin-panel/teachers/helpers/teacher.model';
 import { TeacherData } from 'src/app/models/teacher-data';
 import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
 import { ClassService } from 'src/app/services/class.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 export interface PeriodicElement {
   name: string;
@@ -36,11 +37,14 @@ export class JournalComponent implements OnInit {
   constructor(
     private journalsStorageService: JournalsStorageService,
     private teachersStorageService: TeachersStorageService,
-    private classService: ClassService
+    private classService: ClassService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.classService.getClasses('all').subscribe(classes => {
+      console.log(classes);
       for (const clas of classes) {
         if (clas.isActive) {
           this.activeClasses.push(clas);
@@ -58,7 +62,6 @@ export class JournalComponent implements OnInit {
   }
 
   handleChange(e) {
-    console.log(e);
     this.dataSource = new MatTableDataSource(this[e.value]);
     this.dataSource.sort = this.sort;
     this.applyFilter(this.filter);
@@ -70,5 +73,12 @@ export class JournalComponent implements OnInit {
     }
     this.filter = filterValue.trim().toLowerCase();
     this.dataSource.filter = this.filter;
+  }
+
+  selectRow(row) {
+    console.log(row);
+    this.router.navigate(['class', row.id], {
+      relativeTo: this.route
+    });
   }
 }

@@ -4,9 +4,10 @@ import { JournalRoutingModule } from './journal-routing.module';
 import { JournalComponent } from './journal/journal.component';
 import { MaterialModule } from '../material.module';
 import { FormsModule } from '@angular/forms';
+import { ClassJournalComponent } from './journal/class-journal/class-journal.component';
 
 @NgModule({
-  declarations: [JournalComponent],
+  declarations: [JournalComponent, ClassJournalComponent],
   imports: [
     CommonModule,
     JournalRoutingModule,
