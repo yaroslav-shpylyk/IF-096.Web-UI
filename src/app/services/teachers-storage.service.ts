@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
-import { Teacher } from '../admin-panel/teachers/helpers/teacher.model';
+import { TeacherData } from '../models/teacher-data';
 
 @Injectable()
 export class TeachersStorageService {
@@ -21,7 +21,7 @@ export class TeachersStorageService {
     this.httpClient
       .get('/teachers')
       .pipe(
-        map((response: { status: any; data: Teacher[] }) => {
+        map((response: { status: any; data: TeacherData[] }) => {
           const teachers = response.data;
           for (const teacher of teachers) {
             if (!teacher.avatar) {
@@ -46,9 +46,9 @@ export class TeachersStorageService {
    * @param id - number representing id of requested teacher.
    * @returns - object representing teacher.
    */
-  getTeacher(id): Observable<Teacher> {
+  getTeacher(id): Observable<TeacherData> {
     return this.httpClient.get(`/teachers/${id}`).pipe(
-      map((response: { status: any; data: Teacher }) => {
+      map((response: { status: any; data: TeacherData }) => {
         const teacher = response.data;
         teacher.dateOfBirth = teacher.dateOfBirth
           .split('-')
@@ -69,9 +69,9 @@ export class TeachersStorageService {
    * @param teacher - object with new values.
    * @returns - object representing teacher.
    */
-  updateTeacher(id, updTeacher): Observable<Teacher> {
+  updateTeacher(id, updTeacher): Observable<TeacherData> {
     return this.httpClient.put(`/admin/teachers/${id}`, updTeacher).pipe(
-      map((response: { status: any; data: Teacher }) => {
+      map((response: { status: any; data: TeacherData }) => {
         const teacher = response.data;
         if (!teacher.avatar) {
           teacher.avatar = this.defaultAvatar;
@@ -87,7 +87,7 @@ export class TeachersStorageService {
    * @param id - number representing id of the teacher.
    * @returns - object representing deleted teacher.
    */
-  deleteTeacher(id): Observable<Teacher> {
+  deleteTeacher(id): Observable<TeacherData> {
     return this.httpClient.patch<any>(`/users/${id}`, { observe: 'response' });
   }
 

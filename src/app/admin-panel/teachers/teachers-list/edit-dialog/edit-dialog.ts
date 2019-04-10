@@ -11,8 +11,8 @@ import {
   validPhone,
   validDate
 } from '../../helpers/validators';
-import { Teacher } from '../../helpers/teacher.model';
 import { MatSnackBar } from '@angular/material';
+import { TeacherData } from 'src/app/models/teacher-data';
 
 @Injectable()
 @Component({
@@ -64,8 +64,8 @@ export class EditDialogEntryComponent implements OnInit, OnDestroy {
   templateUrl: './edit-dialog.html',
   styleUrls: ['./edit-dialog.scss']
 })
-export class EditDialogOverviewComponent implements OnInit {
-  teacher: Teacher;
+export class EditDialogOverviewComponent implements OnInit, OnDestroy {
+  teacher: TeacherData;
   subscription: Subscription;
   teacherForm: FormGroup;
   editMode: boolean;
@@ -102,6 +102,12 @@ export class EditDialogOverviewComponent implements OnInit {
       this.initForm();
     }
     this.initForm();
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   private initForm() {
