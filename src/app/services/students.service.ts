@@ -11,29 +11,16 @@ import { Subject } from 'rxjs';
 })
 export class StudentsService {
 
-  // idStudent: any;
-  //  StudentSubject = new Subject<any>();
-
   constructor(private http: HttpClient) {
-    // this.sendStudentSubject(235);
   }
 
-  // sendStudentSubject(idStudent): any {
-  //   //  return this.StudentSubject.next(this.getOneStudent(this.idStudent));
-
-
-  // //   this.getOneStudent(idStudent).subscribe(res => this.StudentSubject.next(res));
-
-
-  // }
-
-  /**
+  /*
     * Method return data with students, that are in this class, where id is class id
   */
 
   getStudents(id): Observable<Student[]> {
     return this.http.get(`/students/classes/${id}`).
-      pipe(map((res: { status: any, data: Student[] }) => res.data))
+      pipe(map((res: { status: any, data: Student[] }) => res.data));
   }
 
   /*
@@ -41,7 +28,7 @@ export class StudentsService {
   */
   getOneStudent(id): Observable<Student> {
     return this.http.get(`/students/${id}`).
-      pipe(map((res: { status: any, data: Student }) => res.data))
+      pipe(map((res: { status: any, data: Student }) => res.data));
   }
 
   addStudents(data): Observable<any> {

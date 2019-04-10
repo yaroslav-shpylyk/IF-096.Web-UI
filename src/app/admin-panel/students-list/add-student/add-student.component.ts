@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { StudentsService } from '../../../services/students.service';
 import { ClassInfo } from '../../../models/class-info';
@@ -18,90 +18,46 @@ import { Subscription } from 'rxjs';
 })
 export class AddStudentModalComponent {
   paramId: number;
-  // studentData: Student;
-  // probaStudent;
 
-  constructor(public dialog: MatDialog,
+  constructor(
+    public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
-    private studentService: StudentsService, ) {
+  ) {
     this.route.params.subscribe(params => {
       this.paramId = params.id;
-      // this.studentService.idStudent = params.id;
     });
-    
-
-  
-
-    // this.studentService.StudentSubject.subscribe(
-    //   (proba: any) => {
-    //     console.log('proba', proba);
-    //   });
-
-    
-
     this.openDialog();
   }
 
-  // ngOnInit(){
-  //   this.studentService.getOneStudent(this.paramId)
-  //   .subscribe((student: Student) => this.studentData = student);
-  //   console.log(this.studentData)
-  // }
 
-/*
-*Method open and close modal window.In data you can sent
-* object with data to modal window
-*/
+  /*
+  *Method open and close modal window.In data you can sent
+  * object with data to modal window
+  */
 
-openDialog(): void {
-  const dialogRef = this.dialog.open(AddStudentComponent, {
-    width: '250px',
-    data: {
-      paramId: this.paramId,
-      
-    }
-  });
-  dialogRef.afterClosed().subscribe(() => {
-    this.router.navigate(['../'], { relativeTo: this.route });
-  });
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddStudentComponent, {
+      width: '250px',
+      data: {
+        paramId: this.paramId,
+
+      }
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
+  }
 }
-}
-
 
 @Component({
   selector: 'app-add-student',
   templateUrl: './add-student.component.html',
   styleUrls: ['./add-student.component.scss']
 })
-export class AddStudentComponent {
+export class AddStudentComponent implements OnInit {
 
   allClasses: Array<ClassInfo>;
-  addMode: any = {
-    lastname: ['', Validators.required],
-    firstname: ['', Validators.required],
-    patronymic: ['', Validators.required],
-    dateOfBirth: ['', Validators.required],
-    classId: [''],
-    login: [''],
-    phone: [''],
-    email: [''],
-    avatar: [''],
-  };
-  id: any=55;
-  studentData: Student;
-  editMode: any = {
-    avatar: [''],
-    dateOfBirth: [''],
-    email: [this.id],
-    firstname: [''],
-    lastname: [''],
-    login: ['panas'],
-    newPass: [''],
-    patronymic: [''],
-    phone: [''],
-  };
-
 
   constructor(
     private fb: FormBuilder,
@@ -109,32 +65,45 @@ export class AddStudentComponent {
     private classService: ClassService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.classService.getClasses('all').subscribe((res: Array<ClassInfo>) => this.allClasses = res);
-    // console.log(this.data)
-    // this.studentService.getOneStudent(this.data.paramId)
-    //   .subscribe((student: Student) => this.studentData = student);
-    // this.id = this.data.paramId;
-    // setTimeout(() => console.log(this.studentData), 2000);
-    // console.log(this.data)
   }
-  addStudent = this.fb.group(this.toCheckMode());
+  addStudent = this.fb.group({
+    lastname: ['', Validators.required],
+    firstname: ['', Validators.required],
+    patronymic: ['', Validators.required],
+    dateOfBirth: ['', Validators.required],
+    classId: [''],
+    login: ['', Validators.required],
+    phone: [''],
+    email: [''],
+    avatar: [''],
+  });
 
-  toCheckMode() {
+  ngOnInit() {
     if (this.data.paramId) {
-      return this.editMode;
+      this.studentService.getOneStudent(this.data.paramId)
+        .subscribe((student: Student) => {
+          this.addStudent = this.fb.group({
+            avatar: [student.avatar],
+            dateOfBirth: [student.dateOfBirth],
+            email: [student.email],
+            firstname: [student.firstname],
+            lastname: [student.lastname],
+            login: [student.login],
+            classId: [{ value: student.classId, disabled: true }],
+            newPass: [''],
+            patronymic: [student.patronymic],
+            phone: [student.phone],
+          });
+          setTimeout(() => console.log(this.addStudent), 2000);
+        });
     }
-    return this.addMode;
   }
-
-ngOnInit(){
-  this.studentService.getOneStudent(this.data.paramId)
-      .subscribe((student: Student) => this.studentData = student);
-  console.log(this.studentData);    
-}
 
   onSubmit(data) {
-
-    // this.studentService.addStudents(data).subscribe(res => console.log('Student add'));
-
-    this.studentService.changeStudent(235, data).subscribe(res => console.log('Student add', res));
+    if (this.data.paramId) {
+      this.studentService.changeStudent(this.data.paramId, data).subscribe(res => console.log('Student edited', res));
+    } else {
+      this.studentService.addStudents(data).subscribe(res => console.log('Student added'));
+    }
   }
 }

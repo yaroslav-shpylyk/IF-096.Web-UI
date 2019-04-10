@@ -12,16 +12,16 @@
     <input placeholder="Дата народження *" matInput type="date" class="form-input" formControlName="dateOfBirth">
   </mat-form-field>
 
-  <!-- <mat-form-field>
-    <mat-select placeholder="Виберіть клас" formControlName="classId">
+  <mat-form-field>
+    <mat-select  placeholder="Виберіть клас" formControlName="classId" [disabled]="data.paramId">
       <mat-option *ngFor="let oneClas of allClasses" [value]="oneClas.id">
         {{oneClas.className + " " + oneClas.classYear}}
       </mat-option>
     </mat-select>
-  </mat-form-field> -->
+  </mat-form-field>
 
 
-  <mat-form-field><input placeholder="studentData.firstname" matInput type="text" class="form-input" formControlName="login"></mat-form-field>
+  <mat-form-field><input placeholder="Логін" matInput type="text" class="form-input" formControlName="login"></mat-form-field>
   <mat-form-field><input placeholder="Телефон" matInput type="tel" class="form-input" formControlName="phone"></mat-form-field>
   <mat-form-field><input placeholder="Електронна адреса" matInput type="email" class="form-input" formControlName="email"></mat-form-field>
   <!-- <mat-form-field><input placeholder="Додати аватар" matInput type="button" class="form-input" formControlName="avatar"></mat-form-field> -->
