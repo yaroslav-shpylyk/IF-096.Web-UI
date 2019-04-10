@@ -7,37 +7,29 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material';
 import { TeachersStorageService } from './services/teachers-storage.service';
-import { TeachersService } from './admin-panel/teachers/teachers.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-list/dialog/dialog-overview';
-import { TeacherService } from './services/teacher.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SubjectService } from './services/subject.service';
-
-
 
 @NgModule({
   declarations: [
-    AppComponent,
-    DialogOverviewExampleDialog
+    AppComponent
   ],
-  entryComponents: [DialogOverviewExampleDialog],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     AuthService,
     TeachersStorageService,
-    TeachersService,
     SubjectService,
-    TeacherService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
@@ -46,4 +38,4 @@ import { SubjectService } from './services/subject.service';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
