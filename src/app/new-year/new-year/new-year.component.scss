@@ -97,3 +97,48 @@ mat-list-item {
     font-size: 1em;
   }
    }
+
+
+   /*Toggle stripe*/
+
+input[type=checkbox] {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+ }
+
+label { 
+   display: block;
+   width: 48px;
+   height: 48px;
+   font-size: 2em;
+   margin: 10px 0 10px 0;
+   cursor: pointer;
+ }
+ 
+ .toggle-stripe {
+    width: 250px;
+    height: 60px;
+    right: -210px;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    position: fixed;
+    top: 150px;
+    transition: right 0.5s ease;
+
+  div.wrap {
+      position: relative;
+      display: flex;
+      justify-content: left;
+      align-items: center;
+      height: 100%;
+      padding: 0px 10px; 
+      background-color: yellowgreen;
+      border-radius: 30px 0px 0px 30px;   
+   }
+  }
+ 
+input[type=checkbox]:checked ~ .toggle-stripe {
+    right: -5px;
+ }   

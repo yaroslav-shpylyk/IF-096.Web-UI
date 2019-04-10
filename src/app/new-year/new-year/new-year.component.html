@@ -1,6 +1,3 @@
-<mat-checkbox [(ngModel)]="isActive" >Active</mat-checkbox>
-<mat-checkbox [(ngModel)]="isNotEmpty" >NotEmpty</mat-checkbox>
-<mat-checkbox [(ngModel)]="isCurrentYear" >CurYear</mat-checkbox>
 <div class="container">
   <h2>Перехід на новий навчальний рік</h2>
   <form [formGroup]="transititionForm"  class="component" (ngSubmit)="formSubmit()">
@@ -33,4 +30,16 @@
     </div>
     <button mat-raised-button class="submit" type="submit" [disabled]="!transititionForm.valid" > Перевести учнів </button>
   </form>
+</div>
+<!-- Toggle menu -->
+<input type="checkbox" id="toggle-1">
+<div class="toggle-stripe">
+  <div class="wrap">
+      <label for="toggle-1"><i class="material-icons">filter_list</i></label>
+      <div class="checkbox-group">
+        <mat-checkbox [(ngModel)]="isActive" >Active</mat-checkbox>
+        <mat-checkbox [(ngModel)]="isNotEmpty" >NotEmpty</mat-checkbox>
+        <mat-checkbox [(ngModel)]="isCurrentYear" >CurYear</mat-checkbox>
+      </div>    
+  </div>
 </div>
