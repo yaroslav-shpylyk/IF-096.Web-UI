@@ -16,7 +16,7 @@ import { GroupsComponent } from './admin-panel/groups/groups.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AddModifyGroupComponent } from './admin-panel/groups/add-modify/add-modify.component';
-import { MatTableModule,  } from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { EditDialogEntryComponent, EditDialogOverviewComponent } from './teachers/teachers-list/edit-dialog/edit-dialog';
