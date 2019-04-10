@@ -1,18 +1,54 @@
 <div class="container">
-  <mat-nav-list>
-    <ng-container *ngFor="let teacher of teachers; let i = index">
-      <mat-list-item
-        routerLinkActive="active"
-        (click)="onTeacherDetails(teacher)"
+  <div>
+    <mat-nav-list>
+      <mat-form-field>
+        <input
+          autocomplete="off"
+          placeholder="Шукати за прізвищем"
+          matInput
+          type="search"
+          [(ngModel)]="filteredTeachers"
+        />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <ng-container
+        *ngFor="let teacher of (teachers | filter: filteredTeachers:'lastname')"
       >
-        <img matListAvatar [src]="teacher.avatar" alt="..." />
-        <p matLine href="javascript:void(0)">
-          {{ teacher.firstname }} {{ teacher.lastname }}
-        </p>
-      </mat-list-item>
-    </ng-container>
-  </mat-nav-list>
-  <button class="mine" mat-fab color="primary" (click)="onNewTeacher()">
+        <div id="wrapper">
+          <mat-list-item
+            routerLinkActive="active"
+            (click)="onTeacherDetails(teacher.id)"
+          >
+            <img
+              matListAvatar
+              [src]="teacher.avatar"
+              alt="{{ teacher.lastname }}"
+            />
+            <p matLine>
+              {{ teacher.lastname }} {{ teacher.firstname }}
+              {{ teacher.patronymic }}
+            </p>
+          </mat-list-item>
+
+          <button
+            id="menu-trigger"
+            mat-icon-button
+            #menuTrigger="matMenuTrigger"
+            [matMenuTriggerFor]="menu"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </div>
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="onEdit(teacher.id)">Редагувати</button>
+          <button mat-menu-item (click)="onDelete(teacher)">Видалити</button>
+        </mat-menu>
+      </ng-container>
+    </mat-nav-list>
+  </div>
+  <button id="mine" mat-fab color="primary" (click)="onNewTeacher()">
     <i class="material-icons">
       person_add
     </i>
