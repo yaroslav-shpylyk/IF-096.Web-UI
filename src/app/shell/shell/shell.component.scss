@@ -7,7 +7,15 @@
 .wrap-content {
   padding: calc(2% + 75px) 2% 2% 2%; // for header and footer
 
-  @media only screen and (max-width: 479px) {
+  @media only screen and (max-width: 600px) {
     padding: calc(2% + 75px) 2%;
+  }
+}
+
+.footer {
+  display: none;
+
+  @media only screen and (max-width: 600px) {
+    display: block;
   }
 }
