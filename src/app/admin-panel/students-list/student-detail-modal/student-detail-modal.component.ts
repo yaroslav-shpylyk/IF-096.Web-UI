@@ -14,7 +14,8 @@ import { Student } from '../../../models/student';
 export class StudentDatails {
   paramId: number;
 
-  constructor(public dialog: MatDialog,
+  constructor(
+    public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute) {
     this.route.params.subscribe(params => this.paramId = params.id);
@@ -32,7 +33,7 @@ export class StudentDatails {
       data: { paramId: this.paramId }
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.router.navigate(['../'], { relativeTo: this.route, replaceUrl: true });
     });
   }
 }

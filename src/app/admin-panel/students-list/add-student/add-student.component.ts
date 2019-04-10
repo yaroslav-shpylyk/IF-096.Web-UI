@@ -45,7 +45,7 @@ export class AddStudentModalComponent {
       }
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.router.navigate(['../'], { relativeTo: this.route, replaceUrl: true });
     });
   }
 }
@@ -64,6 +64,7 @@ export class AddStudentComponent implements OnInit {
     private fb: FormBuilder,
     private studentService: StudentsService,
     private classService: ClassService,
+    public dialogRef: MatDialogRef<AddStudentModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.classService.getClasses('all').subscribe((res: Array<ClassInfo>) => this.allClasses = res);
   }
@@ -124,5 +125,6 @@ export class AddStudentComponent implements OnInit {
     } else {
       this.studentService.addStudents(data).subscribe(res => console.log('Student added'));
     }
+    this.dialogRef.close();
   }
 }
