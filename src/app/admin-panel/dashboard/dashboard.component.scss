@@ -275,7 +275,6 @@ $background-gradient:
     }
 
     mat-card-actions {
-
       button {
         font-size: 0.7em;
       }
@@ -297,6 +296,7 @@ $background-gradient:
 
     .chartOptions {
       height: 24.9em;
+
       mat-card-content {
         form {
           font-size: 1.5em;
@@ -326,10 +326,10 @@ $background-gradient:
     }
 
     mat-card-actions {
-
       button {
         font-size: 0.7em;
       }
+
       mat-icon {
         margin-left: 5.2em;
       }
@@ -347,9 +347,7 @@ $background-gradient:
     }
 
     .chartOptions {
-
       mat-card-content {
-
         form {
           font-size: 1.4em;
         }
@@ -367,25 +365,17 @@ $background-gradient:
 
     .cardHeader {
       font-size: 0.8em;
-
-      mat-icon {
-
-      }
     }
 
     mat-card-content {
       font-size: 0.7em;
-      span {
-
-      }
     }
 
     mat-card-actions {
-
-
       button {
         font-size: 0.7em;
       }
+
       mat-icon {
         margin-left: 5.2em;
       }
@@ -408,7 +398,6 @@ $background-gradient:
       margin-top: 4rem;
 
       mat-card-content {
-
         form {
           flex-direction: row;
 
@@ -450,11 +439,11 @@ $background-gradient:
       height: 20em;
 
       mat-card-content {
-
         form {
           display: flex;
           flex-direction: column;
           justify-content: space-around;
+
           mat-form-field {
             mat-label {
               font-size: 1.2em;
@@ -462,7 +451,6 @@ $background-gradient:
           }
 
           .graphType {
-
             mat-radio-group {
               font-size: 1.2em;
             }
@@ -470,9 +458,7 @@ $background-gradient:
             label {
               font-size: 1.2em;
             }
-
           }
-
         }
       }
     }
@@ -495,7 +481,6 @@ $background-gradient:
     }
 
     mat-card-actions {
-
       button {
         font-size: 0.8em;
       }
@@ -526,11 +511,11 @@ $background-gradient:
       }
 
       mat-card-content {
-
         form {
           display: flex;
           flex-direction: column;
           justify-content: space-around;
+
           mat-form-field {
             mat-label {
               font-size: 1.2em;
@@ -538,7 +523,6 @@ $background-gradient:
           }
 
           .graphType {
-
             mat-radio-group {
               font-size: 1.2em;
             }
@@ -546,7 +530,6 @@ $background-gradient:
             label {
               font-size: 1.2em;
             }
-
           }
 
           button {
@@ -603,20 +586,18 @@ $background-gradient:
       height: 20em;
 
       mat-card-content {
-
         form {
           display: flex;
           flex-direction: column;
           justify-content: space-around;
-          mat-form-field {
 
+          mat-form-field {
             mat-label {
               font-size: 1.2em;
             }
           }
 
           .graphType {
-
             mat-radio-group {
               font-size: 1.2em;
             }
@@ -638,8 +619,6 @@ $background-gradient:
     mat-card {
       font-size: 1.2em;
       width: 60%;
-      span {
-      }
     }
 
     .cardHeader {
@@ -651,7 +630,6 @@ $background-gradient:
     }
 
     mat-card-actions {
-
       button {
         font-size: 0.8em;
       }
@@ -672,6 +650,7 @@ $background-gradient:
       width: 88%;
       font-size: 1.3em;
       height: auto;
+
       mat-card-footer {
         width: 100%;
       }
@@ -684,7 +663,6 @@ $background-gradient:
       height: 20em;
 
       mat-card-content {
-
         form {
           display: flex;
           flex-direction: column;
@@ -700,8 +678,6 @@ $background-gradient:
           }
 
           .graphType {
-
-
             mat-radio-group {
               font-size: 1.2em;
             }
