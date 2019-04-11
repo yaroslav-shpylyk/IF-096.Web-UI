@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogRef, MatSnackBarConfig } from '@angular/material';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -11,14 +11,14 @@ import {
   validPhone,
   validDate
 } from '../../helpers/validators';
-import { Teacher } from '../../helpers/teacher.model';
 import { MatSnackBar } from '@angular/material';
+import { TeacherData } from 'src/app/models/teacher-data';
 
 @Injectable()
 @Component({
   template: ''
 })
-export class EditDialogEntryComponent implements OnInit {
+export class EditDialogEntryComponent implements OnInit, OnDestroy {
   teacher;
   id: number;
   subscription: Subscription;
@@ -40,12 +40,18 @@ export class EditDialogEntryComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(EditDialogOverviewComponent, {
       maxWidth: '90vw'
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['/admin', 'teachers'], {
+      this.router.navigate(['/admin-panel', 'teachers'], {
         relativeTo: this.route,
         replaceUrl: true
       });
@@ -58,14 +64,12 @@ export class EditDialogEntryComponent implements OnInit {
   templateUrl: './edit-dialog.html',
   styleUrls: ['./edit-dialog.scss']
 })
-export class EditDialogOverviewComponent implements OnInit {
-  teacher: Teacher;
+export class EditDialogOverviewComponent implements OnInit, OnDestroy {
+  teacher: TeacherData;
   subscription: Subscription;
   teacherForm: FormGroup;
   editMode: boolean;
   ava;
-
-  // imageEn = imageEncoder;
 
   constructor(
     public dialogRef: MatDialogRef<EditDialogOverviewComponent>,
@@ -98,6 +102,12 @@ export class EditDialogOverviewComponent implements OnInit {
       this.initForm();
     }
     this.initForm();
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   private initForm() {
@@ -190,12 +200,14 @@ export class EditDialogOverviewComponent implements OnInit {
         );
     }
     this.dialogRef.close();
-    this.router.navigate(['/admin/teachers/']);
+    this.router.navigate(['/admin-panel/teachers/'], {
+      replaceUrl: true
+    });
   }
 
   onCancel(): void {
     this.dialogRef.close();
-    this.router.navigate(['admin', 'teachers'], {
+    this.router.navigate(['admin-panel', 'teachers'], {
       relativeTo: this.route,
       replaceUrl: true
     });
