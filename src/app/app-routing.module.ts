@@ -4,18 +4,18 @@ import { ShellGuard } from './services/shell.guard';
 
 const routes: Routes = [
   {
-    path: 'journal',
-    loadChildren: './journal/journal.module#JournalModule'
-  },
-  {
     path: 'login',
     loadChildren: './login/login.module#LoginModule'
   },
+  {
+    path: '',
+    loadChildren: './shell/shell.module#ShellModule',
+    canActivate: [ShellGuard],
+    canLoad: [ShellGuard]
+  },
   // {
-  //   path: 'shell',
-  //   loadChildren: './shell/shell.module#ShellModule',
-  //   canActivate: [ShellGuard],
-  //   canLoad: [ShellGuard]
+  //   path: 'journal',
+  //   loadChildren: './journal/journal.module#JournalModule'
   // },
   {
     path: '',
