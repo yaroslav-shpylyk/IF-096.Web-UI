@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
+import { TeacherData } from '../models/teacher-data';
 
 @Injectable()
 export class TeachersStorageService {
@@ -14,13 +15,13 @@ export class TeachersStorageService {
 
   /**
    * Method fetches from server an array of teachers
-   * passes it to the subject teachersChanged.
+   * and passes it to the subject teachersChanged.
    */
-  getTeachers() {
+  getTeachers(): void {
     this.httpClient
-      .get<any>('/teachers')
+      .get('/teachers')
       .pipe(
-        map(response => {
+        map((response: { status: any; data: TeacherData[] }) => {
           const teachers = response.data;
           for (const teacher of teachers) {
             if (!teacher.avatar) {
@@ -41,13 +42,13 @@ export class TeachersStorageService {
 
   /**
    * Method fetches from the server a single
-   * teacher object by provided id
+   * teacher object by provided id.
    * @param id - number representing id of requested teacher.
    * @returns - object representing teacher.
    */
-  getTeacher(id) {
-    return this.httpClient.get<any>(`/teachers/${id}`).pipe(
-      map(response => {
+  getTeacher(id): Observable<TeacherData> {
+    return this.httpClient.get(`/teachers/${id}`).pipe(
+      map((response: { status: any; data: TeacherData }) => {
         const teacher = response.data;
         teacher.dateOfBirth = teacher.dateOfBirth
           .split('-')
@@ -68,9 +69,9 @@ export class TeachersStorageService {
    * @param teacher - object with new values.
    * @returns - object representing teacher.
    */
-  updateTeacher(id, updTeacher) {
-    return this.httpClient.put<any>(`/admin/teachers/${id}`, updTeacher).pipe(
-      map(response => {
+  updateTeacher(id, updTeacher): Observable<TeacherData> {
+    return this.httpClient.put(`/admin/teachers/${id}`, updTeacher).pipe(
+      map((response: { status: any; data: TeacherData }) => {
         const teacher = response.data;
         if (!teacher.avatar) {
           teacher.avatar = this.defaultAvatar;
@@ -86,7 +87,7 @@ export class TeachersStorageService {
    * @param id - number representing id of the teacher.
    * @returns - object representing deleted teacher.
    */
-  deleteTeacher(id) {
+  deleteTeacher(id): Observable<TeacherData> {
     return this.httpClient.patch<any>(`/users/${id}`, { observe: 'response' });
   }
 
@@ -96,8 +97,10 @@ export class TeachersStorageService {
    * @param newTeacher - object with new values.
    * @returns - object representing newly created teacher.
    */
-  addTeacher(newTeacher) {
-    return this.httpClient.post(`/teachers`, newTeacher);
+  addTeacher(newTeacher): Observable<any> {
+    return this.httpClient.post(`/teachers`, newTeacher, {
+      observe: 'response'
+    });
   }
 
   /**
@@ -106,9 +109,9 @@ export class TeachersStorageService {
    * @param teacherId - number representing id of the journal.
    * @returns - an array of objects with subjects grouped by classes.
    */
-  getTeacherJournal(teacherId) {
-    return this.httpClient.get<any>(`/journals/teachers/${teacherId}`).pipe(
-      map(response => {
+  getTeacherJournal(teacherId): Observable<any> {
+    return this.httpClient.get(`/journals/teachers/${teacherId}`).pipe(
+      map((response: { status: any; data: any }) => {
         const journalData = {};
         for (const item of response.data) {
           if (journalData[item.idClass]) {

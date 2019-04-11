@@ -14,8 +14,9 @@ const routes: Routes = [
     canLoad: [ShellGuard]
   },
   {
-    path: 'admin',
-    loadChildren: './admin-panel/admin-panel.module#AdminPanelModule'
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
   }
 ];
 
@@ -23,4 +24,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
