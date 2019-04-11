@@ -3,15 +3,20 @@ import { Routes, RouterModule } from '@angular/router';
 import { ShellGuard } from './services/shell.guard';
 
 const routes: Routes = [
-  {
+  
     path: 'login',
     loadChildren: './login/login.module#LoginModule'
   },
   {
-    path: '',
+    path: 'shell',
     loadChildren: './shell/shell.module#ShellModule',
     canActivate: [ShellGuard],
     canLoad: [ShellGuard]
+  },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
   }
 ];
 
