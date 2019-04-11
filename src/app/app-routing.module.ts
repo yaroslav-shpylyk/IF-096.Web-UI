@@ -8,7 +8,7 @@ const routes: Routes = [
     loadChildren: './login/login.module#LoginModule'
   },
   {
-    path: 'shell',
+    path: '',
     loadChildren: './shell/shell.module#ShellModule',
     canActivate: [ShellGuard],
     canLoad: [ShellGuard]
@@ -24,4 +24,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
