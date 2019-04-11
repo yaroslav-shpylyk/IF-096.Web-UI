@@ -1,81 +1,40 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger
-} from '@angular/animations';
-import { AfterViewInit, Component, HostBinding } from '@angular/core';
-import { fromEvent } from 'rxjs';
-import {
-  distinctUntilChanged,
-  filter,
-  map,
-  pairwise,
-  share,
-  throttleTime
-} from 'rxjs/operators';
-
-enum VisibilityState {
-  Visible = 'visible',
-  Hidden = 'hidden'
-}
-
-enum Direction {
-  Up = 'Up',
-  Down = 'Down'
-}
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { fromEvent, interval } from 'rxjs';
+import { debounce } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
-  animations: [
-    trigger('toggle', [
-      state(
-        VisibilityState.Hidden,
-        style({opacity: 0, transform: 'translateY(-100%)'})
-      ),
-      state(
-        VisibilityState.Visible,
-        style({opacity: 1, transform: 'translateY(0)'})
-      ),
-      transition('* => *', animate('200ms ease-in'))
-    ])
-  ]
+  styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements AfterViewInit {
-  private isVisible = true;
+export class HeaderComponent implements OnInit, OnDestroy {
+  private hide: boolean;
+  private notransition: boolean;
+  private isScrolling;
+  private stoppedScrolling;
 
-  @HostBinding('@toggle')
-  get toggle(): VisibilityState {
-    return this.isVisible ? VisibilityState.Visible : VisibilityState.Hidden;
+  ngOnInit() {
+    this.isScrolling = fromEvent(window, 'scroll')
+      .subscribe(() => {
+        if (window.scrollY >= 0 && window.scrollY <= 50) {
+          this.hide = false;
+          this.notransition = true; // add header without delay when user scrolls to the top of the page
+        } else {
+          this.hide = true;
+          this.notransition = false; // run when user is scrolling
+        }
+      });
+
+    this.stoppedScrolling = fromEvent(window, 'scroll').pipe(
+      debounce(() => interval(2000))
+    ).subscribe(() => {
+      this.hide = false;
+      this.notransition = false;
+    });
   }
 
-  /**
-   * make reactive sticky header
-   * swipe up - hide
-   * swipe down - show
-   */
-  ngAfterViewInit() {
-    const scroll$ = fromEvent(window, 'scroll').pipe(
-      throttleTime(10),
-      map(() => window.pageYOffset),
-      pairwise(),
-      map(([y1, y2]): Direction => (y2 < y1 ? Direction.Up : Direction.Down)),
-      distinctUntilChanged(),
-      share()
-    );
-
-    const goingUp$ = scroll$.pipe(
-      filter(direction => direction === Direction.Up)
-    );
-
-    const goingDown$ = scroll$.pipe(
-      filter(direction => direction === Direction.Down)
-    );
-
-    goingUp$.subscribe(() => (this.isVisible = true));
-    goingDown$.subscribe(() => (this.isVisible = false));
+  ngOnDestroy(): void {
+    this.isScrolling.unsubscribe();
+    this.stoppedScrolling.unsubscribe();
   }
 }
