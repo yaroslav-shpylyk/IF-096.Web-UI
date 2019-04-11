@@ -14,7 +14,7 @@ const routes: Routes = [
     canLoad: [ShellGuard]
   },
   // {
-  //   path: 'journal',
+  //   path: 'journals',
   //   loadChildren: './journal/journal.module#JournalModule'
   // },
   {

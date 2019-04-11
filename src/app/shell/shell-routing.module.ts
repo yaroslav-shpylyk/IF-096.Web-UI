@@ -17,9 +17,9 @@ const routes: Routes = [
         loadChildren: '../admin-panel/admin-panel.module#AdminPanelModule'
       },
       {
-        path: 'journal',
-        canActivate: [TeachersGuard],
-        canLoad: [TeachersGuard],
+        path: 'journals',
+        // canActivate: [TeachersGuard],
+        // canLoad: [TeachersGuard],
         loadChildren: '../journal/journal.module#JournalModule'
       },
       {
