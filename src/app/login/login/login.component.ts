@@ -38,11 +38,11 @@ export class LoginComponent implements OnInit {
   login(data): void {
     this.auth.login(data).subscribe(() => {
       if (this.auth.getUserRole() === roles.admin) {
-        this.router.navigate(['/shell/admin-panel/']);
+        this.router.navigate(['/admin-panel/']);
       } else if (this.auth.getUserRole() === roles.teacher) {
-        this.router.navigate(['/shell/journal/']);
+        this.router.navigate(['/journal/']);
       } else if (this.auth.getUserRole() === roles.students) {
-        this.router.navigate(['/shell/student-book/']);
+        this.router.navigate(['/student-book/']);
       }
     });
   }
