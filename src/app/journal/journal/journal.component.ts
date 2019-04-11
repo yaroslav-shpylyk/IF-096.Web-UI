@@ -67,10 +67,7 @@ export class JournalComponent implements OnInit {
     this.applyFilter(this.filter);
   }
 
-  applyFilter(filterValue: string) {
-    if (!filterValue) {
-      this.filter = '';
-    }
+  applyFilter(filterValue: string = '') {
     this.filter = filterValue.trim().toLowerCase();
     this.dataSource.filter = this.filter;
   }

@@ -4,23 +4,24 @@ import { ShellGuard } from './services/shell.guard';
 
 const routes: Routes = [
   {
-    path: 'login',
-    loadChildren: './login/login.module#LoginModule'
-  },
-  {
     path: 'journal',
     loadChildren: './journal/journal.module#JournalModule'
   },
   {
-    path: '',
-    loadChildren: './shell/shell.module#ShellModule',
-    canActivate: [ShellGuard],
-    canLoad: [ShellGuard]
+    path: 'login',
+    loadChildren: './login/login.module#LoginModule'
   },
+  // {
+  //   path: 'shell',
+  //   loadChildren: './shell/shell.module#ShellModule',
+  //   canActivate: [ShellGuard],
+  //   canLoad: [ShellGuard]
+  // },
   {
-    path: 'admin',
-    loadChildren: './admin-panel/admin-panel.module#AdminPanelModule'
-  },
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  }
 ];
 
 @NgModule({

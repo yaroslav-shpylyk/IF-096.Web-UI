@@ -42,6 +42,7 @@ import { ChartsModule } from 'ng2-charts';
 import { MatMenuModule } from '@angular/material';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSortModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     MatInputModule,
     MatRadioModule,
-    MaterialModule
+    MaterialModule,
+    MatSortModule
   ],
   entryComponents: [
     AddModifyGroupComponent,
@@ -96,6 +98,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     DashboardComponent,
     AddModifyGroupComponent
   ],
-  providers: [GroupsComponent]
+  providers: []
 })
 export class AdminPanelModule {}
