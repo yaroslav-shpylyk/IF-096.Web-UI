@@ -1,0 +1,33 @@
+<div [formGroup] = "childDailySchedule">
+  <fieldset formArrayName="lessons">
+    <legend>Понеділок2</legend>
+    <div *ngFor="let lesson of lessons.controls; let i=index">
+      <div>
+        <span>{{ i + 1 }}. </span>
+
+        <mat-form-field class="select-subject">
+          <mat-select [formControl]="lesson.controls['firstGroup']" placeholder="Виберіть предмет" (click)="addSubjest(i)">
+            <mat-option *ngFor="let subj of arrSubjectsList" [value]="subj.subjectId"> {{ subj.subjectName }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="select-subject">
+          <mat-select [formControl]="lesson.controls['secondGroup']" [placeholder]="secondGroupMsg">
+            <mat-option *ngFor="let subj of arrSubjectsList" [value]="subj.subjectId"> {{ subj.subjectName }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-icon-button *ngIf="!this.disabled" (click)="addSecondGroup(i)">
+          <mat-icon>add_box</mat-icon>
+        </button>
+
+        <button mat-icon-button *ngIf="!this.disabled" (click)="removeSubjest(i)">
+            <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+
+    </div>
+  </fieldset>
+</div>
+<!-- for test -->
+<div> {{ childDailySchedule.value | json }}</div>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AdminPanelRoutingModule } from './admin-panel-routing.module';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { ScheduleComponent } from './schedule/schedule.component';
+import { DailyScheduleComponent } from './schedule/daily-schedule/daily-schedule.component';
 import { TeachersComponent } from './teachers/teachers.component';
 import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
 import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.component';
@@ -36,6 +37,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   declarations: [
     AdminPanelComponent,
     ScheduleComponent,
+    DailyScheduleComponent,
     GroupsComponent,
     AddModifyGroupComponent,
     TeachersComponent,

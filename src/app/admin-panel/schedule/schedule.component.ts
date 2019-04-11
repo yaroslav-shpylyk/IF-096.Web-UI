@@ -1,8 +1,9 @@
-import { Component, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Renderer2, AfterViewInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { ClassData } from '../../models/class-data';
 import { SubjectData } from '../../models/subject-data';
-import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { DailyScheduleComponent } from './daily-schedule/daily-schedule.component';
 
 /*Понеділок Вівторок Середа Четвер П'ятниця Субота
 Monday Tuesday Wednesday Thursday Friday Saturday */
@@ -12,14 +13,17 @@ Monday Tuesday Wednesday Thursday Friday Saturday */
   templateUrl: './schedule.component.html',
   styleUrls: ['./schedule.component.scss']
 })
-export class ScheduleComponent implements OnInit {
+export class ScheduleComponent implements OnInit, AfterViewInit {
   frmSchedule: FormGroup;
   arrClassList: ClassData[] = [];
   arrSubjectsList: SubjectData[] = [];
+
   selectClassMsg: string;
   dateTermStartMsg: string;
   dateTermEndMsg: string;
   secondGroupMsg: string;
+
+  @ViewChild(DailyScheduleComponent) parentDailySchedule: DailyScheduleComponent;
 
 
   //@ViewChild("buttonAdd")
@@ -36,6 +40,7 @@ export class ScheduleComponent implements OnInit {
       this.arrSubjectsList = data;
     });
     this.initForm();
+
   }
 
   /** Method initializes the initial state of the form */
@@ -49,7 +54,8 @@ export class ScheduleComponent implements OnInit {
           firstGroup: this.frmBld.control(''),
           secondGroup: this.frmBld.control({value: '', disabled: true}),
         })
-      ])
+      ]),
+      dailySchedule: this.parentDailySchedule.childDailySchedule
     });
     this.selectClassMsg = "Виберіть клас";
     this.dateTermStartMsg = "Дата початку семестру";
@@ -59,6 +65,10 @@ export class ScheduleComponent implements OnInit {
 
   get mondaySchedule() {
     return this.frmSchedule.get('mondaySchedule') as FormArray;
+  }
+
+  get dailySchedule() {
+    return this.frmSchedule.get('dailySchedule') as FormGroup;
   }
 
   /**
@@ -92,11 +102,21 @@ export class ScheduleComponent implements OnInit {
    */
   public removeSubjest(i: number): void {
     if (this.mondaySchedule.at(i).get('secondGroup').status != 'DISABLED') {
-      this.mondaySchedule.at(i).get('secondGroup').setValue('');
-      this.mondaySchedule.at(i).get('secondGroup').disable();
+      const secondGroupCntrl: any = this.mondaySchedule.at(i).get('secondGroup');
+      secondGroupCntrl.setValue('');
+      secondGroupCntrl.disable();
     } else {
       this.mondaySchedule.removeAt(i);
     }
+  }
+
+  ngAfterViewInit(): void {
+    console.log(this.parentDailySchedule);
+
+  }
+
+  dataChangeHandler(data) {
+    console.log(data);
   }
 
   /**
