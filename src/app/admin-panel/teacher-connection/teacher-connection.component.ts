@@ -7,6 +7,8 @@ import { FormsModule }   from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material';
 import { ReactiveFormsModule }   from '@angular/forms';
 import { from } from 'rxjs';
+import { SubjectService } from 'src/app/services/subject.service';
+import { RestService } from 'src/app/services/rest.service';
 
 @Component({
   selector: 'app-teacher-connection',
@@ -23,7 +25,9 @@ export class TeacherConnectionComponent implements OnInit {
   constructor(
     private teacherService: TeacherService, 
     private classService: ClassService,
-    private fb: FormBuilder
+    private subjectService: SubjectService,
+    private fb: FormBuilder,
+    private jornalServise: RestService
     ) {
     
   }
@@ -35,21 +39,21 @@ export class TeacherConnectionComponent implements OnInit {
   });
 
   onSubmit(data){
+    this.jornalServise.sentDataTojornal(data, data.teacherId, data.classId, data.subjectId).subscribe(res=>console.log(res))
+
     console.log(data);
 
   }
-
-
-   
-
+  
+  
   ngOnInit() {
     this.teacherService.getTeachers()
       .subscribe(teachers => this.teachers = teachers);
     
-    this.teacherService.getSubjects()
+    this.subjectService.getSubjects()
       .subscribe(subjects => this.subjects = subjects);
 
-    this.classService.getClasses()
+    this.classService.getClasses("all")
       .subscribe(classes => this.classes = classes);
 
     

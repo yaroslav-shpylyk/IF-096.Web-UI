@@ -22,6 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { EditDialogEntryComponent, EditDialogOverviewComponent } from './teachers/teachers-list/edit-dialog/edit-dialog';
 import { FilterPipe } from './teachers/helpers/filter.pipe';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ChartsModule } from 'ng2-charts';
 import { MatMenuModule } from '@angular/material';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { TeacherConnectionComponent } from './teacher-connection/teacher-connection.component'; 
