@@ -5,6 +5,7 @@ import { ProgressComponent } from './progress/progress.component';
 import { MatSelectModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatCardModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
+import { ProgressService } from './services/progress.service';
 
 @NgModule({
   declarations: [ProgressComponent],
@@ -18,6 +19,9 @@ import { ChartsModule } from 'ng2-charts';
     MatInputModule,
     MatCardModule,
     ChartsModule,
+  ],
+  providers: [
+    ProgressService
   ]
 })
 export class ProgressModule { }

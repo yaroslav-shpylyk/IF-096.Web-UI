@@ -8,8 +8,8 @@ import { StudentsService } from '../../services/students.service';
 import { Student } from '../../models/student';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
-import { MarkService } from '../../services/mark.service';
 import { MarkData } from '../../models/mark-data';
+import { ProgressService } from '../services/progress.service';
 
 @Component({
   selector: 'app-progress',
@@ -41,15 +41,15 @@ export class ProgressComponent implements OnInit {
     label: ''
   }];
   constructor(private subjectService: SubjectService, private classService: ClassService,
-              private studentService: StudentsService, private markService: MarkService) { }
+              private studentService: StudentsService, private progressService: ProgressService) { }
 
   ngOnInit() {
     this.createForm();
     this.subjectService.getSubjects().subscribe(result => this.subjects = result);
     this.classService.getClasses('active').subscribe(result => this.classes = result);
-    this.markService.getMarks().subscribe(result => console.log(result));
     this.chartOptionsForm.statusChanges.subscribe(result => {
-      if (result === 'VALID') {
+      if (result === 'VALID' && this.chartOptionsForm.touched) {
+        console.log('works');
         const {subjectId, classId, studentId, periodStart, periodEnd} = this.chartOptionsForm.value;
         const options = {
           subject_id: subjectId,
@@ -58,7 +58,11 @@ export class ProgressComponent implements OnInit {
           period_start: this.formatDate(periodStart),
           period_end: this.formatDate(periodEnd)
         };
-        this.markService.getProgressMarks(options).subscribe(result => {
+        const studentsInfo = this.formStudentsInfo(studentId, this.students);
+        if (!studentsInfo.length) {
+          return;
+        }
+        this.progressService.getProgressMarks(options, studentsInfo).subscribe(result => {
           this.updateChart(result);
         });
       }
@@ -88,28 +92,45 @@ export class ProgressComponent implements OnInit {
         break;
       }
       case 'classes': {
+        this.students = [];
         this.subjectService.getSubjects(event.value).subscribe(result => this.subjects = result);
         this.studentService.getStudents(event.value).subscribe(result => this.students = result);
         break;
       }
     }
   }
-  private formatDate(date: any): any {
+  private formatDate(date: any): string {
     return date.toISOString().slice(0, 10);
   }
-  private updateChart(data: MarkData[]): void {
+  private updateChart(data: any): void {
     this.chartLabels = [];
     this.chartData = [];
-    const newData: number[] = [];
-    const newLabels = [];
+    const newData = [];
+    console.log(data);
     data.forEach(item => {
-      newData.push(item.y);
-      newLabels.push(item.x.reverse().join('-'));
+      const marks = item.marks.map(item => item.mark);
+      const marksInfo = {
+        data: marks,
+        label: `${item.studentInfo.firstname} ${item.studentInfo.lastname}`
+      };
+      newData.push(marksInfo);
     });
-    this.chartLabels = newLabels;
-    this.chartData = [{
-      data: newData,
-      label: ''
-    }];
+    this.chartLabels = data[0].marks.map(item => item.date);
+    this.chartData = newData;
+  }
+  private formStudentsInfo(studentsId: number[], allStudents: Student[]): Student[] {
+    let studentsInfo = [];
+    if (studentsId.length > 0) {
+      studentsId.forEach(id => {
+        allStudents.forEach(student => {
+          if (student.id === id) {
+            studentsInfo.push(student);
+          }
+        });
+      });
+    } else {
+      studentsInfo = allStudents;
+    }
+    return studentsInfo;
   }
 }
