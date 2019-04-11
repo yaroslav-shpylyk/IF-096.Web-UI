@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ShellGuard } from './services/shell.guard';
 
 const routes: Routes = [
-  
+  {
     path: 'login',
     loadChildren: './login/login.module#LoginModule'
   },
