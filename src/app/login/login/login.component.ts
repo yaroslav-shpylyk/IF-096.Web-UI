@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { roles } from '../../enum/roles.enum';
 
 @Component({
   selector: 'app-login',
@@ -10,9 +11,9 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
-  
+
   constructor(private auth: AuthService,
-  private router: Router) {
+    private router: Router) {
     this.createForm();
   }
 
@@ -35,12 +36,12 @@ export class LoginComponent implements OnInit {
    * @param data - Username and password
    */
   login(data): void {
-    this.auth.login(data).subscribe(()=>{
-      if(this.auth.getUserRole()==='ROLE_ADMIN'){
+    this.auth.login(data).subscribe(() => {
+      if (this.auth.getUserRole() === roles.admin) {
         this.router.navigate(['/shell/admin-panel/']);
-      }else if(this.auth.getUserRole()==='ROLE_TEACHER'){
+      } else if (this.auth.getUserRole() === roles.teacher) {
         this.router.navigate(['/shell/journal/']);
-      }else if(this.auth.getUserRole()==='ROLE_USER'){
+      } else if (this.auth.getUserRole() === roles.students) {
         this.router.navigate(['/shell/student-book/']);
       }
     });

@@ -12,7 +12,6 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA, MatDialogRef, MAT_DIALOG_DATA
 })
 
 export class AddModifyGroupComponent implements OnInit {
-  myFirstReactiveForm: FormGroup;
 
   constructor(private dialogRef: MatDialogRef<AddModifyGroupComponent>,
   private groupServices: GroupsService,
