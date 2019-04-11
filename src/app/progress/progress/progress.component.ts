@@ -8,7 +8,6 @@ import { StudentsService } from '../../services/students.service';
 import { Student } from '../../models/student';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
-import { MarkData } from '../../models/mark-data';
 import { ProgressService } from '../services/progress.service';
 
 @Component({
@@ -49,7 +48,6 @@ export class ProgressComponent implements OnInit {
     this.classService.getClasses('active').subscribe(result => this.classes = result);
     this.chartOptionsForm.statusChanges.subscribe(result => {
       if (result === 'VALID' && this.chartOptionsForm.touched) {
-        console.log('works');
         const {subjectId, classId, studentId, periodStart, periodEnd} = this.chartOptionsForm.value;
         const options = {
           subject_id: subjectId,
@@ -59,15 +57,16 @@ export class ProgressComponent implements OnInit {
           period_end: this.formatDate(periodEnd)
         };
         const studentsInfo = this.formStudentsInfo(studentId, this.students);
-        if (!studentsInfo.length) {
-          return;
-        }
         this.progressService.getProgressMarks(options, studentsInfo).subscribe(result => {
           this.updateChart(result);
         });
       }
     });
   }
+
+  /**
+   * Method creates form for chart options
+   */
   private createForm(): void {
     this.chartOptionsForm = new FormGroup({
       subjectId: new FormControl('', [
@@ -85,6 +84,12 @@ export class ProgressComponent implements OnInit {
       ]),
     });
   }
+
+  /**
+   * Method fires then something in form changes
+   * @param fieldName - Name of form input
+   * @param event - Variable of event
+   */
   public chartOptionChange(fieldName: string, event) {
     switch (fieldName) {
       case 'subjects': {
@@ -99,9 +104,20 @@ export class ProgressComponent implements OnInit {
       }
     }
   }
-  private formatDate(date: any): string {
+
+  /**
+   * Method format date to yyyy-mm-dd
+   * @param date - Date in common form
+   * @returns - String with formatted date
+   */
+  private formatDate(date: Date): string {
     return date.toISOString().slice(0, 10);
   }
+
+  /**
+   * Method updates data in chart
+   * @param data - New chart data
+   */
   private updateChart(data: any): void {
     this.chartLabels = [];
     this.chartData = [];
@@ -118,6 +134,13 @@ export class ProgressComponent implements OnInit {
     this.chartLabels = data[0].marks.map(item => item.date);
     this.chartData = newData;
   }
+
+  /**
+   * Method gets students info about requested students
+   * @param studentsId - Request id's of students
+   * @param allStudents - Student info per each student
+   * @returns - Info of filtered students
+   */
   private formStudentsInfo(studentsId: number[], allStudents: Student[]): Student[] {
     let studentsInfo = [];
     if (studentsId.length > 0) {
