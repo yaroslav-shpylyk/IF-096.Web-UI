@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { MarkService } from '../../services/mark.service';
 import { MarksRequestOptions } from '../../models/marks-request-options';
-import { combineLatest, Observable} from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { MarkData } from '../../models/mark-data';
 import { Student } from '../../models/student';
+import { ClassService } from '../../services/class.service';
+import { ClassData } from '../../models/class-data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProgressService {
 
-  constructor(private markService: MarkService) { }
+  constructor(private markService: MarkService, private classService: ClassService) { }
   public getProgressMarks(options: MarksRequestOptions, studentsInfo: Student[]): Observable<any> {
     if (options.student_id.length === 1) {
       return this.getStudentProgressMarks(options, studentsInfo);
@@ -41,7 +43,7 @@ export class ProgressService {
   private getStudentsProgressMarks(options: MarksRequestOptions, studentsInfo: Student[]): Observable<any> {
     let uniqueDates: string[] = [];
     const studentsId: number[] = [];
-    return combineLatest(options.student_id.map(item => {
+    return forkJoin(options.student_id.map(item => {
       studentsId.push(item);
       options.student_id = [item];
       return this.markService.getMarks(options);
@@ -63,10 +65,10 @@ export class ProgressService {
       );
   }
   private createDateObject(dateParams: number[]): Date {
-    const [year, month, day] = dateParams;
+    const [year, month, day]: number[] = dateParams;
     return new Date(year, month, day);
   }
-  private getSortedDates(data: any): string[] {
+  private getSortedDates(data: Array<MarkData[]>): string[] {
     const dates = [];
     for (const student of data) {
       for ( const mark of student ) {
@@ -108,5 +110,11 @@ export class ProgressService {
       newMarks[index].mark = mark.y;
     }
     return newMarks;
+  }
+  public getClassesByStream(stream: number): Observable<ClassData[]> {
+    return this.classService.getClasses('active')
+      .pipe(
+        map(result => result.filter(item => parseInt(item.className, 10) === stream))
+      );
   }
 }

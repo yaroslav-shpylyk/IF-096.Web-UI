@@ -20,6 +20,7 @@ export class ProgressComponent implements OnInit {
   public subjects: SubjectData[];
   public classes: ClassData[];
   public students: Student[];
+  public streams = new Array(12);
   public chartOptions: ChartOptions = {
     responsive: true,
     scales: {
@@ -44,8 +45,6 @@ export class ProgressComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    this.subjectService.getSubjects().subscribe(result => this.subjects = result);
-    this.classService.getClasses('active').subscribe(result => this.classes = result);
     this.chartOptionsForm.statusChanges.subscribe(result => {
       if (result === 'VALID' && this.chartOptionsForm.touched) {
         const {subjectId, classId, studentId, periodStart, periodEnd} = this.chartOptionsForm.value;
@@ -69,6 +68,9 @@ export class ProgressComponent implements OnInit {
    */
   private createForm(): void {
     this.chartOptionsForm = new FormGroup({
+      streamId: new FormControl('', [
+        Validators.required
+      ]),
       subjectId: new FormControl('', [
         Validators.required
       ]),
@@ -84,6 +86,9 @@ export class ProgressComponent implements OnInit {
       ]),
     });
   }
+  public checkFieldValue(field: string): boolean {
+    return Boolean(this.chartOptionsForm.controls[field].value);
+  }
 
   /**
    * Method fires then something in form changes
@@ -91,12 +96,18 @@ export class ProgressComponent implements OnInit {
    * @param event - Variable of event
    */
   public chartOptionChange(fieldName: string, event) {
+    console.log(this.chartOptionsForm.value.streamId > 0);
     switch (fieldName) {
-      case 'subjects': {
-        this.classService.getClasses('active', event.value).subscribe(result => this.classes = result);
+      case 'stream': {
+        console.log(this.chartOptionsForm.controls.streamId.value);
+        this.progressService.getClassesByStream(7).subscribe(result => {
+          console.log(result);
+          this.classes = result;
+        });
         break;
       }
       case 'classes': {
+        this.subjects = [];
         this.students = [];
         this.subjectService.getSubjects(event.value).subscribe(result => this.subjects = result);
         this.studentService.getStudents(event.value).subscribe(result => this.students = result);
