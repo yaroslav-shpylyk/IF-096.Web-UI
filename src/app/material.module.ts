@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatSelectModule } from '@angular/material/select';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 
 import {
   MatButtonModule,
@@ -44,7 +46,9 @@ import {
     MatSelectModule,
     MatSortModule,
     MatTableModule,
-    MatRadioModule
+    MatRadioModule,
+    MatButtonToggleModule,
+    MatBottomSheetModule
   ],
   exports: [
     MatButtonModule,
@@ -66,7 +70,9 @@ import {
     MatSelectModule,
     MatSortModule,
     MatTableModule,
-    MatRadioModule
+    MatRadioModule,
+    MatButtonToggleModule,
+    MatBottomSheetModule
   ]
 })
 export class MaterialModule {}

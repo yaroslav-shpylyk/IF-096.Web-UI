@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import { JournalsStorageService } from 'src/app/services/journals-storage.service';
 import { Journal } from 'src/app/models/journal-data';
 import { ActivatedRoute, Params } from '@angular/router';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { MatBottomSheet, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-subject-journal',
@@ -9,16 +11,18 @@ import { ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./subject-journal.component.scss']
 })
 export class SubjectJournalComponent implements OnInit {
-  // journal: Journal;
-  journal: any;
+  journal: Journal;
   dataSource = ELEMENT_DATA;
+  thRow = ['Учень'];
   idSubject: number;
   idClass: number;
   displayedColumns = ['name', 'position', 'weight', 'symbol'];
 
   constructor(
     private journalsStorageService: JournalsStorageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private bottomSheet: MatBottomSheet
   ) {}
 
   ngOnInit() {
@@ -32,22 +36,49 @@ export class SubjectJournalComponent implements OnInit {
     this.journalsStorageService
       .getJournaL(this.idSubject, this.idClass)
       .subscribe(journal => {
-        let studentData = {};
+        let studentData = { studentFullName: '' };
         for (const student of journal) {
           studentData.studentFullName = student.studentFullName;
           for (const mark of student.marks) {
             studentData[mark.idLesson] = mark.mark;
+            if (this.thRow.length <= student.marks.length) {
+              this.thRow.push(mark.dateMark);
+            }
           }
           elData.push(studentData);
           studentData = {};
-          console.log(elData);
         }
-
+        // this.thRow = journal[0].marks[0].dateMark;
         this.dataSource = elData;
-        this.displayedColumns = Object.keys(elData[0]);
 
+        console.log('this.thRow');
+        console.log(this.thRow);
+
+        console.log('elData');
+        console.log(elData);
+
+        const temp = Object.keys(elData[0]);
+        temp.unshift(...temp.splice(temp.length - 1, 1));
+
+        this.displayedColumns = temp;
         this.journal = journal;
-      }); 
+
+        console.log('this.journal');
+        console.log(this.journal);
+      });
+  }
+
+  onClc(val) {
+    console.log(val);
+    console.log(val.target.attributes.sho.nodeValue);
+    console.log(val.target.innerText);
+    this.openBottomSheet();
+  }
+
+  openBottomSheet(): void {
+    this.bottomSheet.open(BottomSheetOverviewExampleSheetComponent, {
+      data: { names: 12 }
+    });
   }
 }
 
@@ -64,3 +95,23 @@ const ELEMENT_DATA = [
   { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
   { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' }
 ];
+
+@Component({
+  selector: 'app-bottom-sheet',
+  templateUrl: 'bottom-sheet-overview-example-sheet.html'
+})
+export class BottomSheetOverviewExampleSheetComponent {
+  constructor(
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
+    private bottomSheetRef: MatBottomSheetRef<
+      BottomSheetOverviewExampleSheetComponent
+    >
+  ) {}
+
+  sho = 12;
+
+  openLink(event: MouseEvent): void {
+    this.bottomSheetRef.dismiss();
+    event.preventDefault();
+  }
+}
