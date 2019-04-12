@@ -63,7 +63,7 @@ export class SubjectJournalComponent implements OnInit {
 
         const temp = Object.keys(elData[0]);
         temp.unshift(...temp.splice(temp.length - 1, 1));
-        // temp.unshift(...temp.splice(temp.length - 2, 1));
+
 
         this.displayedColumns = temp;
         this.journal = journal;
@@ -73,9 +73,12 @@ export class SubjectJournalComponent implements OnInit {
       });
   }
 
-  onClc(val, jour) {
-    console.log(val, jour);
+  onClc(idLesson, studentEl) {
+    console.log(idLesson, studentEl);
 
+    this.bottomSheet.open(BottomSheetOverviewExampleSheetComponent, {
+      data: { lessonId: idLesson, student: studentEl }
+    });
 
   }
 
@@ -108,12 +111,38 @@ const ELEMENT_DATA = [
 export class BottomSheetOverviewExampleSheetComponent {
   constructor(
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
+    private journalsStorageService: JournalsStorageService,
     private bottomSheetRef: MatBottomSheetRef<
       BottomSheetOverviewExampleSheetComponent
     >
   ) {}
 
-  sho = 12;
+  studentFullName = this.data.student.studentFullName;
+  mark = this.data.student.marks.find((el) => {
+    console.log(el.idLesson, this.data.lessonId);
+    return el.idLesson === +this.data.lessonId;
+  });
+  selectedVal = this.mark.mark;
+
+  counter(i: number) {
+    return new Array(i);
+  }
+
+  onValChange(val) {
+    this.selectedVal = val;
+  }
+
+  daya() {
+    console.log(this.selectedVal);
+    this.journalsStorageService.saveMark({
+      idLesson: this.data.lessonId,
+      idStudent: this.data.student.idStudent,
+      mark: this.selectedVal
+    }).subscribe(resp => {
+      console.log(resp);
+    },
+    error => console.log(error));
+  }
 
   openLink(event: MouseEvent): void {
     this.bottomSheetRef.dismiss();

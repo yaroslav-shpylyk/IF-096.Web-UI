@@ -53,4 +53,10 @@ export class JournalsStorageService {
       })
     );
   }
+
+  saveMark(obj): Observable<any> {
+    return this.httpClient.post(`/marks`, obj, {
+      observe: 'response'
+    });
+  }
 }

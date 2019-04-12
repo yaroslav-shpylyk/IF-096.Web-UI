@@ -1,8 +1,22 @@
-<h3>Оцінка для</h3>
-
+<!-- <h3>Оцінка для {{ data.student.studentFullName }} за {{ data.student.marks }} </h3> -->
+<h3>
+  Оцінка для учня
+  <b
+    >{{ studentFullName }} за <b>{{ mark.dateMark }}</b></b
+  >
+</h3>
+<h4>
+  Вид роботи: <b>{{ mark.typeMark }}</b>
+</h4>
 <mat-nav-list>
-  <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-    <mat-button-toggle value="1">1</mat-button-toggle>
+  <mat-button-toggle-group
+    #group="matButtonToggleGroup"
+    [value]="selectedVal"
+    (change)="onValChange(group.value)"
+    name="fontStyle"
+    aria-label="Font Style"
+  >
+    <!-- <mat-button-toggle value="1">1</mat-button-toggle>
     <mat-button-toggle value="2">2</mat-button-toggle>
     <mat-button-toggle value="3">3</mat-button-toggle>
     <mat-button-toggle value="4">4</mat-button-toggle>
@@ -13,6 +27,15 @@
     <mat-button-toggle value="9">9</mat-button-toggle>
     <mat-button-toggle value="10">10</mat-button-toggle>
     <mat-button-toggle value="11">11</mat-button-toggle>
-    <mat-button-toggle [checked]="data.names == sho ? true : false" value="12">12</mat-button-toggle>
+    <mat-button-toggle [checked]="mark.mark === 12" value="12"
+      >12</mat-button-toggle
+    > -->
+    <mat-button-toggle
+      *ngFor="let in of counter(12); let i = index"
+      [value]="i + 1"
+      >{{ i + 1 }}
+    </mat-button-toggle>
   </mat-button-toggle-group>
+
+  <button (click)="daya()">STARTYEM</button>
 </mat-nav-list>
