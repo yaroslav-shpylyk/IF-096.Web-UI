@@ -12,11 +12,12 @@ import { MatBottomSheet, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angul
 })
 export class SubjectJournalComponent implements OnInit {
   journal: Journal;
-  dataSource = ELEMENT_DATA;
+  dataSource;
   thRow = ['Учень'];
   idSubject: number;
   idClass: number;
-  displayedColumns = ['name', 'position', 'weight', 'symbol'];
+  displayedColumns = [];
+  studentIds = [];
 
   constructor(
     private journalsStorageService: JournalsStorageService,
@@ -36,9 +37,12 @@ export class SubjectJournalComponent implements OnInit {
     this.journalsStorageService
       .getJournaL(this.idSubject, this.idClass)
       .subscribe(journal => {
+        console.log(journal);
         let studentData = { studentFullName: '' };
         for (const student of journal) {
           studentData.studentFullName = student.studentFullName;
+          // studentData.idStudent = student.idStudent;
+          this.studentIds.push(student.idStudent);
           for (const mark of student.marks) {
             studentData[mark.idLesson] = mark.mark;
             if (this.thRow.length <= student.marks.length) {
@@ -59,6 +63,7 @@ export class SubjectJournalComponent implements OnInit {
 
         const temp = Object.keys(elData[0]);
         temp.unshift(...temp.splice(temp.length - 1, 1));
+        // temp.unshift(...temp.splice(temp.length - 2, 1));
 
         this.displayedColumns = temp;
         this.journal = journal;
@@ -68,14 +73,14 @@ export class SubjectJournalComponent implements OnInit {
       });
   }
 
-  onClc(val) {
-    console.log(val);
-    console.log(val.target.attributes.sho.nodeValue);
-    console.log(val.target.innerText);
-    this.openBottomSheet();
+  onClc(val, jour) {
+    console.log(val, jour);
+
+
   }
 
-  openBottomSheet(): void {
+  openBottomSheet(mark, idLesson): void {
+    console.log(mark, idLesson);
     this.bottomSheet.open(BottomSheetOverviewExampleSheetComponent, {
       data: { names: 12 }
     });
