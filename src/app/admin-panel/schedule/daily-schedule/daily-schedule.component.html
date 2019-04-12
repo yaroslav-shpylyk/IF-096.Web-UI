@@ -1,7 +1,7 @@
-<div [formGroup] = "childDailySchedule">
-  <fieldset formArrayName="lessons">
-    <legend>Понеділок2</legend>
-    <div *ngFor="let lesson of lessons.controls; let i=index">
+<div [formGroup] = "frmDailySchedule">
+  <fieldset  formArrayName="dailySchedule">
+    <legend>{{legendDay}}</legend>
+    <ng-container *ngFor="let lesson of dailySchedule.controls; let i=index">
       <div>
         <span>{{ i + 1 }}. </span>
 
@@ -12,7 +12,7 @@
         </mat-form-field>
 
         <mat-form-field class="select-subject">
-          <mat-select [formControl]="lesson.controls['secondGroup']" [placeholder]="secondGroupMsg">
+          <mat-select [formControl]="lesson.controls['secondGroup']" placeholder="Виберіть предмет">
             <mat-option *ngFor="let subj of arrSubjectsList" [value]="subj.subjectId"> {{ subj.subjectName }}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -26,8 +26,8 @@
         </button>
       </div>
 
-    </div>
+    </ng-container>
   </fieldset>
 </div>
 <!-- for test -->
-<div> {{ childDailySchedule.value | json }}</div>
+<div> {{ frmDailySchedule.value | json }}</div>

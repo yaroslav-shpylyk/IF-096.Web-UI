@@ -1,8 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SubjectData } from '../../../models/subject-data';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
-import { DataService } from '../../../services/data.service';
-
 
 @Component({
   selector: 'app-daily-schedule',
@@ -12,37 +10,37 @@ import { DataService } from '../../../services/data.service';
 export class DailyScheduleComponent implements OnInit {
 
   //@Input()
-  @Output() dataChanged: EventEmitter<any> = new EventEmitter<any>();
+  legendDay: string = 'day'; //it have to be input
+  frmDailySchedule: FormGroup;
 
-  childDailySchedule: FormGroup;
-  arrSubjectsList: SubjectData[];
-  secondGroupMsg: string;
-
-  constructor(private frmBld: FormBuilder, private dataList: DataService) { }
-
-  ngOnInit() {
-    this.dataList.getData('/subjects').subscribe(data => {
-      this.arrSubjectsList = data;
-    });
-
-    this.buildDailySchedul();
+  private _arrSubjectsList: SubjectData[];
+  @Input()
+  set arrSubjectsList(inpSubjectsList: SubjectData[]) {
+    this._arrSubjectsList = inpSubjectsList;
+  }
+  get arrSubjectsList(): SubjectData[] {
+    return this._arrSubjectsList;
   }
 
+  constructor(private frmBld: FormBuilder) {}
+
+  ngOnInit() {
+    this.buildDailySchedul();
+  }
+  /** Method initializes the initial state of the component's template */
   buildDailySchedul() {
-    this.childDailySchedule = this.frmBld.group({
-      lessons: this.frmBld.array([
+    this.frmDailySchedule = this.frmBld.group({
+      dailySchedule: this.frmBld.array([
         this.frmBld.group({
           firstGroup: this.frmBld.control(''),
           secondGroup: this.frmBld.control({value: '', disabled: true}),
         })
       ])
     });
-
-    this.secondGroupMsg = "Виберіть предмет";
   }
-
-  get lessons() {
-    return this.childDailySchedule.get('lessons') as FormArray;
+  //getter for the property of element ????
+  get dailySchedule() {
+    return this.frmDailySchedule.get('dailySchedule') as FormArray;
   }
 
   /**
@@ -51,15 +49,12 @@ export class DailyScheduleComponent implements OnInit {
    * @param i - Index of the element on which the click occurred
    */
   public addSubjest(i: number): void {
-    if(i == (this.lessons.length - 1)) {
-      this.lessons.push(this.frmBld.group({
+    if(i == (this.dailySchedule.length - 1)) {
+      this.dailySchedule.push(this.frmBld.group({
         firstGroup: this.frmBld.control(''),
         secondGroup: this.frmBld.control({value: '', disabled: true})
       }));
     }
-
-    //this.renderer.addClass(this.buttonAdd.nativeElement, 'nameclass');
-    //console.log(i + " " + this.buttonAdd.nativeElement);
   }
 
   /**
@@ -67,7 +62,7 @@ export class DailyScheduleComponent implements OnInit {
    * @param i - Index of the element which needs the second group
    */
   public addSecondGroup(i: number): void {
-    this.lessons.at(i).get('secondGroup').enable();
+    this.dailySchedule.at(i).get('secondGroup').enable();
   }
 
   /**
@@ -75,17 +70,12 @@ export class DailyScheduleComponent implements OnInit {
    * @param i - index of the control which to be deleted
    */
   public removeSubjest(i: number): void {
-    if (this.lessons.at(i).get('secondGroup').status != 'DISABLED') {
-      const secondGroupCntrl: any = this.lessons.at(i).get('secondGroup');
+    if (this.dailySchedule.at(i).get('secondGroup').status != 'DISABLED') {
+      const secondGroupCntrl: any = this.dailySchedule.at(i).get('secondGroup');
       secondGroupCntrl.setValue('');
       secondGroupCntrl.disable();
     } else {
-      this.lessons.removeAt(i);
+      this.dailySchedule.removeAt(i);
     }
   }
-
-  sendMessage(data) {
-    this.dataChanged.emit(this.childDailySchedule.value);
-  }
-
 }

@@ -1,9 +1,10 @@
 import { Component, OnInit, ElementRef, ViewChild, Renderer2, AfterViewInit } from '@angular/core';
-import { DataService } from '../../services/data.service';
 import { ClassData } from '../../models/class-data';
 import { SubjectData } from '../../models/subject-data';
-import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { DailyScheduleComponent } from './daily-schedule/daily-schedule.component';
+import { ClassService } from '../../services/class.service';
+import { SubjectService } from '../../services/subject.service';
 
 /*Понеділок Вівторок Середа Четвер П'ятниця Субота
 Monday Tuesday Wednesday Thursday Friday Saturday */
@@ -15,32 +16,31 @@ Monday Tuesday Wednesday Thursday Friday Saturday */
 })
 export class ScheduleComponent implements OnInit, AfterViewInit {
   frmSchedule: FormGroup;
-  arrClassList: ClassData[] = [];
-  arrSubjectsList: SubjectData[] = [];
+  arrClassList: Array<ClassData> = [];
+  arrSubjectsList: Array<SubjectData> = [];
+  selectClassMsg: string = "Виберіть клас";
+  dateTermStartMsg: string = "Дата початку семестру";
+  dateTermEndMsg: string = "Дата закінчення семестру";
 
-  selectClassMsg: string;
-  dateTermStartMsg: string;
-  dateTermEndMsg: string;
-  secondGroupMsg: string;
-
-  @ViewChild(DailyScheduleComponent) parentDailySchedule: DailyScheduleComponent;
-
-
-  //@ViewChild("buttonAdd")
-  //buttonAdd: ElementRef;
+  arrWeekSchedule: Array<DailyScheduleComponent> = [];
 
   constructor(private frmBld: FormBuilder,
-    private dataList: DataService, private renderer: Renderer2) { }
+    private classList: ClassService,
+    private subjectsList: SubjectService) { }
 
   ngOnInit() {
-    this.dataList.getData('/classes').subscribe(data => {
-      this.arrClassList = data.filter(currentClass => currentClass.isActive);
+    this.classList.getClasses('active').subscribe(data => {
+      this.arrClassList = data;
     });
-    this.dataList.getData('/subjects').subscribe(data => {
+    this.subjectsList.getSubjects().subscribe(data => {
       this.arrSubjectsList = data;
     });
-    this.initForm();
 
+    //it for test. there have to be a cycle
+    this.arrWeekSchedule.push(new DailyScheduleComponent(new FormBuilder()));
+    this.arrWeekSchedule.push(new DailyScheduleComponent(new FormBuilder()));
+
+    this.initForm();
   }
 
   /** Method initializes the initial state of the form */
@@ -49,74 +49,17 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
       dateTermStart: [''],
       dateTermEnd: [''],
       selectedClass: ['', Validators.required],
-      mondaySchedule: this.frmBld.array([
-        this.frmBld.group({
-          firstGroup: this.frmBld.control(''),
-          secondGroup: this.frmBld.control({value: '', disabled: true}),
-        })
-      ]),
-      dailySchedule: this.parentDailySchedule.childDailySchedule
+      weekSchedule: this.frmBld.array(this.arrWeekSchedule)
     });
-    this.selectClassMsg = "Виберіть клас";
-    this.dateTermStartMsg = "Дата початку семестру";
-    this.dateTermEndMsg = "Дата закінчення семестру";
-    this.secondGroupMsg = "Виберіть предмет";
   }
 
-  get mondaySchedule() {
-    return this.frmSchedule.get('mondaySchedule') as FormArray;
+  get weekSchedule() {
+    return this.frmSchedule.get('weekSchedule') as FormArray;
   }
-
-  get dailySchedule() {
-    return this.frmSchedule.get('dailySchedule') as FormGroup;
-  }
-
-  /**
-   * Method dynamically adds the subject to the daily schedule
-   * if the click was on the last element
-   * @param i - Index of the element on which the click occurred
-   */
-  public addSubjest(i: number): void {
-    if(i == (this.mondaySchedule.length - 1)) {
-      this.mondaySchedule.push(this.frmBld.group({
-        firstGroup: this.frmBld.control(''),
-        secondGroup: this.frmBld.control({value: '', disabled: true})
-      }));
-    }
-
-    //this.renderer.addClass(this.buttonAdd.nativeElement, 'nameclass');
-    //console.log(i + " " + this.buttonAdd.nativeElement);
-  }
-
-  /**
-   * Method makes available to fill the subject for second group
-   * @param i - Index of the element which needs the second group
-   */
-  public addSecondGroup(i: number): void {
-    this.mondaySchedule.at(i).get('secondGroup').enable();
-  }
-
-  /**
-   * Method removes the subject from the daily schedule
-   * @param i - index of the control which to be deleted
-   */
-  public removeSubjest(i: number): void {
-    if (this.mondaySchedule.at(i).get('secondGroup').status != 'DISABLED') {
-      const secondGroupCntrl: any = this.mondaySchedule.at(i).get('secondGroup');
-      secondGroupCntrl.setValue('');
-      secondGroupCntrl.disable();
-    } else {
-      this.mondaySchedule.removeAt(i);
-    }
-  }
-
   ngAfterViewInit(): void {
-    console.log(this.parentDailySchedule);
+    //console.log(this.parentDailySchedule);
 
-  }
 
-  dataChangeHandler(data) {
-    console.log(data);
   }
 
   /**

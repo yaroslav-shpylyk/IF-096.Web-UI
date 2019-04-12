@@ -1,7 +1,7 @@
 <div class="title-schedule">
   <h5>РОЗКЛАД УРОКІВ</h5>
 </div>
-<form [formGroup] = "frmSchedule" (submit) = "onSubmit()">
+<form [formGroup] = "frmSchedule" (ngSubmit) = "onSubmit()">
   <div class="schedule-top">
     <mat-form-field class="datePiker">
       <input matInput [matDatepicker]="pickerStart" [placeholder]="dateTermStartMsg" formControlName="dateTermStart">
@@ -22,40 +22,14 @@
     </mat-form-field>
   </div> <!--end of top-->
 
-  <div class="week-schedule">
-    <fieldset formArrayName="mondaySchedule">
-      <legend>Понеділок</legend>
-      <div *ngFor="let lesson of mondaySchedule.controls; let i=index">
-        <div>
-          <span>{{ i + 1 }}. </span>
+  <div class="week-schedule" formArrayName="weekSchedule">
+    <ng-container *ngFor="let day of weekSchedule.controls; let i=index">
 
-          <mat-form-field class="select-subject">
-            <mat-select [formControl]="lesson.controls['firstGroup']" placeholder="Виберіть предмет" (click)="addSubjest(i)">
-              <mat-option *ngFor="let subj of arrSubjectsList" [value]="subj.subjectId"> {{ subj.subjectName }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field class="select-subject">
-            <mat-select [formControl]="lesson.controls['secondGroup']" [placeholder]="secondGroupMsg">
-              <mat-option *ngFor="let subj of arrSubjectsList" [value]="subj.subjectId"> {{ subj.subjectName }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <button mat-icon-button *ngIf="!this.disabled" (click)="addSecondGroup(i)">
-            <mat-icon>add_box</mat-icon>
-          </button>
-
-          <button mat-icon-button *ngIf="!this.disabled" (click)="removeSubjest(i)">
-              <mat-icon>delete</mat-icon>
-          </button>
-        </div>
-
-      </div>
-    </fieldset>
-    <app-daily-schedule   (dataChanged)='dataChangeHandler($event)'></app-daily-schedule>
+      <app-daily-schedule [arrSubjectsList]="arrSubjectsList" ></app-daily-schedule>
+    </ng-container>
   </div>
 
-  <button mat-button>Click me!</button>
+  <button mat-button type="submit" [disabled]="!frmSchedule.valid">Submit</button>
 </form>
 
 <!-- for test -->

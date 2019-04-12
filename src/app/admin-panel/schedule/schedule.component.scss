@@ -1,5 +1,4 @@
 $title-color: rgba(210, 230, 240, 0.5);
-$icon-color: rgb(133, 133, 184);
 $invalid-color: rgb(112, 5, 5);
 
 .title-schedule {
@@ -23,14 +22,8 @@ form {
 .datePiker {
     width: 30%;
 }
-.select-subject {
-    margin: 0 0.5em;
-}
 input.ng-touched.ng-invalid{
     border-color: $invalid-color;
-}
-mat-icon {
-    color: $icon-color;
 }
 
 /* Screen = B/w 320px to 479px */
