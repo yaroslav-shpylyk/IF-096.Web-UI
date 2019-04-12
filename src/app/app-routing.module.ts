@@ -8,7 +8,7 @@ const routes: Routes = [
     loadChildren: './login/login.module#LoginModule'
   },
   {
-    path: 'shell',
+    path: '',
     loadChildren: './shell/shell.module#ShellModule',
     canActivate: [ShellGuard],
     canLoad: [ShellGuard]

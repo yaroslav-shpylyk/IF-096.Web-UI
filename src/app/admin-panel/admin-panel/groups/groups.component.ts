@@ -17,11 +17,11 @@ export class GroupsComponent implements OnInit {
   displayedColumns: string[] = ['className', 'classYear', 'isActive', 'id'];
   dataSourceActivClass: MatTableDataSource<Group>;
   dataSourceCloseClass: MatTableDataSource<Group>;
-  
+
 
   constructor(private groupServices: GroupsService,
-  public dialog: MatDialog) { }
-           
+    public dialog: MatDialog) { }
+
   ngOnInit() {
     this.refreshGroups()
   }
@@ -44,26 +44,39 @@ export class GroupsComponent implements OnInit {
   * Method open popups sheet, send data to the popups sheet,
   *  updates list of class after closing popups sheet
   */
-  openPopupsSheet(element:Object) {
-    let sheet = this.dialog.open(AddModifyGroupComponent,{
+  openPopupsSheet(element: Object) {
+    let sheet = this.dialog.open(AddModifyGroupComponent, {
       hasBackdrop: true,
-      data: (element) ? element : Group   
+      data: (element) ? element : Group
     });
-    sheet.afterClosed().subscribe(()=> this.refreshGroups())
+
+    sheet.afterClosed().subscribe((data?) => {
+      if (data) {
+        if (!Number(data.id)) {
+          // data.id = 999999999;
+          this.groups.push(data);
+          this.matTableFilter();
+        }
+      }
+    })
   }
-    
+
   /**
   * Method updates list of class and creates the possibility of sorting them
   */
-  refreshGroups(){
-    this.groupServices.getGroups().subscribe( data =>  {
+  refreshGroups() {
+    this.groupServices.getGroups().subscribe(data => {
       this.groups = data;
-      this.dataSourceActivClass = new MatTableDataSource(this.groups
-        .filter((value: Group, index: number, array: Group[]) => array[index].isActive));
-      this.dataSourceActivClass.sort = this.sort;
-      this.dataSourceCloseClass = new MatTableDataSource(this.groups
-        .filter((value: Group, index: number, array: Group[]) => !array[index].isActive));
-      this.dataSourceCloseClass.sort = this.sort;
+      this.matTableFilter();
     });
+  }
+
+  matTableFilter() {
+    this.dataSourceActivClass = new MatTableDataSource(this.groups
+      .filter((value: Group, index: number, array: Group[]) => array[index].isActive));
+    this.dataSourceActivClass.sort = this.sort;
+    this.dataSourceCloseClass = new MatTableDataSource(this.groups
+      .filter((value: Group, index: number, array: Group[]) => !array[index].isActive));
+    this.dataSourceCloseClass.sort = this.sort;
   }
 }

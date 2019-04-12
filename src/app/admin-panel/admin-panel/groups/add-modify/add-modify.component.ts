@@ -23,8 +23,8 @@ export class AddModifyGroupComponent implements OnInit {
   /**
   * Method reports about closing bottom sheet
   */
-  abort(){
-    this.dialogRef.close()
+  abort(data?){
+    this.dialogRef.close(data)
   }
 
   /**

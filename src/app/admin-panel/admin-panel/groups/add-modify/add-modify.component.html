@@ -27,7 +27,7 @@
       </mat-select>
     </mat-form-field>
   
-    <button mat-stroked-button color="primary" type="submit" (click)="save(form.value)" (click)="abort()"
+    <button mat-stroked-button color="primary" type="submit" (click)="save(form.value)" (click)="abort(form.value)"
     [disabled]="classYear.invalid">Зберегти</button>
     <button mat-stroked-button color="primary" type="submit" (click)="abort()">Відміна</button>
      
