@@ -26,7 +26,11 @@
   padding: 0 2%;
   font-size: 0.8em;
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 480px) {
+    display: none!important;
+  }
+  @media only screen and (max-width: 480px)
+  and (min-resolution: 2dppx) and (orientation: portrait) {
     display: none!important;
   }
 }
@@ -38,7 +42,11 @@
   width: 48px;
   display: none!important;
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-device-width: 480px) {
+    display: flex!important;
+  }
+  @media only screen and (max-device-width: 480px)
+    and (min-resolution: 2dppx) and (orientation: portrait) {
     display: flex!important;
   }
 }

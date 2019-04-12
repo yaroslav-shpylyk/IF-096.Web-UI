@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnDestroy, HostListener, AfterViewInit } from '@angular/core';
 import { fromEvent, interval } from 'rxjs';
 import { debounce, takeWhile } from 'rxjs/operators';
 
@@ -7,12 +7,13 @@ import { debounce, takeWhile } from 'rxjs/operators';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements AfterViewInit, OnDestroy {
   private hide: boolean;
   private notransition: boolean;
   private isScrolling;
   private stoppedScrolling;
-  private resize;
+  private commonDisplay: boolean;
+  private retinaDisplay: boolean;
 
   /**
    * listen to window width resizing
@@ -21,12 +22,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
    */
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    this.resize = event.target.innerWidth;
+    this.commonDisplay = window.matchMedia('(max-device-width: 480px)').matches; // most smartphones in portrait mode
+    this.retinaDisplay = window.matchMedia('(max-device-width: 480px) ' +
+      'and (min-resolution: 2dppx) and (orientation: portrait)').matches; // smartphones with retina display in portrait mode
     this.hideHeader(); // call after every screen width changing (e.g portrait and landscape mode)
   }
 
-  ngOnInit() {
-    window.dispatchEvent(new Event('resize')); // trigger resize event to know screen width once the component is created
+  ngAfterViewInit() {
+    window.dispatchEvent(new Event('resize')); // trigger resize event to know screen width once the view is created
   }
 
   ngOnDestroy(): void {
@@ -39,7 +42,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
    */
   hideHeader() {
     this.isScrolling = fromEvent(window, 'scroll').pipe(
-      takeWhile(() => this.resize <= 599) // subscribe only on mobile screens
+      takeWhile(() => this.commonDisplay || this.retinaDisplay) // subscribe only on mobile screens
     ).subscribe(() => {
       if (window.scrollY >= 0 && window.scrollY <= 50) {
         this.hide = false;
@@ -51,7 +54,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
 
     this.stoppedScrolling = fromEvent(window, 'scroll').pipe(
-      takeWhile(() => this.resize <= 599), // subscribe only on mobile screens
+      takeWhile(() => this.commonDisplay || this.retinaDisplay ), // subscribe only on mobile screens
       debounce(() => interval(2000))
     ).subscribe(() => {
       this.hide = false;
