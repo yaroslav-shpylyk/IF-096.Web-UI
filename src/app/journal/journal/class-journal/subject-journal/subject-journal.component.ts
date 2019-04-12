@@ -9,20 +9,12 @@ import { ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./subject-journal.component.scss']
 })
 export class SubjectJournalComponent implements OnInit {
-  journal: Journal;
+  // journal: Journal;
+  journal: any;
   dataSource = ELEMENT_DATA;
   idSubject: number;
   idClass: number;
-  displayedColumns = [
-    'name',
-    'position',
-    'weight',
-    'symbol',
-    'position',
-    'weight',
-    'symbol',
-    'star'
-  ];
+  displayedColumns = ['name', 'position', 'weight', 'symbol'];
 
   constructor(
     private journalsStorageService: JournalsStorageService,
@@ -30,24 +22,38 @@ export class SubjectJournalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.route.params.subscribe((params: Params) => {
-    //   this.idSubject = +params.subId;
-    //   this.idClass = +params.classId;
-    //   console.log(this.idSubject);
-    //   console.log(this.idClass);
-    // });
+    this.route.params.subscribe((params: Params) => {
+      this.idSubject = +params.subId;
+      this.idClass = +params.classId;
+      console.log(this.idSubject);
+      console.log(this.idClass);
+    });
 
-    // this.journalsStorageService
-    //   .getJournaL(this.idSubject, this.idClass)
-    //   .subscribe(journal => {
-    //     console.log(journal);
-    //     this.journal = journal;
-    //   });
+    this.journalsStorageService
+      .getJournaL(this.idSubject, this.idClass)
+      .subscribe(journal => {
+        let studentData = {};
+        for (const student of journal) {
+          studentData.studentFullName = student.studentFullName;
+          for (const mark of student.marks) {
+            studentData[mark.idLesson] = mark.mark;
+          }
+          elData.push(studentData);
+          studentData = {};
+          console.log(elData);
+        }
+
+        this.dataSource = elData;
+        this.displayedColumns = Object.keys(elData[0]);
+
+        this.journal = journal;
+      }); 
   }
 }
 
+const elData = [];
 const ELEMENT_DATA = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
+  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H', zas: 123 },
   { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
   { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
   { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
