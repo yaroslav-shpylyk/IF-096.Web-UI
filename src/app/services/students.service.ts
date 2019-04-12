@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Student } from '../models/student';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
+// import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { ClassData } from '../models/class-data';
 import { ClassService } from './class.service';
@@ -15,12 +16,28 @@ export class StudentsService {
 
   constructor(private http: HttpClient, private classService: ClassService) { }
 
+  private sub = new Subject<Student[]>();
+
+  getSubject(): Subject<Student[]> {
+    return this.sub;
+  }
+
+  loadStudents(id) {
+    this.http.get(`/students/classes/${id}`)
+      .forEach((res: { status: any, data: Student[] }) => {
+        this.sub.next(res.data);
+      });
+  }
+
   /**
    * Method return data with students, that are in this class, where id is class id
    */
   getStudents(id): Observable<Student[]> {
     return this.http.get(`/students/classes/${id}`).
-      pipe(map((res: { status: any, data: Student[] }) => res.data));
+      pipe(map((res: { status: any, data: Student[] }) => {
+        // this.sub.next(res.data);
+        return res.data;
+      }));
   }
 
   /*

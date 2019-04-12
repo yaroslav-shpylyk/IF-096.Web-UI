@@ -6,7 +6,14 @@ import { ClassService } from '../../../services/class.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Student } from '../../../models/student';
-import { Subscription } from 'rxjs';
+import {
+  validText,
+  validPhone,
+  validLogin
+} from '../validator';
+
+import { MatSnackBar } from '@angular/material';
+
 
 
 /*
@@ -18,6 +25,7 @@ import { Subscription } from 'rxjs';
 })
 export class AddStudentModalComponent {
   paramId: number;
+  classId: number;
 
   constructor(
     public dialog: MatDialog,
@@ -26,6 +34,11 @@ export class AddStudentModalComponent {
   ) {
     this.route.params.subscribe(params => {
       this.paramId = params.id;
+    });
+    this.route.queryParams.subscribe(params => {
+      console.log('QUERY');
+      console.log(params);
+      this.classId = params.classId;
     });
     this.openDialog();
   }
@@ -41,11 +54,11 @@ export class AddStudentModalComponent {
       width: '300px',
       data: {
         paramId: this.paramId,
-
+        classId: this.classId
       }
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['../'], { relativeTo: this.route, replaceUrl: true });
+      this.router.navigate(['admin', 'students'], { skipLocationChange: true });
     });
   }
 }
@@ -58,47 +71,37 @@ export class AddStudentModalComponent {
 export class AddStudentComponent implements OnInit {
 
   allClasses: Array<ClassInfo>;
-  avatar: string | ArrayBuffer = '';
+  avatar: any = '';
+  startDate: Date = new Date(2010, 0, 1);
+  show = false;
+
+  addStudent = this.fb.group({
+    lastname: ['', validText],
+    firstname: ['', validText],
+    patronymic: ['', validText],
+    dateOfBirth: ['', Validators.required],
+    classId: [''],
+    login: ['', Validators.required, validLogin],
+    phone: ['', validPhone],
+    email: [''],
+    avatar: ['']
+  });
 
   constructor(
     private fb: FormBuilder,
     private studentService: StudentsService,
     private classService: ClassService,
     public dialogRef: MatDialogRef<AddStudentModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.classService.getClasses('all').subscribe((res: Array<ClassInfo>) => this.allClasses = res);
-  }
-  addStudent = this.fb.group({
-    lastname: ['', Validators.required],
-    firstname: ['', Validators.required],
-    patronymic: ['', Validators.required],
-    dateOfBirth: ['', Validators.required],
-    classId: [''],
-    login: ['', Validators.required],
-    phone: [''],
-    email: [''],
-    avatar: [''],
-  });
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    if (this.data.paramId) {
-      this.studentService.getOneStudent(this.data.paramId)
-        .subscribe((student: Student) => {
-          this.addStudent = this.fb.group({
-            avatar: [this.checkAvatar(student.avatar), Validators.required],
-            dateOfBirth: [student.dateOfBirth, Validators.required],
-            email: [student.email],
-            firstname: [student.firstname, Validators.required],
-            lastname: [student.lastname, Validators.required],
-            login: [student.login, Validators.required],
-            classId: [{ value: student.classId, disabled: true }],
-            newPass: [''],
-            patronymic: [student.patronymic, Validators.required],
-            phone: [student.phone],
-          });
-          setTimeout(() => console.log(student), 2000);
-        });
-    }
+    this.classService.getClasses('all').subscribe((res: Array<ClassInfo>) => {
+      this.allClasses = res;
+      this.initStudentData();
+      // this.studentService.sub.subscribe(res => console.log(res));
+    });
+
   }
 
   onUpload($event) {
@@ -108,23 +111,70 @@ export class AddStudentComponent implements OnInit {
       this.avatar = reader.result;
     };
     reader.readAsDataURL(file);
-    // this.ngOnInit();
+    this.initStudentData();
   }
 
   checkAvatar(img) {
-    if (img === null || img === '') {
-      return this.avatar;
-    } else {
+    if (img) {
       return img;
-    }
+    } else { return this.avatar; }
   }
 
   onSubmit(data) {
+
+    if (typeof (data.dateOfBirth) !== 'string') {
+      data.dateOfBirth = data.dateOfBirth.toLocaleDateString().split('.').reverse().join('-');
+    }
+
     if (this.data.paramId) {
-      this.studentService.changeStudent(this.data.paramId, data).subscribe(res => console.log('Student edited', res));
+      this.studentService.changeStudent(this.data.paramId, data).subscribe(res => {
+        console.log('Student edited');
+        this.studentService.loadStudents(this.data.classId);
+        this.openSnackBar('Дані змінено', '');
+
+      },
+        err => this.openSnackBar('Дані не змінено', err));
     } else {
-      this.studentService.addStudents(data).subscribe(res => console.log('Student added'));
+      this.studentService.addStudents(data).subscribe(res => {
+        console.log('Student added');
+        this.studentService.loadStudents(this.data.classId);
+        this.openSnackBar('Студента додано', '');
+      },
+        err => this.openSnackBar('Сталась помилка, модливо неправильні дані', err));
     }
     this.dialogRef.close();
+
+
+  }
+
+  initStudentData() {
+    console.log(this.data.paramId);
+    if (this.data.paramId) {
+      this.studentService.getOneStudent(this.data.paramId)
+        .subscribe((student: Student) => {
+          this.editStudentForm(student);
+        });
+    }
+  }
+
+  private editStudentForm(student) {
+    this.addStudent = this.fb.group({
+      avatar: [this.checkAvatar(student.avatar)],
+      dateOfBirth: [student.dateOfBirth],
+      email: [student.email],
+      firstname: [student.firstname, validText],
+      lastname: [student.lastname, validText],
+      login: [student.login, validLogin],
+      classId: [{ value: student.classId, disabled: true }],
+      newPass: [''],
+      patronymic: [student.patronymic, validText],
+      phone: [student.phone, validPhone]
+    });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 }

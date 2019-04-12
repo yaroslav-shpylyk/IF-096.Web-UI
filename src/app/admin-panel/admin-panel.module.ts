@@ -26,8 +26,9 @@ import { EditDialogEntryComponent, EditDialogOverviewComponent } from './teacher
 import { FilterPipe } from './teachers/helpers/filter.pipe';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ChartsModule } from 'ng2-charts';
-import { MatMenuModule } from '@angular/material';
+import { MatMenuModule, MatNativeDateModule } from '@angular/material';
 import { SubjectsComponent } from './subjects/subjects.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import { SubjectsComponent } from './subjects/subjects.component';
     DashboardComponent,
     SubjectsComponent,
     AddStudentModalComponent,
-    AddStudentComponent
+    AddStudentComponent,
   ],
   imports: [
     CommonModule,
@@ -66,7 +67,10 @@ import { SubjectsComponent } from './subjects/subjects.component';
     ChartsModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    MatDatepickerModule,
+    MatMenuModule,
+    MatNativeDateModule,
   ],
   entryComponents: [
     AddModifyGroupComponent,

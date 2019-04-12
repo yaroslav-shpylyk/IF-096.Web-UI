@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { StudentsService } from '../../../services/students.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -33,7 +33,7 @@ export class StudentDatails {
       data: { paramId: this.paramId }
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['../'], { relativeTo: this.route, replaceUrl: true });
+      this.router.navigate(['admin', 'students'], { skipLocationChange: true });
     });
   }
 }
@@ -48,9 +48,10 @@ export class StudentDatails {
   templateUrl: 'student-detail-modal.component.html',
   styleUrls: ['student-detail-modal.component.scss']
 })
-export class StudentDetailModalComponent {
+export class StudentDetailModalComponent implements OnInit {
 
   studentInfo: Student;
+  classId: number;
 
   constructor(
     public dialogRef: MatDialogRef<StudentDetailModalComponent>,
@@ -60,6 +61,12 @@ export class StudentDetailModalComponent {
     private router: Router) {
     this.studentServise.getOneStudent(this.data.paramId)
       .subscribe((student: Student) => this.studentInfo = student);
+  }
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.classId = params.classId;
+    });
   }
 
   /*
@@ -75,7 +82,11 @@ export class StudentDetailModalComponent {
   */
 
   editStudent() {
-    this.router.navigate(['admin', 'students', this.data.paramId, 'edit'], { relativeTo: this.route, replaceUrl: true });
+    this.router.navigate(
+      ['admin', 'students', this.data.paramId, 'edit'],
+      { relativeTo: this.route, replaceUrl: true, queryParams: { classId: this.classId } }
+    );
+    this.dialogRef.close();
   }
 
 }
