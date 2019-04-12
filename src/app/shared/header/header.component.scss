@@ -26,12 +26,14 @@
   padding: 0 2%;
   font-size: 0.8em;
 
+  /* Most of the Smartphones (Portrait) */
   @media only screen and (max-width: 480px) {
-    display: none!important;
+    display: none!important; // hide
   }
+  /* Most of the Retina Display Smartphones (Portrait) */
   @media only screen and (max-width: 480px)
   and (min-resolution: 2dppx) and (orientation: portrait) {
-    display: none!important;
+    display: none!important; // hide
   }
 }
 
@@ -40,13 +42,15 @@
   margin: 0 auto;
   font-size: 48px;
   width: 48px;
-  display: none!important;
+  display: none!important; // hide on medium and large screens
 
-  @media only screen and (max-device-width: 480px) {
-    display: flex!important;
+  /* Most of the Smartphones (Portrait) */
+  @media only screen and (max-width: 480px) {
+    display: flex!important; // show
   }
-  @media only screen and (max-device-width: 480px)
+  /* Most of the Retina Display Smartphones (Portrait) */
+  @media only screen and (max-width: 480px)
     and (min-resolution: 2dppx) and (orientation: portrait) {
-    display: flex!important;
+    display: flex!important; // show
   }
 }

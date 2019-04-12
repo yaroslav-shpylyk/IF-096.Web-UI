@@ -1,4 +1,4 @@
-import { Component, OnDestroy, HostListener, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, HostListener, OnDestroy } from '@angular/core';
 import { fromEvent, interval } from 'rxjs';
 import { debounce, takeWhile } from 'rxjs/operators';
 
@@ -17,13 +17,12 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
 
   /**
    * listen to window width resizing
-   * to get current screen width
-   * @param event - resizing screen width
+   * to get current device screen width
    */
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.commonDisplay = window.matchMedia('(max-device-width: 480px)').matches; // most smartphones in portrait mode
-    this.retinaDisplay = window.matchMedia('(max-device-width: 480px) ' +
+  onResize() {
+    this.commonDisplay = window.matchMedia('(max-width: 480px)').matches; // most smartphones in portrait mode
+    this.retinaDisplay = window.matchMedia('(max-width: 480px) ' +
       'and (min-resolution: 2dppx) and (orientation: portrait)').matches; // smartphones with retina display in portrait mode
     this.hideHeader(); // call after every screen width changing (e.g portrait and landscape mode)
   }
@@ -54,11 +53,11 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
     });
 
     this.stoppedScrolling = fromEvent(window, 'scroll').pipe(
-      takeWhile(() => this.commonDisplay || this.retinaDisplay ), // subscribe only on mobile screens
+      takeWhile(() => this.commonDisplay || this.retinaDisplay), // subscribe only on mobile screens
       debounce(() => interval(2000))
     ).subscribe(() => {
       this.hide = false;
-      this.notransition = false; // show header when user stop scrolling with 2s delay
+      this.notransition = false; // show header when user stops scrolling with 2s delay
     });
   }
 }
