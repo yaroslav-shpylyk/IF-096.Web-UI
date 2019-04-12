@@ -9,8 +9,7 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 })
 export class DailyScheduleComponent implements OnInit {
 
-  //@Input()
-  legendDay: string = 'day'; //it have to be input
+  @Input() legendDay: string;
   frmDailySchedule: FormGroup;
 
   private _arrSubjectsList: SubjectData[];

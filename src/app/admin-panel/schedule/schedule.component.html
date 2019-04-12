@@ -22,11 +22,12 @@
     </mat-form-field>
   </div> <!--end of top-->
 
-  <div class="week-schedule" formArrayName="weekSchedule">
-    <ng-container *ngFor="let day of weekSchedule.controls; let i=index">
-
-      <app-daily-schedule [arrSubjectsList]="arrSubjectsList" ></app-daily-schedule>
+  <div class="week-schedule">
+    <ng-container *ngFor="let day of weekDayName; let i=index">
+      <app-daily-schedule [arrSubjectsList]="arrSubjectsList" [legendDay]="weekDayName[i]" class="day-schedule"></app-daily-schedule>
     </ng-container>
+
+
   </div>
 
   <button mat-button type="submit" [disabled]="!frmSchedule.valid">Submit</button>

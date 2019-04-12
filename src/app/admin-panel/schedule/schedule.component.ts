@@ -6,8 +6,7 @@ import { DailyScheduleComponent } from './daily-schedule/daily-schedule.componen
 import { ClassService } from '../../services/class.service';
 import { SubjectService } from '../../services/subject.service';
 
-/*Понеділок Вівторок Середа Четвер П'ятниця Субота
-Monday Tuesday Wednesday Thursday Friday Saturday */
+/*Monday Tuesday Wednesday Thursday Friday Saturday */
 
 @Component({
   selector: 'app-schedule',
@@ -21,8 +20,7 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   selectClassMsg: string = "Виберіть клас";
   dateTermStartMsg: string = "Дата початку семестру";
   dateTermEndMsg: string = "Дата закінчення семестру";
-
-  arrWeekSchedule: Array<DailyScheduleComponent> = [];
+  weekDayName: Array<string> = ['Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П`ятниця', 'Субота'];
 
   constructor(private frmBld: FormBuilder,
     private classList: ClassService,
@@ -36,10 +34,6 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
       this.arrSubjectsList = data;
     });
 
-    //it for test. there have to be a cycle
-    this.arrWeekSchedule.push(new DailyScheduleComponent(new FormBuilder()));
-    this.arrWeekSchedule.push(new DailyScheduleComponent(new FormBuilder()));
-
     this.initForm();
   }
 
@@ -48,14 +42,10 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     this.frmSchedule = this.frmBld.group({
       dateTermStart: [''],
       dateTermEnd: [''],
-      selectedClass: ['', Validators.required],
-      weekSchedule: this.frmBld.array(this.arrWeekSchedule)
+      selectedClass: ['', Validators.required]
     });
   }
 
-  get weekSchedule() {
-    return this.frmSchedule.get('weekSchedule') as FormArray;
-  }
   ngAfterViewInit(): void {
     //console.log(this.parentDailySchedule);
 
