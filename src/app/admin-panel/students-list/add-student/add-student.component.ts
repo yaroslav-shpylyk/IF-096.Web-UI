@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { StudentsService } from '../../../services/students.service';
 import { ClassInfo } from '../../../models/class-info';
 import { ClassService } from '../../../services/class.service';
@@ -36,8 +36,6 @@ export class AddStudentModalComponent {
       this.paramId = params.id;
     });
     this.route.queryParams.subscribe(params => {
-      console.log('QUERY');
-      console.log(params);
       this.classId = params.classId;
     });
     this.openDialog();
@@ -45,8 +43,8 @@ export class AddStudentModalComponent {
 
 
   /*
-  *Method open and close modal window.In data you can sent
-  * object with data to modal window
+  *Method open and close dialog.In data you can sent
+  * object with data to dialog
   */
 
   openDialog(): void {
@@ -81,7 +79,7 @@ export class AddStudentComponent implements OnInit {
     patronymic: ['', validText],
     dateOfBirth: ['', Validators.required],
     classId: [''],
-    login: ['', Validators.required, validLogin],
+    login: [''],
     phone: ['', validPhone],
     email: [''],
     avatar: ['']
@@ -99,12 +97,14 @@ export class AddStudentComponent implements OnInit {
     this.classService.getClasses('all').subscribe((res: Array<ClassInfo>) => {
       this.allClasses = res;
       this.initStudentData();
-      // this.studentService.sub.subscribe(res => console.log(res));
     });
-
   }
 
-  onUpload($event) {
+  /*
+    *Method upload student avatar
+  */
+
+  onUpload($event): void {
     const file = $event.target.files[0];
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -114,41 +114,43 @@ export class AddStudentComponent implements OnInit {
     this.initStudentData();
   }
 
-  checkAvatar(img) {
+
+  checkAvatar(img): string {
     if (img) {
       return img;
     } else { return this.avatar; }
   }
 
-  onSubmit(data) {
+  /*
+    *Method type form (add mode or edit), submit form and sent data to server
+  */
 
+
+  onSubmit(data): void {
     if (typeof (data.dateOfBirth) !== 'string') {
       data.dateOfBirth = data.dateOfBirth.toLocaleDateString().split('.').reverse().join('-');
     }
-
     if (this.data.paramId) {
       this.studentService.changeStudent(this.data.paramId, data).subscribe(res => {
-        console.log('Student edited');
         this.studentService.loadStudents(this.data.classId);
         this.openSnackBar('Дані змінено', '');
-
       },
         err => this.openSnackBar('Дані не змінено', err));
     } else {
       this.studentService.addStudents(data).subscribe(res => {
-        console.log('Student added');
         this.studentService.loadStudents(this.data.classId);
         this.openSnackBar('Студента додано', '');
       },
-        err => this.openSnackBar('Сталась помилка, модливо неправильні дані', err));
+        err => this.openSnackBar('Сталась помилка, можливо неправильні дані', err));
     }
     this.dialogRef.close();
-
-
   }
 
-  initStudentData() {
-    console.log(this.data.paramId);
+  /*
+    *Method check param Id and if is ID make subscribe on student
+  */
+
+  initStudentData(): void {
     if (this.data.paramId) {
       this.studentService.getOneStudent(this.data.paramId)
         .subscribe((student: Student) => {
@@ -157,7 +159,11 @@ export class AddStudentComponent implements OnInit {
     }
   }
 
-  private editStudentForm(student) {
+  /*
+    *After check initStudent data make init edit mode form
+  */
+
+  private editStudentForm(student): void {
     this.addStudent = this.fb.group({
       avatar: [this.checkAvatar(student.avatar)],
       dateOfBirth: [student.dateOfBirth],
@@ -172,7 +178,7 @@ export class AddStudentComponent implements OnInit {
     });
   }
 
-  openSnackBar(message: string, action: string) {
+  openSnackBar(message: string, action: string): void {
     this.snackBar.open(message, action, {
       duration: 2000,
     });

@@ -9,12 +9,13 @@ export const validText = [
 ];
 export const validPhone = [
   Validators.pattern(/^-?\d+$/),
-  Validators.minLength(3)
+  Validators.minLength(4)
 ];
 
 
 export const validLogin = [
-  Validators.minLength(3)
+  Validators.required,
+  Validators.minLength(5)
 ];
 
 

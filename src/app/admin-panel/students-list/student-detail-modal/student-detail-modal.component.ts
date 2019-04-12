@@ -42,7 +42,6 @@ export class StudentDatails {
  * This component its modal window
 */
 
-
 @Component({
   selector: 'app-student-detail-modal',
   templateUrl: 'student-detail-modal.component.html',
@@ -78,10 +77,10 @@ export class StudentDetailModalComponent implements OnInit {
   }
 
   /*
-  * This method redirect for edit component, where you can edit students data 
+  * This method redirect for edit component, where you can edit students data
   */
 
-  editStudent() {
+  editStudent(): void {
     this.router.navigate(
       ['admin', 'students', this.data.paramId, 'edit'],
       { relativeTo: this.route, replaceUrl: true, queryParams: { classId: this.classId } }
