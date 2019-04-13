@@ -6,7 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class TitlePipe implements PipeTransform {
 
   transform(value: any, curTitle: string, input?: any, active?: boolean): any {
-    console.log('autotitle');
     active = false;
     const classNameData = curTitle.split('-');
     const newTitle = (+classNameData[0] + 1 > 11) ? '' : (+classNameData[0] + 1) + '-' + classNameData[1];

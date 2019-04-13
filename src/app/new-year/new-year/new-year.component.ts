@@ -30,7 +30,6 @@ export class NewYearComponent implements OnInit {
     this.newYearTransitition.getAllClasesInfo().subscribe(
       data => {
         this.allClasses = data;
-        console.log(data);
         data.forEach(
               (schoolClass, i) => {
                 this.controlIndexes.push(i);
@@ -48,25 +47,15 @@ export class NewYearComponent implements OnInit {
 
     }
 
-  // focusToFormControl(event) {
-  //   this.currentClassYear = +event.target.dataset.classYear;
-  //   this.currentClassTitle = event.target.dataset.classTitle;
-  // }
-
   createTransititionForm(): void {
     this.transititionForm = new FormGroup({
-      newClassTitle: new FormArray([]),     // rename
-      editTitleSwitcher: new FormArray([]),    // rename
-      skipClassSwitcher: new FormArray([])  // rename
+      newClassTitle: new FormArray([]),
+      editTitleSwitcher: new FormArray([]),
+      skipClassSwitcher: new FormArray([])
     });
   }
 
   addFormControls() {
-    // const newInput = new FormControl(
-    //   {value: '', disabled: false},
-    //   [Validators.pattern('^([1-9]|1[0-2])-[А-Я]{1}$'), this.classExistValidator(this.allClasses)]);
-    // (this.transititionForm.controls.newClassTitle as FormArray).push(newInput);
-
     const newCheckbox = new FormControl(false);
     (this.transititionForm.controls.editTitleSwitcher as FormArray).push(newCheckbox);
 
@@ -93,23 +82,14 @@ export class NewYearComponent implements OnInit {
     };
   }
 
-  unclockInput(event, index: number, curTitle: string, id: string) {
+  editInput(event, index: number, curTitle: string, id: string) {
     const input = document.getElementById(id);
     input.classList.toggle('locked');
     if (!input.classList.contains('locked')) { input.focus(); }
-    // event.target.nextElementSibling.classList.toggle('active');
   }
 
   skipClass(event, index: number, id: number) {
-    console.log('skip event');
-    // console.log(index, id);
-    // console.log((this.transititionForm.controls.autoClassTitle as FormArray).controls[index]);
-    // console.log((this.transititionForm.controls.newClassTitle as FormArray).controls[index]);
     const classCard = event.target.parentNode.parentNode.parentNode;
-
-    // event.target.parentNode.parentNode.parentNode.classList.toggle('locked');
-    // event.target.parentNode.parentNode.parentNode.classList.toggle('active');
-    // const checked = (this.transititionForm.controls.skipClassCheckbox as FormArray).controls[index].value;
     const input = (this.transititionForm.controls.newClassTitle as FormArray).controls[index];
     const name = (this.transititionForm.controls.newClassTitle as FormArray).controls[index].value;
     classCard.classList.toggle('locked');
@@ -133,13 +113,11 @@ export class NewYearComponent implements OnInit {
               newTitle: input.value,
               newYear: +input.dataset.classYear + 1,
               id: input.id
-
             }
           );
         }      }
     );
     if (this.transititionForm.status === 'VALID') {
-      console.log(this.transititionForm);
       this.newYearTransitition.transitClasses(formData);
     }
   }
