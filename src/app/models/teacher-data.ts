@@ -2,9 +2,12 @@ export interface TeacherData {
   avatar: string;
   dateOfBirth: string;
   email: string;
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   patronymic: string;
   phone: string;
-  id: number;
+  id?: number;
+  login?: string;
+  newPass?: string;
+  oldPass?: string;
 }
