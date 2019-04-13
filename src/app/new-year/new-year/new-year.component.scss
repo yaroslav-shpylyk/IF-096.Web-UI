@@ -5,20 +5,50 @@ mat-card{
   justify-content: space-between;
   align-items: center;
   margin: 5px 2px;
-
-  mat-accordion {width: 68%;}
+  padding: 10px 5px; 
+  @media (min-width: 768px) { padding: 15px;  }
 
   input {
-    width: 25%;
+    width: 70%;
     height: 35px;
     position: relative;
-    font-size: 0.45em;
+    font-size: 1em;
     @media (min-width: 481px) and (max-width: 767px) { font-size: 0.55em; }
     @media (min-width: 768px) { font-size: 0.8em; }
-  }   
+  }
+  
+  input[type="checkbox"]{
+    display:none;
+  }
+
+  label { 
+    display: block;
+    width: 24px;
+    height: 48px;
+    font-size: 2em;
+    margin: 2px;
+    cursor: pointer;
+  }
+  
 }
 
-mat-card:hover {
+mat-card.locked {
+  background-color: grey;
+  mat-accordion, .class-title, .edit_title {
+    cursor: default;
+    pointer-events: none;
+  }  
+}
+
+input.locked {
+  cursor: default;
+  pointer-events: none;
+  color: rgb(84, 84, 84);
+  background-color: rgb(235, 235, 228);
+}
+
+
+mat-card.active:hover {
   background-color: #1538c0d1;
   .mat-expansion-panel-header-description {
     color: #000e5a;
@@ -30,8 +60,15 @@ mat-panel-title {
   align-items: center;
 }
 
-mat-expansion-panel-header { padding: 0 10px; }
-mat-panel-description.mat-expansion-panel-header-description{align-items: center;}
+mat-expansion-panel-header { 
+  padding: 0 10px; 
+  mat-panel-description.mat-expansion-panel-header-description{align-items: center;}
+  mat-panel-description{
+    display: none;
+    @media (min-width: 481px) { display: block }
+  }
+}
+
 ::ng-deep div.mat-expansion-panel-body {padding: 0 5px 16px}
 
 mat-list:nth-of-type(2n+1){
@@ -114,6 +151,7 @@ label {
    font-size: 2em;
    margin: 10px 0 10px 0;
    cursor: pointer;
+  i.active{color: white} 
  }
  
  .toggle-stripe {
@@ -134,7 +172,7 @@ label {
       align-items: center;
       height: 100%;
       padding: 0px 10px; 
-      background-color: yellowgreen;
+      background-color: #1565c0;
       border-radius: 30px 0px 0px 30px;   
 
       .checkbox-group{
@@ -155,6 +193,9 @@ label {
 
 .marks {
   position: absolute;
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0.25s linear, opacity 2s linear;
   left: 30px;
   float: right;
   div {
@@ -173,9 +214,11 @@ label {
 input[type=checkbox]:checked ~ .toggle-stripe {
     .marks {
       position: initial;
+      visibility: hidden;
+      opacity: 0;
     }
     right: -5px;
-    .marks div {
-      transition: position 0.5s ease;
-      float: right;}
+    // .marks div {
+    //   transition: position 0.5s ease;
+    //   float: right;}
  }   

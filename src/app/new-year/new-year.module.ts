@@ -4,12 +4,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NewYearRoutingModule } from './new-year-routing.module';
 import { NewYearComponent } from './new-year/new-year.component';
 import { MaterialModule } from '../material.module';
-import {MatListModule, MatCardModule, MatExpansionModule, MatCheckboxModule} from '@angular/material';
+import {MatListModule, MatCardModule, MatExpansionModule, MatCheckboxModule, MatSlideToggleModule} from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { FilterPipe } from './filter.pipe';
+import { TitlePipe } from './autotitle.pipe';
 
 @NgModule({
-  declarations: [NewYearComponent, FilterPipe],
+  declarations: [NewYearComponent, FilterPipe, TitlePipe],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -19,7 +20,8 @@ import { FilterPipe } from './filter.pipe';
     MatCardModule,
     MatExpansionModule,
     MatCheckboxModule,
-    FormsModule
+    FormsModule,
+    MatSlideToggleModule
   ]
 })
 export class NewYearModule { }

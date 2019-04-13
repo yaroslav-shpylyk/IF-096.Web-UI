@@ -42,6 +42,7 @@ export class NewYearService {
    */
   public transitClasses(formData, classes: ClassData[]) {
     const request = this.getTransitRequest(formData, classes);
+    console.log(request);
     this.createClasses(request.transitClassesQuery).subscribe(
       res => {res.data
        .forEach(
@@ -102,10 +103,10 @@ export class NewYearService {
       (item, index) => {
         if (item) {transitClassesQuery.push(
           {
-            className: item,
-            classYear: classes[index].classYear + 1
+            className: item.newTitle,
+            classYear: item.newYear
           });
-                   bindPupilsQuery.push({oldClassId: classes[index].id});
+                   bindPupilsQuery.push({oldClassId: item.id});
         }
       }
     );
