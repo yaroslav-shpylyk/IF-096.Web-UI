@@ -21,8 +21,8 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
    */
   @HostListener('window:resize', ['$event'])
   onResize() {
-    this.commonDisplay = window.matchMedia('(max-width: 480px)').matches; // most smartphones in portrait mode
-    this.retinaDisplay = window.matchMedia('(max-width: 480px) ' +
+    this.commonDisplay = window.matchMedia('(max-width: 600px)').matches; // most smartphones in portrait mode
+    this.retinaDisplay = window.matchMedia('(max-width: 600px) ' +
       'and (min-resolution: 2dppx) and (orientation: portrait)').matches; // smartphones with retina display in portrait mode
     this.hideHeader(); // call after every screen width changing (e.g portrait and landscape mode)
   }

@@ -11,11 +11,11 @@
   display: none; // hide on medium and large screens
 
   /* Most of the Smartphones (Portrait) */
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 600px) {
     display: block; // show
   }
   /* Most of the Retina Display Smartphones (Portrait) */
-  @media only screen and (max-width: 480px) and (min-resolution: 2dppx) and (orientation: portrait) {
+  @media only screen and (max-width: 600px) and (min-resolution: 2dppx) and (orientation: portrait) {
     display: block; // show
   }
 }
