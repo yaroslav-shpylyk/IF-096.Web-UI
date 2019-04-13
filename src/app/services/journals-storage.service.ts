@@ -43,7 +43,7 @@ export class JournalsStorageService {
     }
     console.log(result);
     return result;
-  }
+  } 
 
   getJournal(id): Observable<Journal> {
     return this.httpClient.get('/journals/class/{idClass}').pipe(
