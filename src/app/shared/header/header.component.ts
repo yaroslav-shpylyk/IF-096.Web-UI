@@ -1,8 +1,8 @@
-import { Component, AfterViewInit, HostListener, OnDestroy } from '@angular/core';
-import { fromEvent, interval } from 'rxjs';
-import { debounce, takeWhile } from 'rxjs/operators';
-import { AuthService } from '../../services/auth.service';
-import { roles } from '../../enum/roles.enum';
+import {Component, AfterViewInit, HostListener, OnDestroy} from '@angular/core';
+import {fromEvent, interval} from 'rxjs';
+import {debounce, takeWhile} from 'rxjs/operators';
+import {AuthService} from '../../services/auth.service';
+import {roles} from '../../enum/roles.enum';
 
 @Component({
   selector: 'app-header',
@@ -64,6 +64,7 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
       this.hide = false;
       this.notransition = false; // show header when user stops scrolling with 2s delay
     });
+
   }
 
   /**
