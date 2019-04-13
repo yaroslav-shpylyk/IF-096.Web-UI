@@ -9,7 +9,7 @@ export class TitlePipe implements PipeTransform {
     console.log('autotitle');
     active = false;
     const classNameData = curTitle.split('-');
-    const newTitle = (+classNameData[0] + 1) + '-' + classNameData[1];
+    const newTitle = (+classNameData[0] + 1 > 11) ? '' : (+classNameData[0] + 1) + '-' + classNameData[1];
     setTimeout(() => {
       if (!active) {
         input.reset({ value: newTitle, disabled: false });

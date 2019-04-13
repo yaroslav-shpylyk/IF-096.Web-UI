@@ -30,7 +30,6 @@
             <input [formControlName]="item|autotitle:allClasses[item].className:newClassTitle.controls[item]"
                   attr.data-class-year="{{allClasses[item].classYear}}" 
                   attr.data-class-title="{{allClasses[item].className}} " 
-                  (click)="focusToFormControl($event, item, allClasses[item].className)" 
                   class="new-class-name locked" id="{{allClasses[item].id}}" placeholder="нова назва класу"/>
             <div class="validation-error"
               *ngIf="newClassTitle.controls[item].invalid">

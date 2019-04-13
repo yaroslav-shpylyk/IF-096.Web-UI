@@ -32,11 +32,14 @@ mat-card{
   
 }
 
-mat-card.locked {
+mat-card.locked, mat-card.locked:hover {
   background-color: grey;
   mat-accordion, .class-title, .edit_title {
     cursor: default;
     pointer-events: none;
+  }
+  .mat-expansion-panel-header-description {
+    color: #545454;
   }  
 }
 
@@ -48,7 +51,7 @@ input.locked {
 }
 
 
-mat-card.active:hover {
+mat-card:hover {
   background-color: #1538c0d1;
   .mat-expansion-panel-header-description {
     color: #000e5a;
@@ -162,7 +165,7 @@ label {
     text-align: center;
     padding: 5px;
     position: fixed;
-    top: 150px;
+    top: 130px;
     transition: right 0.5s ease;
   
   div.wrap {
@@ -196,15 +199,18 @@ label {
   visibility: visible;
   opacity: 1;
   transition: visibility 0.25s linear, opacity 2s linear;
-  left: 30px;
+  left: 20px;
   float: right;
   div {
     width: 20px;
     height: 20px;
-    background-color: darkkhaki;
-    color: red;
+    background-color: #ffffff;
+    color: #1565c0;
     font-weight: 800;
-    margin: 1px;
+    margin: 5px;
+    -webkit-box-shadow: -1px 1px 3px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 1px 3px 0px rgba(0,0,0,0.75);
+    box-shadow: -1px 1px 3px 0px rgba(0,0,0,0.75);
     
   }
 }

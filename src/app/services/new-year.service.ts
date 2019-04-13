@@ -40,21 +40,17 @@ export class NewYearService {
    * @param   formData object that contain new titles for classes
    * @param   classes  classes data
    */
-  public transitClasses(formData, classes: ClassData[]) {
-    const request = this.getTransitRequest(formData, classes);
-    console.log(request);
+  public transitClasses(formData) {
+    const request = this.getTransitRequest(formData);
     this.createClasses(request.transitClassesQuery).subscribe(
       res => {res.data
        .forEach(
          (newClass, index) => {request.bindPupilsQuery[index].newClassID = newClass.id; }
         );
               this.bindPupils(request.bindPupilsQuery).subscribe();
-              console.log(request.bindPupilsQuery);
       }
      );
   }
-
-
 
   /**
    * Method return list of classes
@@ -96,11 +92,11 @@ export class NewYearService {
    * @param newTitles object that contain new titles for classes
    * @param classes object with classes data
    */
-  public getTransitRequest(newTitles, classes: ClassData[]) {
+  public getTransitRequest(formData) {
     const transitClassesQuery = [];
     const bindPupilsQuery = [];
-    newTitles.forEach(
-      (item, index) => {
+    formData.forEach(
+      (item) => {
         if (item) {transitClassesQuery.push(
           {
             className: item.newTitle,
@@ -139,7 +135,7 @@ export class NewYearService {
    * @returns responce that contain id's for new classes
    * @param req  objects with id's for classes (old and new id's)
    */
-  public bindPupils(data: any): Observable<any> {
-    return this.http.put(`/students/transition`, data);
+  public bindPupils(req: any): Observable<any> {
+    return this.http.put(`/students/transition`, req);
   }
 }
