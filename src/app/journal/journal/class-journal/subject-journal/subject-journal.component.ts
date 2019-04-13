@@ -93,20 +93,23 @@ export class SubjectJournalComponent implements OnInit {
       });
   }
 
-  onClc(idLesson, studentEl) {
+  onClc(idLesson, studentEl, event) {
     if (!Number.isInteger(+idLesson)) {
       return;
     }
+    event.target.style.backgroundColor = 'rgba(24, 236, 119, 0.432)';
+    event.path[1].style.backgroundColor = 'rgba(24, 151, 236, 0.432)';
+    console.log(event);
+    const bottomSheetRef = this.bottomSheet.open(
+      BottomSheetOverviewExampleSheetComponent,
+      {
+        data: { lessonId: idLesson, student: studentEl }
+      }
+    );
 
-    this.bottomSheet.open(BottomSheetOverviewExampleSheetComponent, {
-      data: { lessonId: idLesson, student: studentEl }
-    });
-  }
-
-  openBottomSheet(mark, idLesson): void {
-    console.log(mark, idLesson);
-    this.bottomSheet.open(BottomSheetOverviewExampleSheetComponent, {
-      data: { names: 12 }
+    bottomSheetRef.afterDismissed().subscribe(() => {
+      event.target.style.backgroundColor = '';
+      event.path[1].style.backgroundColor = '';
     });
   }
 
@@ -156,13 +159,9 @@ export class BottomSheetOverviewExampleSheetComponent {
       .subscribe(
         resp => {
           console.log(resp);
+          this.bottomSheetRef.dismiss();
         },
         error => console.log(error)
       );
-  }
-
-  openLink(event: MouseEvent): void {
-    this.bottomSheetRef.dismiss();
-    event.preventDefault();
   }
 }
