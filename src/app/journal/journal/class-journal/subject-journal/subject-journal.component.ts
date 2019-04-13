@@ -14,7 +14,7 @@ import {
   styleUrls: ['./subject-journal.component.scss']
 })
 export class SubjectJournalComponent implements OnInit {
-  journal: Journal;
+  journal: Journal[];
   dataSource;
   thRow = ['Учень'];
   idSubject: number;
@@ -57,17 +57,27 @@ export class SubjectJournalComponent implements OnInit {
     this.journalsStorageService
       .getJournaL(this.idSubject, this.idClass)
       .subscribe(journal => {
-        let studentData = { studentFullName: '' };
+        // let studentData = { studentFullName: '' };
+        let studentData = new Object() as any;
         for (const student of journal) {
           studentData.studentFullName = student.studentFullName;
           this.studentIds.push(student.idStudent);
           for (const mark of student.marks) {
             studentData[mark.idLesson] = mark.mark;
             if (this.thRow.length <= student.marks.length) {
-              this.thRow.push(mark.dateMark);
+              this.thRow.push(
+                `${mark.typeMark}\n` +
+                mark.dateMark
+                  .split('.')
+                  .slice(1)
+                  .reverse()
+                  .join('.')
+              );
             }
           }
           this.elData.push(studentData);
+          console.log(studentData);
+          // studentData = {};
           studentData = {};
         }
         if (!this.elData.length) {

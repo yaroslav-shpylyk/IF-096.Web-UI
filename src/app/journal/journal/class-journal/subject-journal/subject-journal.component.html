@@ -1,13 +1,20 @@
 <div *ngIf="displayedColumns" class="wrapper">
   <table mat-table [dataSource]="dataSource">
-
     <ng-container
       *ngFor="let column of displayedColumns; let i = index"
       [matColumnDef]="column"
       [sticky]="column == 'studentFullName' ? true : false"
       [stickyEnd]="column == 'star' ? true : false"
     >
-      <th mat-header-cell *matHeaderCellDef>
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        [ngClass]="{
+          'is-yellow': thRow[i]?.includes('Модуль'),
+          'is-blue': thRow[i]?.includes('Контрольна'),
+          'is-green': thRow[i]?.includes('Самостійна')
+        }"
+      >
         {{ column !== 'star' ? thRow[i] : '' }}
         <i *ngIf="column == 'star'" class="material-icons">
           trending_up

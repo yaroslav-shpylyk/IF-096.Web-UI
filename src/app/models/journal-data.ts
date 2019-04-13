@@ -1,7 +1,11 @@
 export interface Journal {
-  idSubject?: number;
-  idClass?: number;
-  subjectName?: string;
-  className?: string;
-  academicYear?: number;
+  studentFullName?: string;
+  idStudent?: number;
+  marks?: [{
+    idLesson?: number;
+    mark?: number | null;
+    dateMark?: string;
+    note?: string | null;
+    typeMark?: string;
+  }];
 }

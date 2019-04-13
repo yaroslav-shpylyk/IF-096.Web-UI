@@ -12,22 +12,26 @@ table {
   width: 100%;
 }
 
-tr :last-of-type, i {
-  // border-left: 1px solid grey !important;
+tr :last-of-type,
+i {
   background-color: rgb(192, 181, 181);
   color: white;
+  cursor: default;
 }
 
 tr :first-of-type:not(i) {
-  // border-left: 1px solid grey !important;
   background-color: rgb(21, 101, 192);
-  color: white;
+  color: white !important;
   padding: 0.6em !important;
   cursor: default;
 }
 
+
 th {
+  font-size: 1em;
   padding: 0.5em 0em !important;
+  white-space: pre;
+  line-height: 1em;
 }
 
 td {
@@ -52,25 +56,23 @@ td {
   cursor: pointer;
 }
 
-// .mat-cell:active {
-//   background-color: rgba(250, 10, 10, 0.432);
-//   cursor: pointer;
-// }
+th.is-yellow {
+  background: rgb(255, 208, 0);
+}
 
-// td.mat-cell:first-of-type,
-// td.mat-cell:last-of-type {
-//   cursor: default;
-//   color: white;
-// }
+th.is-blue {
+  background: rgba(22, 198, 230, 0.719);
+}
+th.is-green {
+  background: rgb(51, 211, 171);
+}
 
-// td.mat-cell:first-of-type {
-//   background-color: rgb(21, 101, 192);
-// }
+th::first-line {
+  font-size: 0.6em;
+  // color: rgb(104, 104, 104);
+}
 
-// td.mat-cell:last-of-type {
-//   background-color: rgb(167, 163, 163);
-// }
-// .mat-cell:active {
-//   background-color: rgba(24, 236, 119, 0.432);
-//   cursor: pointer;
+// th::first-line:not(tr>th:first-of-type) {
+//   font-size: 0.1em;
+//   color: rgb(104, 104, 104);
 // }

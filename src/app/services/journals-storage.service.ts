@@ -17,11 +17,11 @@ export class JournalsStorageService {
     );
   }
 
-  getJournaL(idSubject, idClass): Observable<Journal> {
+  getJournaL(idSubject, idClass): Observable<Journal[]> {
     return this.httpClient
       .get(`/journals/subjects/${idSubject}/classes/${idClass}`)
       .pipe(
-        map((response: { status: any; data: Journal }) => {
+        map((response: { status: any; data: Journal[] }) => {
           const journal = response.data;
           return journal;
         })
