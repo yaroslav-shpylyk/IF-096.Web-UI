@@ -1,10 +1,8 @@
 <mat-toolbar [ngClass]="{hide: hide, notransition: notransition}">
 <div fxFlex fxLayout fxLayoutAlign="flex-end" class="header-list">
-  <!-- example list for header menu-->
-  <app-header-list></app-header-list>
-</div>
-<!--account photo-->
-<div fxFlex fxLayout fxLayoutAlign="flex-end" class="account-photo">
-  <mat-icon [inline]="true">account_circle</mat-icon> <!-- icon -->
+  <!-- list for header menu-->
+  <div *ngIf="isAdmin()">
+    <app-header-menu></app-header-menu>
+  </div>
 </div>
 </mat-toolbar>

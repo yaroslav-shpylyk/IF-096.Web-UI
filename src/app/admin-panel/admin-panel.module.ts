@@ -26,6 +26,7 @@ import { ChartsModule } from 'ng2-charts';
 import { MatMenuModule } from '@angular/material';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { MatSortModule } from '@angular/material';
+import { FooterMenuComponent } from './admin-panel/footer-menu/footer-menu.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { MatSortModule } from '@angular/material';
     StudentDatails,
     StudentDetailModalComponent,
     DashboardComponent,
-    SubjectsComponent
+    SubjectsComponent,
+    FooterMenuComponent
   ],
   imports: [
     CommonModule,

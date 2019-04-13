@@ -1,0 +1,25 @@
+<mat-nav-list class="navigation-items">
+
+  <a mat-list-item routerLinkActive="active" routerLink="/admin-panel/students">
+    <mat-icon>school</mat-icon>
+    УЧНІ</a>
+
+  <a mat-list-item routerLinkActive="active" routerLink="/admin-panel/teachers">
+    <mat-icon>person</mat-icon>
+    ВЧИТЕЛІ</a>
+
+  <a mat-list-item routerLinkActive="active" routerLink="/admin-panel/groups">
+    <mat-icon>group</mat-icon>
+    КЛАСИ</a>
+
+  <a mat-list-item routerLinkActive="active" routerLink="/admin-panel/subjects">
+    <mat-icon>library_books</mat-icon>
+    ПРЕДМЕТИ</a>
+
+  <!-- account photo icon -->
+  <a routerLinkActive="active" routerLink="/admin-panel">
+    <div class="account-photo">
+      <mat-icon [inline]="true">account_circle</mat-icon>
+    </div>
+  </a>
+</mat-nav-list>

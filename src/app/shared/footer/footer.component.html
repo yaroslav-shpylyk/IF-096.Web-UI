@@ -1,4 +1,6 @@
 <mat-toolbar>
-  <!--example bottom navigation menu-->
-  <app-footer-menu></app-footer-menu>
+  <!--bottom navigation menu-->
+  <div *ngIf="isAdmin()">
+    <app-footer-menu></app-footer-menu>
+  </div>
 </mat-toolbar>

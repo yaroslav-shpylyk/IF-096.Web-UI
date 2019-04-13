@@ -1,0 +1,41 @@
+@import "../../../../styles";
+
+.mat-list-item {
+  color: white !important;
+  cursor: pointer;
+
+  &:hover,
+  &:active {
+    color: lighten($main-color, 40%);
+  }
+
+  .mat-icon {
+    padding-right: 3px;
+  }
+
+  /* Most of the Smartphones and Tablets (Portrait) */
+  @media only screen and (max-width: 1024px) {
+    display: none !important; // hide
+  }
+  /* Most of the Retina Display Smartphones and Tablets (Portrait) */
+  @media only screen and (max-width: 1024px) and (min-resolution: 2dppx) and (orientation: portrait) {
+    display: none !important; // hide
+  }
+}
+
+.navigation-items { // menu list
+  font-size: 0.7em;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.account-photo { // account photo
+  padding: 0 2%;
+  margin: 0 auto;
+  font-size: 48px;
+  width: 48px;
+}

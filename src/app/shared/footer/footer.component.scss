@@ -8,11 +8,19 @@
   background: $main-color;
   color: white;
   height: 50px;
+  display: none; // hide on medium and large screens
+
+  /* Most of the Smartphones (Portrait) */
+  @media only screen and (max-width: 480px) {
+    display: block; // show
+  }
+  /* Most of the Retina Display Smartphones (Portrait) */
+  @media only screen and (max-width: 480px) and (min-resolution: 2dppx) and (orientation: portrait) {
+    display: block; // show
+  }
 }
 
 app-footer-menu {
   width: 100%;
   height: 100%;
 }
-
-
