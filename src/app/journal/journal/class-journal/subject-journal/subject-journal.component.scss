@@ -16,6 +16,21 @@
 }
 
 td:first-of-type {
-  pointer-events: none;
   cursor: default;
 }
+
+
+.mat-row:hover {
+  background-color: rgba(24, 151, 236, 0.432);
+  cursor: pointer;
+}
+
+.mat-cell:hover {
+  background-color: rgba(24, 236, 119, 0.432);
+  cursor: pointer;
+}
+
+// .mat-cell:active {
+//   background-color: rgba(24, 236, 119, 0.432);
+//   cursor: pointer;
+// }

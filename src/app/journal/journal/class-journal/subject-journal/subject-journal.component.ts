@@ -95,8 +95,11 @@ export class SubjectJournalComponent implements OnInit {
   }
 
   onClc(idLesson, studentEl, element) {
-    console.log(idLesson, studentEl);
-    console.log(element);
+    // console.log(studentEl);
+    // console.log(element);
+    if (!Number.isInteger(+idLesson)) {
+      return;
+    }
 
     this.bottomSheet.open(BottomSheetOverviewExampleSheetComponent, {
       data: { lessonId: idLesson, student: studentEl }

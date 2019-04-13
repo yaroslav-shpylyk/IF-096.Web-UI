@@ -9,9 +9,7 @@
     >
       <th mat-header-cell *matHeaderCellDef>
         {{ column !== 'star' ? thRow[i] : '' }}
-        <i 
-          *ngIf="column == 'star'"
-          class="material-icons">
+        <i *ngIf="column == 'star'" class="material-icons">
           trending_up
         </i>
       </th>
@@ -21,7 +19,7 @@
         *matCellDef="let element; let i = index"
         (click)="onClc(column, journal[i], element)"
       >
-        {{ column !== 'star' ? element[column] : average(element)}}
+        {{ column !== 'star' ? element[column] : average(element) }}
       </td>
     </ng-container>
 
