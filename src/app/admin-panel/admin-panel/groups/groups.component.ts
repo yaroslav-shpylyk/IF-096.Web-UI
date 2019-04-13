@@ -52,11 +52,8 @@ export class GroupsComponent implements OnInit {
 
     sheet.afterClosed().subscribe((data?) => {
       if (data) {
-        if (!Number(data.id)) {
-          // data.id = 999999999;
-          this.groups.push(data);
-          this.matTableFilter();
-        }
+        this.groups.push(data);
+        this.matTableFilter();
       }
     })
   }

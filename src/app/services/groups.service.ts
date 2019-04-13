@@ -31,9 +31,19 @@ export class GroupsService {
   */
   addGrup(group: Group) {
     if (Number(group.id)) {
-      return this.http.put<Group>(`/classes/` + group.id, group);
+      return this.http.put<Group>(`/classes/` + group.id, group)
+      .pipe(
+        map((response: any) => {
+          return response.data;
+        })
+      );
     } else {
-      return this.http.post<Group>(`/classes/`, group);
+      return this.http.post<Group>(`/classes/`, group)
+      .pipe(
+        map((response: any) => {
+          return response.data;
+        })
+      );
     }    
   }
 }

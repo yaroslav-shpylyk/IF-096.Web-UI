@@ -2,8 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 
 import { Group } from '../../../../models/group-data.model';
 import { GroupsService } from 'src/app/services/groups.service';
-import { FormGroup } from '@angular/forms';
-import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-add-modify',
@@ -14,8 +13,8 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA, MatDialogRef, MAT_DIALOG_DATA
 export class AddModifyGroupComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<AddModifyGroupComponent>,
-  private groupServices: GroupsService,
-  @Inject(MAT_DIALOG_DATA) public data: any) {}
+    private groupServices: GroupsService,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
   }
@@ -23,16 +22,22 @@ export class AddModifyGroupComponent implements OnInit {
   /**
   * Method reports about closing bottom sheet
   */
-  abort(data?){
-    this.dialogRef.close(data)
+  abort(group?: Object) {
+    this.dialogRef.close(group)
   }
 
   /**
   * Method saves data about a new or modified class
   * @param formValue - data about the class that we want to change or create
   */
-  save(formValue: Object) {
-    const group = new Group(formValue);
-    this.groupServices.addGrup(group).subscribe();
-  }  
+  save(data: Object) {
+    const group = new Group(data);
+    this.groupServices.addGrup(group).subscribe((data) => {
+      if (group.id === undefined) {
+        this.abort(data)
+      } else {
+        this.abort()
+      }
+    });
+  }
 }
