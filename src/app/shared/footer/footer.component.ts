@@ -9,11 +9,16 @@ import { AuthService } from '../../services/auth.service';
 })
 export class FooterComponent implements OnInit {
 
-  constructor(public auth: AuthService) { }
+  constructor(public auth: AuthService) {
+  }
 
   ngOnInit() {
   }
 
+  /**
+   * checks user's role for being admin
+   * @returns true if user is admin
+   */
   isAdmin() {
     const isAdmin = this.auth.getUserRole() === roles.admin;
     return isAdmin;

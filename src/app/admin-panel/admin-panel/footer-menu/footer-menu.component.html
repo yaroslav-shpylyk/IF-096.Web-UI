@@ -1,19 +1,31 @@
 <a routerLink="/admin-panel/students">
-  <button mat-button>
+  <div class="icons">
     <mat-icon>school</mat-icon>
-  </button>
+    <br>
+    <span>УЧНІ</span>
+  </div>
 </a>
 <a routerLink="/admin-panel/teachers">
+  <div class="icons">
     <mat-icon>person</mat-icon>
+    <br>
+    <span>ВЧИТЕЛІ</span>
+  </div>
 </a>
 <a routerLink="/admin-panel/groups">
-    <mat-icon>group</mat-icon>
+  <div class="icons">
+    <mat-icon>group_work</mat-icon>
+    <br>
+    <span>КЛАСИ</span>
+  </div>
 </a>
 
+<!--3 dots toggle menu-->
 <button mat-icon-button [matMenuTriggerFor]="menu">
   <mat-icon>more_vert</mat-icon>
 </button>
 
+<!--links for toggle menu-->
 <mat-menu #menu="matMenu">
   <a routerLink="/admin-panel/subjects">
     <button mat-menu-item>
@@ -43,7 +55,7 @@
     </button>
   </a>
   <mat-divider></mat-divider>
-  <a routerLink="/admin-panel" (click)="auth.logout()">
+  <a routerLink="/admin-panel" (click)="auth.logout()"> <!-- logout function -->
     <button mat-menu-item>
       <mat-icon>exit_to_app</mat-icon>
       <span>Вийти</span>

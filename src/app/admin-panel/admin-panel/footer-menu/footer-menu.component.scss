@@ -1,6 +1,6 @@
 @import "../../../../styles.scss";
 
-a { // icons
+a {
   height: 100%;
   width: 100%;
   color: white;
@@ -8,13 +8,25 @@ a { // icons
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  font-size: 0.5em;
+  line-height: 50px;
+  overflow: hidden;
 }
 
-
-.mat-menu-item {
+.mat-menu-item { // 3 dots toggle menu
   color: $dark-color;
   .mat-icon {
     color: $dark-color;
   }
+}
+
+.icons {
+  line-height: 30%; // icons on bottom navigation
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  span {
+    font-size: 0.5em; // text under icons
+  }
+
 }

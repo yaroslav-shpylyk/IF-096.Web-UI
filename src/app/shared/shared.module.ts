@@ -4,7 +4,7 @@ import { MaterialModule } from '../material.module';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
-import { HeaderMenuComponent } from '../admin-panel/admin-panel/header-menu/header-menu.component';
+import { AdminHeaderMenuComponent } from '../admin-panel/admin-panel/header-menu/header-menu.component';
 import { AdminFooterMenuComponent } from '../admin-panel/admin-panel/footer-menu/footer-menu.component';
 
 
@@ -13,7 +13,7 @@ import { AdminFooterMenuComponent } from '../admin-panel/admin-panel/footer-menu
     HeaderComponent,
     FooterComponent,
     AdminFooterMenuComponent,
-    HeaderMenuComponent
+    AdminHeaderMenuComponent
   ],
   imports: [
     CommonModule,

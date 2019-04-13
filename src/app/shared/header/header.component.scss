@@ -1,6 +1,6 @@
 @import "../../../styles.scss";
 
-.mat-toolbar {
+.mat-toolbar { // header
   position: fixed;
   top: 0;
   width: 100%;
@@ -12,7 +12,7 @@
   opacity: 1;
   transition: top 400ms ease-in-out, opacity 400ms ease-in-out;
 
-  &.hide {
+  &.hide { // hide when scrolling
     top: -75px;
     opacity: 0;
   }

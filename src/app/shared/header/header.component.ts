@@ -17,7 +17,8 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
   private commonDisplay: boolean;
   private retinaDisplay: boolean;
 
-  constructor(public auth: AuthService) { }
+  constructor(public auth: AuthService) {
+  }
 
   /**
    * listen to window width resizing
@@ -25,8 +26,8 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
    */
   @HostListener('window:resize', ['$event'])
   onResize() {
-    this.commonDisplay = window.matchMedia('(max-width: 480px)').matches; // most smartphones in portrait mode
-    this.retinaDisplay = window.matchMedia('(max-width: 480px) ' +
+    this.commonDisplay = window.matchMedia('(max-width: 600px)').matches; // most smartphones in portrait mode
+    this.retinaDisplay = window.matchMedia('(max-width: 600px) ' +
       'and (min-resolution: 2dppx) and (orientation: portrait)').matches; // smartphones with retina display in portrait mode
     this.hideHeader(); // call after every screen width changing (e.g portrait and landscape mode)
   }
@@ -65,6 +66,10 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
     });
   }
 
+  /**
+   * checks user's role for being admin
+   * @returns true if user is admin
+   */
   isAdmin() {
     const isAdmin = this.auth.getUserRole() === roles.admin;
     return isAdmin;
