@@ -4,15 +4,38 @@
   border-right: 1px solid rgb(224, 224, 224);
 }
 
-.lastCell {
+.mat-column-star {
   text-align: center;
-  border-left: 1px solid rgb(224, 224, 224) !important;
+}
+
+tr :last-of-type, i {
+  // border-left: 1px solid grey !important;
+  background-color: rgb(192, 181, 181);
+  color: white;
+}
+
+tr :first-of-type:not(i) {
+  // border-left: 1px solid grey !important;
+  background-color: rgb(21, 101, 192);
+  color: white;
+  padding: 0.6em !important;
+  cursor: default;
+}
+
+th {
+  padding: 0.5em 0em !important;
+}
+
+td {
+  padding: inherit !important;
 }
 
 .wrapper {
-  // width: 30vw;
-  width: 90vw;
+  margin: auto;
+  width: 94vw;
   overflow: auto;
+  border: 0.3em rgb(255, 255, 255) solid;
+  border-radius: 1%;
 }
 
 .mat-row:hover {
@@ -25,9 +48,19 @@
   cursor: pointer;
 }
 
-td.mat-cell:first-of-type, td.mat-cell:last-of-type {
-  cursor: default;
-}
+// td.mat-cell:first-of-type,
+// td.mat-cell:last-of-type {
+//   cursor: default;
+//   color: white;
+// }
+
+// td.mat-cell:first-of-type {
+//   background-color: rgb(21, 101, 192);
+// }
+
+// td.mat-cell:last-of-type {
+//   background-color: rgb(167, 163, 163);
+// }
 // .mat-cell:active {
 //   background-color: rgba(24, 236, 119, 0.432);
 //   cursor: pointer;
