@@ -17,7 +17,7 @@
       <td
         mat-cell
         *matCellDef="let element; let i = index"
-        (click)="onClc(column, journal[i], element)"
+        (click)="onClc(column, journal[i])"
       >
         {{ column !== 'star' ? element[column] : average(element) }}
       </td>
@@ -28,5 +28,4 @@
   </table>
 </div>
 
-<!-- *ngFor="let column of displayedColumns" -->
-<!-- sticky -->
+<div *ngIf="!displayedColumns.length">Valera</div>

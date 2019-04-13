@@ -15,11 +15,6 @@
   overflow: auto;
 }
 
-td:first-of-type {
-  cursor: default;
-}
-
-
 .mat-row:hover {
   background-color: rgba(24, 151, 236, 0.432);
   cursor: pointer;
@@ -30,6 +25,9 @@ td:first-of-type {
   cursor: pointer;
 }
 
+td.mat-cell:first-of-type, td.mat-cell:last-of-type {
+  cursor: default;
+}
 // .mat-cell:active {
 //   background-color: rgba(24, 236, 119, 0.432);
 //   cursor: pointer;
