@@ -1,3 +1,52 @@
-<p>
-  footer-menu works!
-</p>
+<a routerLink="/admin-panel/students">
+  <button mat-button>
+    <mat-icon>school</mat-icon>
+  </button>
+</a>
+<a routerLink="/admin-panel/teachers">
+    <mat-icon>person</mat-icon>
+</a>
+<a routerLink="/admin-panel/groups">
+    <mat-icon>group</mat-icon>
+</a>
+
+<button mat-icon-button [matMenuTriggerFor]="menu">
+  <mat-icon>more_vert</mat-icon>
+</button>
+
+<mat-menu #menu="matMenu">
+  <a routerLink="/admin-panel/subjects">
+    <button mat-menu-item>
+      <mat-icon>library_books</mat-icon>
+      <span>Предмети</span>
+    </button>
+  </a>
+  <mat-divider></mat-divider>
+  <a routerLink="/admin-panel">
+    <button mat-menu-item>
+      <mat-icon>today</mat-icon>
+      <span>Розклад</span>
+    </button>
+  </a>
+  <mat-divider></mat-divider>
+  <a routerLink="/admin-panel">
+    <button mat-menu-item>
+      <mat-icon>person_add</mat-icon>
+      <span>Додати вчителя до журналу</span>
+    </button>
+  </a>
+  <mat-divider></mat-divider>
+  <a routerLink="/admin-panel">
+    <button mat-menu-item>
+      <mat-icon>queue</mat-icon>
+      <span>Новий навчальний рік</span>
+    </button>
+  </a>
+  <mat-divider></mat-divider>
+  <a routerLink="/admin-panel" (click)="auth.logout()">
+    <button mat-menu-item>
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Вийти</span>
+    </button>
+  </a>
+</mat-menu>

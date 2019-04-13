@@ -4,15 +4,15 @@ import { MaterialModule } from '../material.module';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
-import { FooterMenuComponent } from './footer-menu/footer-menu.component';
 import { HeaderMenuComponent } from '../admin-panel/admin-panel/header-menu/header-menu.component';
+import { AdminFooterMenuComponent } from '../admin-panel/admin-panel/footer-menu/footer-menu.component';
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent,
-    FooterMenuComponent,
+    AdminFooterMenuComponent,
     HeaderMenuComponent
   ],
   imports: [
@@ -22,8 +22,7 @@ import { HeaderMenuComponent } from '../admin-panel/admin-panel/header-menu/head
   ],
   exports: [
     HeaderComponent,
-    FooterComponent,
-    FooterMenuComponent
+    FooterComponent
   ]
 })
 export class SharedModule { }

@@ -17,8 +17,7 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
   private commonDisplay: boolean;
   private retinaDisplay: boolean;
 
-  constructor(public auth: AuthService) {
-  }
+  constructor(public auth: AuthService) { }
 
   /**
    * listen to window width resizing
@@ -34,7 +33,6 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     window.dispatchEvent(new Event('resize')); // trigger resize event to know screen width once the view is created
-    this.isAdmin();
   }
 
   ngOnDestroy(): void {
