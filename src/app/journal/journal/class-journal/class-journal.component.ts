@@ -5,6 +5,7 @@ import { JournalsStorageService } from 'src/app/services/journals-storage.servic
 import { Journal } from 'src/app/models/journal-data';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { Subscription } from 'rxjs';
+import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
 
 @Component({
   selector: 'app-class-journal',
@@ -19,6 +20,7 @@ export class ClassJournalComponent implements OnInit, OnDestroy {
   filter: string;
   isLoading = false;
   private loadingSub: Subscription;
+  teacher;
 
   idi;
   data;
@@ -31,19 +33,28 @@ export class ClassJournalComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private authService: AuthService,
-    private journalsStorageService: JournalsStorageService
+    private journalsStorageService: JournalsStorageService,
+    private teachersStorageService: TeachersStorageService
   ) {}
 
   ngOnInit() {
-    this.loadingSub = this.journalsStorageService.loadingStateChanged.subscribe(isLoading => {
-      this.isLoading = isLoading;
-    });
+    this.loadingSub = this.journalsStorageService.loadingStateChanged.subscribe(
+      isLoading => {
+        this.isLoading = isLoading;
+      }
+    );
     this.route.params.subscribe((params: Params) => {
       this.idClass = +params.idClass;
       this.idTeacher = +params.idTeacher;
+      console.log(this.idTeacher);
 
-      console.log(`idClass ${this.idClass}`);
-      console.log(`idTeacher ${this.idTeacher}`);
+      if (this.idTeacher) {
+        this.teacher = this.teachersStorageService
+          .getTeacher(this.idTeacher)
+          .subscribe(teacher => {
+            this.teacher = teacher;
+          });
+      }
 
       if (!this.idClass && !this.idTeacher) {
         this.idTeacher = this.authService.getUserId();

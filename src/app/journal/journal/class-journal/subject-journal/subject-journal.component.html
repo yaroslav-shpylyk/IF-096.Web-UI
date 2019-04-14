@@ -1,5 +1,7 @@
-<div *ngIf="displayedColumns" class="wrapper">
-  <table mat-table [dataSource]="dataSource">
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<h1 *ngIf="!isLoading && !dataSource">Журнал ще не створений</h1>
+<div *ngIf="dataSource" class="wrapper">
+  <table *ngIf="dataSource" mat-table [dataSource]="dataSource">
     <ng-container
       *ngFor="let column of displayedColumns; let i = index"
       [matColumnDef]="column"

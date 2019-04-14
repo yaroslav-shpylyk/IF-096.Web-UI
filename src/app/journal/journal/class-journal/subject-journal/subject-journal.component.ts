@@ -7,6 +7,7 @@ import {
   MatBottomSheetRef,
   MAT_BOTTOM_SHEET_DATA
 } from '@angular/material';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-subject-journal',
@@ -22,6 +23,8 @@ export class SubjectJournalComponent implements OnInit {
   displayedColumns = [];
   studentIds = [];
   elData = [];
+  private loadingSub: Subscription;
+  isLoading = false;
 
   constructor(
     private journalsStorageService: JournalsStorageService,
@@ -30,12 +33,16 @@ export class SubjectJournalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loadingSub = this.journalsStorageService.loadingStateChanged.subscribe(
+      isLoading => {
+        this.isLoading = isLoading;
+      }
+    );
+
     this.route.params.subscribe((params: Params) => {
       this.idSubject = +params.subId;
       this.idClass = +params.classId;
       this.initialiseState();
-      console.log(this.idSubject);
-      console.log(this.idClass);
 
       this.renderTable();
     });
@@ -57,7 +64,6 @@ export class SubjectJournalComponent implements OnInit {
     this.journalsStorageService
       .getJournaL(this.idSubject, this.idClass)
       .subscribe(journal => {
-        // let studentData = { studentFullName: '' };
         let studentData = new Object() as any;
         for (const student of journal) {
           studentData.studentFullName = student.studentFullName;
@@ -67,29 +73,22 @@ export class SubjectJournalComponent implements OnInit {
             if (this.thRow.length <= student.marks.length) {
               this.thRow.push(
                 `${mark.typeMark}\n` +
-                mark.dateMark
-                  .split('.')
-                  .slice(1)
-                  .reverse()
-                  .join('.')
+                  mark.dateMark
+                    .split('.')
+                    .slice(1)
+                    .reverse()
+                    .join('.')
               );
             }
           }
           this.elData.push(studentData);
-          console.log(studentData);
-          // studentData = {};
           studentData = {};
         }
         if (!this.elData.length) {
+          this.journalsStorageService.loadingStateChanged.next(false);
           return;
         }
         this.dataSource = this.elData;
-
-        console.log('this.thRow');
-        console.log(this.thRow);
-
-        console.log('this.elData');
-        console.log(this.elData);
 
         const temp = Object.keys(this.elData[0]);
         temp.unshift(...temp.splice(temp.length - 1, 1));
@@ -98,8 +97,7 @@ export class SubjectJournalComponent implements OnInit {
         this.displayedColumns = temp;
         this.journal = journal;
 
-        console.log('this.journal');
-        console.log(this.journal);
+        this.journalsStorageService.loadingStateChanged.next(false);
       });
   }
 
@@ -109,7 +107,6 @@ export class SubjectJournalComponent implements OnInit {
     }
     event.target.style.backgroundColor = 'rgba(24, 236, 119, 0.432)';
     event.path[1].style.backgroundColor = 'rgba(24, 151, 236, 0.432)';
-    console.log(studentEl);
     const bottomSheetRef = this.bottomSheet.open(
       BottomSheetOverviewExampleSheetComponent,
       {
@@ -161,8 +158,6 @@ export class BottomSheetOverviewExampleSheetComponent {
   }
 
   daya() {
-    console.log(this.selectedVal);
-    console.log(this.selectedNote);
     this.journalsStorageService
       .saveMark({
         idLesson: this.data.lessonId,
@@ -171,8 +166,7 @@ export class BottomSheetOverviewExampleSheetComponent {
         note: this.selectedNote
       })
       .subscribe(
-        resp => {
-          console.log(resp);
+        () => {
           this.bottomSheetRef.dismiss();
         },
         error => console.log(error)

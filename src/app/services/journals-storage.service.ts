@@ -20,6 +20,7 @@ export class JournalsStorageService {
   }
 
   getJournaL(idSubject, idClass): Observable<Journal[]> {
+    this.loadingStateChanged.next(true);
     return this.httpClient
       .get(`/journals/subjects/${idSubject}/classes/${idClass}`)
       .pipe(

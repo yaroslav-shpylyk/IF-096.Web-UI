@@ -20,7 +20,6 @@ export class TeachersGuard implements CanActivate, CanLoad {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-    console.log(next);
     return this.isTeacher(next.routeConfig.path);
   }
 
