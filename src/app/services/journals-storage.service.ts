@@ -45,8 +45,26 @@ export class JournalsStorageService {
     return result;
   }
 
-  getJournal(id): Observable<Journal> {
-    return this.httpClient.get('/journals/class/{idClass}').pipe(
+  getClassJournal(idClass): Observable<Journal> {
+    return this.httpClient.get(`/journals/class/${idClass}`).pipe(
+      map((response: { status: any; data: Journal }) => {
+        const journal = response.data;
+        return journal;
+      })
+    );
+  }
+
+  getTeacherJournal(idTeacher): Observable<Journal> {
+    return this.httpClient.get(`/journals/teachers/${idTeacher}`).pipe(
+      map((response: { status: any; data: Journal }) => {
+        const journal = response.data;
+        return journal;
+      })
+    );
+  }
+
+  getJournal(id, data): Observable<Journal> {
+    return this.httpClient.get(`/journals/${data}/${id}`).pipe(
       map((response: { status: any; data: Journal }) => {
         const journal = response.data;
         return journal;
