@@ -1,27 +1,29 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Params, Router, ActivatedRoute } from '@angular/router';
 import { JournalsStorageService } from 'src/app/services/journals-storage.service';
-import { HttpClient } from '@angular/common/http';
 import { Journal } from 'src/app/models/journal-data';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-class-journal',
   templateUrl: './class-journal.component.html',
   styleUrls: ['./class-journal.component.scss']
 })
-export class ClassJournalComponent implements OnInit {
+export class ClassJournalComponent implements OnInit, OnDestroy {
   idClass: number;
   idTeacher: number;
   journal;
   journalData;
   filter: string;
+  isLoading = false;
+  private loadingSub: Subscription;
 
   idi;
   data;
 
-  displayedColumns: string[] = ['num', 'subjectName', 'className'];
+  displayedColumns: string[] = ['num', 'subjectName', 'academicYear'];
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -33,6 +35,9 @@ export class ClassJournalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loadingSub = this.journalsStorageService.loadingStateChanged.subscribe(isLoading => {
+      this.isLoading = isLoading;
+    });
     this.route.params.subscribe((params: Params) => {
       this.idClass = +params.idClass;
       this.idTeacher = +params.idTeacher;
@@ -55,7 +60,8 @@ export class ClassJournalComponent implements OnInit {
           this.journal = journal;
           this.journalData = new MatTableDataSource(this.journal);
           this.journalData.sort = this.sort;
-          console.log(journal);
+          this.journalsStorageService.loadingStateChanged.next(false);
+          console.log(this.journal);
         });
     });
   }
@@ -67,8 +73,18 @@ export class ClassJournalComponent implements OnInit {
 
   selectRow(row) {
     console.log(row);
-    // this.router.navigate(['class', row.id], {
-    //   relativeTo: this.route
-    // });
+    if (this.idTeacher) {
+      this.router.navigate([
+        `/journals/class/${row.idClass}/subject/${row.idSubject}`
+      ]);
+    } else {
+      this.router.navigate(['subject', row.idSubject], {
+        relativeTo: this.route
+      });
+    }
+  }
+
+  ngOnDestroy() {
+    this.loadingSub.unsubscribe();
   }
 }

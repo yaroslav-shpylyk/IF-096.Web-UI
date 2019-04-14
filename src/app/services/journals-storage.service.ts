@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Journal } from '../models/journal-data';
 
 @Injectable()
 export class JournalsStorageService {
   constructor(private httpClient: HttpClient) {}
+
+  loadingStateChanged = new Subject<boolean>();
 
   getAllJournals(): Observable<Journal[]> {
     return this.httpClient.get<any>('/journals').pipe(
@@ -64,6 +66,7 @@ export class JournalsStorageService {
   }
 
   getJournal(id, data): Observable<Journal> {
+    this.loadingStateChanged.next(true);
     return this.httpClient.get(`/journals/${data}/${id}`).pipe(
       map((response: { status: any; data: Journal }) => {
         const journal = response.data;
