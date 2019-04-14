@@ -2,16 +2,11 @@ table {
   width: 100%;
 }
 
-.example-button-row button,
-.example-button-row a {
-  margin-right: 8px;
-  font-size: 1.6em;
-}
-
-.example-button-row {
+.buttonAdd {
   position: fixed;
-  bottom: 2.8em;
-  right: 1em;
+  bottom: 1.8em;
+  right: 0.7em;
+  font-size: 1.6em;
 }
 
 th.mat-sort-header-sorted {
@@ -26,7 +21,7 @@ th.mat-sort-header-sorted {
 .mat-form-field {
   font-size: 1.2em;
   width: 90%;
-  padding-left: 0.5em;
+  padding-left: 0.6em;
 }
 
 .filterBlok {

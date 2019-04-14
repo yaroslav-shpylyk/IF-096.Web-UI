@@ -1,6 +1,8 @@
-<div class="example-button-row">
-  <button mat-fab color="primary"  mat-raised-button (click)="openPopupsSheet()">+</button>
-</div>
+
+<button class="buttonAdd" mat-fab color="primary"  mat-raised-button (click)="openPopupsSheet()">
+  +
+</button>
+
 
 <div class="filterBlok">
   <mat-form-field>
@@ -11,17 +13,17 @@
 <table  mat-table [dataSource]="dataSourceActivClass" matSort class="mat-elevation-z8">
 
   <ng-container matColumnDef="className">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Назва класу </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Назва класа </th>
     <td mat-cell *matCellDef="let element"> {{element.className}} </td>
   </ng-container>
 
   <ng-container matColumnDef="classYear">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Рік класу </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Рік класа </th>
     <td mat-cell *matCellDef="let element"> {{element.classYear}} </td>
   </ng-container>
 
   <ng-container matColumnDef="isActive">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Стан класу </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Стан класа </th>
     <td mat-cell *matCellDef="let element"><span *ngIf = "element.isActive">Відкритий</span><span *ngIf = "!element.isActive">Закритий</span></td>
   </ng-container>
 
