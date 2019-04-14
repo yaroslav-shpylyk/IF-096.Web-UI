@@ -9,22 +9,32 @@ import { AdminPanelGuard } from '../services/admin-panel.guard';
 const routes: Routes = [
   {
     path: '',
-    component: JournalComponent
+    component: JournalComponent,
+    canActivate: [AdminPanelGuard],
+    canLoad: [AdminPanelGuard]
   },
   {
     path: 'class/:classId/subject/:subId',
     component: SubjectJournalComponent
   },
   {
-    path: 'class/:id',
-    component: ClassJournalComponent
+    path: 'class/:idClass',
+    component: ClassJournalComponent,
+    canActivate: [AdminPanelGuard],
+    canLoad: [AdminPanelGuard]
+  },
+  {
+    path: 'teacher/:idTeacher',
+    component: ClassJournalComponent,
+    canActivate: [AdminPanelGuard],
+    canLoad: [AdminPanelGuard]
   },
   {
     path: 'my-journals',
     component: ClassJournalComponent,
     canActivate: [TeachersGuard],
     canLoad: [TeachersGuard]
-  },
+  }
 ];
 
 @NgModule({

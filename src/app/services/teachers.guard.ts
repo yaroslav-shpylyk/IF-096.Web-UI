@@ -20,7 +20,8 @@ export class TeachersGuard implements CanActivate, CanLoad {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-    return this.isTeacher();
+    console.log(next);
+    return this.isTeacher(next.routeConfig.path);
   }
 
   /**
@@ -37,10 +38,10 @@ export class TeachersGuard implements CanActivate, CanLoad {
    * Function that checks user's role -
    * @returns true if user's role == ROLE_TEACHER
    */
-  private isTeacher(): boolean {
+  private isTeacher(route?): boolean {
     const decodedToken: TokenInfo = JWTDecoder(this.authService.getToken());
     const role: string = decodedToken.Roles.authority;
-    if (role === 'ROLE_TEACHER') {
+    if (role === 'ROLE_TEACHER' || (role === 'ROLE_ADMIN' && route === 'journals')) {
       return true;
     }
     return false;
