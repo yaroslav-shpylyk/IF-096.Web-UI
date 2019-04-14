@@ -23,6 +23,9 @@ export class SubjectsComponent implements OnInit {
     this.showList();
   }
 
+  /**
+   * Method shows a list of subjects
+   */
   showList() {
     this.subjectService.getSubjects().subscribe(result => {
       this.subjects = result;
@@ -39,6 +42,11 @@ export class SubjectsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  /**
+   * Method open a dialog window, send data to the dialog window,
+   * update list of subjects
+   * @param subject - data which sends to the dialog window
+   */
   openDialog(subject: Object): void {
     const dialogRef = this.dialog.open(ModifySubjectsComponent, {
       data: (subject) ? { ...subject } : {}

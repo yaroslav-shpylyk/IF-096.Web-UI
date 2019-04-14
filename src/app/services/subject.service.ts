@@ -20,11 +20,20 @@ export class SubjectService {
         map((result: { status: any, data: SubjectData[] }) => result.data)
       );
   }
-  
+
+  /**
+   * Method creates a new subject
+   * @param subj - Object which we create
+   */
   addSubject(subj: SubjectData): Observable<SubjectData> {
     return this.http.post<SubjectData>('/subjects/', subj);
   };
 
+  /**
+   * Method sends changes to an object which we want to modify
+   * @param id - the data on which we refer to the object
+   * @param subj - object which we modify
+   */
   editSubject(id: Number, subj: SubjectData): Observable<SubjectData> {
     return this.http.put<SubjectData>(`/subjects/${id}`, subj);
   }

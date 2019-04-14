@@ -18,6 +18,9 @@ export class ModifySubjectsComponent {
     this.dialogRef.close();
   }
 
+  /**
+   * Method save a new o modify subject
+   */
   saveNewSubject() {
     const subj = new SubjectData(this.data);
     if (subj.subjectId > 0) {
