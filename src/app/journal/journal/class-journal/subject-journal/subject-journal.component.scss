@@ -26,7 +26,6 @@ tr :first-of-type:not(i) {
   cursor: default;
 }
 
-
 th {
   font-size: 1em;
   padding: 0.5em 0em !important;
@@ -35,7 +34,7 @@ th {
 }
 
 td {
-  padding: inherit !important;
+  padding: 0 !important;
 }
 
 .wrapper {
@@ -72,7 +71,52 @@ th::first-line {
   // color: rgb(104, 104, 104);
 }
 
-// th::first-line:not(tr>th:first-of-type) {
-//   font-size: 0.1em;
-//   color: rgb(104, 104, 104);
-// }
+::ng-deep .mat-button-toggle-label-content {
+  padding: 0 0.7em !important;
+}
+
+::ng-deep .valera {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+::ng-deep .toggle {
+  display: flex !important;
+  justify-content: center !important;
+  padding: 5px;
+}
+
+::ng-deep .mat-bottom-sheet-container {
+  padding: 0 !important;
+}
+
+::ng-deep mat-button-toggle-group {
+  overflow: auto !important;
+}
+
+::ng-deep .info {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  line-height: 1em;
+  color: grey;
+}
+
+::ng-deep .bottom-section mat-form-field {
+  margin: 1em;
+  display: flex;
+  flex-direction: column;
+  // text-align: center;
+}
+
+::ng-deep .bottom-section button {
+  margin: 1em auto !important;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+::ng-deep .mat-button-toggle-checked.mat-button-toggle-appearance-standard {
+  background-color: #acb8ff;
+}

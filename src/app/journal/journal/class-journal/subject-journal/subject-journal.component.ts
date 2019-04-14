@@ -109,11 +109,12 @@ export class SubjectJournalComponent implements OnInit {
     }
     event.target.style.backgroundColor = 'rgba(24, 236, 119, 0.432)';
     event.path[1].style.backgroundColor = 'rgba(24, 151, 236, 0.432)';
-    console.log(event);
+    console.log(studentEl);
     const bottomSheetRef = this.bottomSheet.open(
       BottomSheetOverviewExampleSheetComponent,
       {
-        data: { lessonId: idLesson, student: studentEl }
+        data: { lessonId: idLesson, student: studentEl },
+        panelClass: 'bottom-container'
       }
     );
 
@@ -149,6 +150,7 @@ export class BottomSheetOverviewExampleSheetComponent {
     return el.idLesson === +this.data.lessonId;
   });
   selectedVal = this.mark.mark;
+  selectedNote = this.mark.note;
 
   counter(i: number) {
     return new Array(i);
@@ -160,11 +162,13 @@ export class BottomSheetOverviewExampleSheetComponent {
 
   daya() {
     console.log(this.selectedVal);
+    console.log(this.selectedNote);
     this.journalsStorageService
       .saveMark({
         idLesson: this.data.lessonId,
         idStudent: this.data.student.idStudent,
-        mark: this.selectedVal
+        mark: this.selectedVal,
+        note: this.selectedNote
       })
       .subscribe(
         resp => {
