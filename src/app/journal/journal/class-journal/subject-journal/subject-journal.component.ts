@@ -101,7 +101,9 @@ export class SubjectJournalComponent implements OnInit {
       });
   }
 
-  onClc(idLesson, studentEl, event) {
+  onClc(idLesson, studentEl, event, i) {
+    console.log(idLesson);
+    console.log(i);
     if (!Number.isInteger(+idLesson)) {
       return;
     }
@@ -110,7 +112,12 @@ export class SubjectJournalComponent implements OnInit {
     const bottomSheetRef = this.bottomSheet.open(
       BottomSheetOverviewExampleSheetComponent,
       {
-        data: { lessonId: idLesson, student: studentEl },
+        data: {
+          lessonId: idLesson,
+          student: studentEl,
+          elData: this.elData,
+          id: i
+        },
         panelClass: 'bottom-container'
       }
     );
@@ -118,6 +125,7 @@ export class SubjectJournalComponent implements OnInit {
     bottomSheetRef.afterDismissed().subscribe(() => {
       event.target.style.backgroundColor = '';
       event.path[1].style.backgroundColor = '';
+      console.log(this.elData);
     });
   }
 
@@ -148,6 +156,9 @@ export class BottomSheetOverviewExampleSheetComponent {
   });
   selectedVal = this.mark.mark;
   selectedNote = this.mark.note;
+  elData = this.data.elData;
+  id = this.data.id;
+  lessonId = this.data.lessonId;
 
   counter(i: number) {
     return new Array(i);
@@ -166,8 +177,10 @@ export class BottomSheetOverviewExampleSheetComponent {
         note: this.selectedNote
       })
       .subscribe(
-        () => {
+        (resp) => {
+          this.elData[this.id][this.lessonId] = resp.body.data.mark;
           this.bottomSheetRef.dismiss();
+          console.log(resp);
         },
         error => console.log(error)
       );
