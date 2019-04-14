@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Params, Router, ActivatedRoute } from '@angular/router';
 import { JournalsStorageService } from 'src/app/services/journals-storage.service';
 import { HttpClient } from '@angular/common/http';
+import { Journal } from 'src/app/models/journal-data';
+import { MatTableDataSource, MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-class-journal',
@@ -12,15 +14,22 @@ import { HttpClient } from '@angular/common/http';
 export class ClassJournalComponent implements OnInit {
   idClass: number;
   idTeacher: number;
+  journal;
+  journalData;
+  filter: string;
 
   idi;
   data;
+
+  displayedColumns: string[] = ['num', 'subjectName', 'className'];
+
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private authService: AuthService,
-    private journalsStorageService: JournalsStorageService,
+    private journalsStorageService: JournalsStorageService
   ) {}
 
   ngOnInit() {
@@ -40,14 +49,26 @@ export class ClassJournalComponent implements OnInit {
       this.idi = this.idClass ? this.idClass : this.idTeacher;
       this.data = this.idClass ? 'class' : 'teachers';
 
-
-      this.journalsStorageService.getJournal(this.idi, this.data).subscribe(
-
-        journal => {
+      this.journalsStorageService
+        .getJournal(this.idi, this.data)
+        .subscribe(journal => {
+          this.journal = journal;
+          this.journalData = new MatTableDataSource(this.journal);
+          this.journalData.sort = this.sort;
           console.log(journal);
-        }
-      );
+        });
     });
   }
 
+  applyFilter(filterValue: string = '') {
+    this.filter = filterValue.trim().toLowerCase();
+    this.journalData.filter = this.filter;
+  }
+
+  selectRow(row) {
+    console.log(row);
+    // this.router.navigate(['class', row.id], {
+    //   relativeTo: this.route
+    // });
+  }
 }
