@@ -3,13 +3,14 @@
     <form [formGroup]="transititionForm"  class="component" (ngSubmit)="formSubmit()">
       <div>
         <mat-card class="active" *ngFor="let item of controlIndexes|classFilter:isActive:isNotEmpty:isCurrentYear:allClasses;  let index = index">
-        <div formArrayName="skipClassSwitcher">
+        <ng-container *ngIf="item>-1; else emptyFilter">
+          <div formArrayName="skipClassSwitcher">
             <label>
               <input attr.data-order="{{item}}" type="checkbox" [formControlName]="item"  (click)="skipClass($event, item, allClasses[item].id)">
               <i *ngIf="!skipClassSwitcher.controls[item].value" class="material-icons">lock_open</i>
               <i *ngIf="skipClassSwitcher.controls[item].value" class="material-icons">lock</i>
             </label>
-        </div>
+          </div>
           <mat-accordion>
             <mat-expansion-panel (opened)="panelOpenState[index] = true" (closed)="panelOpenState[index] = false">
               <mat-expansion-panel-header>
@@ -46,7 +47,11 @@
                 <i class="material-icons">edit</i>
               </label>
         </div>
-        </mat-card>  
+        </ng-container>
+        <ng-template #emptyFilter>
+          Немає класів, що відповідають критеріям фільтру. Ви можете змінити налаштування фільтру кнопкою, що розміщена справа 
+        </ng-template>
+        </mat-card>
       </div>
       <button mat-raised-button class="submit" type="submit" [disabled]="!transititionForm.valid" > Перевести учнів </button>
     </form>

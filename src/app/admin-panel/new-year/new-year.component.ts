@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NewYearService } from '../../services/new-year.service';
-import { ClassData } from '../../models/class-info';
+import { ClassInfo } from '../../models/class-info';
 
 @Component({
   selector: 'app-new-year',
@@ -11,15 +11,16 @@ import { ClassData } from '../../models/class-info';
 
 export class NewYearComponent implements OnInit {
 
-  public allClasses: ClassData[] = [];
+  public allClasses: ClassInfo[] = [];
   public transititionForm: FormGroup;
   public currentClassYear: number;
   public currentClassTitle: string;
   public isNotEmpty = true;
   public isActive = true;
   public isCurrentYear = true;
-  public filterParams = [this.isNotEmpty, this.isCurrentYear, this.isActive];
-  public singleInputEnabled = false;
+  public filterHasResults = false;
+  // public filterParams = [this.isNotEmpty, this.isCurrentYear, this.isActive];
+  // public singleInputEnabled = false;
   public controlIndexes: number[] = [];
   panelOpenState = [];
 
@@ -66,7 +67,7 @@ export class NewYearComponent implements OnInit {
   get editTitleSwitcher() { return this.transititionForm.get('editTitleSwitcher'); }
   get skipClassSwitcher() { return this.transititionForm.get('skipClassSwitcher'); }
 
-  classExistValidator = (allClasses: ClassData[], classYear?: number) => {
+  classExistValidator = (allClasses: ClassInfo[], classYear?: number) => {
     return (control: FormControl) => {
       if (this.currentClassTitle === control.value) {
         return {title_dublicate: {valid: false}};

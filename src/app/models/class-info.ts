@@ -1,4 +1,4 @@
-import { PupilData } from '../models/pupil-info';
+import { Student } from '../models/student';
 
 export interface ClassInfo {
   classDescription: string;
@@ -7,14 +7,5 @@ export interface ClassInfo {
   id: number;
   isActive: boolean;
   numOfStudents: number;
-}
-
-export interface ClassData {
-  id: number;
-  classYear: number;
-  className: string;
-  classDescription: string;
-  isActive: boolean;
-  numOfStudents: number;
-  pupilList?: PupilData[];
+  pupilList?: Student[];
 }

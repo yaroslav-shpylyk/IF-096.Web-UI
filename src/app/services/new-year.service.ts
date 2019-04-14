@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import {ClassData} from '../models/class-info';
-import { PupilData } from '../models/pupil-info';
+import { ClassInfo } from '../models/class-info';
+import { Student } from '../models/student';
 
 
 @Injectable({
@@ -18,7 +18,7 @@ export class NewYearService {
   * @returns - list of classes
   */
 
-  public getAllClasesInfo(): Observable <any> {
+  public getAllClasesInfo(): Observable <ClassInfo[]> {
     return this.getClasses().pipe(
       map(
         classList => { classList.forEach(
@@ -60,7 +60,7 @@ export class NewYearService {
     return this.http.get(`/classes`, {observe: 'response'})
     .pipe(
       map((response: any) => {
-        return response.body.data as ClassData;
+        return response.body.data as ClassInfo;
       }),
       catchError((error: any) => {
         return error;
@@ -77,7 +77,7 @@ export class NewYearService {
     return this.http.get(`/students/classes/${classId}`, {observe: 'response'})
     .pipe(
       map((response: any) => {
-        return response.body.data as PupilData;
+        return response.body.data as Student;
       }),
       catchError((error: any) => {
         return error;
@@ -87,7 +87,7 @@ export class NewYearService {
 
 
   /**
-   * Method create generate requests for creating classes and pupils binding methods
+   * Method generate requests for creating classes and pupils binding methods
    * @returns object that contain requests
    * @param newTitles object that contain new titles for classes
    * @param classes object with classes data

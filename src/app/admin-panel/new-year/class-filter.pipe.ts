@@ -1,11 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
-
+import { ClassInfo } from '../../models/class-info';
 @Pipe({
   name: 'classFilter'
 })
 export class ClassFilterPipe implements PipeTransform {
 
-  transform(value: any, Active: boolean, NotEmpty: boolean, curYear: boolean, allClasses: any ): any {
+  transform(value: number[], Active: boolean, NotEmpty: boolean, curYear: boolean, allClasses: ClassInfo[]): any {
     const isActive = (item) => allClasses[item].isActive;
     const curDate = new Date();
     const year = (curDate.getMonth() < 12 && curDate.getMonth() > 7) ? curDate.getFullYear() : curDate.getFullYear() - 1;
@@ -18,12 +18,8 @@ export class ClassFilterPipe implements PipeTransform {
     if (NotEmpty) {filterParams.push(isNotEmpty); }
     if (curYear) {filterParams.push(isCurrentYear); }
 
-    if (value.length === 0) {
-      return value;
-    }
-
-    const res = value
-      .filter(isEvery(filterParams));
+    const res = value.filter(isEvery(filterParams));
+    if (res.length === 0) {res.push(-1); }
     return res;
 
   }
