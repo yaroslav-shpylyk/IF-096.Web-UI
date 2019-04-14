@@ -17,12 +17,11 @@ import { ProgressService } from '../services/progress.service';
 })
 export class ProgressComponent implements OnInit {
   public chartOptionsForm: FormGroup;
-  public subjects: SubjectData[];
-  public classes: ClassData[];
-  public students: Student[];
-  public streams = new Array(12);
+  public stream = new Array(12);
+  public subjects: SubjectData[] = [];
+  public classes: ClassData[] = [];
+  public students: Student[] = [];
   public chartOptions: ChartOptions = {
-    responsive: true,
     scales: {
       yAxes: [{
         ticks: {
@@ -45,21 +44,8 @@ export class ProgressComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    this.chartOptionsForm.statusChanges.subscribe(result => {
-      if (result === 'VALID' && this.chartOptionsForm.touched) {
-        const {subjectId, classId, studentId, periodStart, periodEnd} = this.chartOptionsForm.value;
-        const options = {
-          subject_id: subjectId,
-          student_id: studentId.length ? studentId : this.students.map(item => item.id),
-          class_id: classId,
-          period_start: this.formatDate(periodStart),
-          period_end: this.formatDate(periodEnd)
-        };
-        const studentsInfo = this.formStudentsInfo(studentId, this.students);
-        this.progressService.getProgressMarks(options, studentsInfo).subscribe(result => {
-          this.updateChart(result);
-        });
-      }
+    this.chartOptionsForm.valueChanges.subscribe(result => {
+      console.log(result);
     });
   }
 
@@ -71,10 +57,13 @@ export class ProgressComponent implements OnInit {
       streamId: new FormControl('', [
         Validators.required
       ]),
+      classId: new FormControl('', [
+        Validators.required
+      ]),
       subjectId: new FormControl('', [
         Validators.required
       ]),
-      classId: new FormControl('', [
+      markType: new FormControl('all', [
         Validators.required
       ]),
       studentId: new FormControl([]),
@@ -133,7 +122,6 @@ export class ProgressComponent implements OnInit {
     this.chartLabels = [];
     this.chartData = [];
     const newData = [];
-    console.log(data);
     data.forEach(item => {
       const marks = item.marks.map(item => item.mark);
       const marksInfo = {
@@ -166,5 +154,31 @@ export class ProgressComponent implements OnInit {
       studentsInfo = allStudents;
     }
     return studentsInfo;
+  }
+  public checkEmpty(field: string): boolean {
+    const value = this.chartOptionsForm.controls[field].value;
+    return field === 'classId' ?
+      value.length :
+      Boolean(value);
+  }
+  public getDataForChart(): void {
+    const {subjectId, classId, studentId, periodStart, periodEnd} = this.chartOptionsForm.value;
+    const options = {
+      subject_id: subjectId,
+      student_id: studentId.length ? studentId : this.students.map(item => item.id),
+      class_id: classId,
+      period_start: this.formatDate(periodStart),
+      period_end: this.formatDate(periodEnd)
+    };
+    const studentsInfo = this.formStudentsInfo(studentId, this.students);
+    this.progressService.getAllMarks(options, studentsInfo).subscribe(result => {
+      this.updateChart(result);
+    });
+  }
+  public resetForm(): void {
+    this.chartOptionsForm.reset();
+    this.subjects = [];
+    this.classes = [];
+    this.students = [];
   }
 }

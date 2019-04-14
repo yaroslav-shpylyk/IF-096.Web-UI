@@ -2,7 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProgressRoutingModule } from './progress-routing.module';
 import { ProgressComponent } from './progress/progress.component';
-import { MatSelectModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatCardModule } from '@angular/material';
+import {
+  MatSelectModule,
+  MatDatepickerModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatCardModule,
+  MatRadioModule,
+  MatExpansionModule,
+  MatIconModule,
+  MatButtonModule
+} from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
 import { ProgressService } from './services/progress.service';
@@ -19,6 +29,10 @@ import { ProgressService } from './services/progress.service';
     MatInputModule,
     MatCardModule,
     ChartsModule,
+    MatRadioModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [
     ProgressService

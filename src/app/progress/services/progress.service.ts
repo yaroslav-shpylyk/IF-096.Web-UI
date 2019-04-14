@@ -14,14 +14,18 @@ import { ClassData } from '../../models/class-data';
 export class ProgressService {
 
   constructor(private markService: MarkService, private classService: ClassService) { }
-  public getProgressMarks(options: MarksRequestOptions, studentsInfo: Student[]): Observable<any> {
-    if (options.student_id.length === 1) {
-      return this.getStudentProgressMarks(options, studentsInfo);
-    } else {
-      return this.getStudentsProgressMarks(options, studentsInfo);
-    }
+  public getClassesByStream(stream: number): Observable<ClassData[]> {
+    return this.classService.getClasses('active')
+      .pipe(
+        map(result => result.filter(item => parseInt(item.className, 10) === stream))
+      );
   }
-  private getStudentProgressMarks(options, studentsInfo): Observable<any> {
+  public getAllMarks(options: MarksRequestOptions, studentsInfo: Student[]): Observable<any> {
+    return options.student_id.length === 1 ?
+      this.getStudentAllMarks(options, studentsInfo) :
+      this.getStudentsAllMarks(options, studentsInfo);
+  }
+  private getStudentAllMarks(options, studentsInfo): Observable<any> {
     return this.markService.getMarks(options)
       .pipe(
         map(result => {
@@ -40,7 +44,7 @@ export class ProgressService {
         })
       );
   }
-  private getStudentsProgressMarks(options: MarksRequestOptions, studentsInfo: Student[]): Observable<any> {
+  private getStudentsAllMarks(options: MarksRequestOptions, studentsInfo: Student[]): Observable<any> {
     let uniqueDates: string[] = [];
     const studentsId: number[] = [];
     return forkJoin(options.student_id.map(item => {
@@ -64,6 +68,11 @@ export class ProgressService {
         })
       );
   }
+/*  public getAvgMarks(): void {
+    return options.student_id.length === 1 ?
+      this.getStudentAvgMarks(options, studentsInfo) :
+      this.getStudentsAvgMarks(options, studentsInfo);
+  }*/
   private createDateObject(dateParams: number[]): Date {
     const [year, month, day]: number[] = dateParams;
     return new Date(year, month, day);
