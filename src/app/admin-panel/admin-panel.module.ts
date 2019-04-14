@@ -26,7 +26,10 @@ import { ChartsModule } from 'ng2-charts';
 import { MatMenuModule } from '@angular/material';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { MatSortModule } from '@angular/material';
-
+import { MatCardModule, MatExpansionModule, MatCheckboxModule, MatSlideToggleModule} from '@angular/material';
+import { NewYearComponent } from './new-year/new-year.component';
+import { ClassFilterPipe } from './new-year/class-filter.pipe';
+import { TitlePipe } from './new-year/autotitle.pipe';
 @NgModule({
   declarations: [
     AdminPanelComponent,
@@ -44,7 +47,10 @@ import { MatSortModule } from '@angular/material';
     StudentDatails,
     StudentDetailModalComponent,
     DashboardComponent,
-    SubjectsComponent
+    SubjectsComponent,
+    NewYearComponent,
+    ClassFilterPipe,
+    TitlePipe
   ],
   imports: [
     CommonModule,
@@ -63,7 +69,12 @@ import { MatSortModule } from '@angular/material';
     MatFormFieldModule,
     ReactiveFormsModule,
     MaterialModule,
-    MatSortModule
+    MatSortModule,
+    MatCardModule,
+    MatExpansionModule,
+    MatCheckboxModule,
+    MatSlideToggleModule
+
   ],
   entryComponents: [
     AddModifyGroupComponent,

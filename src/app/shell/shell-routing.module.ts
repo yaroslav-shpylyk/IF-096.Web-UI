@@ -34,12 +34,12 @@ const routes: Routes = [
         canLoad: [StudentGuard],
         loadChildren: '../student-book/student-book.module#StudentBookModule'
       },
-      {
-        path: 'new-year-transition',
-        canActivate: [AdminPanelGuard],
-        canLoad: [AdminPanelGuard],
-        loadChildren: '../new-year/new-year.module#NewYearModule'
-      },
+      // {
+      //   path: 'new-year-transition',
+      //   canActivate: [AdminPanelGuard],
+      //   canLoad: [AdminPanelGuard],
+      //   loadChildren: '../new-year/new-year.module#NewYearModule'
+      // },
     ]
   }
 ];

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NewYearService } from '../../services/new-year.service';
 import { ClassData } from '../../models/class-info';
@@ -23,7 +23,8 @@ export class NewYearComponent implements OnInit {
   public controlIndexes: number[] = [];
   panelOpenState = [];
 
-  constructor( private newYearTransitition: NewYearService) {  }
+  constructor(
+    private newYearTransitition: NewYearService) {  }
 
   ngOnInit() {
     this.createTransititionForm();
@@ -44,7 +45,6 @@ export class NewYearComponent implements OnInit {
             );
           }
       );
-
     }
 
   createTransititionForm(): void {

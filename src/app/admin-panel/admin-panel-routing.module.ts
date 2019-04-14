@@ -9,6 +9,7 @@ import { GroupsComponent } from './admin-panel/groups/groups.component';
 import { StudentDatails } from './students-list/student-detail-modal/student-detail-modal.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SubjectsComponent } from './subjects/subjects.component';
+import { NewYearComponent } from './new-year/new-year.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'new-year-transition',
+        component: NewYearComponent
+      },
+      {
         path: '',
         component: DashboardComponent
       },
@@ -50,5 +55,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
+
 })
 export class AdminPanelRoutingModule {}

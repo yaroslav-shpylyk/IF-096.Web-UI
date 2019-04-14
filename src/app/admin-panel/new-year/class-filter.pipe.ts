@@ -1,10 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'filter'
+  name: 'classFilter'
 })
-export class FilterPipe implements PipeTransform {
-
+export class ClassFilterPipe implements PipeTransform {
 
   transform(value: any, Active: boolean, NotEmpty: boolean, curYear: boolean, allClasses: any ): any {
     const isActive = (item) => allClasses[item].isActive;

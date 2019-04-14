@@ -2,7 +2,7 @@
     <h2>Перехід на новий навчальний рік</h2>
     <form [formGroup]="transititionForm"  class="component" (ngSubmit)="formSubmit()">
       <div>
-        <mat-card class="active" *ngFor="let item of controlIndexes|filter:isActive:isNotEmpty:isCurrentYear:allClasses;  let index = index">
+        <mat-card class="active" *ngFor="let item of controlIndexes|classFilter:isActive:isNotEmpty:isCurrentYear:allClasses;  let index = index">
         <div formArrayName="skipClassSwitcher">
             <label>
               <input attr.data-order="{{item}}" type="checkbox" [formControlName]="item"  (click)="skipClass($event, item, allClasses[item].id)">
