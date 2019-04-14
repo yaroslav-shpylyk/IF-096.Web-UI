@@ -16,12 +16,16 @@ export class SubjectsComponent implements OnInit {
   public displayedColumns: string[] = ['subjectName', 'subjectDescription', 'edit'];
   public dataSource: MatTableDataSource<SubjectData>;
 
-  constructor(private SubjectService: SubjectService,
+  constructor(public subjectService: SubjectService,
   public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.SubjectService.getSubjects().subscribe(subjects => {
-      this.subjects = subjects;
+    this.showList();
+  }
+
+  showList() {
+    this.subjectService.getSubjects().subscribe(result => {
+      this.subjects = result;
       this.dataSource = new MatTableDataSource(this.subjects);
     });
   }
@@ -35,14 +39,14 @@ export class SubjectsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  openDialog(g): void {
+  openDialog(element: Object): void {
     const dialogRef = this.dialog.open(ModifySubjectsComponent, {
-      data: g
+      data: (element) ? element : SubjectData
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    
+      this.subjects = [...this.subjects, result.data];
+      this.subjects = this.dataSource.data;
     });
   }
 }

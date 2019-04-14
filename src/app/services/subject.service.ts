@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { SubjectData } from '../models/subject-data';
@@ -8,6 +8,7 @@ import { SubjectData } from '../models/subject-data';
   providedIn: 'root'
 })
 export class SubjectService {
+
   constructor(private http: HttpClient) { }
   /**
    * Method gets number of all subjects
@@ -18,5 +19,13 @@ export class SubjectService {
       .pipe(
         map((result: {status: any, data: SubjectData[]}) => result.data)
       );
+  }
+
+  addSubject(subj: SubjectData) {
+    return this.http.post<SubjectData>('/subjects/', subj);
+  };
+
+  editSubject(id, subj) {
+    return this.http.put<SubjectData>(`/subjects/${id}`, subj);
   }
 }

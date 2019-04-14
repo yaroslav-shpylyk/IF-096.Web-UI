@@ -1,5 +1,5 @@
 <div mat-dialog-content>
-  <form class="example-form" #form = "ngForm">
+  <form class="example-form" #form="ngForm">
     <mat-form-field class="example-full-width">
       <input 
         matInput
@@ -17,7 +17,7 @@
        [(ngModel)]="data.subjectDescription">
       </textarea>
     </mat-form-field>
+    <button mat-button (click)="saveNewSubject(form.value)" cdkFocusInitial>Зберегти</button>
     <button mat-button (click)="onNoClick()">Відмінити</button>
-    <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Зберегти</button>
   </form>
 </div>

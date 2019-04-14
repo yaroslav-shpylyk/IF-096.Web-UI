@@ -14,3 +14,15 @@ table {
 .threeDots{
   cursor: pointer;
 }
+
+.example-button-row {
+  position: fixed;
+  bottom: 3em;
+  right: 1em;
+}
+
+.example-button-row button,
+.example-button-row a {
+  margin-right: 8px;
+  font-size: 1.6em;
+}
