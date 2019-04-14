@@ -27,10 +27,12 @@ export class JournalComponent implements OnInit {
   activeClasses = [];
   inactiveClasses = [];
   teachers: TeacherData[];
-  chosenClasses = 'inactiveClasses';
+  chosenClasses = 'activeClasses';
 
   displayedColumns: string[] = ['num', 'className', 'classYear'];
+  displayedTeachersColumns: string[] = ['num', 'teacher'];
   dataSource;
+  teachersData;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -58,6 +60,9 @@ export class JournalComponent implements OnInit {
     });
     this.teachersStorageService.getTeacherS().subscribe(teachers => {
       this.teachers = teachers;
+
+      this.teachersData = new MatTableDataSource(this.teachers);
+      this.teachersData.sort = this.sort;
     });
   }
 
@@ -70,6 +75,11 @@ export class JournalComponent implements OnInit {
   applyFilter(filterValue: string = '') {
     this.filter = filterValue.trim().toLowerCase();
     this.dataSource.filter = this.filter;
+  }
+
+  applyTeacherFilter(filterValue: string = '') {
+    this.filter = filterValue.trim().toLowerCase();
+    this.teachersData.filter = this.filter;
   }
 
   selectRow(row) {

@@ -2,6 +2,14 @@ mat-accordion {
   width: 40em;
 }
 
+#wrapper {
+  place-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-sizing: border-box;
+  display: flex;
+}
+
 .wrapper {
   margin: 1em;
 }
