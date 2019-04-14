@@ -17,7 +17,7 @@ export class SubjectsComponent implements OnInit {
   public dataSource: MatTableDataSource<SubjectData>;
 
   constructor(public subjectService: SubjectService,
-  public dialog: MatDialog) { }
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     this.showList();
@@ -29,7 +29,7 @@ export class SubjectsComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.subjects);
     });
   }
-  
+
   /**
    * Method which filter value in table,removes the leading
    * and trailing white space and line terminator characters from a string.
@@ -39,14 +39,20 @@ export class SubjectsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  openDialog(element: Object): void {
+  openDialog(subject: Object): void {
     const dialogRef = this.dialog.open(ModifySubjectsComponent, {
-      data: (element) ? element : SubjectData
+      data: (subject) ? { ...subject } : {}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.subjects = [...this.subjects, result.data];
-      this.subjects = this.dataSource.data;
+      if (result == undefined) { return };
+      let index = this.subjects.findIndex(subj => subj.subjectId == result.data.subjectId);
+      if (index >= 0) {
+        this.subjects[index] = result.data;
+      } else {
+        this.subjects = [...this.subjects, result.data];
+      }
+      this.dataSource.data = this.subjects;
     });
   }
 }

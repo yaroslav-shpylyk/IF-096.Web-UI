@@ -18,15 +18,17 @@ export class ModifySubjectsComponent {
     this.dialogRef.close();
   }
 
-  saveNewSubject(fields: Object) {
-    const subj = new SubjectData(fields);
-    if (subj.subjectName > "") {
-      this.SubjectService.editSubject(subj.subjectId, subj).subscribe();
+  saveNewSubject() {
+    const subj = new SubjectData(this.data);
+    if (subj.subjectId > 0) {
+      this.SubjectService.editSubject(subj.subjectId, subj).subscribe((subj) => {
+        this.dialogRef.close(subj);
+      });
     }
     else {
       this.SubjectService.addSubject(subj).subscribe((subj) => {
         this.dialogRef.close(subj);
-      })
+      });
     }
   }
 }

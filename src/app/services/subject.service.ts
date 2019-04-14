@@ -17,15 +17,15 @@ export class SubjectService {
   public getSubjects(): Observable<SubjectData[]> {
     return this.http.get('/subjects')
       .pipe(
-        map((result: {status: any, data: SubjectData[]}) => result.data)
+        map((result: { status: any, data: SubjectData[] }) => result.data)
       );
   }
-
-  addSubject(subj: SubjectData) {
+  
+  addSubject(subj: SubjectData): Observable<SubjectData> {
     return this.http.post<SubjectData>('/subjects/', subj);
   };
 
-  editSubject(id, subj) {
+  editSubject(id: Number, subj: SubjectData): Observable<SubjectData> {
     return this.http.put<SubjectData>(`/subjects/${id}`, subj);
   }
 }
