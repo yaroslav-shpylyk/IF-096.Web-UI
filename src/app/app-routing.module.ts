@@ -13,10 +13,6 @@ const routes: Routes = [
     canActivate: [ShellGuard],
     canLoad: [ShellGuard]
   },
-  // {
-  //   path: 'journals',
-  //   loadChildren: './journal/journal.module#JournalModule'
-  // },
   {
     path: '',
     redirectTo: 'login',
