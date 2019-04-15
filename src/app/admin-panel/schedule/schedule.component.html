@@ -16,25 +16,26 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-select [placeholder]="selectClassMsg" formControlName="selectedClass">
-        <mat-option *ngFor="let class of arrClassList" [value]="class.id">{{ class.className }}</mat-option>
+      <mat-select [placeholder]="selectClassMsg" formControlName="selectClass" (selectionChange)="selectedClass($event)">
+        <mat-option *ngFor="let class of arrClassList" [value]="class.id">{{ class.className }}{{class.id}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div> <!--end of top-->
 
   <div class="week-schedule">
-    <ng-container *ngFor="let day of weekDayName; let i=index">
-      <app-daily-schedule [arrSubjectsList]="arrSubjectsList" [legendDay]="weekDayName[i]" class="day-schedule"></app-daily-schedule>
-    </ng-container>
-
-
+    <app-daily-schedule *ngFor="let day of weekDayName; let i=index"
+      [arrSubjectsList]="arrSubjectsList"
+      [legendDay]="weekDayName[i]"
+      (dayFilled)="dayFilledHandler($event)" class="day-schedule" >
+    </app-daily-schedule>
   </div>
 
+  <div> {{ dailySchedule | json }}</div>
   <button mat-button type="submit" [disabled]="!frmSchedule.valid">Submit</button>
 </form>
 
 <!-- for test -->
 <div> {{ frmSchedule.value | json }}</div>
-<div class=errorMsg *ngIf="isInputInvalid('selectedClass')">
+<div class=errorMsg *ngIf="isInputInvalid('selectClass')">
   invalid class - Error
 </div>

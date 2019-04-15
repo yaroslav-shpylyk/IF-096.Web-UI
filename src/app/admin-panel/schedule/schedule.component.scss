@@ -22,20 +22,12 @@ form {
 .datePiker {
     width: 30%;
 }
-
 .week-schedule {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    height: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-column-gap: 1em;
+    grid-row-gap: 1em;
 }
-.day-schedule {
-    width: 50%;
-    height: 33%;
-}
-
-
-
 input.ng-touched.ng-invalid{
     border-color: $invalid-color;
 }
@@ -47,5 +39,8 @@ input.ng-touched.ng-invalid{
     }
     .datePiker {
         width: 100%;
+    }
+    .week-schedule {
+        grid-template-columns: 100%;
     }
 }

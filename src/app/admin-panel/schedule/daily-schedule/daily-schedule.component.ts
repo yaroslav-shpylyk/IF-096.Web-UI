@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewChecked } from '@angular/core';
 import { SubjectData } from '../../../models/subject-data';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 
@@ -7,7 +7,7 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
   templateUrl: './daily-schedule.component.html',
   styleUrls: ['./daily-schedule.component.scss']
 })
-export class DailyScheduleComponent implements OnInit {
+export class DailyScheduleComponent implements OnInit, AfterViewChecked {
 
   @Input() legendDay: string;
   frmDailySchedule: FormGroup;
@@ -20,12 +20,14 @@ export class DailyScheduleComponent implements OnInit {
   get arrSubjectsList(): SubjectData[] {
     return this._arrSubjectsList;
   }
+  @Output() dayFilled: EventEmitter<any> = new EventEmitter();
 
   constructor(private frmBld: FormBuilder) {}
 
   ngOnInit() {
     this.buildDailySchedul();
   }
+
   /** Method initializes the initial state of the component's template */
   buildDailySchedul() {
     this.frmDailySchedule = this.frmBld.group({
@@ -77,4 +79,20 @@ export class DailyScheduleComponent implements OnInit {
       this.dailySchedule.removeAt(i);
     }
   }
+
+  ngAfterViewInit(): void {
+      //console.log('ngAfterViewInit - child');
+
+
+    }
+
+  ngAfterViewChecked(): void {
+    //Called after every check of the component's view. Applies to components only.
+    //Add 'implements AfterViewChecked' to the class.
+    //console.log('ngAfterViewChecked - child');
+    this.dayFilled.emit(this.frmDailySchedule.value);
+  }
+
+
+
 }
