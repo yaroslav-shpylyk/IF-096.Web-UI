@@ -1,0 +1,63 @@
+<mat-nav-list class="navigation-items">
+  <a mat-list-item routerLinkActive="active" routerLink="/admin-panel/students">
+    <mat-icon>school</mat-icon>
+    УЧНІ</a>
+
+  <a mat-list-item routerLinkActive="active" routerLink="/admin-panel/teachers">
+    <mat-icon>person</mat-icon>
+    ВЧИТЕЛІ</a>
+
+  <a mat-list-item routerLinkActive="active" routerLink="/admin-panel/groups">
+    <mat-icon>group_work</mat-icon>
+    КЛАСИ</a>
+
+  <!--dropdown menu-->
+  <a mat-list-item [matMenuTriggerFor]="menu">
+    <mat-icon>expand_more</mat-icon>
+    БІЛЬШЕ</a>
+
+  <!--list for dropdown menu-->
+  <mat-menu #menu="matMenu" class="dropdown-menu">
+    <a routerLink="/admin-panel/subjects">
+      <button mat-menu-item>
+        <mat-icon>library_books</mat-icon>
+        <span>Предмети</span>
+      </button>
+    </a>
+    <mat-divider></mat-divider>
+    <a routerLink="/admin-panel">
+      <button mat-menu-item>
+        <mat-icon>today</mat-icon>
+        <span>Розклад</span>
+      </button>
+    </a>
+    <mat-divider></mat-divider>
+    <a routerLink="/admin-panel">
+      <button mat-menu-item>
+        <mat-icon>person_add</mat-icon>
+        <span>Додати вчителя до журналу</span>
+      </button>
+    </a>
+    <mat-divider></mat-divider>
+    <a routerLink="/admin-panel">
+      <button mat-menu-item>
+        <mat-icon>queue</mat-icon>
+        <span>Новий навчальний рік</span>
+      </button>
+    </a>
+    <mat-divider></mat-divider>
+    <a routerLink="/admin-panel" (click)="auth.logout()">
+      <button mat-menu-item>
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Вийти</span>
+      </button>
+    </a>
+  </mat-menu>
+
+  <!-- account photo icon -->
+  <a routerLinkActive="active" routerLink="/admin-panel">
+    <div class="account-photo">
+      <mat-icon [inline]="true">account_circle</mat-icon>
+    </div>
+  </a>
+</mat-nav-list>

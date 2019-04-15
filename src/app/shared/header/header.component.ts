@@ -1,6 +1,8 @@
 import { Component, AfterViewInit, HostListener, OnDestroy } from '@angular/core';
 import { fromEvent, interval } from 'rxjs';
 import { debounce, takeWhile } from 'rxjs/operators';
+import { AuthService } from '../../services/auth.service';
+import { roles } from '../../enum/roles.enum';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +16,9 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
   private stoppedScrolling;
   private commonDisplay: boolean;
   private retinaDisplay: boolean;
+
+  constructor(public auth: AuthService) {
+  }
 
   /**
    * listen to window width resizing
@@ -59,5 +64,15 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
       this.hide = false;
       this.notransition = false; // show header when user stops scrolling with 2s delay
     });
+
+  }
+
+  /**
+   * checks user's role for being admin
+   * @returns true if user is admin
+   */
+  isAdmin() {
+    const isAdmin = this.auth.getUserRole() === roles.admin;
+    return isAdmin;
   }
 }
