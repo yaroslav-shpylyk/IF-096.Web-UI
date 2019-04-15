@@ -20,7 +20,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
 
 
   constructor(private groupServices: GroupsService,
-    public dialog: MatDialog) { }
+              public dialog: MatDialog) { }
 
   ngOnInit() {
     this.refreshGroups();
@@ -42,25 +42,25 @@ export class GroupsComponent implements OnInit, OnDestroy {
   }
 
   /**
-  * Method filters the search for open classes
-  */
+   * Method filters the search for open classes
+   */
   applyFilterForActiveClass(filterValue: string) {
     this.dataSourceActivClass.filter = filterValue.trim().toLowerCase();
   }
 
   /**
-  * Method filters the search for closed classes
-  */
+   * Method filters the search for closed classes
+   */
   applyFilterForCloseClass(filterValue: string) {
     this.dataSourceCloseClass.filter = filterValue.trim().toLowerCase();
   }
 
   /**
-  * Method open popups sheet, send data to the popups sheet,
-  *  updates list of class after closing popups sheet
-  */
-  openPopupsSheet(element: Object) {
-    let sheet = this.dialog.open(AddModifyGroupComponent, {
+   * Method open popups sheet, send data to the popups sheet,
+   *  updates list of class after closing popups sheet
+   */
+  openPopupsSheet(element: object) {
+    const sheet = this.dialog.open(AddModifyGroupComponent, {
       hasBackdrop: true,
       data: (element) ? element : Group
     });
@@ -70,12 +70,12 @@ export class GroupsComponent implements OnInit, OnDestroy {
         this.groups.push(data);
         this.matTableFilter();
       }
-    })
+    });
   }
 
   /**
-  * Method updates list of class
-  */
+   * Method updates list of class
+   */
   refreshGroups() {
     this.groupServices.getGroups().subscribe(data => {
       this.groups = data;
@@ -84,8 +84,8 @@ export class GroupsComponent implements OnInit, OnDestroy {
   }
 
   /**
-  * Method creates the possibility for sorting classes 
-  */
+   * Method creates the possibility for sorting classes
+   */
   matTableFilter() {
     this.dataSourceActivClass = new MatTableDataSource(this.groups
       .filter((value: Group, index: number, array: Group[]) => array[index].isActive));
