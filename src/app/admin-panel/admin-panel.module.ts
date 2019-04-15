@@ -26,6 +26,7 @@ import { ChartsModule } from 'ng2-charts';
 import { MatMenuModule } from '@angular/material';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { MatSortModule } from '@angular/material';
+import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subjects.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { MatSortModule } from '@angular/material';
     StudentDatails,
     StudentDetailModalComponent,
     DashboardComponent,
-    SubjectsComponent
+    SubjectsComponent,
+    ModifySubjectsComponent
   ],
   imports: [
     CommonModule,
@@ -70,7 +72,8 @@ import { MatSortModule } from '@angular/material';
     StudentDetailModalComponent,
     DetailsDialogOverviewComponent,
     EditDialogOverviewComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    ModifySubjectsComponent
   ],
   providers: []
 })
