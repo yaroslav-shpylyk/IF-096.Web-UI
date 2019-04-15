@@ -59,7 +59,7 @@ export class GroupsComponent implements OnInit {
   }
 
   /**
-  * Method updates list of class and creates the possibility of sorting them
+  * Method updates list of class
   */
   refreshGroups() {
     this.groupServices.getGroups().subscribe(data => {
@@ -68,6 +68,9 @@ export class GroupsComponent implements OnInit {
     });
   }
 
+  /**
+  * Method creates the possibility for sorting classes 
+  */
   matTableFilter() {
     this.dataSourceActivClass = new MatTableDataSource(this.groups
       .filter((value: Group, index: number, array: Group[]) => array[index].isActive));

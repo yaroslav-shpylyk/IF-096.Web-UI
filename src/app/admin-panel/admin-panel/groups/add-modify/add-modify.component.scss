@@ -18,3 +18,10 @@
   justify-content: center !important;
   color: white !important;
 }
+
+::ng-deep .snack-class-fail {
+  background-color: rgb(175, 50, 1);
+  display: flex !important;
+  justify-content: center !important;
+  color: white !important;
+}

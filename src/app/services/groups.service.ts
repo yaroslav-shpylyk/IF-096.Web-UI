@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Group } from '../models/group-data.model';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';
+import { catchError } from 'rxjs/internal/operators/catchError';
+import { of } from 'rxjs/internal/observable/of';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +22,8 @@ export class GroupsService {
     .pipe(
       map((response: any) => {
         return response.data;
-      })
+      }),
+      catchError(this.handleError<Group>(`Проблема з відображенням класів.`))
     );
   }
 
@@ -35,15 +38,30 @@ export class GroupsService {
       .pipe(
         map((response: any) => {
           return response.data;
-        })
+        }),
+        catchError(this.handleError<Group>(`Проблема з редагуванням класу.`))
       );
     } else {
       return this.http.post<Group>(`/classes/`, group)
       .pipe(
         map((response: any) => {
           return response.data;
-        })
+        }),
+        catchError(this.handleError<Group>(`Проблема з додаванням класу.`))
       );
     }    
+  }
+
+  /**
+  * Method handles errors and does not break the program
+  * @param operation - text message about the error 
+  * @param result - empty form
+  * @returns - an empty object Group
+  */
+  private handleError<Group> (operation = 'operation', result?: Group) {
+    return (error: any): Observable<Group> => {
+      console.error(`${operation} Текст помилки: ${error.message}`);
+      return of(result as Group);
+    };
   }
 }
