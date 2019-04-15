@@ -31,12 +31,17 @@
     <mat-divider></mat-divider>
     <mat-form-field>
       <textarea
+        #textarea
+        (ngModelChange)="onValChange()"
         matInput
         placeholder="Коментар"
         [(ngModel)]="selectedNote"
         [value]="selectedNote"
       ></textarea>
     </mat-form-field>
-    <button mat-raised-button color="primary" (click)="daya()">Зберегти</button>
+    <button 
+    [disabled]="!valChanged"
+    mat-raised-button color="primary" 
+    (click)="onSave()">Зберегти</button>
   </div>
 </div>

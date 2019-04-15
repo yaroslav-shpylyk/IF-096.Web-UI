@@ -167,13 +167,21 @@ export class BottomSheetOverviewExampleSheetComponent {
   id = this.data.id;
   lessonId = this.data.lessonId;
   journal = this.data.journal;
+  valChanged = false;
 
   counter(i: number) {
     return new Array(i);
   }
 
-  onValChange(val) {
-    this.selectedVal = val;
+  onValChange(mark?) {
+    if (this.selectedVal || mark) {
+      this.valChanged = true;
+      this.selectedVal = mark ? mark : this.selectedVal;
+    }
+  }
+
+  onNoteChange() {
+    this.valChanged = true;
   }
 
   openSnackBar(message: string, classMessage: string) {
@@ -184,7 +192,7 @@ export class BottomSheetOverviewExampleSheetComponent {
     this.snackBar.open(message, null, config);
   }
 
-  daya() {
+  onSave() {
     this.journalsStorageService
       .saveMark({
         idLesson: this.data.lessonId,
@@ -197,8 +205,10 @@ export class BottomSheetOverviewExampleSheetComponent {
           this.elData[this.id][this.lessonId] = resp.body.data.mark;
           this.bottomSheetRef.dismiss();
           this.openSnackBar(`Нові дані внесено`, 'snack-class-success');
-          this.journal[this.id].marks[this.journalIndx].mark = resp.body.data.mark;
-          this.journal[this.id].marks[this.journalIndx].note = resp.body.data.note;
+          this.journal[this.id].marks[this.journalIndx].mark =
+            resp.body.data.mark;
+          this.journal[this.id].marks[this.journalIndx].note =
+            resp.body.data.note;
         },
         error => {
           console.log(error);
