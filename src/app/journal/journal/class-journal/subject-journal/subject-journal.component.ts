@@ -1,11 +1,13 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { JournalsStorageService } from 'src/app/services/journals-storage.service';
 import { Journal } from 'src/app/models/journal-data';
 import { ActivatedRoute, Params } from '@angular/router';
 import {
   MatBottomSheet,
   MatBottomSheetRef,
-  MAT_BOTTOM_SHEET_DATA
+  MAT_BOTTOM_SHEET_DATA,
+  MatSnackBar,
+  MatSnackBarConfig
 } from '@angular/material';
 import { Subscription } from 'rxjs';
 
@@ -14,7 +16,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './subject-journal.component.html',
   styleUrls: ['./subject-journal.component.scss']
 })
-export class SubjectJournalComponent implements OnInit {
+export class SubjectJournalComponent implements OnInit, OnDestroy {
   journal: Journal[];
   dataSource;
   thRow = ['Учень'];
@@ -135,6 +137,10 @@ export class SubjectJournalComponent implements OnInit {
     this.studentIds = [];
     this.elData = [];
   }
+
+  ngOnDestroy() {
+    this.loadingSub.unsubscribe();
+  }
 }
 
 @Component({
@@ -145,6 +151,7 @@ export class BottomSheetOverviewExampleSheetComponent {
   constructor(
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
     private journalsStorageService: JournalsStorageService,
+    public snackBar: MatSnackBar,
     private bottomSheetRef: MatBottomSheetRef<
       BottomSheetOverviewExampleSheetComponent
     >
@@ -168,6 +175,14 @@ export class BottomSheetOverviewExampleSheetComponent {
     this.selectedVal = val;
   }
 
+  openSnackBar(message: string, classMessage: string) {
+    const config = new MatSnackBarConfig();
+    config.panelClass = [classMessage];
+    config.duration = 2000;
+    config.verticalPosition = 'top';
+    this.snackBar.open(message, null, config);
+  }
+
   daya() {
     this.journalsStorageService
       .saveMark({
@@ -177,12 +192,20 @@ export class BottomSheetOverviewExampleSheetComponent {
         note: this.selectedNote
       })
       .subscribe(
-        (resp) => {
+        resp => {
           this.elData[this.id][this.lessonId] = resp.body.data.mark;
           this.bottomSheetRef.dismiss();
+          this.openSnackBar(`Нові дані внесено`, 'snack-class-success');
           console.log(resp);
         },
-        error => console.log(error)
+        error => {
+          console.log(error);
+          this.bottomSheetRef.dismiss();
+          this.openSnackBar(
+            `На сервері відбулась помилка`,
+            'snack-class-fail'
+          );
+        }
       );
   }
 }

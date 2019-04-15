@@ -127,3 +127,17 @@ th::first-line {
 ::ng-deep .mat-button-toggle-checked.mat-button-toggle-appearance-standard {
   background-color: #acb8ff;
 }
+
+::ng-deep .snack-class-success {
+  background-color: rgb(24, 168, 72);
+  display: flex !important;
+  justify-content: center !important;
+  color: white !important;
+}
+
+::ng-deep .snack-class-fail {
+  background-color: rgb(175, 50, 1);
+  display: flex !important;
+  justify-content: center !important;
+  color: white !important;
+}
