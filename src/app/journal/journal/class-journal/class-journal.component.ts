@@ -15,17 +15,16 @@ import { TeachersStorageService } from 'src/app/services/teachers-storage.servic
 export class ClassJournalComponent implements OnInit, OnDestroy {
   idClass: number;
   idTeacher: number;
-  journal;
-  journalData;
+  journal: any = [];
   filter: string;
   isLoading = false;
   private loadingSub: Subscription;
   teacher;
-
   idi;
   data;
 
   displayedColumns: string[] = ['num', 'subjectName', 'academicYear'];
+  journalData;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -38,6 +37,8 @@ export class ClassJournalComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    console.log(this.sort);
+
     this.loadingSub = this.journalsStorageService.loadingStateChanged.subscribe(
       isLoading => {
         this.isLoading = isLoading;
@@ -47,6 +48,7 @@ export class ClassJournalComponent implements OnInit, OnDestroy {
       this.idClass = +params.idClass;
       this.idTeacher = +params.idTeacher;
       console.log(this.idTeacher);
+      console.log(this.idClass);
 
       if (this.idTeacher) {
         this.teacher = this.teachersStorageService
@@ -73,6 +75,8 @@ export class ClassJournalComponent implements OnInit, OnDestroy {
           this.journalData.sort = this.sort;
           this.journalsStorageService.loadingStateChanged.next(false);
           console.log(this.journal);
+          console.log(this.journalData.sort);
+          console.log(this.sort);
         });
     });
   }
