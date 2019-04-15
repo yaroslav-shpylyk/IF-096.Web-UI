@@ -43,6 +43,7 @@ import { MatMenuModule } from '@angular/material';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material';
+import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subjects.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,9 @@ import { MatSortModule } from '@angular/material';
     DashboardComponent,
     StudentDatails,
     StudentDetailModalComponent,
-    SubjectsComponent
+    DashboardComponent,
+    SubjectsComponent,
+    ModifySubjectsComponent
   ],
   imports: [
     CommonModule,
@@ -96,7 +99,8 @@ import { MatSortModule } from '@angular/material';
     ConfirmationDialogComponent,
     StudentDetailModalComponent,
     DashboardComponent,
-    AddModifyGroupComponent
+    AddModifyGroupComponent,
+    ModifySubjectsComponent
   ],
   providers: []
 })

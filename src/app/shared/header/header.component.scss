@@ -1,6 +1,6 @@
 @import "../../../styles.scss";
 
-.mat-toolbar {
+.mat-toolbar { // header
   position: fixed;
   top: 0;
   width: 100%;
@@ -12,33 +12,12 @@
   opacity: 1;
   transition: top 400ms ease-in-out, opacity 400ms ease-in-out;
 
-  &.hide {
+  &.hide { // hide when scrolling
     top: -75px;
     opacity: 0;
   }
 
   &.notransition {
     transition: none;
-  }
-}
-
-.header-list { // menu list
-  padding: 0 2%;
-  font-size: 0.8em;
-
-  @media only screen and (max-width: 600px) {
-    display: none!important;
-  }
-}
-
-.account-photo { // account photo
-  padding: 0 2%;
-  margin: 0 auto;
-  font-size: 48px;
-  width: 48px;
-  display: none!important;
-
-  @media only screen and (max-width: 600px) {
-    display: flex!important;
   }
 }

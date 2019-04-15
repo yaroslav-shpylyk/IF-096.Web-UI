@@ -1,0 +1,23 @@
+<div mat-dialog-content>
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <input 
+        matInput
+        placeholder="Предмет"
+        name="subjectName"
+        [(ngModel)]="data.subjectName"
+      >
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <textarea 
+       rows="5"
+       matInput
+       placeholder="Опис"
+       name="subjectDescription"
+       [(ngModel)]="data.subjectDescription">
+      </textarea>
+    </mat-form-field>
+    <button mat-button (click)="saveNewSubject()" cdkFocusInitial>Зберегти</button>
+    <button mat-button (click)="onNoClick()">Відмінити</button>
+  </form>
+</div>

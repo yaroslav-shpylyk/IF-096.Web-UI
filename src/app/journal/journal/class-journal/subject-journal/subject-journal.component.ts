@@ -198,6 +198,7 @@ export class BottomSheetOverviewExampleSheetComponent {
           this.bottomSheetRef.dismiss();
           this.openSnackBar(`Нові дані внесено`, 'snack-class-success');
           this.journal[this.id].marks[this.journalIndx].mark = resp.body.data.mark;
+          this.journal[this.id].marks[this.journalIndx].note = resp.body.data.note;
         },
         error => {
           console.log(error);
