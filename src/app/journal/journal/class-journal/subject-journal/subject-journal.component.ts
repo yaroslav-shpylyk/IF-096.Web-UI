@@ -103,9 +103,6 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
   }
 
   onClc(idLesson, studentEl, event, i) {
-    console.log(idLesson);
-    console.log(studentEl);
-    console.log(i);
     if (!Number.isInteger(+idLesson)) {
       return;
     }
@@ -128,8 +125,6 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     bottomSheetRef.afterDismissed().subscribe(() => {
       event.target.style.backgroundColor = '';
       event.path[1].style.backgroundColor = '';
-      // this.dataSource = this.elData;
-      console.log(this.journal);
     });
   }
 
@@ -196,7 +191,6 @@ export class BottomSheetOverviewExampleSheetComponent {
         idStudent: this.data.student.idStudent,
         mark: this.selectedVal,
         note: this.selectedNote
-        // dataSource: this.dataSource
       })
       .subscribe(
         resp => {
@@ -204,7 +198,6 @@ export class BottomSheetOverviewExampleSheetComponent {
           this.bottomSheetRef.dismiss();
           this.openSnackBar(`Нові дані внесено`, 'snack-class-success');
           this.journal[this.id].marks[this.journalIndx].mark = resp.body.data.mark;
-          console.log(this.journalIndx);
         },
         error => {
           console.log(error);

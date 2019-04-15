@@ -71,14 +71,12 @@ export class JournalComponent implements OnInit {
   }
 
   selectRow(row) {
-    console.log(row);
     this.router.navigate(['class', row.id], {
       relativeTo: this.route
     });
   }
 
   selectTeacherRow(row) {
-    console.log(row);
     this.router.navigate(['teacher', row.id], {
       relativeTo: this.route
     });

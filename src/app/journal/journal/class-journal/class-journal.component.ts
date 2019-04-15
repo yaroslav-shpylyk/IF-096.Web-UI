@@ -37,8 +37,6 @@ export class ClassJournalComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    console.log(this.sort);
-
     this.loadingSub = this.journalsStorageService.loadingStateChanged.subscribe(
       isLoading => {
         this.isLoading = isLoading;
@@ -47,8 +45,6 @@ export class ClassJournalComponent implements OnInit, OnDestroy {
     this.route.params.subscribe((params: Params) => {
       this.idClass = +params.idClass;
       this.idTeacher = +params.idTeacher;
-      console.log(this.idTeacher);
-      console.log(this.idClass);
 
       if (this.idTeacher) {
         this.teacher = this.teachersStorageService
@@ -60,8 +56,6 @@ export class ClassJournalComponent implements OnInit, OnDestroy {
 
       if (!this.idClass && !this.idTeacher) {
         this.idTeacher = this.authService.getUserId();
-
-        console.log(`shas ${this.idTeacher}`);
       }
 
       this.idi = this.idClass ? this.idClass : this.idTeacher;
@@ -74,9 +68,6 @@ export class ClassJournalComponent implements OnInit, OnDestroy {
           this.journalData = new MatTableDataSource(this.journal);
           this.journalData.sort = this.sort;
           this.journalsStorageService.loadingStateChanged.next(false);
-          console.log(this.journal);
-          console.log(this.journalData.sort);
-          console.log(this.sort);
         });
     });
   }
@@ -87,7 +78,6 @@ export class ClassJournalComponent implements OnInit, OnDestroy {
   }
 
   selectRow(row) {
-    console.log(row);
     if (this.idTeacher) {
       this.router.navigate([
         `/journals/class/${row.idClass}/subject/${row.idSubject}`
