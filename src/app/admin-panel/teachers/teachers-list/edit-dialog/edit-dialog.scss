@@ -1,0 +1,93 @@
+.centered {
+  text-align: center;
+}
+mat-form-field {
+  width: 80%;
+}
+
+button {
+  margin: 2em;
+}
+
+p {
+  margin-top: 0.1em;
+  font-size: 0.8em;
+  text-align: start;
+}
+
+.mat-dialog-container {
+  padding: 0 !important;
+}
+
+::ng-deep .mat-dialog-container .avatar {
+  display: flex;
+  justify-content: center;
+}
+
+::ng-deep .mat-dialog-container h3 {
+  text-align: center;
+  line-height: 0.6em;
+}
+
+::ng-deep .mat-dialog-container h2 {
+  text-align: center;
+}
+
+::ng-deep .mat-dialog-container img {
+  border-radius: 6.25em;
+  padding: 0.2em;
+  border: 0.2em solid rgb(63, 81, 181);
+  overflow: hidden;
+  height: 9.375em;
+  width: 9.375em;
+  position: relative;
+  margin: auto;
+}
+
+::ng-deep mat-dialog-container {
+  display: flex !important;
+  height: inherit !important;
+  margin: 0.5em;
+}
+
+::ng-deep .snack-class-success {
+  background-color: rgb(24, 168, 72);
+  display: flex !important;
+  justify-content: center !important;
+  color: white !important;
+}
+
+::ng-deep .snack-class-fail {
+  background-color: rgb(175, 50, 1);
+  display: flex !important;
+  justify-content: center !important;
+  color: white !important;
+}
+
+form {
+  display: flex;
+  max-width: 400px;
+}
+
+form > div {
+  flex-direction: column;
+  text-align: center;
+}
+
+div > input {
+  margin: 1.5em 0em;
+}
+
+#setWidth {
+  width: 100%;
+}
+
+#latInp {
+  margin-bottom: 0;
+}
+
+#button-section {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: nowrap;
+}

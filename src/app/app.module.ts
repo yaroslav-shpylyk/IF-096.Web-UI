@@ -9,31 +9,29 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { TeachersStorageService } from './services/teachers-storage.service';
-import { TeachersService } from './admin-panel/teachers/teachers.service';
-import { DialogOverviewExampleDialog } from './admin-panel/teachers/teachers-list/dialog/dialog-overview';
-import { TeacherService } from './services/teacher.service';
 import { SubjectService } from './services/subject.service';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    DialogOverviewExampleDialog
+    AppComponent
   ],
-  entryComponents: [DialogOverviewExampleDialog],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    MaterialModule
+    MaterialModule,
+    FlexLayoutModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     AuthService,
     TeachersStorageService,
-    TeachersService,
     SubjectService,
-    TeacherService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
@@ -43,4 +41,4 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

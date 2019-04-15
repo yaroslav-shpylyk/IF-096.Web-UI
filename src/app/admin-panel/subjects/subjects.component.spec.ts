@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FooterMenuComponent } from './footer-menu.component';
+import { SubjectsComponent } from './subjects.component';
 
-describe('FooterMenuComponent', () => {
-  let component: FooterMenuComponent;
-  let fixture: ComponentFixture<FooterMenuComponent>;
+describe('SubjectsComponent', () => {
+  let component: SubjectsComponent;
+  let fixture: ComponentFixture<SubjectsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FooterMenuComponent ]
+      declarations: [ SubjectsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FooterMenuComponent);
+    fixture = TestBed.createComponent(SubjectsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

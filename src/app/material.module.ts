@@ -1,10 +1,25 @@
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule,
-         MatToolbarModule, MatListModule, MatSidenavModule,
-         MatDatepickerModule, MatNativeDateModule
-        } from '@angular/material';
+import {
+  MatButtonModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatToolbarModule,
+  MatListModule,
+  MatSidenavModule,
+  MatCheckboxModule,
+  MatCardModule,
+  MatDialogModule,
+  MatExpansionModule,
+  MatSnackBarModule,
+  MatMenuModule,
+  MatDividerModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatSelectModule
+} from '@angular/material';
 
 @NgModule({
   imports: [
@@ -18,7 +33,15 @@ import { MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule,
     MatSidenavModule,
     MatListModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatCheckboxModule,
+    MatCardModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatSnackBarModule,
+    MatMenuModule,
+    MatDividerModule,
+    MatSelectModule
   ],
   exports: [
     MatButtonModule,
@@ -31,7 +54,15 @@ import { MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule,
     MatSidenavModule,
     MatListModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatCheckboxModule,
+    MatCardModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatSnackBarModule,
+    MatMenuModule,
+    MatDividerModule,
+    MatSelectModule
   ]
 })
 export class MaterialModule {}

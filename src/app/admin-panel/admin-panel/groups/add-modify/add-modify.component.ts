@@ -3,7 +3,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Group } from '../../../../models/group-data.model';
 import { GroupsService } from 'src/app/services/groups.service';
 import { FormGroup } from '@angular/forms';
-import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
+import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-add-modify',
@@ -14,9 +14,9 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 export class AddModifyGroupComponent implements OnInit {
   myFirstReactiveForm: FormGroup;
 
-  constructor(private bottomSheetRef: MatBottomSheetRef<AddModifyGroupComponent>,
+  constructor(private dialogRef: MatDialogRef<AddModifyGroupComponent>,
   private groupServices: GroupsService,
-  @Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {}
+  @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit() {
   }
@@ -25,7 +25,7 @@ export class AddModifyGroupComponent implements OnInit {
   * Method reports about closing bottom sheet
   */
   abort(){
-    this.bottomSheetRef.dismiss()
+    this.dialogRef.close()
   }
 
   /**

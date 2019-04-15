@@ -5,9 +5,10 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { DailyScheduleComponent } from './schedule/daily-schedule/daily-schedule.component';
 import { TeachersComponent } from './teachers/teachers.component';
+import { MaterialModule } from '../material.module';
 import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
-import { TeacherEditComponent } from './teachers/teacher-edit/teacher-edit.component';
-import { DialogEntryComponent } from './teachers/teachers-list/dialog/dialog-overview';
+import { DialogEntryComponent, DetailsDialogOverviewComponent } from './teachers/teachers-list/details-dialog/details-dialog-overview';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { StudentsListComponent } from './students-list/students-list.component';
 import { StudentDatails, StudentDetailModalComponent } from './students-list/student-detail-modal/student-detail-modal.component';
 import { MatListModule } from '@angular/material/list';
@@ -27,11 +28,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatSortModule } from '@angular/material/sort';
+import { EditDialogEntryComponent, EditDialogOverviewComponent } from './teachers/teachers-list/edit-dialog/edit-dialog';
+import { FilterPipe } from './teachers/helpers/filter.pipe';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { MatCardModule } from '@angular/material';
 import { ChartsModule } from 'ng2-charts';
 import { MatMenuModule } from '@angular/material';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { SubjectsComponent } from './subjects/subjects.component';
+import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subjects.component';
 
 @NgModule({
   declarations: [
@@ -42,12 +45,17 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     AddModifyGroupComponent,
     TeachersComponent,
     TeachersListComponent,
-    TeacherEditComponent,
     DialogEntryComponent,
     StudentsListComponent,
+    EditDialogEntryComponent,
+    FilterPipe,
+    DetailsDialogOverviewComponent,
+    EditDialogOverviewComponent,
     StudentDatails,
     StudentDetailModalComponent,
-    DashboardComponent
+    DashboardComponent,
+    SubjectsComponent,
+    ModifySubjectsComponent
   ],
   imports: [
     CommonModule,
@@ -56,20 +64,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     ReactiveFormsModule,
     MatRadioModule,
     MatFormFieldModule,
-    MatInputModule,
-    MatDialogModule,
     MatTableModule,
     MatButtonModule,
-    MatIconModule,
-    MatExpansionModule,
-    MatBottomSheetModule,
     MatListModule,
-    MatSortModule,
-    MatSelectModule,
     PlatformModule,
     FlexLayoutModule,
-    MatCardModule,
-    MatIconModule,
     MatButtonModule,
     MatSelectModule,
     MatDatepickerModule,
@@ -79,14 +78,16 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     ChartsModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    MatInputModule,
-    MatRadioModule,
-    MatSelectModule
+    MaterialModule,
+    MatSortModule
   ],
   entryComponents: [
     AddModifyGroupComponent,
-    StudentDetailModalComponent
+    StudentDetailModalComponent,
+    DetailsDialogOverviewComponent,
+    EditDialogOverviewComponent,
+    ModifySubjectsComponent
   ],
-  providers: [GroupsComponent]
+  providers: []
 })
 export class AdminPanelModule { }
