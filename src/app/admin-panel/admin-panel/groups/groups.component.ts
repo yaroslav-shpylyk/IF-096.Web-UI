@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 
 import { Group } from '../../../models/group-data.model';
 import { GroupsService } from 'src/app/services/groups.service';
@@ -11,7 +11,7 @@ import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
   styleUrls: ['./groups.component.scss']
 })
 
-export class GroupsComponent implements OnInit {
+export class GroupsComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
   groups: Group[];
   displayedColumns: string[] = ['className', 'classYear', 'isActive', 'id'];
@@ -23,7 +23,22 @@ export class GroupsComponent implements OnInit {
     public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.refreshGroups()
+    this.refreshGroups();
+
+    let prevScrollpos = window.pageYOffset;
+    window.onscroll = () => {
+      const currentScrollPos = window.pageYOffset;
+      if (prevScrollpos > currentScrollPos) {
+        document.getElementById('buttonAdd').style.bottom = '1.3em';
+      } else {
+        document.getElementById('buttonAdd').style.bottom = '-1.3em';
+      }
+      prevScrollpos = currentScrollPos;
+    };
+  }
+
+  ngOnDestroy() {
+    window.onscroll = null;
   }
 
   /**

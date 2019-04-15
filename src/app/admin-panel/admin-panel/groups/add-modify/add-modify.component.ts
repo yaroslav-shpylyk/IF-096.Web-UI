@@ -66,7 +66,6 @@ export class AddModifyGroupComponent implements OnInit {
     const config = new MatSnackBarConfig();
     config.panelClass = [classMessage];
     config.duration = 4000;
-    config.verticalPosition = 'top';
     this.snackBar.open(message, null, config);
   }
 }
