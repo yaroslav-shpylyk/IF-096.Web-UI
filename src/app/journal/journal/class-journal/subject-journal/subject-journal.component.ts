@@ -91,7 +91,6 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
           return;
         }
         this.dataSource = this.elData;
-
         const temp = Object.keys(this.elData[0]);
         temp.unshift(...temp.splice(temp.length - 1, 1));
         temp.push('star');
@@ -105,6 +104,7 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
 
   onClc(idLesson, studentEl, event, i) {
     console.log(idLesson);
+    console.log(studentEl);
     console.log(i);
     if (!Number.isInteger(+idLesson)) {
       return;
@@ -118,7 +118,8 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
           lessonId: idLesson,
           student: studentEl,
           elData: this.elData,
-          id: i
+          id: i,
+          journal: this.journal
         },
         panelClass: 'bottom-container'
       }
@@ -127,7 +128,8 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     bottomSheetRef.afterDismissed().subscribe(() => {
       event.target.style.backgroundColor = '';
       event.path[1].style.backgroundColor = '';
-      console.log(this.elData);
+      // this.dataSource = this.elData;
+      console.log(this.journal);
     });
   }
 
@@ -161,11 +163,15 @@ export class BottomSheetOverviewExampleSheetComponent {
   mark = this.data.student.marks.find(el => {
     return el.idLesson === +this.data.lessonId;
   });
+
+  journalIndx = this.data.student.marks.indexOf(this.mark);
+
   selectedVal = this.mark.mark;
   selectedNote = this.mark.note;
   elData = this.data.elData;
   id = this.data.id;
   lessonId = this.data.lessonId;
+  journal = this.data.journal;
 
   counter(i: number) {
     return new Array(i);
@@ -190,21 +196,20 @@ export class BottomSheetOverviewExampleSheetComponent {
         idStudent: this.data.student.idStudent,
         mark: this.selectedVal,
         note: this.selectedNote
+        // dataSource: this.dataSource
       })
       .subscribe(
         resp => {
           this.elData[this.id][this.lessonId] = resp.body.data.mark;
           this.bottomSheetRef.dismiss();
           this.openSnackBar(`Нові дані внесено`, 'snack-class-success');
-          console.log(resp);
+          this.journal[this.id].marks[this.journalIndx].mark = resp.body.data.mark;
+          console.log(this.journalIndx);
         },
         error => {
           console.log(error);
           this.bottomSheetRef.dismiss();
-          this.openSnackBar(
-            `На сервері відбулась помилка`,
-            'snack-class-fail'
-          );
+          this.openSnackBar(`На сервері відбулась помилка`, 'snack-class-fail');
         }
       );
   }
