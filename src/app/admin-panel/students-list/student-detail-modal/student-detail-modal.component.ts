@@ -33,7 +33,7 @@ export class StudentDatails {
       data: { paramId: this.paramId }
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['admin', 'students'], { skipLocationChange: true });
+      this.router.navigate(['admin-panel', 'students'], { skipLocationChange: true });
     });
   }
 }
@@ -82,7 +82,7 @@ export class StudentDetailModalComponent implements OnInit {
 
   editStudent(): void {
     this.router.navigate(
-      ['admin', 'students', this.data.paramId, 'edit'],
+      ['admin-panel', 'students', this.data.paramId, 'edit'],
       { relativeTo: this.route, replaceUrl: true, queryParams: { classId: this.classId } }
     );
     this.dialogRef.close();

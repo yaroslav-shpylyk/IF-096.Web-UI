@@ -1,6 +1,6 @@
 @import "../../../styles.scss";
 
-:host {
+.mat-toolbar { // header
   position: fixed;
   top: 0;
   width: 100%;
@@ -9,18 +9,15 @@
   background-color: $main-color;
   font-size: 2rem;
   height: 75px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  opacity: 1;
+  transition: top 400ms ease-in-out, opacity 400ms ease-in-out;
 
-.header-list { // menu list
-  padding: 0 3%;
-  font-size: 0.8em;
-}
+  &.hide { // hide when scrolling
+    top: -75px;
+    opacity: 0;
+  }
 
-.account-photo { // account photo
-  padding: 0 3%;
-  margin: auto;
-  font-size: 48px;
+  &.notransition {
+    transition: none;
+  }
 }

@@ -19,6 +19,7 @@ export class StudentsListComponent implements OnInit {
   classId: number;
   showNowActive = false;
   searchValue = '';
+  showSearch = false;
 
   constructor(
     private classListService: ClassService,
@@ -41,6 +42,7 @@ export class StudentsListComponent implements OnInit {
   onSelectionClass($event): void {
     this.classId = $event.value;
     this.studentsService.loadStudents(this.classId);
+    this.showSearch = true;
   }
 
   /**

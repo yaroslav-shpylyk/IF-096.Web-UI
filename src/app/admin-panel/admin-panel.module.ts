@@ -30,6 +30,8 @@ import { MatMenuModule, MatNativeDateModule } from '@angular/material';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { StudentFilterPipe } from './students-list/student-filter.pipe';
+import { MatSortModule } from '@angular/material';
+import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subjects.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,7 @@ import { StudentFilterPipe } from './students-list/student-filter.pipe';
     AddStudentModalComponent,
     AddStudentComponent,
     StudentFilterPipe,
+    ModifySubjectsComponent
   ],
   imports: [
     CommonModule,
@@ -73,6 +76,7 @@ import { StudentFilterPipe } from './students-list/student-filter.pipe';
     MatDatepickerModule,
     MatMenuModule,
     MatNativeDateModule,
+    MatSortModule
   ],
   entryComponents: [
     AddModifyGroupComponent,
@@ -83,6 +87,6 @@ import { StudentFilterPipe } from './students-list/student-filter.pipe';
     StudentDetailModalComponent,
     AddStudentComponent
   ],
-  providers: [GroupsComponent]
+  providers: []
 })
 export class AdminPanelModule { }

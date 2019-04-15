@@ -55,7 +55,7 @@ export class AddStudentModalComponent {
       }
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['admin', 'students'], { skipLocationChange: true });
+      this.router.navigate(['admin-panel', 'students'], { skipLocationChange: true });
     });
   }
 }

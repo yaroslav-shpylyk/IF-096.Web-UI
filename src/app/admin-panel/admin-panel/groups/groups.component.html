@@ -2,9 +2,11 @@
   <button mat-fab color="primary"  mat-raised-button (click)="openPopupsSheet()">+</button>
 </div>
 
-<mat-form-field>
-  <input matInput (keyup)="applyFilterForActiveClass($event.target.value)" placeholder="Введіть назву класу">
-</mat-form-field>
+<div class="filterBlok">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilterForActiveClass($event.target.value)" placeholder="  Введіть назву класу">
+  </mat-form-field>
+</div>
 
 <table  mat-table [dataSource]="dataSourceActivClass" matSort class="mat-elevation-z8">
 

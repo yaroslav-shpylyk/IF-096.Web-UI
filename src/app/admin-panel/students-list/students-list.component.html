@@ -20,9 +20,9 @@
   </ng-container>
 </div>
 <div class="students">
-  <mat-nav-list *ngIf="studentList" class="students">
+  <mat-nav-list *ngIf="showSearch" class="students">
     <mat-form-field>
-      <input matInput [ngModel]="searchValue" placeholder="Пошук" (ngModelChange)="onSearch($event)">
+      <input matInput [ngModel]="searchValue" placeholder="Шукати" (ngModelChange)="onSearch($event)">
     </mat-form-field>
     <mat-list-item class="students" [routerLink]="['./', student.id]" [queryParams]="{ classId: classId }"
       *ngFor="let student of studentList | async | studentFilter : searchValue">
