@@ -25,6 +25,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ChartsModule } from 'ng2-charts';
 import { MatMenuModule } from '@angular/material';
 import { SubjectsComponent } from './subjects/subjects.component';
+import { MatSortModule } from '@angular/material';
 import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subjects.component';
 
 @NgModule({
@@ -63,7 +64,8 @@ import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subje
     ChartsModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    MatSortModule
   ],
   entryComponents: [
     AddModifyGroupComponent,
@@ -73,6 +75,6 @@ import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subje
     ConfirmationDialogComponent,
     ModifySubjectsComponent
   ],
-  providers: [GroupsComponent]
+  providers: []
 })
 export class AdminPanelModule { }

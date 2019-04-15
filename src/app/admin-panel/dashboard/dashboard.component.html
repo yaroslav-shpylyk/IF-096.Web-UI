@@ -1,3 +1,12 @@
+<!-- not final menu!!! for easier routing when we working!!! -->
+<button mat-button [matMenuTriggerFor]="menu">Menu</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item routerLink = 'students'>Учні</button>
+  <button mat-menu-item routerLink = 'groups'>Класи</button>
+  <button mat-menu-item routerLink = 'teachers'>Учителі</button>
+  <button mat-menu-item routerLink = 'subjects'>Придмети</button>
+</mat-menu>
+<!-- -->
 <div class="component">
   <div class="graph">
     <mat-card class="chart" [ngSwitch]="chartType" *ngIf="chartData.length">
@@ -26,13 +35,12 @@
       <mat-card-footer>Учнів на потоці: {{studentsOfStream}}</mat-card-footer>
     </mat-card>
     <mat-card class="chartOptions">
-      <mat-card-header>Завантаженість класів</mat-card-header>
+      <mat-card-header>Завантаженість</mat-card-header>
       <mat-card-content>
-        <form [formGroup]="streamClasses" (ngSubmit)="submitChartChange(streamClasses)">
+        <form [formGroup]="streamClasses">
           <mat-form-field>
             <mat-label>Номер потоку</mat-label>
             <mat-select formControlName="classes">
-              <mat-option>--</mat-option>
               <mat-option *ngFor="let item of numberOfClasses; let i = index" [value]="i + 1">
                 {{i + 1}}
               </mat-option>
@@ -47,14 +55,16 @@
           <div class="graphType">
             <label id="graphTypeGroup">Тип графіка:</label>
             <mat-radio-group aria-label="graphTypeGroup" formControlName="graphType">
-              <mat-radio-button *ngFor="let item of objectKeys(graphTypes); let i = index" [value]="item" color="#000000">
+              <mat-radio-button *ngFor="let item of objectKeys(graphTypes)" [value]="item" color="#000000">
                 {{graphTypes[item]}}
               </mat-radio-button>
             </mat-radio-group>
           </div>
-          <button mat-raised-button type="submit" [disabled]="!streamClasses.valid">ПОКАЗАТИ</button>
         </form>
       </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button [disabled]="!streamClasses.valid" (click)="submitChartChange(streamClasses)">ПОКАЗАТИ</button>
+      </mat-card-actions>
     </mat-card>
   </div>
   <div class="stats">
