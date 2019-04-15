@@ -11,7 +11,6 @@ import {
   validPhone,
   validLogin
 } from '../validator';
-
 import { MatSnackBar } from '@angular/material';
 
 
@@ -115,7 +114,7 @@ export class AddStudentComponent implements OnInit {
   }
 
 
-  checkAvatar(img): string {
+  checkAvatar(img): any {
     if (img) {
       return img;
     } else { return this.avatar; }
@@ -163,7 +162,7 @@ export class AddStudentComponent implements OnInit {
     *After check initStudent data make init edit mode form
   */
 
-  private editStudentForm(student): void {
+  private editStudentForm(student: Student): void {
     this.addStudent = this.fb.group({
       avatar: [this.checkAvatar(student.avatar)],
       dateOfBirth: [student.dateOfBirth],

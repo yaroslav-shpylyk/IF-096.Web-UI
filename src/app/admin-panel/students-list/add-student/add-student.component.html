@@ -18,7 +18,7 @@
       <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
-      <mat-select placeholder="Виберіть клас" formControlName="classId" [disabled]="data.paramId">
+      <mat-select placeholder="Виберіть клас" formControlName="classId">
         <mat-option *ngFor="let oneClas of allClasses" [value]="oneClas.id">
           {{oneClas.className + " " + oneClas.classYear}}
         </mat-option>

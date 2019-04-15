@@ -2,7 +2,7 @@
   <mat-form-field>
     <mat-label>Активні класи</mat-label>
     <mat-select (selectionChange)="onSelectionClass($event)">
-      <mat-option class='option' *ngFor="let active of activeClass" [value]="active.id">
+      <mat-option class='option' *ngFor="let active of activeClass | async" [value]="active.id">
         <span>{{active.className + " " + active.classYear + "рік"}}</span>
       </mat-option>
     </mat-select>
@@ -12,7 +12,7 @@
     <mat-form-field>
       <mat-label>Неактивні класи</mat-label>
       <mat-select (selectionChange)="onSelectionClass($event)">
-        <mat-option class='option' *ngFor="let notActive of notActiveClass" [value]="notActive.id">
+        <mat-option class='option' *ngFor="let notActive of notActiveClass | async" [value]="notActive.id">
           <span>{{notActive.className + "" + notActive.classYear}}</span>
         </mat-option>
       </mat-select>
@@ -25,7 +25,7 @@
       <input matInput [ngModel]="searchValue" placeholder="Пошук" (ngModelChange)="onSearch($event)">
     </mat-form-field>
     <mat-list-item class="students" [routerLink]="['./', student.id]" [queryParams]="{ classId: classId }"
-      *ngFor="let student of studentList | studentFilter : searchValue">
+      *ngFor="let student of studentList | async | studentFilter : searchValue">
       <span>{{student.lastname + " " + student.firstname + " " + student.patronymic}}</span>
     </mat-list-item>
   </mat-nav-list>

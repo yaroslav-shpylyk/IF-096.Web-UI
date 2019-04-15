@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Student } from '../models/student';
-import { Subject } from 'rxjs';
 import { ClassData } from '../models/class-data';
 import { ClassService } from './class.service';
 
@@ -38,7 +37,6 @@ export class StudentsService {
   getStudents(id): Observable<Student[]> {
     return this.http.get(`/students/classes/${id}`).
       pipe(map((res: { status: any, data: Student[] }) => {
-        // this.sub.next(res.data);
         return res.data;
       }));
   }
@@ -83,7 +81,6 @@ export class StudentsService {
         })
       );
   }
-
 }
 
 
