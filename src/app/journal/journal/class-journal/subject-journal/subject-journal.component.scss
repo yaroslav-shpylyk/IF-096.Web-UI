@@ -77,6 +77,9 @@ th::first-line {
   font-size: 0.6em;
 }
 
+mat-divider {
+  margin: 1em
+}
 
 ::ng-deep {
   .mat-button-toggle-label-content {
@@ -130,5 +133,8 @@ th::first-line {
     display: flex !important;
     justify-content: center !important;
     color: white !important;
+  }
+  & .mat-divider {
+    margin: 1em !important;
   }
 }
