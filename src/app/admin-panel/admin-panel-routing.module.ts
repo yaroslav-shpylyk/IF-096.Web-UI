@@ -6,7 +6,7 @@ import { TeachersListComponent } from './teachers/teachers-list/teachers-list.co
 import { StudentsListComponent } from './students-list/students-list.component';
 import { EditDialogEntryComponent } from './teachers/teachers-list/edit-dialog/edit-dialog';
 import { GroupsComponent } from './admin-panel/groups/groups.component';
-import { StudentDatails } from './students-list/student-detail-modal/student-detail-modal.component';
+import { StudentDatailsComponent } from './students-list/student-detail-modal/student-detail-modal.component';
 import { AddStudentComponent } from './students-list/add-student/add-student.component';
 import { AddStudentModalComponent } from './students-list/add-student/add-student.component';
 import { FullscreenOverlayContainer } from '@angular/cdk/overlay';
@@ -28,7 +28,7 @@ const routes: Routes = [
           },
           {
             path: ':id',
-            component: StudentDatails,
+            component: StudentDatailsComponent,
             pathMatch: 'full'
           },
           {

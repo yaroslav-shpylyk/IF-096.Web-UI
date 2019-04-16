@@ -4,43 +4,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Student } from '../../../models/student';
 
-/*
-   * This component have empty html.Its need for create modal window with own Id
-*/
-
-@Component({
-  template: ''
-})
-export class StudentDatails {
-  paramId: number;
-
-  constructor(
-    public dialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute) {
-    this.route.params.subscribe(params => this.paramId = params.id);
-    this.openDialog();
-  }
-
-  /*
-    *Method open and close modal window.In data you can sent
-    *object with data to modal window
-  */
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(StudentDetailModalComponent, {
-      width: '250px',
-      data: { paramId: this.paramId }
-    });
-    dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['admin-panel', 'students'], { skipLocationChange: true });
-    });
-  }
-}
-
-/*
+/**
  * This component its modal window
-*/
+ */
 
 @Component({
   selector: 'app-student-detail-modal',
@@ -68,17 +34,17 @@ export class StudentDetailModalComponent implements OnInit {
     });
   }
 
-  /*
-  * This method close modal window, and redirect back
-  */
+  /**
+   * This method close modal window, and redirect back
+   */
 
   goBack(): void {
     this.dialogRef.close();
   }
 
-  /*
-  * This method redirect for edit component, where you can edit students data
-  */
+  /**
+   * This method redirect for edit component, where you can edit students data
+   */
 
   editStudent(): void {
     this.router.navigate(
@@ -88,4 +54,38 @@ export class StudentDetailModalComponent implements OnInit {
     this.dialogRef.close();
   }
 
+}
+
+/**
+ * This component have empty html.Its need for create modal window with own route
+ */
+
+@Component({
+  template: ''
+})
+export class StudentDatailsComponent {
+  paramId: number;
+
+  constructor(
+    public dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute) {
+    this.route.params.subscribe(params => this.paramId = params.id);
+    this.openDialog();
+  }
+
+  /**
+   * Method open and close modal window.In data you can sent
+   * object with data to modal window
+   */
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(StudentDetailModalComponent, {
+      width: '250px',
+      data: { paramId: this.paramId }
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.router.navigate(['admin-panel', 'students'], { skipLocationChange: true });
+    });
+  }
 }

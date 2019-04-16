@@ -8,7 +8,7 @@ import { TeachersListComponent, ConfirmationDialogComponent } from './teachers/t
 import { DialogEntryComponent, DetailsDialogOverviewComponent } from './teachers/teachers-list/details-dialog/details-dialog-overview';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { StudentsListComponent } from './students-list/students-list.component';
-import { StudentDatails, StudentDetailModalComponent } from './students-list/student-detail-modal/student-detail-modal.component';
+import { StudentDatailsComponent, StudentDetailModalComponent } from './students-list/student-detail-modal/student-detail-modal.component';
 import { MatListModule } from '@angular/material/list';
 import { PlatformModule } from '@angular/cdk/platform';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -47,7 +47,7 @@ import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subje
     DetailsDialogOverviewComponent,
     EditDialogOverviewComponent,
     ConfirmationDialogComponent,
-    StudentDatails,
+    StudentDatailsComponent,
     StudentDetailModalComponent,
     DashboardComponent,
     SubjectsComponent,

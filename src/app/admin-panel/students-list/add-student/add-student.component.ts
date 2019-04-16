@@ -14,52 +14,6 @@ import {
 import { MatSnackBar } from '@angular/material';
 
 
-
-/*
-* This component have empty html.Its need for create modal window with own Id
-*/
-
-@Component({
-  template: ''
-})
-export class AddStudentModalComponent {
-  paramId: number;
-  classId: number;
-
-  constructor(
-    public dialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute,
-  ) {
-    this.route.params.subscribe(params => {
-      this.paramId = params.id;
-    });
-    this.route.queryParams.subscribe(params => {
-      this.classId = params.classId;
-    });
-    this.openDialog();
-  }
-
-
-  /*
-  *Method open and close dialog.In data you can sent
-  * object with data to dialog
-  */
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(AddStudentComponent, {
-      width: '300px',
-      data: {
-        paramId: this.paramId,
-        classId: this.classId
-      }
-    });
-    dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['admin-panel', 'students'], { skipLocationChange: true });
-    });
-  }
-}
-
 @Component({
   selector: 'app-add-student',
   templateUrl: './add-student.component.html',
@@ -99,9 +53,9 @@ export class AddStudentComponent implements OnInit {
     });
   }
 
-  /*
-    *Method upload student avatar
-  */
+  /**
+   * Method upload student avatar
+   */
 
   onUpload($event): void {
     const file = $event.target.files[0];
@@ -120,10 +74,9 @@ export class AddStudentComponent implements OnInit {
     } else { return this.avatar; }
   }
 
-  /*
-    *Method type form (add mode or edit), submit form and sent data to server
-  */
-
+  /**
+   * Method type form (add mode or edit), submit form and sent data to server
+   */
 
   onSubmit(data): void {
     if (typeof (data.dateOfBirth) !== 'string') {
@@ -145,9 +98,9 @@ export class AddStudentComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  /*
-    *Method check param Id and if is ID make subscribe on student
-  */
+  /**
+   * Method check param Id and if is ID make subscribe on student
+   */
 
   initStudentData(): void {
     if (this.data.paramId) {
@@ -158,9 +111,9 @@ export class AddStudentComponent implements OnInit {
     }
   }
 
-  /*
-    *After check initStudent data make init edit mode form
-  */
+  /**
+   * After check initStudent data make init edit mode form
+   */
 
   private editStudentForm(student: Student): void {
     this.addStudent = this.fb.group({
@@ -180,6 +133,50 @@ export class AddStudentComponent implements OnInit {
   openSnackBar(message: string, action: string): void {
     this.snackBar.open(message, action, {
       duration: 2000,
+    });
+  }
+}
+
+/**
+ * This component have empty html.Its need for create modal window with own route
+ */
+
+@Component({
+  template: ''
+})
+export class AddStudentModalComponent {
+  paramId: number;
+  classId: number;
+
+  constructor(
+    public dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {
+    this.route.params.subscribe(params => {
+      this.paramId = params.id;
+    });
+    this.route.queryParams.subscribe(params => {
+      this.classId = params.classId;
+    });
+    this.openDialog();
+  }
+
+  /**
+   * Method open and close dialog.In data you can sent
+   * object with data to dialog
+   */
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddStudentComponent, {
+      width: '300px',
+      data: {
+        paramId: this.paramId,
+        classId: this.classId
+      }
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.router.navigate(['admin-panel', 'students'], { skipLocationChange: true });
     });
   }
 }
