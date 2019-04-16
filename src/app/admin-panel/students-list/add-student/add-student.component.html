@@ -1,0 +1,44 @@
+<mat-dialog-content>
+  <form [formGroup]="addStudent" (ngSubmit)="onSubmit(addStudent.value)">
+    <mat-form-field>
+      <input placeholder="Прізвище *" matInput type="text" class="form-input" formControlName="lastname">
+      <mat-error *ngIf="addStudent.invalid">Тільки букви, 1 велика</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input placeholder="Ім'я *" matInput type="text" class="form-input" formControlName="firstname">
+      <mat-error *ngIf="addStudent.invalid">Тільки букви, 1 велика</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input placeholder="По батькові *" matInput type="text" class="form-input" formControlName="patronymic">
+      <mat-error *ngIf="addStudent.invalid">Тільки букви, 1 велика</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" placeholder="Дата народження *" formControlName="dateOfBirth">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Виберіть клас" formControlName="classId">
+        <mat-option *ngFor="let oneClas of allClasses" [value]="oneClas.id">
+          {{oneClas.className + " " + oneClas.classYear}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input placeholder="Логін *" matInput type="text" class="form-input" formControlName="login">
+      <mat-error *ngIf="addStudent.invalid">Мін 5 символів</mat-error>
+    </mat-form-field>
+    <ng-container *ngIf="show">
+      <mat-form-field>
+        <span matPrefix>+380 &nbsp;</span>
+        <input placeholder="Телефон" matInput type="tel" class="form-input" formControlName="phone">
+      </mat-form-field>
+      <mat-form-field><input placeholder="Електронна адреса" matInput type="email" class="form-input"
+          formControlName="email"></mat-form-field>
+      <input placeholder="Додати аватар" type="file" (change)="onUpload($event)" class="form-input"
+        formControlName="avatar">
+    </ng-container>
+    <button mat-raised-button type="submit" [disabled]="!addStudent.valid">Зберегти</button>
+    <button mat-button color="primary" type="button" (click)="show = !show">Додаткові дані</button>
+  </form>
+</mat-dialog-content>

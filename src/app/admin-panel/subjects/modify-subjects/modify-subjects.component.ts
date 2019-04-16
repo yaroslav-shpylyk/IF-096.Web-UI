@@ -11,8 +11,8 @@ import { SubjectService } from 'src/app/services/subject.service';
 export class ModifySubjectsComponent {
 
   constructor(public dialogRef: MatDialogRef<ModifySubjectsComponent>,
-    public SubjectService: SubjectService,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+              public subjectService: SubjectService,
+              @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -24,13 +24,12 @@ export class ModifySubjectsComponent {
   saveNewSubject() {
     const subj = new SubjectData(this.data);
     if (subj.subjectId > 0) {
-      this.SubjectService.editSubject(subj.subjectId, subj).subscribe((subj) => {
-        this.dialogRef.close(subj);
+      this.subjectService.editSubject(subj.subjectId, subj).subscribe((res) => {
+        this.dialogRef.close(res);
       });
-    }
-    else {
-      this.SubjectService.addSubject(subj).subscribe((subj) => {
-        this.dialogRef.close(subj);
+    } else {
+      this.subjectService.addSubject(subj).subscribe((res) => {
+        this.dialogRef.close(res);
       });
     }
   }

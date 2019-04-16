@@ -1,55 +1,22 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { StudentsService } from '../../../services/students.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Student } from '../../../models/student';
 
 /**
-   * This component have empty html.Its need for create modal window with own Id
-*/
-
-@Component({
-  template: ''
-})
-export class StudentDatails {
-  paramId: number;
-
-  constructor(public dialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute) {
-    this.route.params.subscribe(params => this.paramId = params.id);
-    this.openDialog();
-  }
-
-  /**
-   * Method open and close modal window.In data you can sent
-   * object with data to modal window
-  */
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(StudentDetailModalComponent, {
-      width: '250px',
-      data: { paramId: this.paramId }
-    });
-    dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
-  }
-}
-
-/**
  * This component its modal window
-*/
-
+ */
 
 @Component({
   selector: 'app-student-detail-modal',
   templateUrl: 'student-detail-modal.component.html',
   styleUrls: ['student-detail-modal.component.scss']
 })
-export class StudentDetailModalComponent {
+export class StudentDetailModalComponent implements OnInit {
 
   studentInfo: Student;
+  classId: number;
 
   constructor(
     public dialogRef: MatDialogRef<StudentDetailModalComponent>,
@@ -60,21 +27,65 @@ export class StudentDetailModalComponent {
     this.studentServise.getOneStudent(this.data.paramId)
       .subscribe((student: Student) => this.studentInfo = student);
   }
- 
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.classId = params.classId;
+    });
+  }
+
   /**
-  * This method close modal window, and redirect back
-  */
+   * This method close modal window, and redirect back
+   */
 
   goBack(): void {
     this.dialogRef.close();
   }
 
   /**
-  * This method redirect for edit component, where you can edit students data 
-  */
+   * This method redirect for edit component, where you can edit students data
+   */
 
-  editStudent() {
-    this.router.navigate(['edit', this.studentInfo.id], { relativeTo: this.route })
+  editStudent(): void {
+    this.router.navigate(
+      ['admin-panel', 'students', this.data.paramId, 'edit'],
+      { relativeTo: this.route, replaceUrl: true, queryParams: { classId: this.classId } }
+    );
+    this.dialogRef.close();
   }
 
+}
+
+/**
+ * This component have empty html.Its need for create modal window with own route
+ */
+
+@Component({
+  template: ''
+})
+export class StudentDatailsComponent {
+  paramId: number;
+
+  constructor(
+    public dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute) {
+    this.route.params.subscribe(params => this.paramId = params.id);
+    this.openDialog();
+  }
+
+  /**
+   * Method open and close modal window.In data you can sent
+   * object with data to modal window
+   */
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(StudentDetailModalComponent, {
+      width: '250px',
+      data: { paramId: this.paramId }
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.router.navigate(['admin-panel', 'students'], { skipLocationChange: true });
+    });
+  }
 }

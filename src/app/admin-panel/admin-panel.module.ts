@@ -15,7 +15,7 @@ import {
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { StudentsListComponent } from './students-list/students-list.component';
 import {
-  StudentDatails,
+  StudentDatailsComponent,
   StudentDetailModalComponent
 } from './students-list/student-detail-modal/student-detail-modal.component';
 import { MatListModule } from '@angular/material/list';
@@ -24,14 +24,13 @@ import { GroupsComponent } from './admin-panel/groups/groups.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AddModifyGroupComponent } from './admin-panel/groups/add-modify/add-modify.component';
-import {
-  MatInputModule,
-  MatDialogModule,
-  MatIconModule
-} from '@angular/material';
+import { MatDialogModule, MatIconModule } from '@angular/material';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { AddStudentComponent } from './students-list/add-student/add-student.component';
+import { AddStudentModalComponent } from './students-list/add-student/add-student.component';
+import { MatInputModule } from '@angular/material/input';
 import {
   EditDialogEntryComponent,
   EditDialogOverviewComponent
@@ -39,9 +38,11 @@ import {
 import { FilterPipe } from './teachers/helpers/filter.pipe';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ChartsModule } from 'ng2-charts';
-import { MatMenuModule } from '@angular/material';
+import { MatMenuModule, MatNativeDateModule } from '@angular/material';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { StudentFilterPipe } from './students-list/student-filter.pipe';
 import { MatSortModule } from '@angular/material';
 import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subjects.component';
 
@@ -59,11 +60,13 @@ import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subje
     DetailsDialogOverviewComponent,
     EditDialogOverviewComponent,
     ConfirmationDialogComponent,
-    DashboardComponent,
-    StudentDatails,
+    StudentDatailsComponent,
     StudentDetailModalComponent,
     DashboardComponent,
     SubjectsComponent,
+    AddStudentModalComponent,
+    AddStudentComponent,
+    StudentFilterPipe,
     ModifySubjectsComponent
   ],
   imports: [
@@ -86,6 +89,9 @@ import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subje
     MatInputModule,
     MatRadioModule,
     MaterialModule,
+    MatDatepickerModule,
+    MatMenuModule,
+    MatNativeDateModule,
     MatSortModule
   ],
   entryComponents: [
@@ -94,13 +100,8 @@ import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subje
     DetailsDialogOverviewComponent,
     EditDialogOverviewComponent,
     ConfirmationDialogComponent,
-    DetailsDialogOverviewComponent,
-    EditDialogOverviewComponent,
-    ConfirmationDialogComponent,
     StudentDetailModalComponent,
-    DashboardComponent,
-    AddModifyGroupComponent,
-    ModifySubjectsComponent
+    AddStudentComponent
   ],
   providers: []
 })
