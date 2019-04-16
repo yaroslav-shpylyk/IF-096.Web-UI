@@ -1,6 +1,6 @@
-import { SubjectData } from './subject-data';
-
 export interface LessonData {
     lessonNumber: string;
-    subjectData: SubjectData
+    subjectId: number;
+    subjectName: string;
+    subjectDescription: string
 }

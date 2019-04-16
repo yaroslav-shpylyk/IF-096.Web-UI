@@ -4,20 +4,28 @@
 <form [formGroup] = "frmSchedule" (ngSubmit) = "onSubmit()">
   <div class="schedule-top">
     <mat-form-field class="datePiker">
-      <input matInput [matDatepicker]="pickerStart" [placeholder]="dateTermStartMsg" formControlName="dateTermStart">
+      <input matInput [matDatepicker]="pickerStart"
+      [placeholder]="dateTermStartMsg"
+      formControlName="dateTermStart">
       <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
       <mat-datepicker #pickerStart></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field class="datePiker">
-        <input matInput [matDatepicker]="pickerEnd" [placeholder]="dateTermEndMsg" formControlName="dateTermEnd">
+        <input matInput [matDatepicker]="pickerEnd"
+        [placeholder]="dateTermEndMsg"
+        formControlName="dateTermEnd">
         <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker #pickerEnd></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-select [placeholder]="selectClassMsg" formControlName="selectClass" (selectionChange)="selectedClass($event)">
-        <mat-option *ngFor="let class of arrClassList" [value]="class.id">{{ class.className }}{{class.id}}</mat-option>
+      <mat-select [placeholder]="selectClassMsg"
+      formControlName="selectClass"
+      (selectionChange)="selectedClass($event)">
+        <mat-option *ngFor="let class of arrClassList" [value]="class.id">
+          {{ class.className }}{{class.id}}
+        </mat-option>
       </mat-select>
     </mat-form-field>
   </div> <!--end of top-->
@@ -25,8 +33,9 @@
   <div class="week-schedule">
     <app-daily-schedule *ngFor="let day of weekDayName; let i=index"
       [arrSubjectsList]="arrSubjectsList"
-      [legendDay]="weekDayName[i]"
-      (dayFilled)="dayFilledHandler($event)" class="day-schedule" >
+      [legendDay]="day.legendDay"
+      (dayFilled)="dayFilledHandler($event)"
+      [class]="day.dailySubjects">
     </app-daily-schedule>
   </div>
 

@@ -7,11 +7,11 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
   templateUrl: './daily-schedule.component.html',
   styleUrls: ['./daily-schedule.component.scss']
 })
-export class DailyScheduleComponent implements OnInit, AfterViewChecked {
+export class DailyScheduleComponent implements OnInit {
 
   @Input() legendDay: string;
   frmDailySchedule: FormGroup;
-
+  selectSubjectMsg: string = "Виберіть предмет";
   private _arrSubjectsList: SubjectData[];
   @Input()
   set arrSubjectsList(inpSubjectsList: SubjectData[]) {
@@ -39,7 +39,7 @@ export class DailyScheduleComponent implements OnInit, AfterViewChecked {
       ])
     });
   }
-  //getter for the property of element ????
+  //getter for the property of element
   get dailySchedule() {
     return this.frmDailySchedule.get('dailySchedule') as FormArray;
   }
@@ -64,6 +64,7 @@ export class DailyScheduleComponent implements OnInit, AfterViewChecked {
    */
   public addSecondGroup(i: number): void {
     this.dailySchedule.at(i).get('secondGroup').enable();
+    console.log(this.dailySchedule.at(i).get('secondGroup').disabled);
   }
 
   /**
@@ -86,11 +87,17 @@ export class DailyScheduleComponent implements OnInit, AfterViewChecked {
 
     }
 
-  ngAfterViewChecked(): void {
-    //Called after every check of the component's view. Applies to components only.
-    //Add 'implements AfterViewChecked' to the class.
-    //console.log('ngAfterViewChecked - child');
-    this.dayFilled.emit(this.frmDailySchedule.value);
+
+  selectedSubject(event: any, i?: number) {
+    //console.log(event.source.selected);
+    console.log(event.value);
+
+    if (i != undefined) {
+      this.addSubjest(i);
+    }
+
+    this.dayFilled.emit(event.value);
+
   }
 
 

@@ -8,7 +8,6 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ScheduleService {
-
   constructor(private http: HttpClient) { }
 
   /**
@@ -16,10 +15,10 @@ export class ScheduleService {
    * @param classId - Id of class
    * @returns - Array with schedule data
    */
-  getSchedule(classId:number): Observable<any> {
-    return this.http.get('/classes/40/schedule').pipe(map(
-      (response: {status: any, data: any}) => {
-        return response.status;
+  getSchedule(classId:number): Observable<ScheduleData> {
+    return this.http.get(`/classes/${classId}/schedule`).pipe(map(
+      (response: {status: any, data: ScheduleData}) => {
+        return response.data;
       }
     ));
   }

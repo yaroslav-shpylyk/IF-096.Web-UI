@@ -7,8 +7,6 @@ import { ClassService } from '../../services/class.service';
 import { SubjectService } from '../../services/subject.service';
 import { ScheduleService } from '../../services/schedule.service';
 
-/*Monday Tuesday Wednesday Thursday Friday Saturday */
-
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
@@ -16,14 +14,20 @@ import { ScheduleService } from '../../services/schedule.service';
 })
 export class ScheduleComponent implements OnInit, AfterViewInit {
   scheduleData: ScheduleData;
-  statusResp:any;
   frmSchedule: FormGroup;
   arrClassList: Array<ClassData>;
   arrSubjectsList: Array<SubjectData>;
   selectClassMsg: string = "Виберіть клас";
   dateTermStartMsg: string = "Дата початку семестру";
   dateTermEndMsg: string = "Дата закінчення семестру";
-  weekDayName: Array<string> = ['Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П`ятниця', 'Субота'];
+  weekDayName: Array<{legendDay: string, dailySubjects: string}> = [
+    {legendDay: 'Понеділок', dailySubjects: 'mondaySubjects'},
+    {legendDay: 'Вівторок', dailySubjects: 'tuesdaySubjects'},
+    {legendDay: 'Середа', dailySubjects: 'wednesdaySubjects'},
+    {legendDay: 'Четвер', dailySubjects: 'thursdaySubjects'},
+    {legendDay: 'П`ятниця', dailySubjects: 'fridaySubjects'},
+    {legendDay: 'Субота', dailySubjects: 'saturdaySubjects'}
+  ];
 
   constructor(private frmBld: FormBuilder,
     private classService: ClassService,
@@ -57,11 +61,12 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
   }
 
   selectedClass(event: any) {
-
     this.scheduleService.getSchedule(event.value).subscribe(data => {
-      this.statusResp = data;
+      this.scheduleData = data;
+      console.log(this.scheduleData);
+
     });
-    console.log(this.statusResp);
+
   }
 
   ngAfterViewChecked(): void {

@@ -1,10 +1,10 @@
 $title-color: rgba(210, 230, 240, 0.5);
 $invalid-color: rgb(112, 5, 5);
+$shadow-color: rgb(182, 182, 182);
 
 .title-schedule {
-    background-color: $title-color;
     margin: 0 0 0.5em 0;
-    box-shadow: 1px 1px 4px #000;
+    box-shadow: 1px 1px 5px $shadow-color;
 }
 .title-schedule h5 {
     margin: 0;
@@ -24,9 +24,29 @@ form {
 }
 .week-schedule {
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: auto auto;
     grid-column-gap: 1em;
     grid-row-gap: 1em;
+    padding: 0.7em;
+    box-shadow: 0px 0px 15px $shadow-color;
+}
+.mondaySubjects {
+    grid-area: 1/1;
+}
+.tuesdaySubjects {
+    grid-area: 2/1;
+}
+.wednesdaySubjects {
+    grid-area: 3/1;
+}
+.thursdaySubjects {
+    grid-area: 1/2
+}
+.fridaySubjects {
+    grid-area: 2/2
+}
+.saturdaySubjects {
+    grid-area: 3/2
 }
 input.ng-touched.ng-invalid{
     border-color: $invalid-color;
@@ -41,6 +61,8 @@ input.ng-touched.ng-invalid{
         width: 100%;
     }
     .week-schedule {
-        grid-template-columns: 100%;
+        display: flex;
+        flex-direction: column;
+        width: 95%;
     }
 }

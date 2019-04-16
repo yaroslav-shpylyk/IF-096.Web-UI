@@ -1,12 +1,16 @@
 $icon-color: rgb(133, 133, 184);
 
-.select-subject {
-    margin: 0 0.5em;
-}
-mat-icon {
-    color: $icon-color;
+fieldset {
+    padding: 0 0 0 0.5em;
 }
 .daily-schedule {
     display: flex;
     flex-wrap: wrap;
+}
+.select-subject {
+    margin: 0 0.5em;
+    width: 35%;
+}
+mat-icon {
+    color: $icon-color;
 }
