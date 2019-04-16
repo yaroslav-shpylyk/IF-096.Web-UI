@@ -31,7 +31,6 @@ export class AddModifyGroupComponent implements OnInit {
 
   /**
    * Method saves data about a new or modified class
-   * @param formValue - data about the class that we want to change or create
    */
   save() {
     const group = new Group(this.data);
@@ -65,7 +64,7 @@ export class AddModifyGroupComponent implements OnInit {
   openSnackBar(message: string, classMessage: string) {
     const config = new MatSnackBarConfig();
     config.panelClass = [classMessage];
-    config.duration = 4000;
+    config.duration = 3000;
     config.verticalPosition = 'top';
     this.snackBar.open(message, null, config);
   }

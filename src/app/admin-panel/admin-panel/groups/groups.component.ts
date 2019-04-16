@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, HostListener } from '@angular/core';
 
 import { Group } from '../../../models/group-data.model';
 import { GroupsService } from 'src/app/services/groups.service';
 import { AddModifyGroupComponent } from './add-modify/add-modify.component';
 import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
-import { group } from '@angular/animations';
 
 @Component({
   selector: 'app-groups',
@@ -12,13 +11,24 @@ import { group } from '@angular/animations';
   styleUrls: ['./groups.component.scss']
 })
 
-export class GroupsComponent implements OnInit, OnDestroy {
+export class GroupsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   groups: Group[];
   displayedColumns: string[] = ['className', 'classYear', 'isActive', 'id'];
   dataSourceActivClass: MatTableDataSource<Group>;
   dataSourceCloseClass: MatTableDataSource<Group>;
+  prevScrollpos = window.pageYOffset;
 
+  @HostListener('window:scroll', [])
+  onScrollEvent() {
+    const currentScrollPos = window.pageYOffset;
+    if (this.prevScrollpos > currentScrollPos) {
+      document.getElementById('buttonAdd').style.bottom = '0.9em';
+    } else {
+      document.getElementById('buttonAdd').style.bottom = '-2.3em';
+    }
+    this.prevScrollpos = currentScrollPos;
+  }
 
   constructor(
     private groupServices: GroupsService,
@@ -27,21 +37,6 @@ export class GroupsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.refreshGroups();
-
-    let prevScrollpos = window.pageYOffset;
-    window.onscroll = () => {
-      const currentScrollPos = window.pageYOffset;
-      if (prevScrollpos > currentScrollPos) {
-        document.getElementById('buttonAdd').style.bottom = '1.3em';
-      } else {
-        document.getElementById('buttonAdd').style.bottom = '-1.3em';
-      }
-      prevScrollpos = currentScrollPos;
-    };
-  }
-
-  ngOnDestroy() {
-    window.onscroll = null;
   }
 
   /**
