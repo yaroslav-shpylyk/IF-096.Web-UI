@@ -11,7 +11,6 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./journal.component.scss']
 })
 export class JournalComponent implements OnInit {
-  journals;
   filter: string;
   activeClasses = [];
   inactiveClasses = [];
@@ -54,28 +53,56 @@ export class JournalComponent implements OnInit {
     });
   }
 
+  /**
+   * Method receives event object from a radio group and
+   * depending upon its value provides data for the table source.
+   * On each radio toggling the filter is applied.
+   * @param e - event object from a radio group.
+   */
   handleChange(e) {
     this.dataSource = new MatTableDataSource(this[e.value]);
     this.dataSource.sort = this.sortCol1;
     this.applyFilter(this.filter);
   }
 
+  /**
+   * Method receives input data from a filter field
+   * in class table turns it into lower case and assigns it
+   * to the table dta source.
+   * @param filterValue - string of provided value to filter by
+   */
   applyFilter(filterValue: string = '') {
     this.filter = filterValue.trim().toLowerCase();
     this.dataSource.filter = this.filter;
   }
 
+  /**
+   * Method receives input data from a filter field
+   * in teacher table turns it into lower case and assigns it
+   * to the table dta source.
+   * @param filterValue - string of provided value to filter by
+   */
   applyTeacherFilter(filterValue: string = '') {
     this.filter = filterValue.trim().toLowerCase();
     this.teachersData.filter = this.filter;
   }
 
+  /**
+   * Method navigates to the selected
+   * class from appropriate row
+   * @param row - object representing a class
+   */
   selectRow(row) {
     this.router.navigate(['class', row.id], {
       relativeTo: this.route
     });
   }
 
+  /**
+   * Method navigates to the selected
+   * teacher from appropriate row
+   * @param row - object representing a teacher
+   */
   selectTeacherRow(row) {
     this.router.navigate(['teacher', row.id], {
       relativeTo: this.route

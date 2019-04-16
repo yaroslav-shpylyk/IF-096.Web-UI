@@ -101,14 +101,12 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     this.teachersStorageService.modalsId = id;
     this.router.navigate([id], {
       relativeTo: this.route,
-      //  replaceUrl: true
     });
   }
 
   onEdit(id) {
     this.router.navigate([id, 'edit'], {
       relativeTo: this.route,
-      // replaceUrl: true
     });
   }
 
