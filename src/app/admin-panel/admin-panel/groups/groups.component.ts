@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 
 import { Group } from '../../../models/group-data.model';
 import { GroupsService } from 'src/app/services/groups.service';

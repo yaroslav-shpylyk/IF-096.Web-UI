@@ -1,6 +1,6 @@
-import { Component, AfterViewInit, HostListener, OnDestroy } from '@angular/core';
-import { fromEvent, interval } from 'rxjs';
-import { debounce, takeWhile } from 'rxjs/operators';
+import { Component, OnInit, HostListener } from '@angular/core';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
 import { roles } from '../../enum/roles.enum';
 
@@ -9,13 +9,12 @@ import { roles } from '../../enum/roles.enum';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements AfterViewInit, OnDestroy {
+export class HeaderComponent implements OnInit {
   private hide: boolean;
   private notransition: boolean;
-  private isScrolling;
-  private stoppedScrolling;
   private commonDisplay: boolean;
   private retinaDisplay: boolean;
+  private scroll = new Subject();
 
   constructor(public auth: AuthService) {
   }
@@ -29,42 +28,45 @@ export class HeaderComponent implements AfterViewInit, OnDestroy {
     this.commonDisplay = window.matchMedia('(max-width: 600px)').matches; // most smartphones in portrait mode
     this.retinaDisplay = window.matchMedia('(max-width: 600px) ' +
       'and (min-resolution: 2dppx) and (orientation: portrait)').matches; // smartphones with retina display in portrait mode
-    this.hideHeader(); // call after every screen width changing (e.g portrait and landscape mode)
   }
 
-  ngAfterViewInit() {
-    window.dispatchEvent(new Event('resize')); // trigger resize event to know screen width once the view is created
+  /**
+   * listen to scroll event
+   * hide header on mobile devices
+   */
+  @HostListener('window:scroll', ['$event'])
+  onScroll() {
+    if (this.commonDisplay || this.retinaDisplay) {
+      this.scroll.next(this.hideHeader());
+    }
   }
 
-  ngOnDestroy(): void {
-    this.isScrolling.unsubscribe();
-    this.stoppedScrolling.unsubscribe();
+  ngOnInit() {
   }
 
   /**
    * hide header on scroll on mobile view
    */
-  hideHeader() {
-    this.isScrolling = fromEvent(window, 'scroll').pipe(
-      takeWhile(() => this.commonDisplay || this.retinaDisplay) // subscribe only on mobile screens
-    ).subscribe(() => {
-      if (window.scrollY >= 0 && window.scrollY <= 50) {
-        this.hide = false;
-        this.notransition = true; // add header without delay when user scrolls to the top of the page
-      } else {
-        this.hide = true;
-        this.notransition = false; // hide header when user is scrolling
-      }
-    });
+  hideHeader(): any {
+    if (window.scrollY >= 0 && window.scrollY <= 50) {
+      this.hide = false;
+      this.notransition = true; // add header without delay when user scrolls to the top of the page
+    } else {
+      this.hide = true;
+      this.notransition = false;
+    }
+  }
 
-    this.stoppedScrolling = fromEvent(window, 'scroll').pipe(
-      takeWhile(() => this.commonDisplay || this.retinaDisplay), // subscribe only on mobile screens
-      debounce(() => interval(2000))
+  /**
+   * show header when user stops scrolling with 2s delay
+   */
+  showHeader() {
+    this.scroll.pipe(
+      debounceTime(2000),
     ).subscribe(() => {
       this.hide = false;
-      this.notransition = false; // show header when user stops scrolling with 2s delay
+      this.notransition = false;
     });
-
   }
 
   /**
