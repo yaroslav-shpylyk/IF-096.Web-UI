@@ -43,11 +43,11 @@ export class NewYearService {
   public transitClasses(formData) {
     const request = this.getTransitRequest(formData);
     this.createClasses(request.transitClassesQuery).subscribe(
-      res => {res.data
-       .forEach(
-         (newClass, index) => {request.bindPupilsQuery[index].newClassID = newClass.id; }
+      res => {
+        res.data.forEach(
+          (newClass, index) => { request.bindPupilsQuery[index].newClassID = newClass.id; }
         );
-              this.bindPupils(request.bindPupilsQuery).subscribe();
+        this.bindPupils(request.bindPupilsQuery).subscribe();
       }
      );
   }
@@ -96,12 +96,14 @@ export class NewYearService {
     const bindPupilsQuery = [];
     formData.forEach(
       (item) => {
-        if (item) {transitClassesQuery.push(
-          {
-            className: item.newTitle,
-            classYear: item.newYear
-          });
-                   bindPupilsQuery.push({oldClassId: item.id});
+        if (item) {
+          transitClassesQuery.push(
+            {
+              className: item.newTitle,
+              classYear: item.newYear
+            }
+          );
+          bindPupilsQuery.push({oldClassId: item.id});
         }
       }
     );
@@ -114,9 +116,9 @@ export class NewYearService {
   /**
    * adds new classes based on currently classes with new year and name
    * @returns responce that contain id's for new classes
-   * @param req  objects with classes info
+   * @param req  objects array with classes info (new class title and new year)
    */
-  public createClasses(req: any): Observable<any> {
+  public createClasses(req: { className: string, classYear: number }[]): Observable<any> {
     return this.http.post(`/students/transition`, req, {observe: 'response'})
     .pipe(
       map((response: any) => {
@@ -131,9 +133,9 @@ export class NewYearService {
   /**
    * binds students to new classes, deactivate previous year classes
    * @returns responce that contain id's for new classes
-   * @param req  objects with id's for classes (old and new id's)
+   * @param req  objects array with id's for classes (old and new id's)
    */
-  public bindPupils(req: any): Observable<any> {
+  public bindPupils(req: { newClassId: number, oldClassId: number }[]): Observable<any> {
     return this.http.put(`/students/transition`, req);
   }
 }
