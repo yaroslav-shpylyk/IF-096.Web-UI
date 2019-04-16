@@ -50,7 +50,6 @@ export class ClassJournalComponent implements OnInit, OnDestroy {
         this.teachersStorageService
           .getTeacher(this.idTeacher)
           .subscribe(teacher => {
-            console.log(teacher);
             this.teacher = teacher;
           });
       }
@@ -65,7 +64,6 @@ export class ClassJournalComponent implements OnInit, OnDestroy {
       this.journalsStorageService
         .getJournal(this.idi, this.data)
         .subscribe(journal => {
-          console.log(journal);
           this.journal = journal;
           this.journalData = new MatTableDataSource(this.journal);
           this.journalData.sort = this.sort;

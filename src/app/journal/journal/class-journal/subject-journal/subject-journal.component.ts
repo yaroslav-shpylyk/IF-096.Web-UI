@@ -13,13 +13,13 @@ import { BottomSheetOverviewSheetComponent } from './bottom-sheet-overview.compo
 })
 export class SubjectJournalComponent implements OnInit, OnDestroy {
   journal: Journal[];
-  dataSource;
-  thRow = ['Учень'];
+  dataSource: any[];
+  thRow: string[];
   idSubject: number;
   idClass: number;
-  displayedColumns = [];
-  studentIds = [];
-  elData = [];
+  displayedColumns: string[];
+  studentIds: number[];
+  elData: any[];
   private loadingSub: Subscription;
   isLoading = false;
 
@@ -45,7 +45,11 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     });
   }
 
-  average(marks) {
+  /**
+   * Method receives an array of all student marks and calculates the avarage.
+   * @returns - avarage mark;
+   */
+  average(marks: number[]) {
     let res = 0;
     let counter = 0;
     for (const key in marks) {
@@ -57,6 +61,11 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     return res ? Math.round((res / counter) * 10) / 10 : '';
   }
 
+  /**
+   * Method fetches a journal by available subject id and class id,
+   * makes manipulations with received data in order to fit the table
+   * and creates the journal table itself.
+   */
   renderTable() {
     this.journalsStorageService
       .getJournaL(this.idSubject, this.idClass)
@@ -97,6 +106,16 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * Method receives from the table all needed values for assigning a mark,
+   * appropriately transforms them, changes clicked cell and row color
+   * and passes to the bottom sheet component needed data.
+   * Om closing bottom sheet the table's cell and row colors are changed to the ddfault.
+   * @param idLesson - id number of the lesson;
+   * @param studentEl - object representing student;
+   * @param event - object representing a click event;
+   * @param i - index of column in a row;
+   */
   onClc(idLesson, studentEl, event, i) {
     if (!Number.isInteger(+idLesson)) {
       return;
@@ -123,6 +142,10 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Method initialize default values for table
+   * data source beforethe journal can be created.
+   */
   initialiseState() {
     this.thRow = ['Учень'];
     this.displayedColumns = [];
