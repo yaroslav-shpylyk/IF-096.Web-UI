@@ -2,14 +2,9 @@ import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { JournalsStorageService } from 'src/app/services/journals-storage.service';
 import { Journal } from 'src/app/models/journal-data';
 import { ActivatedRoute, Params } from '@angular/router';
-import {
-  MatBottomSheet,
-  MatBottomSheetRef,
-  MAT_BOTTOM_SHEET_DATA,
-  MatSnackBar,
-  MatSnackBarConfig
-} from '@angular/material';
+import { MatBottomSheet } from '@angular/material';
 import { Subscription } from 'rxjs';
+import { BottomSheetOverviewSheetComponent } from './bottom-sheet-overview.components';
 
 @Component({
   selector: 'app-subject-journal',
@@ -109,7 +104,7 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     event.target.style.backgroundColor = 'rgba(24, 236, 119, 0.432)';
     event.path[1].style.backgroundColor = 'rgba(24, 151, 236, 0.432)';
     const bottomSheetRef = this.bottomSheet.open(
-      BottomSheetOverviewExampleSheetComponent,
+      BottomSheetOverviewSheetComponent,
       {
         data: {
           lessonId: idLesson,
@@ -137,84 +132,5 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.loadingSub.unsubscribe();
-  }
-}
-
-@Component({
-  selector: 'app-bottom-sheet',
-  templateUrl: 'bottom-sheet-overview-example-sheet.html'
-})
-export class BottomSheetOverviewExampleSheetComponent {
-  constructor(
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
-    private journalsStorageService: JournalsStorageService,
-    public snackBar: MatSnackBar,
-    private bottomSheetRef: MatBottomSheetRef<
-      BottomSheetOverviewExampleSheetComponent
-    >
-  ) {}
-
-  studentFullName = this.data.student.studentFullName;
-  mark = this.data.student.marks.find(el => {
-    return el.idLesson === +this.data.lessonId;
-  });
-
-  journalIndx = this.data.student.marks.indexOf(this.mark);
-
-  selectedVal = this.mark.mark;
-  selectedNote = this.mark.note;
-  elData = this.data.elData;
-  id = this.data.id;
-  lessonId = this.data.lessonId;
-  journal = this.data.journal;
-  valChanged = false;
-
-  counter(i: number) {
-    return new Array(i);
-  }
-
-  onValChange(mark?) {
-    if (this.selectedVal || mark) {
-      this.valChanged = true;
-      this.selectedVal = mark ? mark : this.selectedVal;
-    }
-  }
-
-  onNoteChange() {
-    this.valChanged = true;
-  }
-
-  openSnackBar(message: string, classMessage: string) {
-    const config = new MatSnackBarConfig();
-    config.panelClass = [classMessage];
-    config.duration = 2000;
-    config.verticalPosition = 'top';
-    this.snackBar.open(message, null, config);
-  }
-
-  onSave() {
-    this.journalsStorageService
-      .saveMark({
-        idLesson: this.data.lessonId,
-        idStudent: this.data.student.idStudent,
-        mark: this.selectedVal,
-        note: this.selectedNote
-      })
-      .subscribe(
-        resp => {
-          this.elData[this.id][this.lessonId] = resp.body.data.mark;
-          this.bottomSheetRef.dismiss();
-          this.openSnackBar(`Нові дані внесено`, 'snack-class-success');
-          this.journal[this.id].marks[this.journalIndx].mark =
-            resp.body.data.mark;
-          this.journal[this.id].marks[this.journalIndx].note =
-            resp.body.data.note;
-        },
-        error => {
-          console.log(error);
-          this.bottomSheetRef.dismiss();
-          this.openSnackBar(`На сервері відбулась помилка`, 'snack-class-fail');
-        }
-      );
   }
 }
