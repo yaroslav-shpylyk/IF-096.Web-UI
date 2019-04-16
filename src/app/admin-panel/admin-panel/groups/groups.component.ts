@@ -19,8 +19,10 @@ export class GroupsComponent implements OnInit, OnDestroy {
   dataSourceCloseClass: MatTableDataSource<Group>;
 
 
-  constructor(private groupServices: GroupsService,
-              public dialog: MatDialog) { }
+  constructor(
+    private groupServices: GroupsService,
+    public dialog: MatDialog
+   ) { }
 
   ngOnInit() {
     this.refreshGroups();
