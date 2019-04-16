@@ -17,7 +17,7 @@ export class SubjectsComponent implements OnInit {
   public dataSource: MatTableDataSource<SubjectData>;
 
   constructor(public subjectService: SubjectService,
-    public dialog: MatDialog) { }
+              public dialog: MatDialog) { }
 
   ngOnInit() {
     this.showList();
@@ -47,14 +47,14 @@ export class SubjectsComponent implements OnInit {
    * update list of subjects
    * @param subject - data which sends to the dialog window
    */
-  openDialog(subject: Object): void {
+  openDialog(subject: any): void {
     const dialogRef = this.dialog.open(ModifySubjectsComponent, {
       data: (subject) ? { ...subject } : {}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result == undefined) { return };
-      let index = this.subjects.findIndex(subj => subj.subjectId == result.data.subjectId);
+      if (result === undefined) { return; }
+      const index = this.subjects.findIndex(subj => subj.subjectId === result.data.subjectId);
       if (index >= 0) {
         this.subjects[index] = result.data;
       } else {

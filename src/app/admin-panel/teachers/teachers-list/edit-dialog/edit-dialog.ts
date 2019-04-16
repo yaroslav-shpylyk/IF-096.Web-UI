@@ -14,50 +14,7 @@ import {
 import { MatSnackBar } from '@angular/material';
 import { TeacherData } from 'src/app/models/teacher-data';
 
-@Injectable()
-@Component({
-  template: ''
-})
-export class EditDialogEntryComponent implements OnInit, OnDestroy {
-  teacher;
-  id: number;
-  subscription: Subscription;
 
-  constructor(
-    public dialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute,
-    private teachersStorageService: TeachersStorageService
-  ) {
-    this.openDialog();
-  }
-
-  ngOnInit() {
-    this.route.params.subscribe((params: Params) => {
-      this.id = +params.id;
-      this.teachersStorageService.editMode = params.id != null;
-      this.teachersStorageService.modalsId = this.id;
-    });
-  }
-
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(EditDialogOverviewComponent, {
-      maxWidth: '90vw'
-    });
-    dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['/admin-panel', 'teachers'], {
-        relativeTo: this.route,
-        replaceUrl: true
-      });
-    });
-  }
-}
 
 @Component({
   selector: 'app-edit-dialog-overview',
@@ -78,7 +35,7 @@ export class EditDialogOverviewComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     public snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.editMode = this.teachersStorageService.editMode;
@@ -235,5 +192,50 @@ export class EditDialogOverviewComponent implements OnInit, OnDestroy {
     config.duration = 2000;
     config.verticalPosition = 'top';
     this.snackBar.open(message, null, config);
+  }
+}
+
+@Injectable()
+@Component({
+  template: ''
+})
+export class EditDialogEntryComponent implements OnInit, OnDestroy {
+  teacher;
+  id: number;
+  subscription: Subscription;
+
+  constructor(
+    public dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute,
+    private teachersStorageService: TeachersStorageService
+  ) {
+    this.openDialog();
+  }
+
+  ngOnInit() {
+    this.route.params.subscribe((params: Params) => {
+      this.id = +params.id;
+      this.teachersStorageService.editMode = params.id != null;
+      this.teachersStorageService.modalsId = this.id;
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(EditDialogOverviewComponent, {
+      maxWidth: '90vw'
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.router.navigate(['/admin-panel', 'teachers'], {
+        relativeTo: this.route,
+        replaceUrl: true
+      });
+    });
   }
 }
