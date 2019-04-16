@@ -42,8 +42,6 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    window.dispatchEvent(new Event('resize')); // trigger resize event to know screen width once the component is created
-    this.showHeader();
   }
 
   /**
