@@ -12,10 +12,12 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatSnackBarConfig } from '@
 
 export class AddModifyGroupComponent implements OnInit {
 
-  constructor(private dialogRef: MatDialogRef<AddModifyGroupComponent>,
-              private groupServices: GroupsService,
-              public snackBar: MatSnackBar,
-              @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(
+    private dialogRef: MatDialogRef<AddModifyGroupComponent>,
+    private groupServices: GroupsService,
+    public snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
 
   ngOnInit() {
   }
@@ -23,31 +25,30 @@ export class AddModifyGroupComponent implements OnInit {
   /**
    * Method reports about closing bottom sheet
    */
-  abort(group?: object) {
-    this.dialogRef.close(group);
+  abort(): void {
+    this.dialogRef.close();
   }
 
   /**
    * Method saves data about a new or modified class
    * @param formValue - data about the class that we want to change or create
    */
-  save(data: object) {
-    const group = new Group(data);
+  save() {
+    const group = new Group(this.data);
     this.groupServices.addGrup(group).subscribe((dataResponse: any) => {
-      if (group.id === undefined  && !(dataResponse === undefined)) {
-        this.abort(dataResponse);
-        this.openSnackBar(
-          `Клас ${dataResponse.className}  ${dataResponse.classYear} року створений`,
-          'snack-class-success'
-        );
-      } else if (group.id && !(dataResponse === undefined)) {
-        this.abort();
+      if (group.id && !(dataResponse === undefined)) {
+        this.dialogRef.close(dataResponse);
         this.openSnackBar(
           `Клас ${dataResponse.className}  ${dataResponse.classYear} року. Зміни збережено`,
           'snack-class-success'
         );
+      } else if (group.id === undefined && !(dataResponse === undefined)) {
+        this.dialogRef.close(dataResponse);
+        this.openSnackBar(
+          `Клас ${dataResponse.className}  ${dataResponse.classYear} року створений`,
+          'snack-class-success'
+        );
       } else if (dataResponse === undefined) {
-        this.abort();
         this.openSnackBar(
           `НЕ ЗБЕРЕЖЕНО!!! Можливо даний клас вже існує`,
           'snack-class-fail'

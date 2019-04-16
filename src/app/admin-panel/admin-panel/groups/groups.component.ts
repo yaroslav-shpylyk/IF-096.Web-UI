@@ -4,6 +4,7 @@ import { Group } from '../../../models/group-data.model';
 import { GroupsService } from 'src/app/services/groups.service';
 import { AddModifyGroupComponent } from './add-modify/add-modify.component';
 import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
+import { group } from '@angular/animations';
 
 @Component({
   selector: 'app-groups',
@@ -19,8 +20,10 @@ export class GroupsComponent implements OnInit, OnDestroy {
   dataSourceCloseClass: MatTableDataSource<Group>;
 
 
-  constructor(private groupServices: GroupsService,
-              public dialog: MatDialog) { }
+  constructor(
+    private groupServices: GroupsService,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit() {
     this.refreshGroups();
@@ -59,17 +62,24 @@ export class GroupsComponent implements OnInit, OnDestroy {
    * Method open popups sheet, send data to the popups sheet,
    *  updates list of class after closing popups sheet
    */
-  openPopupsSheet(element: object) {
+  openPopupsSheet(element: object): void {
     const sheet = this.dialog.open(AddModifyGroupComponent, {
-      hasBackdrop: true,
-      data: (element) ? element : Group
+      data: (element) ? { ...element } : {}
     });
 
-    sheet.afterClosed().subscribe((data?) => {
-      if (data) {
-        this.groups.push(data);
-        this.matTableFilter();
+    sheet.afterClosed().subscribe((data) => {
+      if (data === undefined) { return; }
+      let addOrEdit = true;
+      this.groups.filter((value: Group, index: number, array: Group[]) => {
+        if (array[index].id === data.id) {
+          this.groups[index] = data;
+          addOrEdit = false;
+        }
+      });
+      if (addOrEdit) {
+        this.groups = [...this.groups, data];
       }
+      this.matTableFilter();
     });
   }
 
