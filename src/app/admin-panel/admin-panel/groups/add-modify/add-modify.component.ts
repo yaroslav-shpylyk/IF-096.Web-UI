@@ -15,25 +15,27 @@ export class AddModifyGroupComponent implements OnInit {
   myFirstReactiveForm: FormGroup;
 
   constructor(private dialogRef: MatDialogRef<AddModifyGroupComponent>,
-  private groupServices: GroupsService,
-  @Inject(MAT_DIALOG_DATA) public data: any) {}
+              private groupServices: GroupsService,
+              @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
   }
 
-  /**
-  * Method reports about closing bottom sheet
-  */
-  abort(){
-    this.dialogRef.close()
+  /*
+   * Method reports about closing bottom sheet
+   */
+
+  abort() {
+    this.dialogRef.close();
   }
 
   /**
-  * Method saves data about a new or modified class
-  * @param formValue - data about the class that we want to change or create
-  */
-  save(formValue: Object) {
+   * Method saves data about a new or modified class
+   * @param formValue - data about the class that we want to change or create
+   */
+
+  save(formValue: any) {
     const group = new Group(formValue);
     this.groupServices.addGrup(group).subscribe();
-  }  
+  }
 }

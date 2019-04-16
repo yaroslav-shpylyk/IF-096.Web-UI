@@ -1,4 +1,6 @@
 <mat-toolbar>
-  <!--example bottom navigation menu-->
-  <app-footer-menu></app-footer-menu>
+  <!-- bottom navigation menu-->
+  <div *ngIf="isAdmin()"> <!-- menu list for admin-->
+    <app-admin-footer-menu></app-admin-footer-menu> <!-- show for mobiles and tablets -->
+  </div>
 </mat-toolbar>

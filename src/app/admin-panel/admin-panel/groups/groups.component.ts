@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-
 import { Group } from '../../../models/group-data.model';
 import { GroupsService } from 'src/app/services/groups.service';
 import { AddModifyGroupComponent } from './add-modify/add-modify.component';
@@ -17,45 +16,45 @@ export class GroupsComponent implements OnInit {
   displayedColumns: string[] = ['className', 'classYear', 'isActive', 'id'];
   dataSourceActivClass: MatTableDataSource<Group>;
   dataSourceCloseClass: MatTableDataSource<Group>;
-  
+
 
   constructor(private groupServices: GroupsService,
-  public dialog: MatDialog) { }
-           
+              public dialog: MatDialog) { }
+
   ngOnInit() {
-    this.refreshGroups()
+    this.refreshGroups();
   }
 
   /**
-  * Method filters the search for open classes
-  */
+   * Method filters the search for open classes
+   */
   applyFilterForActiveClass(filterValue: string) {
     this.dataSourceActivClass.filter = filterValue.trim().toLowerCase();
   }
 
   /**
-  * Method filters the search for closed classes
-  */
+   * Method filters the search for closed classes
+   */
   applyFilterForCloseClass(filterValue: string) {
     this.dataSourceCloseClass.filter = filterValue.trim().toLowerCase();
   }
 
   /**
-  * Method open popups sheet, send data to the popups sheet,
-  *  updates list of class after closing popups sheet
-  */
-  openPopupsSheet(element:Object) {
-    let sheet = this.dialog.open(AddModifyGroupComponent,{
+   * Method open popups sheet, send data to the popups sheet,
+   *  updates list of class after closing popups sheet
+   */
+  openPopupsSheet(element: any) {
+    const sheet = this.dialog.open(AddModifyGroupComponent, {
       hasBackdrop: true,
-      data: (element) ? element : Group   
+      data: (element) ? element : Group
     });
-    sheet.afterClosed().subscribe(()=> this.refreshGroups())
+    sheet.afterClosed().subscribe(() => this.refreshGroups());
   }
-    
+
   /**
-  * Method updates list of class and creates the possibility of sorting them
-  */
-  refreshGroups(){
+   * Method updates list of class and creates the possibility of sorting them
+   */
+  refreshGroups() {
     this.groupServices.getGroups().subscribe( data =>  {
       this.groups = data;
       this.dataSourceActivClass = new MatTableDataSource(this.groups
