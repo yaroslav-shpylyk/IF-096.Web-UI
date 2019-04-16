@@ -13,16 +13,14 @@
   display: flex;
 }
 
-.mat-column-teacherCard  {
+.mat-column-teacherCard {
   padding: 0.7em;
-  // display: flex;
   justify-content: left;
 
   width: 240px;
 }
 
-.mat-column-num  {
-
+.mat-column-num {
   width: 5%;
 }
 
@@ -37,7 +35,7 @@ mat-card {
 }
 
 mat-form-field {
-  display: block
+  display: block;
 }
 
 mat-list {
@@ -68,4 +66,9 @@ mat-select {
   display: flex !important;
   justify-content: center !important;
   color: white !important;
+}
+
+::ng-deep  .mat-icon-button {
+  padding-right: 0.4em;
+  margin-right: 0.1em;
 }

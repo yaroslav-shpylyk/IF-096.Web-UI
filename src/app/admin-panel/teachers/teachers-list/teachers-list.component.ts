@@ -12,7 +12,6 @@ import {
   MatTableDataSource
 } from '@angular/material';
 
-
 @Component({
   selector: 'app-confirmation-dialog',
   templateUrl: './confirmation-dialog/app-confirmation-dialog.html',
@@ -61,8 +60,9 @@ export class ConfirmationDialogComponent {
 export class TeachersListComponent implements OnInit, OnDestroy {
   teachers;
   subscription: Subscription;
-  filteredTeachers = '';
+  // filteredTeachers = '';
   dataSource;
+  arr = [];
 
   displayedColumns: string[] = ['num', 'teacherCard', 'lastname', 'firstname'];
 
@@ -79,10 +79,25 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     this.teachers = this.teachersStorageService.getTeachers();
     this.subscription = this.teachersStorageService.teachersChanged.subscribe(
       teachers => {
-        console.log(teachers);
         this.teachers = teachers;
-        this.dataSource = new MatTableDataSource(this.teachers);
-        this.dataSource.sort = this.sortCol;
+        this.teachers.forEach(teacher => {
+          this.teachersStorageService
+            .getTeacherSubjectsClasses(teacher.id)
+            .subscribe(data => {
+              data.avatar = teacher.avatar;
+              data.lastname = teacher.lastname;
+              data.firstname = teacher.firstname;
+              data.patronymic = teacher.patronymic;
+              this.arr.push(data);
+              this.dataSource = new MatTableDataSource(this.arr);
+              this.dataSource.sort = this.sortCol;
+            });
+          });
+        // console.log(this.arr);
+        // this.dataSource = new MatTableDataSource(this.teachers);
+        console.log(this.arr);
+        // this.dataSource = new MatTableDataSource(this.arr);
+        // this.dataSource.sort = this.sortCol;
       }
     );
 
@@ -110,13 +125,13 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   onTeacherDetails(id) {
     this.teachersStorageService.modalsId = id;
     this.router.navigate([id], {
-      relativeTo: this.route,
+      relativeTo: this.route
     });
   }
 
   onEdit(id) {
     this.router.navigate([id, 'edit'], {
-      relativeTo: this.route,
+      relativeTo: this.route
     });
   }
 

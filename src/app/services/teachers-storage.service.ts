@@ -130,8 +130,25 @@ export class TeachersStorageService {
             academicYear: item.academicYear
           };
         }
-
+        console.log(Object.values(journalData));
         return Object.values(journalData);
+      })
+    );
+  }
+
+  getTeacherSubjectsClasses(teacherId): Observable<any> {
+    return this.httpClient.get(`/journals/teachers/${teacherId}`).pipe(
+      map((response: { status: any; data: any }) => {
+        const data = { subjects: [], classes: [] };
+        for (const item of response.data) {
+          if (!data.subjects.includes(item.subjectName)) {
+            data.subjects.push(item.subjectName);
+          }
+          if (!data.classes.includes(item.className)) {
+            data.classes.push(item.className);
+          }
+        }
+        return data;
       })
     );
   }
