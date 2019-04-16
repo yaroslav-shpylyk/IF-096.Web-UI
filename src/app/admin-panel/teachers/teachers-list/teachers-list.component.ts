@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -7,7 +7,9 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
   MatSnackBar,
-  MatSnackBarConfig
+  MatSnackBarConfig,
+  MatSort,
+  MatTableDataSource
 } from '@angular/material';
 
 
@@ -60,6 +62,11 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   teachers;
   subscription: Subscription;
   filteredTeachers = '';
+  dataSource;
+
+  displayedColumns: string[] = ['num', 'teacherCard', 'lastname', 'firstname'];
+
+  @ViewChild('sortCol') sortCol: MatSort;
 
   constructor(
     private teachersStorageService: TeachersStorageService,
@@ -72,7 +79,10 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     this.teachers = this.teachersStorageService.getTeachers();
     this.subscription = this.teachersStorageService.teachersChanged.subscribe(
       teachers => {
+        console.log(teachers);
         this.teachers = teachers;
+        this.dataSource = new MatTableDataSource(this.teachers);
+        this.dataSource.sort = this.sortCol;
       }
     );
 
@@ -108,6 +118,10 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     this.router.navigate([id, 'edit'], {
       relativeTo: this.route,
     });
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   onDelete(teacher): void {

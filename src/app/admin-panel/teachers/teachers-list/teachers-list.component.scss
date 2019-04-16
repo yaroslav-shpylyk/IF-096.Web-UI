@@ -13,6 +13,25 @@
   display: flex;
 }
 
+.mat-column-teacherCard  {
+  padding: 0.7em;
+  // display: flex;
+  justify-content: left;
+
+  width: 240px;
+}
+
+.mat-column-num  {
+
+  width: 5%;
+}
+
+mat-card {
+  padding: 0.2em;
+  // display: flex;
+  width: 20em;
+}
+
 #menu-trigger {
   margin: auto;
 }
