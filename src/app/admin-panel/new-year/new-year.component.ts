@@ -19,13 +19,11 @@ export class NewYearComponent implements OnInit {
   public isActive = true;
   public isCurrentYear = true;
   public filterHasResults = false;
-  // public filterParams = [this.isNotEmpty, this.isCurrentYear, this.isActive];
-  // public singleInputEnabled = false;
   public controlIndexes: number[] = [];
   panelOpenState = [];
 
   constructor(
-    private newYearTransitition: NewYearService) {  }
+    private newYearTransitition: NewYearService) { }
 
   ngOnInit() {
     this.createTransititionForm();
@@ -37,16 +35,16 @@ export class NewYearComponent implements OnInit {
                 this.controlIndexes.push(i);
                 this.panelOpenState.push(false);
                 const newInput = new FormControl(
-                  {value: '', disabled: false},
+                  {value:  '', disabled: false},
                   [Validators.pattern('^([1-9]|1[0-2])-[А-Я]{1}$'),
                   this.classExistValidator(this.allClasses, schoolClass.classYear)]);
                 (this.transititionForm.controls.newClassTitle as FormArray).push(newInput);
                 this.addFormControls();
               }
-            );
-          }
-      );
-    }
+        );
+      }
+    );
+  }
 
   createTransititionForm(): void {
     this.transititionForm = new FormGroup({
@@ -75,9 +73,9 @@ export class NewYearComponent implements OnInit {
       const error = allClasses.some(
          (item) => {
           return (item.classYear === classYear + 1 && item.className === control.value); }
-       );
-      if (error )  {
-        return { class_exist: {valid: false}  };
+      );
+      if (error) {
+        return { class_exist: {valid: false} };
       }
       return null;
     };
@@ -90,13 +88,15 @@ export class NewYearComponent implements OnInit {
   }
 
   skipClass(event, index: number, id: number) {
-    const classCard = event.target.parentNode.parentNode.parentNode;
+    const classCard = event.target.parentNode.parentNode;
     const input = (this.transititionForm.controls.newClassTitle as FormArray).controls[index];
     const name = (this.transititionForm.controls.newClassTitle as FormArray).controls[index].value;
-    classCard.classList.toggle('locked');
-    if (classCard.classList.contains('locked')) {
+    if (!classCard.classList.contains('locked')) {
       input.reset({ value: name, disabled: true });
-      } else {input.reset({ value: name, disabled: false }); }
+    }
+    else {
+      input.reset({ value: name, disabled: false });
+    }
   }
 
   formSubmit() {
@@ -108,7 +108,7 @@ export class NewYearComponent implements OnInit {
         const skipClass = ((this.transititionForm.controls.skipClassSwitcher as FormArray).controls[controlOrder].value);
         const input = matCard.querySelectorAll('input')[1];
         if (!skipClass) {
-        formData.push(
+          formData.push(
             {
               curTitle: input.dataset.classTitle,
               newTitle: input.value,
@@ -116,7 +116,8 @@ export class NewYearComponent implements OnInit {
               id: input.id
             }
           );
-        }      }
+        }
+      }
     );
     if (this.transititionForm.status === 'VALID') {
       this.newYearTransitition.transitClasses(formData);

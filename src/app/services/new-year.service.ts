@@ -17,19 +17,20 @@ export class NewYearService {
   * Method return list of classes with pupils
   * @returns - list of classes
   */
-
   public getAllClasesInfo(): Observable <ClassInfo[]> {
     return this.getClasses().pipe(
       map(
-        classList => { classList.forEach(
-          (singleClass) =>  {
-            if (singleClass.numOfStudents > 0) {
-              this.getPupilList(singleClass.id)
-              .subscribe( pupilList => singleClass.pupilList = pupilList );
+        classList => {
+          classList.forEach(
+            (singleClass) => {
+              if (singleClass.numOfStudents > 0) {
+                this.getPupilList(singleClass.id)
+                .subscribe(pupilList => singleClass.pupilList = pupilList);
+              }
             }
-          }
-        );
-                       return classList; }
+          );
+        return classList;
+        }
       )
     );
   }
@@ -38,7 +39,6 @@ export class NewYearService {
    * Method create new classes with new titles for the next year and bind pupils to them
    * @returns list of classes
    * @param   formData object that contain new titles for classes
-   * @param   classes  classes data
    */
   public transitClasses(formData) {
     const request = this.getTransitRequest(formData);
@@ -85,7 +85,6 @@ export class NewYearService {
     );
   }
 
-
   /**
    * Method generate requests for creating classes and pupils binding methods
    * @returns object that contain requests
@@ -111,7 +110,6 @@ export class NewYearService {
       bindPupilsQuery
     };
   }
-
 
   /**
    * adds new classes based on currently classes with new year and name
