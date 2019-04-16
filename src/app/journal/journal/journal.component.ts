@@ -68,8 +68,8 @@ export class JournalComponent implements OnInit {
   /**
    * Method receives input data from a filter field
    * in class table turns it into lower case and assigns it
-   * to the table dta source.
-   * @param filterValue - string of provided value to filter by
+   * to the table data source.
+   * @param filterValue - string of provided value to filter by.
    */
   applyFilter(filterValue: string = '') {
     this.filter = filterValue.trim().toLowerCase();
@@ -79,8 +79,8 @@ export class JournalComponent implements OnInit {
   /**
    * Method receives input data from a filter field
    * in teacher table turns it into lower case and assigns it
-   * to the table dta source.
-   * @param filterValue - string of provided value to filter by
+   * to the table data source.
+   * @param filterValue - string of provided value to filter by.
    */
   applyTeacherFilter(filterValue: string = '') {
     this.filter = filterValue.trim().toLowerCase();
@@ -88,8 +88,8 @@ export class JournalComponent implements OnInit {
   }
 
   /**
-   * Method navigates to the selected
-   * class from appropriate row
+   * Method navigates to the route with
+   * selected class from appropriate row
    * @param row - object representing a class
    */
   selectRow(row) {
@@ -99,8 +99,8 @@ export class JournalComponent implements OnInit {
   }
 
   /**
-   * Method navigates to the selected
-   * teacher from appropriate row
+   * Method navigates to the route with
+   * selected teacher from appropriate row
    * @param row - object representing a teacher
    */
   selectTeacherRow(row) {

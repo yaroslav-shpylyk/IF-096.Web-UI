@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Params, Router, ActivatedRoute } from '@angular/router';
 import { JournalsStorageService } from 'src/app/services/journals-storage.service';
-import { Journal } from 'src/app/models/journal-data';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
+import { TeacherData } from 'src/app/models/teacher-data';
 
 @Component({
   selector: 'app-class-journal',
@@ -19,9 +19,9 @@ export class ClassJournalComponent implements OnInit, OnDestroy {
   filter: string;
   isLoading = false;
   private loadingSub: Subscription;
-  teacher;
-  idi;
-  data;
+  teacher: TeacherData;
+  idi: number;
+  data: string;
 
   displayedColumns: string[] = ['num', 'subjectName', 'academicYear'];
   journalData;
@@ -47,9 +47,10 @@ export class ClassJournalComponent implements OnInit, OnDestroy {
       this.idTeacher = +params.idTeacher;
 
       if (this.idTeacher) {
-        this.teacher = this.teachersStorageService
+        this.teachersStorageService
           .getTeacher(this.idTeacher)
           .subscribe(teacher => {
+            console.log(teacher);
             this.teacher = teacher;
           });
       }
@@ -64,6 +65,7 @@ export class ClassJournalComponent implements OnInit, OnDestroy {
       this.journalsStorageService
         .getJournal(this.idi, this.data)
         .subscribe(journal => {
+          console.log(journal);
           this.journal = journal;
           this.journalData = new MatTableDataSource(this.journal);
           this.journalData.sort = this.sort;
@@ -71,12 +73,22 @@ export class ClassJournalComponent implements OnInit, OnDestroy {
         });
     });
   }
-
+  /**
+   * Method receives input data from a filter field
+   * in teacher table turns it into lower case and assigns it
+   * to the table data source.
+   * @param filterValue - string of provided value to filter by
+   */
   applyFilter(filterValue: string = '') {
     this.filter = filterValue.trim().toLowerCase();
     this.journalData.filter = this.filter;
   }
 
+  /**
+   * Depending on available data method finds out
+   * which route user should navigate further.
+   * @param row - object representing a discipline.
+   */
   selectRow(row) {
     if (this.idTeacher) {
       this.router.navigate([
