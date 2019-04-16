@@ -93,8 +93,7 @@ export class NewYearComponent implements OnInit {
     const name = (this.transititionForm.controls.newClassTitle as FormArray).controls[index].value;
     if (!classCard.classList.contains('locked')) {
       input.reset({ value: name, disabled: true });
-    }
-    else {
+    } else {
       input.reset({ value: name, disabled: false });
     }
   }

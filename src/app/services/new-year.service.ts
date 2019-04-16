@@ -29,7 +29,7 @@ export class NewYearService {
               }
             }
           );
-        return classList;
+          return classList;
         }
       )
     );
