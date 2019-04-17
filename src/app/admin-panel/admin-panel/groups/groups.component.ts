@@ -57,7 +57,7 @@ export class GroupsComponent implements OnInit {
    * Method open popups sheet, send data to the popups sheet,
    *  updates list of class after closing popups sheet
    */
-  openPopupsSheet(element: object): void {
+  openPopupsSheet(element: any): void {
     const sheet = this.dialog.open(AddModifyGroupComponent, {
       data: (element) ? { ...element } : {}
     });
