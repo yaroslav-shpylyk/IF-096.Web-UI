@@ -1,48 +1,98 @@
-<p>
-  teacher-connection works!
-</p>
-
 <!--header-->
 <app-header></app-header>
-<div class="wrap-content"> 
+<div class="wrap-content">
   <div class="container">
-    <br>
-    <p>{{title}}</p>
-    <br>
-    <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)">
-        <div class="form-group">              
-            <mat-form-field>
-                <mat-select placeholder="Виберіть вчителя" formControlName='teacherId'>
-                  <mat-option *ngFor="let item of teachers" [value]="item.id">{{item.firstname + " " + item.lastname }}</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <br>
-              <mat-form-field>
-              <mat-select placeholder="Виберіть предмет" formControlName='subjectId'>
-                  <mat-option *ngFor="let item of subjects" [value]="item.subjectId">{{item.subjectName}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <br>
-              <mat-form-field>
-                  <mat-select placeholder="Виберіть клас" formControlName='classId'>
-                    <mat-option *ngFor="let item of classes" [value]="item.id">{{item.className}}</mat-option>
-                  </mat-select>
-                </mat-form-field>
-                <br>
-              <button mat-raised-button color="primary" type="submit" [disabled]="!myForm">
-                  <mat-icon>save_alt</mat-icon>
-                  Зберегти</button>
-        </div>
+    <br />
+    <p>{{ title }}</p>
+    <br />
+    <form [formGroup]="myForm">
+      <mat-vertical-stepper [linear]="isLinear" #stepper>
+        <mat-step [stepControl]="teacherId">
+          <ng-template matStepLabel>Виберіть вчителя</ng-template>
+          <mat-form-field>
+            <mat-select placeholder="" formControlName="teacherId">
+              <mat-option *ngFor="let item of teachers" [value]="item.id">{{
+                item.firstname + " " + item.lastname
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div>
+            <button
+              mat-button
+              [disabled]="myForm.controls.teacherId.errors?.required"
+              matStepperNext
+            >
+              Далі
+            </button>
+          </div>
+        </mat-step>
+        <mat-step [stepControl]="subjectId">
+          <ng-template matStepLabel>Виберіть предмет</ng-template>
+          <mat-form-field>
+            <mat-select placeholder="" formControlName="subjectId">
+              <mat-option
+                *ngFor="let item of subjects"
+                [value]="item.subjectId"
+                >{{ item.subjectName }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Назад</button>
+            <button
+              mat-button
+              matStepperNext
+              [disabled]="myForm.controls.subjectId.errors?.required"
+            >
+              Далі
+            </button>
+          </div>
+        </mat-step>
+        <mat-step [stepControl]="classId">
+          <ng-template matStepLabel>Виберіть клас</ng-template>
+          <mat-form-field>
+            <mat-select placeholder="" formControlName="classId">
+              <mat-option *ngFor="let item of classes" [value]="item.id">{{
+                item.className
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Назад</button>
+            <button
+              mat-button
+              matStepperNext
+              [disabled]="myForm.controls.classId.errors?.required"
+            >
+              Далі
+            </button>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Підтвердити</ng-template>
+          Ви зробили вибір?
+          <div>
+            <button mat-button matStepperPrevious>Назад</button>
+            <button mat-button (click)="stepper.reset()">Спочатку</button><br />
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="!myForm"
+              (click)="onSubmit(myForm.value)"
+            >
+              <mat-icon>save_alt</mat-icon>
+              Зберегти
+            </button>
+          </div>
+        </mat-step>
+      </mat-vertical-stepper>
     </form>
   </div>
 </div>
 <footer>
-<div fxHide.gt-xs> <!-- show only for mobile devices-->
-  <app-footer></app-footer>
-</div>
-
-
-
-  
-  
-  
+  <div fxHide.gt-xs>
+    <!-- show only for mobile devices-->
+    <app-footer></app-footer>
+  </div>
+</footer>

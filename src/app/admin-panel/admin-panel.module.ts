@@ -27,6 +27,7 @@ import { MatMenuModule } from '@angular/material';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { TeacherConnectionComponent } from './teacher-connection/teacher-connection.component'; 
 import { SharedModule } from '../shared/shared.module';
+import {MatStepperModule} from '@angular/material/stepper';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { SharedModule } from '../shared/shared.module';
     ReactiveFormsModule,
     MaterialModule,
     MatSelectModule,
-    SharedModule
+    SharedModule,
+    MatStepperModule
   ],
   entryComponents: [
     AddModifyGroupComponent,

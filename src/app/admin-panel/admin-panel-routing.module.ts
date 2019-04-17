@@ -53,7 +53,7 @@ const routes: Routes = [
       {
         path:'teacher-connection',
         component: TeacherConnectionComponent
-      }
+      },
     ]
   }
 ];

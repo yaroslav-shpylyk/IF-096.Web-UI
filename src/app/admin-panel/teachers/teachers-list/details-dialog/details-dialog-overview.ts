@@ -14,12 +14,13 @@ export class DialogEntryComponent implements OnInit {
   teacher;
   id: number;
   subscription: Subscription;
-
+ 
   constructor(
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
-    private teachersStorageService: TeachersStorageService
+    private teachersStorageService: TeachersStorageService,
+    
   ) {
     this.openDialog();
   }
@@ -28,7 +29,7 @@ export class DialogEntryComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.id = +params.id;
       this.teachersStorageService.modalsId = this.id;
-    });
+    }); 
   }
 
   openDialog(): void {
@@ -52,17 +53,17 @@ export class DialogEntryComponent implements OnInit {
 export class DetailsDialogOverviewComponent implements OnInit {
   teacher: Teacher;
   teacherJournal;
-
+ 
   constructor(
     public dialogRef: MatDialogRef<DetailsDialogOverviewComponent>,
     private teachersStorageService: TeachersStorageService,
     private router: Router,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute,   
     @Inject(MAT_DIALOG_DATA)
     public data: any
   ) {}
 
-  ngOnInit() {
+   ngOnInit() {
     this.teachersStorageService
       .getTeacher(this.teachersStorageService.modalsId)
       .subscribe(
