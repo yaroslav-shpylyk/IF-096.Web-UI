@@ -1,4 +1,4 @@
-export interface MarksRequestOptions {
+export interface MarkRequestOptions {
   student_id?: number[];
   class_id?: number;
   subject_id?: number;
