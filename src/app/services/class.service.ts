@@ -43,24 +43,18 @@ export class ClassService {
    * @param stream - Number of stream
    * @returns - Array with objects of className and number of students in it
    */
-  public getClassesByStream(stream?: number | undefined): Observable<ClassesFromStream> {
+  public getClassesByStream(stream?: number | undefined): Observable<any> {
     return this.getClasses('active')
       .pipe(
         map((result: ClassData[]) => {
-          let uniqueClasses: ClassData[] = [];
-          result
-            .filter(item => item.numOfStudents)
-            .forEach(item => {
-              if (!uniqueClasses.some(value => item.className === value.className)) {
-                uniqueClasses.push(item);
-              }
-            });
           if (stream === undefined) {
-            stream = this.getRandomStream(uniqueClasses);
+            stream = this.getRandomStream(result);
           }
-          uniqueClasses = uniqueClasses.filter(item => parseInt(item.className, 10) === stream);
-          const studentsStream: ClassFromStream[] = uniqueClasses.map(item => {
+          const studentsStream: ClassFromStream[] = result
+            .filter(item => parseInt(item.className, 10) === stream)
+            .map(item => {
             return {
+              id: item.id,
               className: item.className,
               numOfStudents: item.numOfStudents
             };
