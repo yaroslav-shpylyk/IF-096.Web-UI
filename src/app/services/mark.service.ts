@@ -85,11 +85,10 @@ export class MarkService {
   private getStudentsProgressMarks(options: MarkRequestOptions,
                                    studentsInfo: Student[]): Observable<StudentChartMarks[]> {
     let uniqueDates: string[] = [];
-    const studentsId: number[] = [];
     return forkJoin(options.student_id.map(item => {
-      studentsId.push(item);
-      options.student_id = [item];
-      return this.getMarks(options);
+      const newOptions = options;
+      newOptions.student_id = [item];
+      return this.getMarks(newOptions);
     }))
       .pipe(
         tap(result => {

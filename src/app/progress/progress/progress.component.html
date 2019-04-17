@@ -48,7 +48,7 @@
             {{item.subjectName}}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="chartOptionsForm.controls.classId.hasError('required')">
+        <mat-error *ngIf="chartOptionsForm.controls.subjectId.hasError('required')">
           Оберіть предмет
         </mat-error>
       </mat-form-field>
@@ -60,6 +60,9 @@
             {{item.firstname}} {{item.lastname}}
           </mat-option>
         </mat-select>
+        <mat-error *ngIf="chartOptionsForm.controls.studentId.hasError('required')">
+          Оберіть учня
+        </mat-error>
       </mat-form-field>
       <div class="period">
         <mat-form-field>
@@ -69,7 +72,7 @@
           <mat-error *ngIf="chartOptionsForm.controls.periodStart.hasError('required')">
             Оберіть початкову дату
           </mat-error>
-          <mat-error *ngIf="periodError">
+          <mat-error *ngIf="chartOptionsForm.controls.periodStart.hasError('period')">
             Початкова дата більша за кінцеву
           </mat-error>
         </mat-form-field>

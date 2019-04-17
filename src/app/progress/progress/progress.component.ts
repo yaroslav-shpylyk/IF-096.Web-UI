@@ -28,19 +28,30 @@ export class ProgressComponent implements OnInit {
     avgOfSubject: 'Середня по предмету',
     avgOfStudent: 'Всі середні учня'
   };
-  private markType = '';
-  public periodError = false;
   constructor(private subjectService: SubjectService, private classService: ClassService,
               private studentService: StudentsService, private markService: MarkService,
               private progressService: ProgressService) { }
 
   ngOnInit() {
     this.createChartOptions();
+    const controls = this.chartOptionsForm.controls;
     this.chartOptionsForm.valueChanges.subscribe(() => {
-      this.periodError = this.chartOptionsForm.hasError('periodError');
+        if (this.chartOptionsForm.hasError('periodError')) {
+          controls.periodStart.setErrors({
+            period: true
+          });
+          console.log(controls.periodStart.errors);
+        } else {
+          if (controls.periodStart.hasError('period')) {
+            let errors = controls.periodStart.errors;
+            delete errors.period;
+            errors = Object.keys.length ? errors : null;
+            controls.periodStart.setErrors(errors);
+            controls.periodStart.updateValueAndValidity();
+          }
+        }
       }
     );
-    const controls = this.chartOptionsForm.controls;
     controls.streamId.valueChanges.subscribe( result => {
       if (result !== null) {
         controls.classId.enable();
@@ -55,6 +66,13 @@ export class ProgressComponent implements OnInit {
       } else {
         controls.subjectId.disable();
         controls.studentId.disable();
+      }
+    });
+    controls.markType.valueChanges.subscribe(result => {
+      if (result === 'avgOfStudent') {
+        controls.subjectId.disable();
+      } else {
+        controls.subjectId.enable();
       }
     });
   }
@@ -106,7 +124,6 @@ export class ProgressComponent implements OnInit {
       studentId: [],
       subjectId: []
     });
-    this.markType = type;
     switch (type) {
       case 'allOfSubject':
       case 'avgOfSubject': {
@@ -115,13 +132,13 @@ export class ProgressComponent implements OnInit {
         break;
       }
       case 'avgOfStudent': {
-        this.chartOptionsForm.controls.subjectId.clearValidators();
         this.chartOptionsForm.controls.studentId.setValidators([Validators.required]);
+        this.chartOptionsForm.controls.subjectId.clearValidators();
         break;
       }
     }
     this.chartOptionsForm.controls.subjectId.markAsUntouched();
-    this.chartOptionsForm.controls.subjectId.markAsUntouched();
+    this.chartOptionsForm.controls.studentId.markAsUntouched();
     this.chartOptionsForm.controls.subjectId.updateValueAndValidity();
     this.chartOptionsForm.controls.studentId.updateValueAndValidity();
     this.chartOptionsForm.markAsUntouched();
