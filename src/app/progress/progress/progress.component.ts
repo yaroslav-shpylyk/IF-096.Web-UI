@@ -16,6 +16,7 @@ import { DateValidator } from '../validators/date.validator';
   templateUrl: './progress.component.html',
   styleUrls: ['./progress.component.scss']
 })
+
 export class ProgressComponent implements OnInit {
   public chartOptionsForm: FormGroup;
   public stream = new Array(12);
@@ -35,10 +36,27 @@ export class ProgressComponent implements OnInit {
 
   ngOnInit() {
     this.createChartOptions();
-    this.chartOptionsForm.valueChanges.subscribe(result => {
+    this.chartOptionsForm.valueChanges.subscribe(() => {
       this.periodError = this.chartOptionsForm.hasError('periodError');
       }
     );
+    const controls = this.chartOptionsForm.controls;
+    controls.streamId.valueChanges.subscribe( result => {
+      if (result !== null) {
+        controls.classId.enable();
+      } else {
+        controls.classId.disable();
+      }
+    });
+    controls.classId.valueChanges.subscribe( result => {
+      if (result !== null) {
+        controls.subjectId.enable();
+        controls.studentId.enable();
+      } else {
+        controls.subjectId.disable();
+        controls.studentId.disable();
+      }
+    });
   }
 
   /**
@@ -47,10 +65,10 @@ export class ProgressComponent implements OnInit {
   private createChartOptions(): void {
     this.chartOptionsForm = new FormGroup({
       streamId: new FormControl(null, Validators.required),
-      classId: new FormControl(null, Validators.required),
-      subjectId: new FormControl(null, Validators.required),
+      classId: new FormControl({ value: null, disabled: true }, Validators.required),
+      subjectId: new FormControl({ value: null, disabled: true }, Validators.required),
       markType: new FormControl('allOfSubject', Validators.required),
-      studentId: new FormControl([]),
+      studentId: new FormControl({ value: [], disabled: true }),
       periodStart: new FormControl(null, Validators.required),
       periodEnd: new FormControl(null, Validators.required)
     },
@@ -141,7 +159,7 @@ export class ProgressComponent implements OnInit {
   }
 
   /**
-   * Method gets data for chart
+   * Method calls data for chart
    */
   public getDataForChart(): void {
     if (!this.chartOptionsForm.valid) {
@@ -161,29 +179,20 @@ export class ProgressComponent implements OnInit {
         options.subject_id = subjectId;
         options.class_id = classId;
         this.markService.getProgressMarks(options, studentsInfo).subscribe(result => {
-          this.progressService.updateChartData({
-            data: result,
-            markType: this.chartOptionsForm.controls.markType.value
-          });
+          this.progressService.updateSubjectChartData(result);
         });
         break;
       }
       case 'avgOfSubject': {
         const subjectName: SubjectData[] = this.subjects.filter(item => item.subjectId === subjectId);
         this.markService.getAvgProgressMarks(options, subjectName, studentsInfo).subscribe(result => {
-          this.progressService.updateChartData({
-            data: result,
-            markType: this.chartOptionsForm.controls.markType.value
-          });
+          this.progressService.updateSubjectChartData(result);
         });
         break;
       }
       case 'avgOfStudent': {
-        this.markService.getAvgStudentProgressMarks(options).subscribe(result => {
-          this.progressService.updateChartData({
-            data: result,
-            markType: this.chartOptionsForm.controls.markType.value
-          });
+        this.markService.getAvgMarks(options).subscribe(result => {
+          this.progressService.updateStudentChartData(result);
         });
         break;
       }
