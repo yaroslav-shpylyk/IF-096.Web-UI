@@ -1,0 +1,52 @@
+@import "../../../../styles";
+
+.mat-list-item { // menu list
+  color: white !important;
+  cursor: pointer;
+
+  &:hover,
+  &:active {
+    color: lighten($main-color, 40%);
+  }
+
+  .mat-icon { // icons
+    padding-right: 5px;
+  }
+
+  /* Most of the Smartphones (Portrait) */
+  @media only screen and (max-width: 600px) {
+    display: none !important; // hide
+  }
+  /* Most of the Retina Display Smartphones (Portrait) */
+  @media only screen and (max-width: 600px) and (min-resolution: 2dppx) and (orientation: portrait) {
+    display: none !important; // hide
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+.mat-menu-item { // dropdown menu
+  color: $dark-color;
+  .mat-icon {
+    color: $dark-color;
+  }
+}
+
+.navigation-items { // menu list
+  font-size: 0.7em;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.account-photo { // account photo
+  padding: 0 2%;
+  margin: 0 auto;
+  font-size: 48px;
+  width: 48px;
+}

@@ -1,4 +1,4 @@
-#displayNone {
+#displayNoneForId {
   display: none;
 }
 
@@ -10,4 +10,19 @@
   
 .example-full-width {
   width: 100%;
+}
+
+::ng-deep {
+  & .snack-class-fail {
+    background-color: rgb(175, 50, 1);
+    display: flex !important;
+    justify-content: center !important;
+    color: white !important;
+  }
+  & .snack-class-success {
+    background-color: rgb(24, 168, 72);
+    display: flex !important;
+    justify-content: center !important;
+    color: white !important;
+  }
 }

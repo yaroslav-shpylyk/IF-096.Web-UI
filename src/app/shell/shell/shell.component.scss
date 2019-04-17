@@ -5,5 +5,15 @@
 }
 
 .wrap-content {
-  padding: calc(2% + 75px) 2%; // for header and footer
+  padding: calc(2% + 75px) 2% 2% 2%; // add padding for header
+
+  /* Most of the Smartphones (Portrait) */
+  @media only screen and (max-width: 600px) {
+    padding: calc(2% + 75px) 2%; // add padding for footer
+  }
+  /* Most of the Retina Display Smartphones (Portrait) */
+  @media only screen and (max-width: 600px)
+  and (min-resolution: 2dppx) and (orientation: portrait) {
+    padding: calc(2% + 75px) 2%; // add padding for footer
+  }
 }

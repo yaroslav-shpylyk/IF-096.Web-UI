@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { roles } from '../../enum/roles.enum';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +11,9 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
-  constructor(private auth: AuthService) {
+
+  constructor(private auth: AuthService,
+              private router: Router) {
     this.createForm();
   }
 
@@ -28,13 +32,21 @@ export class LoginComponent implements OnInit {
   }
 
   /**
-   * Method calls login subscription
+   * Method calls login subscription and and directs for received role
    * @param data - Username and password
    */
   login(data): void {
-    this.auth.login(data).subscribe();
-  }
-  ngOnInit() {
+    this.auth.login(data).subscribe(() => {
+      if (this.auth.getUserRole() === roles.admin) {
+        this.router.navigate(['/admin-panel/']);
+      } else if (this.auth.getUserRole() === roles.teacher) {
+        this.router.navigate(['/journal/']);
+      } else if (this.auth.getUserRole() === roles.students) {
+        this.router.navigate(['/student-book/']);
+      }
+    });
   }
 
+  ngOnInit() {
+  }
 }

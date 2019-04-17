@@ -12,74 +12,76 @@ $background-gradient:
 .component {
   display: flex;
   align-items: center;
+  justify-content: space-around;
   width: 100%;
+  height: 100%;
   flex-direction: column;
 }
 
 .graph {
-  margin-top: 2rem;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
+  margin-top: 2rem;
+
+  mat-card {
+    height: 25em;
+
+    mat-card-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5em 0;
+      color: white;
+      border-radius: 0.2rem;
+      width: 100%;
+    }
+
+    mat-card-content {
+      padding: 1em 0;
+    }
+
+    mat-card-footer {
+      padding: 0.5em 0;
+    }
+  }
 
   .chart {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    width: 50%;
-    mat-card-header {
-      width: 90%;
-    }
-    mat-card-content {
-      height: 77%;
+    width: 40em;
 
-      canvas {
-      }
+    mat-card-content {
+      width: 100%;
+      height: auto;
     }
 
     mat-card-footer {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 90%;
-      height: 12%;
+      width: 100%;
       border-top: 0.01em solid #eaeaea;
     }
   }
 
-  mat-card {
-    width: 20em;
-    height: 23em;
-
-    mat-card-header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      width: 100%;
-      border-radius: 0.03rem;
-      color: white;
-      height: 10%;
-    }
-
-    mat-card-content {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-    }
-  }
-
   .chartOptions {
+    display: flex;
+    flex-direction: column;
+    width: 20em;
+
     mat-card-content {
-      height: 90%;
+      display: flex;
+      justify-content: center;
+      flex-grow: 1;
 
       form {
-        width: 70%;
-        height: 95%;
         display: flex;
+        width: 80%;
+        height: 100%;
         flex-direction: column;
         align-items: center;
         justify-content: space-around;
@@ -96,6 +98,7 @@ $background-gradient:
           mat-select {
             font-size: 1.3em;
           }
+
           mat-error {
             font-size: 1.2em;
           }
@@ -106,7 +109,6 @@ $background-gradient:
           justify-content: space-around;
           align-items: center;
           width: 100%;
-          height: 5em;
           font-size: 1.1em;
 
           mat-radio-group {
@@ -118,34 +120,40 @@ $background-gradient:
             text-align: center;
             vertical-align: center;
           }
-
         }
 
         mat-radio-button {
           margin: 1em;
         }
+      }
+    }
 
-        button {
-          width: 10em;
-          height: 3em;
-          font-size: 1.2em;
-          margin-top: 1em;
-          background-color: $main-color;
-          color: white;
+    mat-card-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1em 0;
 
-          &:not(disabled):hover {
-            background-color: $main-hover-color;
-          }
+      button {
+        width: 10em;
+        height: 3em;
+        font-size: 0.9em;
+        margin-top: 1em;
+        background-color: $main-color;
+        color: white;
+
+        &:not(disabled):hover {
+          background-color: $main-hover-color;
         }
       }
     }
   }
- }
+}
 
 .stats {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 4em;
   width: 100%;
 
@@ -211,9 +219,11 @@ $background-gradient:
       width: 12em;
       height: 2.5em;
     }
+
     button:hover {
       background-color: #ebebeb;
     }
+
     mat-icon {
       position: absolute;
       font-size: 1em;
@@ -229,47 +239,223 @@ $background-gradient:
   border-bottom: 0.05rem solid rgba(236, 236, 236, 0.64);
 }
 
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 1920px) {
+  .graph {
+    justify-content: space-around;
+    font-size: 1.27em;
+
+    .chart {
+      height: auto;
+    }
+
+    .chartOptions {
+      height: 24.9em;
+
+      mat-card-content {
+        form {
+          font-size: 1.5em;
+        }
+      }
+    }
+  }
+
+  .stats {
+    flex-grow: 3;
+    font-size: 1.4em;
+
+    mat-card {
+      margin: 0.7em;
+    }
+
+    .cardHeader {
+      font-size: 0.8em;
+
+      mat-icon {
+        margin: -0.7em 0 0 -0.75em;
+      }
+    }
+
+    mat-card-content {
+      font-size: 0.7em;
+    }
+
+    mat-card-actions {
+      button {
+        font-size: 0.7em;
+      }
+      mat-icon {
+        margin-left: 5.2em;
+      }
+    }
+  }
+}
+
+@media (min-width: 1601px) and (max-width: 1920px) {
+  .graph {
+    justify-content: space-around;
+    font-size: 1.27em;
+
+    .chart {
+      height: auto;
+    }
+
+    .chartOptions {
+      height: 24.9em;
+
+      mat-card-content {
+        form {
+          font-size: 1.5em;
+        }
+      }
+    }
+  }
+
+  .stats {
+    flex-grow: 3;
+    font-size: 1.4em;
+
+    mat-card {
+      margin: 0.7em;
+    }
+
+    .cardHeader {
+      font-size: 0.8em;
+
+      mat-icon {
+        margin: -0.7em 0 0 -0.75em;
+      }
+    }
+
+    mat-card-content {
+      font-size: 0.7em;
+    }
+
+    mat-card-actions {
+      button {
+        font-size: 0.7em;
+      }
+
+      mat-icon {
+        margin-left: 5.2em;
+      }
+    }
+  }
+}
+
+@media (min-width: 1367px) and (max-width: 1600px) {
+  .graph {
+    justify-content: space-around;
+    font-size: 1.06em;
+
+    .chart {
+      height: auto;
+    }
+
+    .chartOptions {
+      mat-card-content {
+        form {
+          font-size: 1.4em;
+        }
+      }
+    }
+  }
+
+  .stats {
+    flex-grow: 1;
+    font-size: 1.2em;
+
+    mat-card {
+      margin: 1em;
+    }
+
+    .cardHeader {
+      font-size: 0.8em;
+    }
+
+    mat-card-content {
+      font-size: 0.7em;
+    }
+
+    mat-card-actions {
+      button {
+        font-size: 0.7em;
+      }
+
+      mat-icon {
+        margin-left: 5.2em;
+      }
+    }
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
   .graph {
     flex-direction: column;
 
     .chart {
       width: 80%;
-      font-size: 1.2em;
+      height: auto;
     }
+
     .chartOptions {
+      width: 80%;
+      height: 13em;
       margin-top: 4rem;
-      width: 60%;
-      font-size: 1.2em;
-      height: 20em;
-      mat-card-header {
-        font-size: 1.2em;
-      }
 
       mat-card-content {
+        form {
+          flex-direction: row;
 
+          mat-form-field {
+            width: 18em;
+          }
+
+          .graphType {
+            width: 25em;
+
+            mat-radio-group {
+              flex-direction: row;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .stats {
+    flex-wrap: wrap;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .graph {
+    flex-direction: column;
+
+    .chart {
+      width: 90%;
+      font-size: 1.2em;
+      height: auto;
+    }
+
+    .chartOptions {
+      margin-top: 4rem;
+      width: 70%;
+      font-size: 1.2em;
+      height: 20em;
+
+      mat-card-content {
         form {
           display: flex;
           flex-direction: column;
           justify-content: space-around;
+
           mat-form-field {
-
-
             mat-label {
               font-size: 1.2em;
-            }
-
-            mat-select {
-
-            }
-            mat-error {
-
             }
           }
 
           .graphType {
-
-
             mat-radio-group {
               font-size: 1.2em;
             }
@@ -277,45 +463,30 @@ $background-gradient:
             label {
               font-size: 1.2em;
             }
-
-          }
-
-          mat-radio-button {
-
-          }
-
-          button {
-            font-size: 1.2em;
           }
         }
       }
     }
   }
+
   .stats {
+    flex-wrap: wrap;
+
     mat-card {
       font-size: 1.2em;
-      width: 30%;
-      span {
-      }
+      margin: 1.5em 1em;
+      flex-grow: 1;
     }
 
     .cardHeader {
       font-size: 0.8em;
-      mat-icon {
-
-      }
     }
 
     mat-card-content {
       font-size: 0.7em;
-      span {
-
-      }
     }
 
     mat-card-actions {
-
-
       button {
         font-size: 0.8em;
       }
@@ -335,39 +506,30 @@ $background-gradient:
       width: 90%;
       font-size: 1.2em;
     }
+
     .chartOptions {
       margin-top: 4rem;
       width: 80%;
       font-size: 1.2em;
       height: 20em;
+
       mat-card-header {
         font-size: 1.2em;
       }
 
       mat-card-content {
-
         form {
           display: flex;
           flex-direction: column;
           justify-content: space-around;
+
           mat-form-field {
-
-
             mat-label {
               font-size: 1.2em;
-            }
-
-            mat-select {
-
-            }
-            mat-error {
-
             }
           }
 
           .graphType {
-
-
             mat-radio-group {
               font-size: 1.2em;
             }
@@ -375,11 +537,6 @@ $background-gradient:
             label {
               font-size: 1.2em;
             }
-
-          }
-
-          mat-radio-button {
-
           }
 
           button {
@@ -389,31 +546,25 @@ $background-gradient:
       }
     }
   }
+
   .stats {
+    flex-wrap: wrap;
+    justify-content: center;
+
     mat-card {
       font-size: 1.2em;
       width: 60%;
-      span {
-      }
     }
 
     .cardHeader {
       font-size: 0.8em;
-      mat-icon {
-
-      }
     }
 
     mat-card-content {
       font-size: 0.7em;
-      span {
-
-      }
     }
 
     mat-card-actions {
-
-
       button {
         font-size: 0.8em;
       }
@@ -432,41 +583,28 @@ $background-gradient:
     .chart {
       width: 90%;
       font-size: 1.2em;
-      height: 15em;
+      height: auto;
     }
+
     .chartOptions {
       margin-top: 4rem;
-      width: 80%;
+      width: 90%;
       font-size: 1.2em;
       height: 20em;
-      mat-card-header {
-        font-size: 1.2em;
-      }
 
       mat-card-content {
-
         form {
           display: flex;
           flex-direction: column;
           justify-content: space-around;
+
           mat-form-field {
-
-
             mat-label {
               font-size: 1.2em;
-            }
-
-            mat-select {
-
-            }
-            mat-error {
-
             }
           }
 
           .graphType {
-
-
             mat-radio-group {
               font-size: 1.2em;
             }
@@ -474,45 +612,30 @@ $background-gradient:
             label {
               font-size: 1.2em;
             }
-
-          }
-
-          mat-radio-button {
-
-          }
-
-          button {
-            font-size: 1.3em;
           }
         }
       }
     }
   }
+
   .stats {
+    flex-wrap: wrap;
+    justify-content: center;
+
     mat-card {
       font-size: 1.2em;
       width: 60%;
-      span {
-      }
     }
 
     .cardHeader {
       font-size: 0.8em;
-      mat-icon {
-
-      }
     }
 
     mat-card-content {
       font-size: 0.7em;
-      span {
-
-      }
     }
 
     mat-card-actions {
-
-
       button {
         font-size: 0.8em;
       }
@@ -526,56 +649,41 @@ $background-gradient:
 
 @media (max-width: 480px) {
   .graph {
+    margin-top: 1rem;
     flex-direction: column;
 
     .chart {
-      width: 97%;
+      width: 88%;
       font-size: 1.3em;
-      height: 15em;
-      mat-card-header {
-        width: 90%;
-        font-size: 1.1em;
-        height: 2.6em;
-      }
+      height: auto;
+
       mat-card-footer {
-        width: 90%;
+        width: 100%;
       }
     }
+
     .chartOptions {
-      margin-top: 4rem;
-      width: 87%;
+      margin-top: 2rem;
+      width: 88%;
       font-size: 1.3em;
       height: 20em;
 
-      mat-card-header {
-        font-size: 1.1em;
-        height: 2.6em;
-      }
-
       mat-card-content {
-
         form {
           display: flex;
           flex-direction: column;
           justify-content: space-around;
-          mat-form-field {
+          width: 90%;
 
+          mat-form-field {
+            width: 100%;
 
             mat-label {
               font-size: 1.4em;
             }
-
-            mat-select {
-
-            }
-            mat-error {
-
-            }
           }
 
           .graphType {
-
-
             mat-radio-group {
               font-size: 1.2em;
             }
@@ -583,11 +691,6 @@ $background-gradient:
             label {
               font-size: 1.2em;
             }
-
-          }
-
-          mat-radio-button {
-
           }
 
           button {
@@ -597,32 +700,27 @@ $background-gradient:
       }
     }
   }
+
   .stats {
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 2rem;
+
     mat-card {
       font-size: 1.2em;
-      width: 85%;
+      width: 88%;
       margin: 2em 0;
-      span {
-      }
     }
 
     .cardHeader {
       font-size: 0.8em;
-      mat-icon {
-
-      }
     }
 
     mat-card-content {
       font-size: 0.7em;
-      span {
-
-      }
     }
 
     mat-card-actions {
-
-
       button {
         font-size: 0.8em;
       }
@@ -637,11 +735,6 @@ $background-gradient:
 ::ng-deep {
   & .mat-card-header {
     background-color: $main-color;
-  }
-
-  & .chart {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
   }
 
   & .mat-form-field-appearance-outline .mat-form-field-outline {
