@@ -1,0 +1,13 @@
+<div id="confirm" mat-dialog-content>
+  <p>
+    Ви справді бажаєте видалити викладача
+    <b> {{ data.name }} {{ data.lastname }}</b
+    >?
+  </p>
+</div>
+<div id="buttons-section" mat-dialog-actions>
+  <button mat-raised-button color="warn" (click)="onDeleteClick()">
+    Видалити
+  </button>
+  <button mat-raised-button (click)="onNoClick()">Ні</button>
+</div>

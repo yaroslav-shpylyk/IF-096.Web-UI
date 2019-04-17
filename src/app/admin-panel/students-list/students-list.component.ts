@@ -4,7 +4,7 @@ import { StudentsService } from '../../services/students.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Student } from '../../models/student';
 import { ClassInfo } from '../../models/class-info';
-
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-students-list',
@@ -12,40 +12,52 @@ import { ClassInfo } from '../../models/class-info';
   styleUrls: ['./students-list.component.scss']
 })
 
-
 export class StudentsListComponent implements OnInit {
-  activeClass: Array<ClassInfo>;
-  notActiveClass: Array<ClassInfo>;
-  studentList: Array<Student>;
+  activeClass: Observable<Array<ClassInfo>>;
+  notActiveClass: Observable<Array<ClassInfo>>;
+  studentList: Observable<Array<Student>>;
+  classId: number;
+  showNowActive = false;
+  searchValue = '';
+  showSearch = false;
 
   constructor(
-    private classList: ClassService,
-    private students: StudentsService,
+    private classListService: ClassService,
+    private studentsService: StudentsService,
     private router: Router,
     private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    this.classList.getClasses('active').subscribe((data: Array<ClassInfo>) =>
-      this.activeClass = data);
-    this.classList.getClasses('inActive').subscribe((data: Array<ClassInfo>) =>
-      this.notActiveClass = data);
+    this.activeClass = this.classListService.getClasses('active');
+    this.notActiveClass = this.classListService.getClasses('inActive');
+    this.studentList = this.studentsService.getSubject();
   }
 
   /**
    * Method return students list from one class
    * @returns - array with students in class
    */
+
   onSelectionClass($event): void {
-    this.students.getStudents($event.value).subscribe((list: Array<Student>) => this.studentList = list);
+    this.classId = $event.value;
+    this.studentsService.loadStudents(this.classId);
+    this.showSearch = true;
   }
 
   /**
    * Method open component for add new student
-   * @returns - array with students in class
    */
+
   AddStudent(): void {
-    console.log('button add student');
-    this.router.navigate(['add'], { relativeTo: this.route });
+    this.router.navigate(['add'], { relativeTo: this.route, queryParams: { classId: this.classId } });
+  }
+
+  /**
+   * Method pipe students list
+   */
+
+  onSearch(event): void {
+    this.searchValue = event;
   }
 }

@@ -10,7 +10,7 @@ table {
 
 .example-button-row {
   position: fixed;
-  bottom: 1em;
+  bottom: 2.8em;
   right: 1em;
 }
 
@@ -22,3 +22,13 @@ th.mat-sort-header-sorted {
   font-size: 1.8em;
   cursor: pointer;
 } 
+
+.mat-form-field {
+  font-size: 1.2em;
+  width: 90%;
+  padding-left: 0.5em;
+}
+
+.filterBlok {
+  background-color: white;
+}

@@ -1,39 +1,40 @@
 mat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  img {
+    width: 7em;
+    height: 7em;
+  }
+  
+  mat-card-title {
+    font-size: 0.8em;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 0.3em;
+  }
+  
+  mat-card-content {
+    font-size: 0.6em;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    img {
-        width: 7em;
-        height: 7em;
+    justify-content: flex-start;
+    align-items: flex-start;
+    
+    span {
+      margin-top: 1em;
     }
-    mat-card-title {
-        font-size: 0.8em;
-        display: flex;
-        justify-content: space-evenly;
-        flex-wrap: wrap;
-        margin-top: 0.3em;
-    }
-    mat-card-content {
-        font-size: 0.6em;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        span {
-            margin-top: 1em;
-        }
-    }
-    .iconAvatar {
-        display: flex;
-        justify-content: center;
-    }
-    mat-card-actions {
-        display:flex;
-        justify-content: center;
-    }
+  }
+  
+  .iconAvatar {
+    display: flex;
+    justify-content: center;
+  }
+  
+  mat-card-actions {
+    display:flex;
+    justify-content: center;
+  }
 }
-
-
-
-
-
