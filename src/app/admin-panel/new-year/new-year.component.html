@@ -2,7 +2,7 @@
   <h2>Перехід на новий навчальний рік</h2>
   <form [formGroup]="transititionForm"  class="component" (ngSubmit)="formSubmit()">
     <div>
-      <ng-container *ngFor="let item of controlIndexes|classFilter:isActive:isNotEmpty:isCurrentYear:allClasses:newClassTitle.controls[item];  let index = index">
+      <ng-container *ngFor="let item of controlIndexes|classFilter:isActive:isNotEmpty:isCurrentYear:allClasses:newClassTitle.controls:skipClassSwitcher.controls;  let index = index">
         <ng-container *ngIf="item>-1; else emptyFilter">
           <mat-card [ngClass]="skipClassSwitcher.controls[item].value?'locked':'active'" >
             <ng-container formArrayName="skipClassSwitcher">
@@ -48,6 +48,11 @@
                 <i class="material-icons">edit</i>
               </label>
             </div>
+            <div class="doted-marks">
+              <div class="active" *ngIf="!allClasses[item].isActive"></div>
+              <div class="pupils" *ngIf="allClasses[item].numOfStudents <= 0"></div>
+              <div class="year" *ngIf="allClasses[item].classYear!==2018"></div>
+            </div>
           </mat-card>
         </ng-container>
       </ng-container>
@@ -75,4 +80,12 @@
     <div *ngIf="isCurrentYear">П</div>
   </div>
 </div>
-  
+<div id="result-message" class="overlay">
+	<div class="popup">
+		<h2>Here i am</h2>
+		<a class="close" href="#">&times;</a>
+		<div class="content">
+			Thank to pop me out of that button, but now i'm done so you can close this window.
+		</div>
+	</div>
+</div>
