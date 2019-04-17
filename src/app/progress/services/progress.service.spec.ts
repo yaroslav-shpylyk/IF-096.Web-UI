@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ProgressService } from './services/progress.service';
+import { ProgressService } from './progress.service';
 
 describe('ProgressService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
