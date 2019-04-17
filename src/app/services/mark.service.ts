@@ -7,6 +7,8 @@ import { MarkResponse } from '../models/mark-response';
 import { AvgMarkResponse } from '../models/avg-mark-response';
 import { Student } from '../models/student';
 import { SubjectData } from '../models/subject-data';
+import { StudentChartMarks } from '../models/student-chart-marks';
+import { MarkData } from '../models/mark-data';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +18,9 @@ export class MarkService {
   constructor(private http: HttpClient) { }
 
   /**
-   * Method gets marks filtered by params
+   * Method gets marks
    * @param options - Object of params, which we use as query with request
+   * @returns - Array of marks
    */
   public getMarks(options?: MarkRequestOptions): Observable<MarkResponse[]> {
     let requestParams;
@@ -35,12 +38,26 @@ export class MarkService {
         map(result => result.data)
       );
   }
-  public getProgressMarks(options: MarkRequestOptions, studentsInfo: Student[]): Observable<any> {
+
+  /**
+   * Method choose with number of student another method to get marks for single or multiple students
+   * @param options - Object with query params
+   * @param studentsInfo - Array with info of students
+   * @returns - Marks of student(s)
+   */
+  public getProgressMarks(options: MarkRequestOptions, studentsInfo: Student[]): Observable<StudentChartMarks[]> {
     return options.student_id.length === 1 ?
       this.getStudentProgressMarks(options, studentsInfo) :
       this.getStudentsProgressMarks(options, studentsInfo);
   }
-  private getStudentProgressMarks(options, studentsInfo): Observable<any> {
+
+  /**
+   * Method gets marks of single student and filter them for progress chart
+   * @param options - Object with query params
+   * @param studentsInfo - Array with info of students
+   * @returns - Marks of student
+   */
+  private getStudentProgressMarks(options, studentsInfo): Observable<StudentChartMarks[]> {
     return this.getMarks(options)
       .pipe(
         map(result => {
@@ -58,7 +75,15 @@ export class MarkService {
         })
       );
   }
-  private getStudentsProgressMarks(options: MarkRequestOptions, studentsInfo: Student[]): Observable<any> {
+
+  /**
+   * Method gets marks of multiple student and filter them for progress chart
+   * @param options - Object with query params
+   * @param studentsInfo - Array with info of students
+   * @returns - Marks of students
+   */
+  private getStudentsProgressMarks(options: MarkRequestOptions,
+                                   studentsInfo: Student[]): Observable<StudentChartMarks[]> {
     let uniqueDates: string[] = [];
     const studentsId: number[] = [];
     return forkJoin(options.student_id.map(item => {
@@ -82,6 +107,12 @@ export class MarkService {
         })
       );
   }
+
+  /**
+   * Method gets avg marks
+   * @param options - Object with query params
+   * @returns - Array of avg marks
+   */
   public getAvgMarks(options: MarkRequestOptions): Observable<AvgMarkResponse[]> {
     const optionKeys = Object.keys(options);
     const formattedOptions = optionKeys
@@ -93,10 +124,16 @@ export class MarkService {
         map(result => result.data)
       );
   }
-  public getAvgStudentProgressMarks(options: any): Observable<any> {
-    return this.getAvgMarks(options);
-  }
-  public getAvgProgressMarks(options: any, subjectsNames: SubjectData[], studentsInfo: Student[]): Observable<any> {
+
+  /**
+   * Method gets avg mark of subject for multiple students
+   * @param options - Object with query params
+   * @param subjectsNames - String with subject name
+   * @param studentsInfo - Array with students info
+   * @returns - Array with avg marks of subject
+   */
+  public getAvgProgressMarks(options: MarkRequestOptions, subjectsNames: SubjectData[],
+                             studentsInfo: Student[]): Observable<StudentChartMarks[]> {
     const requestOptions = options;
     return forkJoin(requestOptions.student_id.map(item => {
       requestOptions.student_id = [item];
@@ -119,11 +156,23 @@ export class MarkService {
       })
     );
   }
+
+  /**
+   * Method creates new date object with year, month and day
+   * @param dateParams - Array with date parts
+   * @returns - New date object
+   */
   private createDateObject(dateParams: number[]): Date {
     const [year, month, day]: number[] = dateParams;
     return new Date(year, month, day);
   }
-  private getSortedDates(data: any): string[] {
+
+  /**
+   * Method sort date objects from min to max and format them to dd-mm-yyyy format
+   * @param data - Array with date objects
+   * @returns - Array with dates in dd-mm-yyyy format
+   */
+  private getSortedDates(data: Array<MarkResponse[]>): string[] {
     const dates = [];
     for (const student of data) {
       for ( const mark of student ) {
@@ -135,6 +184,12 @@ export class MarkService {
       .sort((itemA, itemB) => itemA.getTime() - itemB.getTime())
       .map(item => this.formatToShortDate(item));
   }
+
+  /**
+   * Method gets all unique dates
+   * @param dates - Array with dates
+   * @returns - Array with unique dates
+   */
   private getUniqueDates(dates: string[]): string[] {
     const uniqueDates = [];
     dates.forEach(item => {
@@ -144,6 +199,12 @@ export class MarkService {
     });
     return uniqueDates;
   }
+
+  /**
+   * Method formats dates to dd-mm-yyyy format
+   * @param date - Date object
+   * @returns - Formatted date
+   */
   private formatToShortDate(date: Date): string {
     return date
       .toISOString()
@@ -152,7 +213,15 @@ export class MarkService {
       .reverse()
       .join('-');
   }
-  private formNewMarks(studentMarks: MarkResponse[], allDates: string[]): any {
+
+  /**
+   * Method compares all dates to unique, then form new array where pushes existing marks and fill with zero mark
+   * non-existing dates
+   * @param studentMarks - Array with student marks
+   * @param allDates - Array with all unique dates
+   * @returns - Array of marks for unique dates
+   */
+  private formNewMarks(studentMarks: MarkResponse[], allDates: string[]): MarkData[] {
     const newMarks = allDates.map(item => {
       return {
         date: item,
