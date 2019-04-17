@@ -15,10 +15,10 @@ import {
 } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
-import { ProgressService } from './services/progress.service';
+import { ChartComponent } from './chart/chart.component';
 
 @NgModule({
-  declarations: [ProgressComponent],
+  declarations: [ProgressComponent, ChartComponent],
   imports: [
     CommonModule,
     ProgressRoutingModule,
@@ -33,9 +33,6 @@ import { ProgressService } from './services/progress.service';
     MatExpansionModule,
     MatIconModule,
     MatButtonModule
-  ],
-  providers: [
-    ProgressService
   ]
 })
 export class ProgressModule { }
