@@ -98,7 +98,8 @@ import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subje
     EditDialogOverviewComponent,
     ConfirmationDialogComponent,
     StudentDetailModalComponent,
-    AddStudentComponent
+    AddStudentComponent,
+    ModifySubjectsComponent
   ],
   providers: []
 })
