@@ -76,7 +76,7 @@ export class NewYearService {
   public getPupilList(classId: number): Observable<Student[]> {
     return this.http.get(`/students/classes/${classId}`)
     .pipe(
-      map((response: { status: any, data: Student[] }) => {
+      map((response: { status: any, data: any}) => {
         return response.data;
       }),
       catchError((error: any) => {

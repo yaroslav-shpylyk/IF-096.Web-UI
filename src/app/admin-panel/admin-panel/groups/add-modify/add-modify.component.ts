@@ -36,11 +36,19 @@ export class AddModifyGroupComponent implements OnInit {
     const group = new Group(this.data);
     this.groupServices.addGrup(group).subscribe((dataResponse: any) => {
       if (group.id && !(dataResponse === undefined)) {
-        this.dialogRef.close(dataResponse);
-        this.openSnackBar(
-          `Клас ${dataResponse.className}  ${dataResponse.classYear} року. Зміни збережено`,
-          'snack-class-success'
-        );
+        if (group.className === dataResponse.className && group.classYear === dataResponse.classYear
+          && group.isActive === dataResponse.isActive && group.classDescription === dataResponse.classDescription) {
+          this.openSnackBar(
+            `Клас ${dataResponse.className}  ${dataResponse.classYear} року. Ви не внесли ніяких змін!`,
+            'snack-class-warning'
+          );
+        } else {
+          this.dialogRef.close(dataResponse);
+          this.openSnackBar(
+            `Клас ${dataResponse.className}  ${dataResponse.classYear} року. Зміни збережено`,
+            'snack-class-success'
+          );
+        }
       } else if (group.id === undefined && !(dataResponse === undefined)) {
         this.dialogRef.close(dataResponse);
         this.openSnackBar(
