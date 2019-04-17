@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ScheduleData } from '../../models/schedule-data';
 import { ClassData } from '../../models/class-data';
@@ -12,14 +12,22 @@ import { ScheduleService } from '../../services/schedule.service';
   templateUrl: './schedule.component.html',
   styleUrls: ['./schedule.component.scss']
 })
-export class ScheduleComponent implements OnInit, AfterViewInit {
+export class ScheduleComponent implements OnInit {
   scheduleData: ScheduleData;
+
+  /*mondaySubjects: LessonData[];
+    lessonNumber: string;
+    subjectId: number;
+    subjectName: string;
+    subjectDescription: string*/
+
   frmSchedule: FormGroup;
   arrClassList: Array<ClassData>;
   arrSubjectsList: Array<SubjectData>;
-  selectClassMsg: string = "Виберіть клас";
-  dateTermStartMsg: string = "Дата початку семестру";
-  dateTermEndMsg: string = "Дата закінчення семестру";
+  selectClassMsg = 'Виберіть клас*';
+  dateTermStartMsg = 'Дата початку семестру*';
+  dateTermEndMsg = 'Дата закінчення семестру*';
+
   weekDayName: Array<{legendDay: string, dailySubjects: string}> = [
     {legendDay: 'Понеділок', dailySubjects: 'mondaySubjects'},
     {legendDay: 'Вівторок', dailySubjects: 'tuesdaySubjects'},
@@ -28,6 +36,13 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     {legendDay: 'П`ятниця', dailySubjects: 'fridaySubjects'},
     {legendDay: 'Субота', dailySubjects: 'saturdaySubjects'}
   ];
+
+  emittedMondaySubjects: any;
+  emittedTuesdaySubjects: any;
+  emittedWednesdaySubjects: any;
+  emittedThursdaySubjects: any;
+  emittedFridaySubjects: any;
+  emittedSaturdaySubjects: any;
 
   constructor(private frmBld: FormBuilder,
     private classService: ClassService,
@@ -53,30 +68,41 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     });
   }
 
-
-  ngAfterViewInit(): void {
-    //console.log('ngAfterViewInit - parent');
-
-
-  }
-
-  selectedClass(event: any) {
-    this.scheduleService.getSchedule(event.value).subscribe(data => {
+  /**
+   * Method gets schedule for selected class
+   * @param classId - Id of selected class
+   * @returns - Schedule for selected class
+   */
+  selectedClass(classId: number) {
+    this.scheduleService.getSchedule(classId).subscribe(data => {
       this.scheduleData = data;
-      console.log(this.scheduleData);
+
+      console.log(this.scheduleData); //for test
 
     });
-
   }
 
-  ngAfterViewChecked(): void {
-    //Called after every check of the component's view. Applies to components only.
-    //Add 'implements AfterViewChecked' to the class.
-    //console.log('ngAfterViewChecked - parent');
-  }
-
-  dayFilledHandler($event): void {
-    //console.log($event + "parent");
+  onAddDailySubjects($event, dailySubjects: string): void {
+    switch (dailySubjects) {
+      case 'mondaySubjects' : {
+        this.emittedMondaySubjects = $event;
+      }
+      case 'tuesdaySubjects' : {
+        this.emittedTuesdaySubjects = $event;
+      }
+      case 'wednesdaySubjects' : {
+        this.emittedWednesdaySubjects = $event;
+      }
+      case 'thursdaySubjects' : {
+        this.emittedThursdaySubjects = $event;
+      }
+      case 'fridaySubjects' : {
+        this.emittedFridaySubjects = $event;
+      }
+      case 'saturdaySubjects' : {
+        this.emittedSaturdaySubjects = $event;
+      }
+    }
   }
 
   /**
@@ -102,7 +128,13 @@ export class ScheduleComponent implements OnInit, AfterViewInit {
     }
     /* Handling form data */
 
-    console.log(this.frmSchedule.value);
-   
+    console.log(this.emittedWednesdaySubjects.value); //for test
+
+    /*const lessonData: LessonData = {
+      lessonNumber: ,
+      subjectId: ,
+      subjectName: ,
+      subjectDescription:
+    };*/
   }
 }

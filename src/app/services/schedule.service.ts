@@ -15,7 +15,7 @@ export class ScheduleService {
    * @param classId - Id of class
    * @returns - Array with schedule data
    */
-  getSchedule(classId:number): Observable<ScheduleData> {
+  getSchedule(classId: number): Observable<ScheduleData> {
     return this.http.get(`/classes/${classId}/schedule`).pipe(map(
       (response: {status: any, data: ScheduleData}) => {
         return response.data;

@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, FormArray, AbstractControl } from '@angular/forms';
 import { SubjectData } from '../../../models/subject-data';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-daily-schedule',
@@ -8,24 +8,19 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
   styleUrls: ['./daily-schedule.component.scss']
 })
 export class DailyScheduleComponent implements OnInit {
+  frmDailySchedule: FormGroup;
+  selectSubjectMsg = 'Виберіть предмет';
 
   @Input() legendDay: string;
-  frmDailySchedule: FormGroup;
-  selectSubjectMsg: string = "Виберіть предмет";
-  private _arrSubjectsList: SubjectData[];
-  @Input()
-  set arrSubjectsList(inpSubjectsList: SubjectData[]) {
-    this._arrSubjectsList = inpSubjectsList;
-  }
-  get arrSubjectsList(): SubjectData[] {
-    return this._arrSubjectsList;
-  }
-  @Output() dayFilled: EventEmitter<any> = new EventEmitter();
+  @Input() arrSubjectsList: SubjectData[];
+
+  @Output() addDailySubjects: EventEmitter<any> = new EventEmitter();
 
   constructor(private frmBld: FormBuilder) {}
 
   ngOnInit() {
     this.buildDailySchedul();
+    this.addDailySubjects.emit(this.dailySchedule);
   }
 
   /** Method initializes the initial state of the component's template */
@@ -39,7 +34,7 @@ export class DailyScheduleComponent implements OnInit {
       ])
     });
   }
-  //getter for the property of element
+  // getter for the property of element
   get dailySchedule() {
     return this.frmDailySchedule.get('dailySchedule') as FormArray;
   }
@@ -50,7 +45,7 @@ export class DailyScheduleComponent implements OnInit {
    * @param i - Index of the element on which the click occurred
    */
   public addSubjest(i: number): void {
-    if(i == (this.dailySchedule.length - 1)) {
+    if (i === (this.dailySchedule.length - 1)) {
       this.dailySchedule.push(this.frmBld.group({
         firstGroup: this.frmBld.control(''),
         secondGroup: this.frmBld.control({value: '', disabled: true})
@@ -64,7 +59,6 @@ export class DailyScheduleComponent implements OnInit {
    */
   public addSecondGroup(i: number): void {
     this.dailySchedule.at(i).get('secondGroup').enable();
-    console.log(this.dailySchedule.at(i).get('secondGroup').disabled);
   }
 
   /**
@@ -72,34 +66,13 @@ export class DailyScheduleComponent implements OnInit {
    * @param i - index of the control which to be deleted
    */
   public removeSubjest(i: number): void {
-    if (this.dailySchedule.at(i).get('secondGroup').status != 'DISABLED') {
-      const secondGroupCntrl: any = this.dailySchedule.at(i).get('secondGroup');
+    if (this.dailySchedule.at(i).get('secondGroup').status !== 'DISABLED') {
+      const secondGroupCntrl: AbstractControl =
+        this.dailySchedule.at(i).get('secondGroup');
       secondGroupCntrl.setValue('');
       secondGroupCntrl.disable();
     } else {
       this.dailySchedule.removeAt(i);
     }
   }
-
-  ngAfterViewInit(): void {
-      //console.log('ngAfterViewInit - child');
-
-
-    }
-
-
-  selectedSubject(event: any, i?: number) {
-    //console.log(event.source.selected);
-    console.log(event.value);
-
-    if (i != undefined) {
-      this.addSubjest(i);
-    }
-
-    this.dayFilled.emit(event.value);
-
-  }
-
-
-
 }

@@ -5,28 +5,29 @@
   <div class="schedule-top">
     <mat-form-field class="datePiker">
       <input matInput [matDatepicker]="pickerStart"
-      [placeholder]="dateTermStartMsg"
-      formControlName="dateTermStart">
+       [placeholder]="dateTermStartMsg"
+       formControlName="dateTermStart">
       <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
       <mat-datepicker #pickerStart></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field class="datePiker">
         <input matInput [matDatepicker]="pickerEnd"
-        [placeholder]="dateTermEndMsg"
-        formControlName="dateTermEnd">
+         [placeholder]="dateTermEndMsg"
+         formControlName="dateTermEnd">
         <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker #pickerEnd></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field>
       <mat-select [placeholder]="selectClassMsg"
-      formControlName="selectClass"
-      (selectionChange)="selectedClass($event)">
+       formControlName="selectClass"
+       (selectionChange)="selectedClass($event.value)">
         <mat-option *ngFor="let class of arrClassList" [value]="class.id">
-          {{ class.className }}{{class.id}}
+          {{ class.className }} {{class.id}}
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="isInputInvalid('selectClass')">Не обрано клас</mat-error>
     </mat-form-field>
   </div> <!--end of top-->
 
@@ -34,17 +35,14 @@
     <app-daily-schedule *ngFor="let day of weekDayName; let i=index"
       [arrSubjectsList]="arrSubjectsList"
       [legendDay]="day.legendDay"
-      (dayFilled)="dayFilledHandler($event)"
-      [class]="day.dailySubjects">
+      [class]="day.dailySubjects"
+      (addDailySubjects)="onAddDailySubjects($event, day.dailySubjects)">
     </app-daily-schedule>
   </div>
 
-  <div> {{ dailySchedule | json }}</div>
-  <button mat-button type="submit" [disabled]="!frmSchedule.valid">Submit</button>
+  <button mat-button type="submit"
+   [disabled]="!frmSchedule.valid"
+   class="save-button">
+    Зберегти
+  </button>
 </form>
-
-<!-- for test -->
-<div> {{ frmSchedule.value | json }}</div>
-<div class=errorMsg *ngIf="isInputInvalid('selectClass')">
-  invalid class - Error
-</div>

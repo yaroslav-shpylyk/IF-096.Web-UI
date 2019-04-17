@@ -1,6 +1,7 @@
 $title-color: rgba(210, 230, 240, 0.5);
 $invalid-color: rgb(112, 5, 5);
 $shadow-color: rgb(182, 182, 182);
+$button-color: rgb(198, 219, 233);
 
 .title-schedule {
     margin: 0 0 0.5em 0;
@@ -18,15 +19,16 @@ form {
     display: flex;
     width: 95%;
     justify-content: space-around;
+    margin-bottom: 1.5em;
 }
 .datePiker {
     width: 30%;
 }
 .week-schedule {
     display: grid;
-    grid-template-columns: auto auto;
-    grid-column-gap: 1em;
-    grid-row-gap: 1em;
+    grid-template-columns: 49% 49%;
+    grid-column-gap: 0.8em;
+    grid-row-gap: 0.8em;
     padding: 0.7em;
     box-shadow: 0px 0px 15px $shadow-color;
 }
@@ -50,6 +52,15 @@ form {
 }
 input.ng-touched.ng-invalid{
     border-color: $invalid-color;
+}
+.save-button {
+    width: 6em;
+    height: 2.5em;
+    margin: 1em;
+    padding: 0.2em;
+    background-color: $button-color;
+    font-size: 1em;
+    box-shadow: 2px 2px 3px $shadow-color;
 }
 
 /* Screen = B/w 320px to 479px */

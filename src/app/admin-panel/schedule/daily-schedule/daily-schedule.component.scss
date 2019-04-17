@@ -1,4 +1,4 @@
-$icon-color: rgb(133, 133, 184);
+$icon-color: rgb(118, 118, 168);
 
 fieldset {
     padding: 0 0 0 0.5em;
@@ -13,4 +13,17 @@ fieldset {
 }
 mat-icon {
     color: $icon-color;
+}
+.invisible {
+    display: none;
+}
+
+/* Screen = B/w 320px to 479px */
+@media (min-width: 320px) and (max-width: 480px) {
+    .daily-schedule {
+        flex-direction: column;
+    }
+    .select-subject {
+        width: 80%;
+    }
 }
