@@ -1,7 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Label} from 'ng2-charts';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { ProgressService } from '../services/progress.service';
+import { AvgMarkResponse } from '../../models/avg-mark-response';
+import { StudentChartMarks } from '../../models/student-chart-marks';
 
 @Component({
   selector: 'app-chart',
@@ -30,34 +32,24 @@ export class ChartComponent implements OnInit {
   constructor(private progressService: ProgressService) { }
 
   ngOnInit() {
-    this.progressService.getChartData().subscribe(result => {
-      switch (result.markType) {
-        case 'allOfSubject':
-        case 'avgOfSubject': {
-          this.createSubjectChart(result.data);
-          break;
-        }
-        case 'avgOfStudent': {
-          this.createStudentChart(result.data);
-          break;
-        }
-      }
-    });
+    this.progressService.getSubjectChartData().subscribe(result => this.createSubjectChart(result));
+    this.progressService.getStudentChartData().subscribe(result => this.createStudentChart(result));
   }
 
   /**
    * Method forms data for subject based chart
    * @param data - New chart data
    */
-  private createSubjectChart(data: any): void {
+  private createSubjectChart(data: StudentChartMarks[]): void {
+    console.log(data);
     this.chartLabels = [];
     this.chartData = [];
     const newData = [];
-    data.forEach(item => {
-      const marks = item.marks.map(item => item.mark);
+    data.forEach(student => {
+      const marks = student.marks.map(markInfo => markInfo.mark);
       const marksInfo = {
         data: marks,
-        label: `${item.studentInfo.firstname} ${item.studentInfo.lastname}`
+        label: `${student.studentInfo.firstname} ${student.studentInfo.lastname}`
       };
       newData.push(marksInfo);
     });
@@ -69,8 +61,7 @@ export class ChartComponent implements OnInit {
    * Method forms data for student based chart
    * @param data - New chart data
    */
-  private createStudentChart(data: any): void {
-    console.log(data);
+  private createStudentChart(data: AvgMarkResponse[]): void {
     this.chartLabels = [''];
     this.chartData = [];
     const newData = [];
