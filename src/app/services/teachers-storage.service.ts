@@ -172,21 +172,28 @@ export class TeachersStorageService {
   }
 
   varvara() {
-    this.getTeacherS().subscribe(arr => {
+    return this.getTeacherS().subscribe(arr => {
       console.log(arr);
       const data = [];
       for (const teacher of arr) {
         data.push(this.getTeacherSubjectsClasses2(teacher));
       }
 
-      forkJoin(data).subscribe(teachers => {
-        // for (const teac of teachers) {
-        //   if (!teac.subjects.includes) {
-        //     teac.subjects.push(teac.subjectName);
-        //   }
-        // }
-        console.log(teachers);
-      });
+      forkJoin(data);
     });
+  }
+
+  varvara2() {
+    return this.httpClient.get('/teachers').pipe(
+      map((result: { status: any; data: TeacherData[] }) => {
+        const arr = result.data;
+        const data = [];
+        for (const teacher of arr) {
+          data.push(this.getTeacherSubjectsClasses2(teacher));
+        }
+
+        forkJoin(data);
+      })
+    );
   }
 }

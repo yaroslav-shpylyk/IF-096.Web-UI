@@ -1,64 +1,8 @@
-.container {
-  display: flex;
-  justify-content: center;
-  margin-left: calc(100vw - 100%) !important;
-}
-
-.container > div {
-  min-width: 16.6em;
-  max-width: 18.8em;
-}
-
-#wrapper {
-  display: flex;
-}
-
-.mat-column-teacherCard {
-  padding: 0.7em;
-  justify-content: left;
-
-  width: 240px;
-}
-
-.mat-column-num {
-  width: 5%;
-}
-
-mat-card {
-  padding: 0.2em;
-  // display: flex;
-  width: 20em;
-}
-
-#menu-trigger {
-  margin: auto;
-}
-
-mat-form-field {
-  display: block;
-}
-
-mat-list {
-  margin: auto;
-  width: 17em;
-  display: flex;
-  flex-direction: column;
-}
-
-mat-list-item {
-  width: 65%;
-  justify-content: left;
-}
-
 #mine {
   position: fixed;
   bottom: 3.5em;
   right: 3em;
   transition: bottom 0.3s;
-}
-
-mat-select {
-  width: 2em;
 }
 
 ::ng-deep .snack-class-success {
@@ -68,7 +12,30 @@ mat-select {
   color: white !important;
 }
 
-::ng-deep  .mat-icon-button {
+::ng-deep .mat-icon-button {
   padding-right: 0.4em;
   margin-right: 0.1em;
+}
+
+.block {
+  display: flex;
+}
+
+
+span.lastname {
+  display: block;
+  font-size: 1.4em;
+  margin-top: 0.3em;
+}
+
+
+img {
+  height: 44px;
+  width: 44px;
+  border-radius: 50%;
+  padding: 0.3em;
+  margin-right: 1em ;
+}
+
+.avatar {
 }

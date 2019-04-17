@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Inject, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, forkJoin } from 'rxjs';
 import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
@@ -59,14 +59,14 @@ export class ConfirmationDialogComponent {
 })
 export class TeachersListComponent implements OnInit, OnDestroy {
   teachers;
-  subscription: Subscription;
+  // subscription: Subscription;
   // filteredTeachers = '';
   dataSource;
   arr = [];
 
-  displayedColumns: string[] = ['num', 'teacherCard', 'lastname', 'firstname'];
+  displayedColumns: string[] = ['num', 'teacherCard', 'classes', 'subjects'];
 
-  @ViewChild('sortCol') sortCol: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private teachersStorageService: TeachersStorageService,
@@ -76,37 +76,25 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.teachers = this.teachersStorageService.getTeachers();
-    this.subscription = this.teachersStorageService.teachersChanged.subscribe(
-      teachers => {
-        this.teachers = teachers;
-        this.teachers.forEach(teacher => {
-          this.teachersStorageService
-            .getTeacherSubjectsClasses(teacher.id)
-            .subscribe(data => {
-              data.avatar = teacher.avatar;
-              data.lastname = teacher.lastname;
-              data.firstname = teacher.firstname;
-              data.patronymic = teacher.patronymic;
-              this.arr.push(data);
-              this.dataSource = new MatTableDataSource(this.arr);
-              this.dataSource.sort = this.sortCol;
-            });
-          });
-        // console.log(this.arr);
-        // this.dataSource = new MatTableDataSource(this.teachers);
-        console.log(this.arr);
-        this.teachersStorageService.varvara();
-        // this.dataSource = new MatTableDataSource(this.arr);
-        // this.dataSource.sort = this.sortCol;
+    this.teachersStorageService.getTeacherS().subscribe(arr => {
+      const data = [];
+      for (const teacher of arr) {
+        data.push(this.teachersStorageService.getTeacherSubjectsClasses2(teacher));
       }
-    );
+
+      forkJoin(data).subscribe(datas => {
+        console.log(datas);
+        this.dataSource = new MatTableDataSource(datas);
+        this.dataSource.sort = this.sort;
+      });
+    });
+
 
     let prevScrollpos = window.pageYOffset;
     window.onscroll = () => {
       const currentScrollPos = window.pageYOffset;
       if (prevScrollpos > currentScrollPos) {
-        document.getElementById('mine').style.bottom = '3.5em';
+        document.getElementById('mine').style.bottom = '4.5em';
       } else {
         document.getElementById('mine').style.bottom = '-75px';
       }
@@ -115,7 +103,7 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
     window.onscroll = null;
   }
 
@@ -153,5 +141,9 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(() => {});
+  }
+
+  valik(e) {
+    console.log(e.target);
   }
 }
