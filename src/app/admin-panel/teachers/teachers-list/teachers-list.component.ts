@@ -11,6 +11,7 @@ import {
   MatSort,
   MatTableDataSource
 } from '@angular/material';
+import { TeacherData } from 'src/app/models/teacher-data';
 
 @Component({
   selector: 'app-confirmation-dialog',
@@ -59,10 +60,11 @@ export class ConfirmationDialogComponent {
 })
 export class TeachersListComponent implements OnInit, OnDestroy {
   teachers;
-  // subscription: Subscription;
+  subscription: Subscription;
   // filteredTeachers = '';
   dataSource;
-  arr = [];
+  mappedTeachers = new Object() as any;
+
 
   displayedColumns: string[] = ['num', 'teacherCard', 'classes', 'subjects'];
 
@@ -76,6 +78,11 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.teachersStorageService.teacherChanged.subscribe(resp => {
+      const newTeacher: any = resp;
+      this.mappedTeachers[newTeacher.id] = newTeacher;
+      this.dataSource = new MatTableDataSource(Object.values(this.mappedTeachers));
+    });
     this.teachersStorageService.getTeacherS().subscribe(arr => {
       const data = [];
       for (const teacher of arr) {
@@ -83,7 +90,11 @@ export class TeachersListComponent implements OnInit, OnDestroy {
       }
 
       forkJoin(data).subscribe(datas => {
-        console.log(datas);
+        for (const el of datas) {
+          this.mappedTeachers[el.id] = el;
+        }
+        this.teachers = datas;
+        console.log(this.mappedTeachers);
         this.dataSource = new MatTableDataSource(datas);
         this.dataSource.sort = this.sort;
       });

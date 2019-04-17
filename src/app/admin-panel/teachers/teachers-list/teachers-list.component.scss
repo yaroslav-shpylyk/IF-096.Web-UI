@@ -21,21 +21,42 @@
   display: flex;
 }
 
-
 span.lastname {
   display: block;
   font-size: 1.4em;
   margin-top: 0.3em;
 }
 
+// .block div:last-child {
+//   margin: auto 2em auto auto;
+// }
+.block-button-section {
+  margin: auto 2em auto auto;
+}
 
 img {
   height: 44px;
   width: 44px;
   border-radius: 50%;
   padding: 0.3em;
-  margin-right: 1em ;
+  margin-right: 1em;
 }
 
-.avatar {
+.block-info-avatar {
+  display: flex;
+}
+
+.block-info-avatar:hover {
+  background-color: rgba(24, 151, 236, 0.685);
+  cursor: pointer;
+  border-radius: 3%;
+}
+
+mat-icon:hover {
+  background-color: rgba(24, 151, 236, 0.685);
+  border-radius: 50%;
+}
+
+::ng-deep th.mat-header-cell {
+  text-align: center !important;
 }

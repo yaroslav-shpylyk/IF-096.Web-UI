@@ -126,8 +126,10 @@ export class EditDialogOverviewComponent implements OnInit, OnDestroy {
       phone: this.teacherForm.value.teacherPhone
     };
     if (!this.editMode) {
+      console.log(newValues.avatar);
       this.teachersStorageService.addTeacher(newValues).subscribe(
-        () => {
+        (res) => {
+          console.log(res);
           this.teachersStorageService.getTeachers();
           this.openSnackBar(
             `Викладач ${newValues.lastname} ${newValues.lastname} створений`,
@@ -178,11 +180,13 @@ export class EditDialogOverviewComponent implements OnInit, OnDestroy {
   }
 
   _handleReaderLoaded(e) {
+    console.log(e);
     const reader = e.target;
     if (this.editMode) {
       this.teacher.avatar = reader.result;
     } else {
       this.ava = reader.result;
+      console.log(this.ava);
     }
   }
 
