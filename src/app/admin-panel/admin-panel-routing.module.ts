@@ -6,9 +6,13 @@ import { TeachersListComponent } from './teachers/teachers-list/teachers-list.co
 import { StudentsListComponent } from './students-list/students-list.component';
 import { EditDialogEntryComponent } from './teachers/teachers-list/edit-dialog/edit-dialog';
 import { GroupsComponent } from './admin-panel/groups/groups.component';
-import { StudentDatails } from './students-list/student-detail-modal/student-detail-modal.component';
+import { StudentDatailsComponent } from './students-list/student-detail-modal/student-detail-modal.component';
+import { AddStudentComponent } from './students-list/add-student/add-student.component';
+import { AddStudentModalComponent } from './students-list/add-student/add-student.component';
+import { FullscreenOverlayContainer } from '@angular/cdk/overlay';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SubjectsComponent } from './subjects/subjects.component';
+import { NewYearComponent } from './new-year/new-year.component';
 import { TeacherConnectionComponent } from './teacher-connection/teacher-connection.component';
 
 const routes: Routes = [
@@ -18,8 +22,24 @@ const routes: Routes = [
     children: [
       {
         path: 'students',
-        component: StudentsListComponent
+        component: StudentsListComponent,
+        children: [
+          {
+            path: 'add',
+            component: AddStudentModalComponent
+          },
+          {
+            path: ':id',
+            component: StudentDatailsComponent,
+            pathMatch: 'full'
+          },
+          {
+            path: ':id/edit',
+            component: AddStudentModalComponent
+          },
+        ]
       },
+
       {
         path: 'groups',
         component: GroupsComponent
@@ -35,6 +55,10 @@ const routes: Routes = [
           },
           { path: ':id/edit', component: EditDialogEntryComponent }
         ]
+      },
+      {
+        path: 'new-year-transition',
+        component: NewYearComponent
       },
       {
         path: '',
@@ -61,5 +85,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
+
 })
-export class AdminPanelRoutingModule {}
+export class AdminPanelRoutingModule { }

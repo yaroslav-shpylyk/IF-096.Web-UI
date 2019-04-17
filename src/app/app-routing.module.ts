@@ -14,8 +14,9 @@ const routes: Routes = [
     canLoad: [ShellGuard]
   },
   {
-    path: 'admin',
-    loadChildren: './admin-panel/admin-panel.module#AdminPanelModule'
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
   }
 ];
 
@@ -24,4 +25,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
- 
