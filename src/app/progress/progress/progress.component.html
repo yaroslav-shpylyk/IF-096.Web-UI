@@ -5,14 +5,14 @@
         <mat-icon>settings</mat-icon>
       </mat-panel-title>
       <mat-panel-description>
-        Налаштуйте відображення свого графіка
+        Налаштуйте параметри графіка
       </mat-panel-description>
     </mat-expansion-panel-header>
     <form [formGroup]="chartOptionsForm">
       <div class="class">
         <mat-form-field>
           <mat-label>Потік класів</mat-label>
-          <mat-select formControlName="streamId" (selectionChange)="chartOptionChange('stream', $event)">
+          <mat-select formControlName="streamId" (selectionChange)="streamChange($event)">
             <mat-option *ngFor="let item of stream; let i = index" [value]="i+1">
               {{i+1}}
             </mat-option>
@@ -23,7 +23,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Клас</mat-label>
-          <mat-select formControlName="classId" [disabled]="!classes.length" (selectionChange)="chartOptionChange('classes', $event)">
+          <mat-select formControlName="classId" (selectionChange)="classesChange($event)">
             <mat-option *ngFor="let item of classes" [value]="item.id">
               {{item.className}}
             </mat-option>
@@ -33,27 +33,29 @@
           </mat-error>
         </mat-form-field>
       </div>
+      <div class="markType">
+        <mat-label>Тип оцінки</mat-label>
+        <mat-radio-group formControlName="markType">
+          <mat-radio-button *ngFor="let item of markTypes | keyvalue" [value]="item.key" color="primary" (click)="markTypeChange($event, item.key)">
+            {{item.value}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
       <mat-form-field>
         <mat-label>Предмет</mat-label>
-        <mat-select formControlName="subjectId" [disabled]="!subjects.length" (selectionChange)="chartOptionChange('subjects', $event)">
+        <mat-select formControlName="subjectId">
           <mat-option *ngFor="let item of subjects" [value]="item.subjectId" >
             {{item.subjectName}}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="chartOptionsForm.controls.subjectId.hasError('required')">
+        <mat-error *ngIf="chartOptionsForm.controls.classId.hasError('required')">
           Оберіть предмет
         </mat-error>
       </mat-form-field>
-      <div class="markType">
-        <mat-label>Тип оцінки</mat-label>
-        <mat-radio-group formControlName="markType">
-          <mat-radio-button value="'all'" color="primary" checked>Всі</mat-radio-button>
-          <mat-radio-button value="'avg'" color="primary">Середня</mat-radio-button>
-        </mat-radio-group>
-      </div>
       <mat-form-field>
         <mat-label>Учень</mat-label>
-        <mat-select formControlName="studentId" [disabled]="!students.length || chartOptionsForm.value['markType'] === 'avg'" (selectionChange)="chartOptionChange('students', $event)" multiple>
+        <mat-select formControlName="studentId"
+                    [multiple]="chartOptionsForm.controls.markType.value !== 'avgOfStudents'">
           <mat-option *ngFor="let item of students" [value]="item.id">
             {{item.firstname}} {{item.lastname}}
           </mat-option>
@@ -64,26 +66,27 @@
           <input matInput [matDatepicker]="periodStart" formControlName="periodStart" placeholder="Початок періоду">
           <mat-datepicker-toggle matSuffix [for]="periodStart"></mat-datepicker-toggle>
           <mat-datepicker #periodStart></mat-datepicker>
+          <mat-error *ngIf="chartOptionsForm.controls.periodStart.hasError('required')">
+            Оберіть початкову дату
+          </mat-error>
+          <mat-error *ngIf="periodError">
+            Початкова дата більша за кінцеву
+          </mat-error>
         </mat-form-field>
         <mat-form-field>
           <input matInput [matDatepicker]="periodEnd" formControlName="periodEnd" placeholder="Кінець періоду">
           <mat-datepicker-toggle matSuffix [for]="periodEnd"></mat-datepicker-toggle>
           <mat-datepicker #periodEnd></mat-datepicker>
+          <mat-error *ngIf="chartOptionsForm.controls.periodStart.hasError('required')">
+            Оберіть кінцеву дату
+          </mat-error>
         </mat-form-field>
       </div>
     </form>
     <div class="buttons">
-      <button (click)="getDataForChart()" mat-raised-button class="submit" [disabled]="!chartOptionsForm.valid">Оновити графік</button>
-      <button mat-raised-button (click)="resetForm()" class="reset">Очистити</button>
+      <button (click)="getDataForChart()" mat-raised-button class="submit">Оновити графік</button>
+      <button mat-raised-button (click)="resetChartOptions()" class="reset">Очистити</button>
     </div>
   </mat-expansion-panel>
-  <mat-card class="chart">
-    <canvas baseChart
-            [datasets]="chartData"
-            [labels]="chartLabels"
-            [options]="chartOptions"
-            [legend]="chartLegend"
-            [chartType]="chartType">
-    </canvas>
-  </mat-card>
+  <app-chart></app-chart>
 </div>

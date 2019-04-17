@@ -3,12 +3,13 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SubjectService } from '../../services/subject.service';
 import { SubjectData } from '../../models/subject-data';
 import { ClassService } from '../../services/class.service';
-import { ClassData } from '../../models/class-data';
 import { StudentsService } from '../../services/students.service';
 import { Student } from '../../models/student';
-import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
-import { Label } from 'ng2-charts';
+import { ClassesFromStream } from '../../models/classes-from-stream';
+import { MarkService } from '../../services/mark.service';
+import { MarkRequestOptions } from '../../models/mark-request-options';
 import { ProgressService } from '../services/progress.service';
+import { DateValidator } from '../validators/date.validator';
 
 @Component({
   selector: 'app-progress',
@@ -19,90 +20,93 @@ export class ProgressComponent implements OnInit {
   public chartOptionsForm: FormGroup;
   public stream = new Array(12);
   public subjects: SubjectData[] = [];
-  public classes: ClassData[] = [];
+  public classes: ClassesFromStream[] = [];
   public students: Student[] = [];
-  public chartOptions: ChartOptions = {
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true,
-          max: 12,
-          maxTicksLimit: 24
-        }
-      }]
-    }
+  public markTypes = {
+    allOfSubject: 'По предмету',
+    avgOfSubject: 'Середня по предмету',
+    avgOfStudent: 'Всі середні учня'
   };
-  public chartLabels: Label[] = [''];
-  public chartType: ChartType = 'bar';
-  public chartLegend = true;
-  public chartData: ChartDataSets[] = [{
-    data: [],
-    label: ''
-  }];
+  private markType = '';
+  public periodError = false;
   constructor(private subjectService: SubjectService, private classService: ClassService,
-              private studentService: StudentsService, private progressService: ProgressService) { }
+              private studentService: StudentsService, private markService: MarkService,
+              private progressService: ProgressService) { }
 
   ngOnInit() {
-    this.createForm();
+    this.createChartOptions();
     this.chartOptionsForm.valueChanges.subscribe(result => {
-      console.log(result);
-    });
+      this.periodError = this.chartOptionsForm.hasError('periodError');
+      }
+    );
   }
 
   /**
    * Method creates form for chart options
    */
-  private createForm(): void {
+  private createChartOptions(): void {
     this.chartOptionsForm = new FormGroup({
-      streamId: new FormControl('', [
-        Validators.required
-      ]),
-      classId: new FormControl('', [
-        Validators.required
-      ]),
-      subjectId: new FormControl('', [
-        Validators.required
-      ]),
-      markType: new FormControl('all', [
-        Validators.required
-      ]),
+      streamId: new FormControl(null, Validators.required),
+      classId: new FormControl(null, Validators.required),
+      subjectId: new FormControl(null, Validators.required),
+      markType: new FormControl('allOfSubject', Validators.required),
       studentId: new FormControl([]),
-      periodStart: new FormControl('', [
-        Validators.required
-      ]),
-      periodEnd: new FormControl('', [
-        Validators.required
-      ]),
-    });
-  }
-  public checkFieldValue(field: string): boolean {
-    return Boolean(this.chartOptionsForm.controls[field].value);
+      periodStart: new FormControl(null, Validators.required),
+      periodEnd: new FormControl(null, Validators.required)
+    },
+      DateValidator
+    );
   }
 
   /**
-   * Method fires then something in form changes
-   * @param fieldName - Name of form input
-   * @param event - Variable of event
+   * Method changes stream in chart settings
+   * @param event - Variable of change event
    */
-  public chartOptionChange(fieldName: string, event) {
-    console.log(this.chartOptionsForm.value.streamId > 0);
-    switch (fieldName) {
-      case 'stream': {
-        console.log(this.chartOptionsForm.controls.streamId.value);
-        this.progressService.getClassesByStream(7).subscribe(result => {
-          console.log(result);
-          this.classes = result;
-        });
+  public streamChange(event): void {
+    this.subjects = [];
+    this.students = [];
+    this.classService.getClassesByStream(event.value).subscribe(result => this.classes = result.studentsData);
+  }
+
+  /**
+   * Method changes stream in chart settings
+   * @param event - Variable of change event
+   */
+  public classesChange(event): void {
+    this.students = [];
+    this.subjectService.getSubjects(event.value).subscribe(result => this.subjects = result);
+    this.studentService.getStudents(event.value).subscribe(result => this.students = result);
+  }
+
+  /**
+   * Method changes stream in chart settings
+   * @param event - Variable of change event
+   * @param type - Type of mark
+   */
+  public markTypeChange(event, type: string): void {
+    this.chartOptionsForm.patchValue({
+      studentId: [],
+      subjectId: []
+    });
+    this.markType = type;
+    switch (type) {
+      case 'allOfSubject':
+      case 'avgOfSubject': {
+        this.chartOptionsForm.controls.subjectId.setValidators([Validators.required]);
+        this.chartOptionsForm.controls.studentId.clearValidators();
         break;
       }
-      case 'classes': {
-        this.subjects = [];
-        this.students = [];
-        this.subjectService.getSubjects(event.value).subscribe(result => this.subjects = result);
-        this.studentService.getStudents(event.value).subscribe(result => this.students = result);
+      case 'avgOfStudent': {
+        this.chartOptionsForm.controls.subjectId.clearValidators();
+        this.chartOptionsForm.controls.studentId.setValidators([Validators.required]);
         break;
       }
     }
+    this.chartOptionsForm.controls.subjectId.markAsUntouched();
+    this.chartOptionsForm.controls.subjectId.markAsUntouched();
+    this.chartOptionsForm.controls.subjectId.updateValueAndValidity();
+    this.chartOptionsForm.controls.studentId.updateValueAndValidity();
+    this.chartOptionsForm.markAsUntouched();
   }
 
   /**
@@ -112,26 +116,6 @@ export class ProgressComponent implements OnInit {
    */
   private formatDate(date: Date): string {
     return date.toISOString().slice(0, 10);
-  }
-
-  /**
-   * Method updates data in chart
-   * @param data - New chart data
-   */
-  private updateChart(data: any): void {
-    this.chartLabels = [];
-    this.chartData = [];
-    const newData = [];
-    data.forEach(item => {
-      const marks = item.marks.map(item => item.mark);
-      const marksInfo = {
-        data: marks,
-        label: `${item.studentInfo.firstname} ${item.studentInfo.lastname}`
-      };
-      newData.push(marksInfo);
-    });
-    this.chartLabels = data[0].marks.map(item => item.date);
-    this.chartData = newData;
   }
 
   /**
@@ -155,28 +139,67 @@ export class ProgressComponent implements OnInit {
     }
     return studentsInfo;
   }
-  public checkEmpty(field: string): boolean {
-    const value = this.chartOptionsForm.controls[field].value;
-    return field === 'classId' ?
-      value.length :
-      Boolean(value);
-  }
+
+  /**
+   * Method gets data for chart
+   */
   public getDataForChart(): void {
-    const {subjectId, classId, studentId, periodStart, periodEnd} = this.chartOptionsForm.value;
-    const options = {
-      subject_id: subjectId,
+    if (!this.chartOptionsForm.valid) {
+      const controlsKeys = Object.keys(this.chartOptionsForm.controls);
+      controlsKeys.forEach(item => this.chartOptionsForm.controls[`${item}`].markAsTouched());
+      return;
+    }
+    const {subjectId, classId, studentId, markType, periodStart, periodEnd} = this.chartOptionsForm.value;
+    const options: MarkRequestOptions = {
       student_id: studentId.length ? studentId : this.students.map(item => item.id),
-      class_id: classId,
       period_start: this.formatDate(periodStart),
       period_end: this.formatDate(periodEnd)
     };
     const studentsInfo = this.formStudentsInfo(studentId, this.students);
-    this.progressService.getAllMarks(options, studentsInfo).subscribe(result => {
-      this.updateChart(result);
-    });
+    switch (markType) {
+      case 'allOfSubject': {
+        options.subject_id = subjectId;
+        options.class_id = classId;
+        this.markService.getProgressMarks(options, studentsInfo).subscribe(result => {
+          this.progressService.updateChartData({
+            data: result,
+            markType: this.chartOptionsForm.controls.markType.value
+          });
+        });
+        break;
+      }
+      case 'avgOfSubject': {
+        const subjectName: SubjectData[] = this.subjects.filter(item => item.subjectId === subjectId);
+        this.markService.getAvgProgressMarks(options, subjectName, studentsInfo).subscribe(result => {
+          this.progressService.updateChartData({
+            data: result,
+            markType: this.chartOptionsForm.controls.markType.value
+          });
+        });
+        break;
+      }
+      case 'avgOfStudent': {
+        this.markService.getAvgStudentProgressMarks(options).subscribe(result => {
+          this.progressService.updateChartData({
+            data: result,
+            markType: this.chartOptionsForm.controls.markType.value
+          });
+        });
+        break;
+      }
+    }
   }
-  public resetForm(): void {
-    this.chartOptionsForm.reset();
+
+  /**
+   * Method resets form
+   */
+  public resetChartOptions(): void {
+    const controlKeys = Object.keys(this.chartOptionsForm.controls);
+    controlKeys.forEach(item => {
+      if (item !== 'markType') {
+        this.chartOptionsForm.controls[item].reset();
+      }
+    });
     this.subjects = [];
     this.classes = [];
     this.students = [];
