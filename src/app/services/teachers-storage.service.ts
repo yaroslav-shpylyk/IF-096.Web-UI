@@ -9,8 +9,9 @@ export class TeachersStorageService {
   public modalsId: number;
   public editMode: boolean;
   public defaultAvatar = 'assets/default-avatar.svg';
+  teacherAdded = new Subject();
+  teacherEdited = new Subject();
   teachersChanged = new Subject();
-  teacherChanged = new Subject();
 
   constructor(private httpClient: HttpClient) {}
 
@@ -36,8 +37,7 @@ export class TeachersStorageService {
       .subscribe(
         teachers => {
           const newTeacher = teachers[teachers.length - 1];
-          console.log(newTeacher);
-          this.teacherChanged.next(newTeacher);
+          this.teacherAdded.next(newTeacher);
         },
         error => console.log(error)
       );
@@ -46,7 +46,6 @@ export class TeachersStorageService {
   getTeacherS(): Observable<TeacherData[]> {
     return this.httpClient
       .get('/teachers')
-      // .pipe(map((result: { status: any; data: TeacherData[] }) => result.data));
       .pipe(
         map((response: { status: any; data: TeacherData[] }) => {
           const teachers = response.data;

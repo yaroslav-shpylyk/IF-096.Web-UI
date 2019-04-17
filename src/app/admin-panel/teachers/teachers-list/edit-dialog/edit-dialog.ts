@@ -14,8 +14,6 @@ import {
 import { MatSnackBar } from '@angular/material';
 import { TeacherData } from 'src/app/models/teacher-data';
 
-
-
 @Component({
   selector: 'app-edit-dialog-overview',
   templateUrl: './edit-dialog.html',
@@ -35,7 +33,7 @@ export class EditDialogOverviewComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     public snackBar: MatSnackBar
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.editMode = this.teachersStorageService.editMode;
@@ -126,9 +124,9 @@ export class EditDialogOverviewComponent implements OnInit, OnDestroy {
       phone: this.teacherForm.value.teacherPhone
     };
     if (!this.editMode) {
-      console.log(newValues.avatar);
+
       this.teachersStorageService.addTeacher(newValues).subscribe(
-        (res) => {
+        res => {
           console.log(res);
           this.teachersStorageService.getTeachers();
           this.openSnackBar(
@@ -145,8 +143,13 @@ export class EditDialogOverviewComponent implements OnInit, OnDestroy {
       this.teachersStorageService
         .updateTeacher(this.teachersStorageService.modalsId, newValues)
         .subscribe(
-          () => {
-            this.teachersStorageService.getTeachers();
+          res => {
+            const id = this.teachersStorageService.modalsId;
+            res.id = id;
+            this.teachersStorageService.teacherEdited.next({
+              id,
+              obj: res
+            });
             this.openSnackBar(`Нові дані внесено`, 'snack-class-success');
           },
           error => {

@@ -60,7 +60,8 @@ export class ConfirmationDialogComponent {
 })
 export class TeachersListComponent implements OnInit, OnDestroy {
   teachers;
-  subscription: Subscription;
+  addSubscription: Subscription;
+  editSubscription: Subscription;
   // filteredTeachers = '';
   dataSource;
   mappedTeachers = new Object() as any;
@@ -78,11 +79,19 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.teachersStorageService.teacherChanged.subscribe(resp => {
+    this.addSubscription = this.teachersStorageService.teacherAdded.subscribe(resp => {
       const newTeacher: any = resp;
       this.mappedTeachers[newTeacher.id] = newTeacher;
       this.dataSource = new MatTableDataSource(Object.values(this.mappedTeachers));
     });
+
+    this.editSubscription = this.teachersStorageService.teacherEdited.subscribe(resp => {
+      const newTeacher: any = resp;
+      Object.assign(this.mappedTeachers[newTeacher.id], newTeacher.obj);
+      console.log(this.mappedTeachers);
+      this.dataSource = new MatTableDataSource(Object.values(this.mappedTeachers));
+    });
+
     this.teachersStorageService.getTeacherS().subscribe(arr => {
       const data = [];
       for (const teacher of arr) {
@@ -114,7 +123,7 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.subscription.unsubscribe();
+    this.addSubscription.unsubscribe();
     window.onscroll = null;
   }
 
