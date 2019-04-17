@@ -17,6 +17,35 @@
     flex-wrap: wrap;
     width: 100%;
     height: 100%;
+
+    mat-form-field {
+      width: 13em;
+    }
+    .class{
+      display: flex;
+      flex-direction: column;
+    }
+
+    .markType {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+
+      mat-radio-group {
+        display: flex;
+        flex-direction: column;
+
+        mat-radio-button {
+          margin-top: 1em;
+        }
+      }
+    }
+
+    .period {
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   .buttons {
