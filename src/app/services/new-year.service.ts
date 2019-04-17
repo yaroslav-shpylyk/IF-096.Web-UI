@@ -56,11 +56,11 @@ export class NewYearService {
    * Method return list of classes
    * @returns list of classes
    */
-  public getClasses(): Observable<any> {
-    return this.http.get(`/classes`, {observe: 'response'})
+  public getClasses(): Observable<ClassInfo[]> {
+    return this.http.get(`/classes`)
     .pipe(
       map((response: any) => {
-        return response.body.data as ClassInfo;
+        return response.data;
       }),
       catchError((error: any) => {
         return error;
@@ -73,11 +73,11 @@ export class NewYearService {
    * @returns list of pupils
    * @param classId number, class id
    */
-  public getPupilList(classId: number): Observable<any> {
-    return this.http.get(`/students/classes/${classId}`, {observe: 'response'})
+  public getPupilList(classId: number): Observable<Student[]> {
+    return this.http.get(`/students/classes/${classId}`)
     .pipe(
-      map((response: any) => {
-        return response.body.data as Student;
+      map((response: { status: any, data: Student[] }) => {
+        return response.data;
       }),
       catchError((error: any) => {
         return error;
