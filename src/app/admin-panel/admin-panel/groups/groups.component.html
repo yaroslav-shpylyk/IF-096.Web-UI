@@ -1,5 +1,5 @@
 <i class="material-icons" id="buttonAdd" (click)="openPopupsSheet()">
-  add_circle_outline
+  add_circle
 </i>
 
 <div class="filterBlok">
@@ -26,7 +26,7 @@
   </ng-container>
 
   <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef> Ред. </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Ред. </th>
     <td mat-cell *matCellDef="let element"> <a (click)="openPopupsSheet(element)" class="edit" title="Редагувати">⋮</a> </td>
   </ng-container>
 

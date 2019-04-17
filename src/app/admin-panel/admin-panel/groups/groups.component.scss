@@ -8,7 +8,8 @@ table {
   right: 0.15em;
   font-size: 3.1em;
   transition: bottom 0.9s;
-  color:  #1565c0;
+  color: #1565c0;
+  cursor: pointer;
 }
 
 th.mat-sort-header-sorted {
@@ -18,7 +19,7 @@ th.mat-sort-header-sorted {
 .edit {
   font-size: 1.8em;
   cursor: pointer;
-} 
+}
 
 .mat-form-field {
   font-size: 1.2em;
@@ -30,6 +31,13 @@ th.mat-sort-header-sorted {
   background-color: white;
 }
 
-td {
-  text-align: left;
+::ng-deep {
+  & tr.mat-header-row > th > div > button {
+    margin: auto !important;
+    font-size: 1.5em !important;
+    color:  #1565c0 !important;
+  }
+  & td {
+    text-align: center !important;
+  }
 }

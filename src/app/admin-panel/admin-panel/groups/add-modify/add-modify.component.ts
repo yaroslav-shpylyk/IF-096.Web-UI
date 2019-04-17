@@ -11,6 +11,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatSnackBarConfig } from '@
 })
 
 export class AddModifyGroupComponent implements OnInit {
+  groupBeforeChange = { ...this.data };
 
   constructor(
     private dialogRef: MatDialogRef<AddModifyGroupComponent>,
@@ -36,8 +37,10 @@ export class AddModifyGroupComponent implements OnInit {
     const group = new Group(this.data);
     this.groupServices.addGrup(group).subscribe((dataResponse: any) => {
       if (group.id && !(dataResponse === undefined)) {
-        if (group.className === dataResponse.className && group.classYear === dataResponse.classYear
-          && group.isActive === dataResponse.isActive && group.classDescription === dataResponse.classDescription) {
+        if (this.groupBeforeChange.className === dataResponse.className
+          && this.groupBeforeChange.classYear === dataResponse.classYear
+          && this.groupBeforeChange.isActive === dataResponse.isActive
+          && this.groupBeforeChange.classDescription === dataResponse.classDescription) {
           this.openSnackBar(
             `Клас ${dataResponse.className}  ${dataResponse.classYear} року. Ви не внесли ніяких змін!`,
             'snack-class-warning'
