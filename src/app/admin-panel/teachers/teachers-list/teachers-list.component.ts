@@ -96,6 +96,7 @@ export class TeachersListComponent implements OnInit, OnDestroy {
         // console.log(this.arr);
         // this.dataSource = new MatTableDataSource(this.teachers);
         console.log(this.arr);
+        this.teachersStorageService.varvara();
         // this.dataSource = new MatTableDataSource(this.arr);
         // this.dataSource.sort = this.sortCol;
       }

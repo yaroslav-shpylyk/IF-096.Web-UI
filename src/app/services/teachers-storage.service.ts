@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { Subject, Observable } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+import { Subject, Observable, forkJoin } from 'rxjs';
 import { TeacherData } from '../models/teacher-data';
 
 @Injectable()
@@ -130,7 +130,7 @@ export class TeachersStorageService {
             academicYear: item.academicYear
           };
         }
-        console.log(Object.values(journalData));
+
         return Object.values(journalData);
       })
     );
@@ -151,5 +151,42 @@ export class TeachersStorageService {
         return data;
       })
     );
+  }
+
+  getTeacherSubjectsClasses2(teacher): Observable<any> {
+    return this.httpClient.get(`/journals/teachers/${teacher.id}`).pipe(
+      map((response: { status: any; data: any }) => {
+        teacher.subjects = [];
+        teacher.classes = [];
+        for (const item of response.data) {
+          if (!teacher.subjects.includes(item.subjectName)) {
+            teacher.subjects.push(item.subjectName);
+          }
+          if (!teacher.classes.includes(item.className)) {
+            teacher.classes.push(item.className);
+          }
+        }
+        return teacher;
+      })
+    );
+  }
+
+  varvara() {
+    this.getTeacherS().subscribe(arr => {
+      console.log(arr);
+      const data = [];
+      for (const teacher of arr) {
+        data.push(this.getTeacherSubjectsClasses2(teacher));
+      }
+
+      forkJoin(data).subscribe(teachers => {
+        // for (const teac of teachers) {
+        //   if (!teac.subjects.includes) {
+        //     teac.subjects.push(teac.subjectName);
+        //   }
+        // }
+        console.log(teachers);
+      });
+    });
   }
 }
