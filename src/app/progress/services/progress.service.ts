@@ -1,16 +1,25 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { StudentChartMarks } from '../../models/student-chart-marks';
+import { AvgMarkResponse } from '../../models/avg-mark-response';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProgressService {
-  private chartData: BehaviorSubject<{data: any, markType: string}> = new BehaviorSubject({data: [], markType: ''});
+  private subjectChartData: Subject<StudentChartMarks[]> = new Subject();
+  private studentChartData: Subject<AvgMarkResponse[]> = new Subject();
   constructor() { }
-  public getChartData(): any {
-    return this.chartData;
+  public getSubjectChartData(): Observable<StudentChartMarks[]> {
+    return this.subjectChartData;
   }
-  public updateChartData(data): any {
-    this.chartData.next(data);
+  public updateSubjectChartData(data): void {
+    this.subjectChartData.next(data);
+  }
+  public getStudentChartData(): Observable<AvgMarkResponse[]> {
+    return this.studentChartData;
+  }
+  public updateStudentChartData(data): void {
+    this.studentChartData.next(data);
   }
 }
