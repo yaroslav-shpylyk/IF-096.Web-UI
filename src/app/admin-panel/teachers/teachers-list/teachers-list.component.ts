@@ -11,7 +11,6 @@ import {
   MatSort,
   MatTableDataSource
 } from '@angular/material';
-import { TeacherData } from 'src/app/models/teacher-data';
 
 @Component({
   selector: 'app-confirmation-dialog',
@@ -31,7 +30,7 @@ export class ConfirmationDialogComponent {
     this.teachersStorageService
       .deleteTeacher(this.data.id)
       .subscribe(response => {
-        this.teachersStorageService.getTeachers();
+        this.teachersStorageService.teacherDeleted.next(this.data.id);
         this.dialogRef.close();
         this.openSnackBar(
           `Викладач ${response.lastname} ${response.firstname} видалений`,
@@ -62,7 +61,7 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   teachers;
   addSubscription: Subscription;
   editSubscription: Subscription;
-  // filteredTeachers = '';
+  deleteSubscription: Subscription;
   dataSource;
   mappedTeachers = new Object() as any;
 
@@ -88,7 +87,12 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     this.editSubscription = this.teachersStorageService.teacherEdited.subscribe(resp => {
       const newTeacher: any = resp;
       Object.assign(this.mappedTeachers[newTeacher.id], newTeacher.obj);
-      console.log(this.mappedTeachers);
+      this.dataSource = new MatTableDataSource(Object.values(this.mappedTeachers));
+    });
+
+    this.deleteSubscription = this.teachersStorageService.teacherDeleted.subscribe(resp => {
+      const toDelete: any = resp;
+      delete this.mappedTeachers[toDelete];
       this.dataSource = new MatTableDataSource(Object.values(this.mappedTeachers));
     });
 
@@ -124,6 +128,8 @@ export class TeachersListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.addSubscription.unsubscribe();
+    this.editSubscription.unsubscribe();
+    this.deleteSubscription.unsubscribe();
     window.onscroll = null;
   }
 

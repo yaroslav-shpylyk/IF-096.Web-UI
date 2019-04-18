@@ -11,13 +11,13 @@ export class TeachersStorageService {
   public defaultAvatar = 'assets/default-avatar.svg';
   teacherAdded = new Subject();
   teacherEdited = new Subject();
-  teachersChanged = new Subject();
+  teacherDeleted = new Subject();
 
   constructor(private httpClient: HttpClient) {}
 
   /**
    * Method fetches from server an array of teachers
-   * and passes it to the subject teachersChanged.
+   * and passes it to the subject teacherAdded.
    */
   getTeachers(): void {
     this.httpClient
