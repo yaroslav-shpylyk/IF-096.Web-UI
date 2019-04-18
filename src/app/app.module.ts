@@ -14,6 +14,7 @@ import { JournalsStorageService } from './services/journals-storage.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TeacherService } from './services/teacher.service';
 import { SubjectService } from './services/subject.service';
+import { MatNativeDateModule } from '@angular/material';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,7 +26,8 @@ import { SubjectService } from './services/subject.service';
     BrowserAnimationsModule,
     FlexLayoutModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatNativeDateModule
   ],
   providers: [
     AuthService,

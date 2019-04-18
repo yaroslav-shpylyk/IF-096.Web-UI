@@ -1,3 +1,110 @@
-<p>
-  progress works!
-</p>
+<div class="component">
+  <mat-expansion-panel class="chartOptions">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon>settings</mat-icon>
+      </mat-panel-title>
+      <mat-panel-description>
+        Налаштуйте параметри графіка
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <form [formGroup]="chartOptionsForm">
+      <div class="class">
+        <mat-form-field>
+          <mat-label>Потік класів</mat-label>
+          <mat-select formControlName="streamId">
+            <mat-option *ngFor="let item of stream; let i = index" [value]="i+1">
+              {{i+1}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="chartOptionsForm.controls.streamId.hasError('required')">
+            Оберіть номер потоку класів
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Клас</mat-label>
+          <mat-select formControlName="classId">
+            <mat-option *ngFor="let item of classes" [value]="item.id">
+              {{item.className}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="chartOptionsForm.controls.classId.hasError('required')">
+            Оберіть клас
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="markType">
+        <mat-label>Тип оцінки</mat-label>
+        <mat-radio-group formControlName="markType">
+          <mat-radio-button *ngFor="let item of markTypes | keyvalue" [value]="item.key" color="primary">
+            {{item.value}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <mat-form-field>
+        <mat-label>Предмет</mat-label>
+        <mat-select formControlName="subjectId">
+          <input class="autoComplete" type="text"
+                 (keydown)="$event.stopPropagation()" formControlName="subjectAutoComplete">
+          <div class="options">
+            <mat-option *ngFor="let item of sortedSubjects$ | async" [value]="item.subjectId" >
+              {{item.subjectName}}
+            </mat-option>
+          </div>
+        </mat-select>
+        <mat-error *ngIf="chartOptionsForm.controls.subjectId.hasError('required')">
+          Оберіть предмет
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Учень</mat-label>
+        <mat-select  formControlName="studentId" multiple
+                     *ngIf="chartOptionsForm.controls.markType.value !== 'avgOfStudent';else singleSelect">
+          <input class="autoComplete" type="text"
+                 (keydown)="$event.stopPropagation()" formControlName="studentAutoComplete">
+          <mat-option *ngFor="let item of sortedStudents$ | async" [value]="item.id">
+            {{item.firstname}} {{item.lastname}}
+          </mat-option>
+        </mat-select>
+        <ng-template #singleSelect>
+          <mat-select  formControlName="studentId" >
+            <input class="autoComplete" type="text"
+                   (keydown)="$event.stopPropagation()" formControlName="studentAutoComplete">
+            <mat-option *ngFor="let item of sortedStudents$ | async" [value]="item.id">
+              {{item.firstname}} {{item.lastname}}
+            </mat-option>
+          </mat-select>
+        </ng-template>
+        <mat-error *ngIf="chartOptionsForm.controls.studentId.hasError('required')">
+          Оберіть учня
+        </mat-error>
+      </mat-form-field>
+      <div class="period">
+        <mat-form-field>
+          <input matInput [matDatepicker]="periodStart" formControlName="periodStart" placeholder="Початок періоду">
+          <mat-datepicker-toggle matSuffix [for]="periodStart"></mat-datepicker-toggle>
+          <mat-datepicker #periodStart></mat-datepicker>
+          <mat-error *ngIf="chartOptionsForm.controls.periodStart.hasError('required')">
+            Оберіть початкову дату
+          </mat-error>
+          <mat-error *ngIf="chartOptionsForm.controls.periodStart.hasError('periodError')">
+            Початкова дата більша за кінцеву
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [matDatepicker]="periodEnd" formControlName="periodEnd" placeholder="Кінець періоду">
+          <mat-datepicker-toggle matSuffix [for]="periodEnd"></mat-datepicker-toggle>
+          <mat-datepicker #periodEnd></mat-datepicker>
+          <mat-error *ngIf="chartOptionsForm.controls.periodStart.hasError('required')">
+            Оберіть кінцеву дату
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+    <div class="buttons">
+      <button (click)="getDataForChart()" mat-raised-button class="submit">Оновити графік</button>
+      <button mat-raised-button (click)="resetChartOptions()" class="reset">Очистити</button>
+    </div>
+  </mat-expansion-panel>
+  <app-chart></app-chart>
+</div>

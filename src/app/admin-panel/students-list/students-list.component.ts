@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ClassService } from '../../services/class.service';
 import { StudentsService } from '../../services/students.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Student } from '../../models/student';
 import { ClassInfo } from '../../models/class-info';
 import { Observable } from 'rxjs';
+import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-students-list',
@@ -15,11 +16,11 @@ import { Observable } from 'rxjs';
 export class StudentsListComponent implements OnInit {
   activeClass: Observable<Array<ClassInfo>>;
   notActiveClass: Observable<Array<ClassInfo>>;
-  studentList: Observable<Array<Student>>;
   classId: number;
   showNowActive = false;
-  searchValue = '';
-  showSearch = false;
+  dataSource: MatTableDataSource<Student>;
+  displayedColumns: string[] = ['avatar', 'name', 'dateOfBirth', 'schoolClass', 'moreButton'];
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private classListService: ClassService,
@@ -31,33 +32,52 @@ export class StudentsListComponent implements OnInit {
   ngOnInit() {
     this.activeClass = this.classListService.getClasses('active');
     this.notActiveClass = this.classListService.getClasses('inActive');
-    this.studentList = this.studentsService.getSubject();
+    this.initStudentList();
+  }
+
+  /**
+   * Method init student list, sort and refresh student in table
+   */
+
+  initStudentList(): void {
+    this.studentsService.getSubject().subscribe((res: Array<Student>) => {
+      this.dataSource = new MatTableDataSource(res);
+      this.dataSource.sort = this.sort;
+    });
   }
 
   /**
    * Method return students list from one class
-   * @returns - array with students in class
    */
 
   onSelectionClass($event): void {
     this.classId = $event.value;
     this.studentsService.loadStudents(this.classId);
-    this.showSearch = true;
   }
 
   /**
    * Method open component for add new student
    */
 
-  AddStudent(): void {
+  addStudent(): void {
     this.router.navigate(['add'], { relativeTo: this.route, queryParams: { classId: this.classId } });
   }
 
   /**
-   * Method pipe students list
+   * Method delete student
    */
 
-  onSearch(event): void {
-    this.searchValue = event;
+  deleteStudent(id): void {
+    this.studentsService.deleteStudent(id).subscribe(() => {
+      this.studentsService.loadStudents(this.classId);
+    });
+  }
+
+  /**
+   * Method filter students list
+   */
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

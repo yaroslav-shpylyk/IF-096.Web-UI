@@ -1,14 +1,41 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { ProgressRoutingModule } from './progress-routing.module';
 import { ProgressComponent } from './progress/progress.component';
+import {
+  MatSelectModule,
+  MatDatepickerModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatCardModule,
+  MatRadioModule,
+  MatExpansionModule,
+  MatIconModule,
+  MatButtonModule,
+  MatAutocompleteModule
+} from '@angular/material';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ChartsModule } from 'ng2-charts';
+import { ChartComponent } from './chart/chart.component';
 
 @NgModule({
-  declarations: [ProgressComponent],
+  declarations: [ProgressComponent, ChartComponent],
   imports: [
     CommonModule,
-    ProgressRoutingModule
+    ProgressRoutingModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    ChartsModule,
+    MatRadioModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatButtonModule,
+    MatAutocompleteModule,
+    FormsModule
   ]
 })
 export class ProgressModule { }
