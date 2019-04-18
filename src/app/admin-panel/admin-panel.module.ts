@@ -42,7 +42,6 @@ import { MatMenuModule, MatNativeDateModule } from '@angular/material';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { StudentFilterPipe } from './students-list/student-filter.pipe';
 import { MatSortModule } from '@angular/material';
 import { MatCardModule, MatExpansionModule, MatCheckboxModule, MatSlideToggleModule} from '@angular/material';
 import { NewYearComponent } from './new-year/new-year.component';
@@ -74,7 +73,6 @@ import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subje
     TitlePipe,
     AddStudentModalComponent,
     AddStudentComponent,
-    StudentFilterPipe,
     ModifySubjectsComponent
   ],
   imports: [
