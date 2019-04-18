@@ -7,7 +7,7 @@ export function AsyncStreamValidator(classService: ClassService) {
   return (control: AbstractControl) => {
     return classService.getClassesByStream(control.value)
       .pipe(
-        map((result: ClassesFromStream) => result.studentsData.length ? null : { noClasses: true })
+        map((result: ClassesFromStream) => result.allStudents ? null : { noClasses: true })
       );
   };
 }
