@@ -6,6 +6,11 @@
         placeholder="Предмет"
         name="subjectName"
         [(ngModel)]="data.subjectName"
+        maxlength="50"
+        required
+        pattern="[А-ЯІЇЄҐа-яіїєґ()' -]+"
+        #subj="ngModel"
+        [class.is-invalid]="subj.invalid && subj.touched"
       >
     </mat-form-field>
     <mat-form-field class="example-full-width">
@@ -14,10 +19,12 @@
        matInput
        placeholder="Опис"
        name="subjectDescription"
-       [(ngModel)]="data.subjectDescription">
+       [(ngModel)]="data.subjectDescription"
+       maxlength="500"
+      >
       </textarea>
     </mat-form-field>
-    <button mat-button (click)="saveNewSubject()" cdkFocusInitial>Зберегти</button>
+    <button mat-button (click)="saveNewSubject()" cdkFocusInitial [disabled]="subj.invalid">Зберегти</button>
     <button mat-button (click)="onNoClick()">Відмінити</button>
   </form>
 </div>

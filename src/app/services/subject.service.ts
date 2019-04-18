@@ -14,8 +14,9 @@ export class SubjectService {
    * Method gets number of all subjects
    * @returns - Number of classes
    */
-  public getSubjects(): Observable<SubjectData[]> {
-    return this.http.get('/subjects')
+  public getSubjects(classNumber?: string): Observable<SubjectData[]> {
+    const classId = classNumber || '';
+    return this.http.get(`/subjects?classId=${classId}`)
       .pipe(
         map((result: { status: any, data: SubjectData[] }) => result.data)
       );

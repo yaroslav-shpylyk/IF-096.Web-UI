@@ -18,7 +18,7 @@ export class TeacherService {
   public getTeachers(): Observable<TeacherData[]> {
     return this.http.get('/teachers')
       .pipe(
-        map((result: {status: any, data: TeacherData[]}) => result.data)
+        map((result: {status: any, data: TeacherData[] | null}) => result.data)
       );
   }
 }
