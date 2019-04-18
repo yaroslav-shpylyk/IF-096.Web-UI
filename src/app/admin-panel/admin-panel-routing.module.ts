@@ -12,6 +12,7 @@ import { AddStudentModalComponent } from './students-list/add-student/add-studen
 import { FullscreenOverlayContainer } from '@angular/cdk/overlay';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SubjectsComponent } from './subjects/subjects.component';
+import { NewYearComponent } from './new-year/new-year.component';
 
 const routes: Routes = [
   {
@@ -55,6 +56,10 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'new-year-transition',
+        component: NewYearComponent
+      },
+      {
         path: '',
         component: DashboardComponent
       },
@@ -69,5 +74,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
+
 })
 export class AdminPanelRoutingModule { }

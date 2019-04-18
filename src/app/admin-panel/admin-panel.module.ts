@@ -31,7 +31,12 @@ import { SubjectsComponent } from './subjects/subjects.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { StudentFilterPipe } from './students-list/student-filter.pipe';
 import { MatSortModule } from '@angular/material';
+import { MatCardModule, MatExpansionModule, MatCheckboxModule, MatSlideToggleModule} from '@angular/material';
+import { NewYearComponent } from './new-year/new-year.component';
+import { ClassFilterPipe } from './new-year/class-filter.pipe';
+import { TitlePipe } from './new-year/autotitle.pipe';
 import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subjects.component';
+
 
 @NgModule({
   declarations: [
@@ -51,6 +56,9 @@ import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subje
     StudentDetailModalComponent,
     DashboardComponent,
     SubjectsComponent,
+    NewYearComponent,
+    ClassFilterPipe,
+    TitlePipe,
     AddStudentModalComponent,
     AddStudentComponent,
     StudentFilterPipe,
@@ -73,6 +81,11 @@ import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subje
     MatFormFieldModule,
     ReactiveFormsModule,
     MaterialModule,
+    MatSortModule,
+    MatCardModule,
+    MatExpansionModule,
+    MatCheckboxModule,
+    MatSlideToggleModule,
     MatDatepickerModule,
     MatMenuModule,
     MatNativeDateModule,

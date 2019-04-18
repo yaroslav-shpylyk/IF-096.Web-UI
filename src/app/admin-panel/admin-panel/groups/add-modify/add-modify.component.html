@@ -1,5 +1,5 @@
 <div mat-dialog-content>
-  <form class="example-form" #form = "ngForm">
+  <form class="example-form">
     <mat-form-field class="example-full-width">
       <input matInput placeholder="Назва класу:"  name="className" [(ngModel)]="data.className"
         required #className="ngModel" [class.is-invalid]="className.invalid && className.touched"
@@ -16,7 +16,7 @@
       <textarea  matInput placeholder="Додадкова інформація:" name="classDescription"
        [(ngModel)]="data.classDescription"></textarea>
     </mat-form-field>
-    <mat-form-field class="example-full-width" id="displayNone">
+    <mat-form-field class="example-full-width" id="displayNoneForId">
       <input matInput placeholder="ID:" name="id" [(ngModel)]="data.id">
     </mat-form-field>
     <mat-form-field class="example-full-width" >
@@ -27,9 +27,9 @@
       </mat-select>
     </mat-form-field>
   
-    <button mat-stroked-button color="primary" type="submit" (click)="save(form.value)" (click)="abort()"
-    [disabled]="classYear.invalid">Зберегти</button>
-    <button mat-stroked-button color="primary" type="submit" (click)="abort()">Відміна</button>
+    <button mat-stroked-button color="primary" (click)="save()"
+    [disabled]="classYear.invalid || className.invalid">Зберегти</button>
+    <button mat-stroked-button color="primary" (click)="abort()">Відміна</button>
      
   </form>
 </div>
