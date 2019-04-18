@@ -4,37 +4,53 @@ import { AdminPanelRoutingModule } from './admin-panel-routing.module';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { DailyScheduleComponent } from './schedule/daily-schedule/daily-schedule.component';
-import { TeachersComponent } from './teachers/teachers.component';
 import { MaterialModule } from '../material.module';
-import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
-import { DialogEntryComponent, DetailsDialogOverviewComponent } from './teachers/teachers-list/details-dialog/details-dialog-overview';
+import {
+  TeachersListComponent,
+} from './teachers/teachers-list/teachers-list.component';
+import {
+  DialogEntryComponent,
+  DetailsDialogOverviewComponent
+} from './teachers/teachers-list/details-dialog/details-dialog-overview';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { StudentsListComponent } from './students-list/students-list.component';
-import { StudentDatails, StudentDetailModalComponent } from './students-list/student-detail-modal/student-detail-modal.component';
+import {
+  StudentDatailsComponent,
+  StudentDetailModalComponent
+} from './students-list/student-detail-modal/student-detail-modal.component';
 import { MatListModule } from '@angular/material/list';
 import { PlatformModule } from '@angular/cdk/platform';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GroupsComponent } from './admin-panel/groups/groups.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AddModifyGroupComponent } from './admin-panel/groups/add-modify/add-modify.component';
-import { MatDialogModule } from '@angular/material';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatDialogModule, MatIconModule } from '@angular/material';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { AddStudentComponent } from './students-list/add-student/add-student.component';
+import { AddStudentModalComponent } from './students-list/add-student/add-student.component';
 import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
-import { MatSortModule } from '@angular/material/sort';
-import { EditDialogEntryComponent, EditDialogOverviewComponent } from './teachers/teachers-list/edit-dialog/edit-dialog';
+import {
+  EditDialogEntryComponent,
+  EditDialogOverviewComponent
+} from './teachers/teachers-list/edit-dialog/edit-dialog';
 import { FilterPipe } from './teachers/helpers/filter.pipe';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ChartsModule } from 'ng2-charts';
-import { MatMenuModule } from '@angular/material';
+import { MatMenuModule, MatNativeDateModule } from '@angular/material';
 import { SubjectsComponent } from './subjects/subjects.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { StudentFilterPipe } from './students-list/student-filter.pipe';
+import { MatSortModule } from '@angular/material';
+import { MatCardModule, MatExpansionModule, MatCheckboxModule, MatSlideToggleModule} from '@angular/material';
+import { NewYearComponent } from './new-year/new-year.component';
+import { ClassFilterPipe } from './new-year/class-filter.pipe';
+import { TitlePipe } from './new-year/autotitle.pipe';
 import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subjects.component';
+
 
 @NgModule({
   declarations: [
@@ -43,7 +59,6 @@ import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subje
     DailyScheduleComponent,
     GroupsComponent,
     AddModifyGroupComponent,
-    TeachersComponent,
     TeachersListComponent,
     DialogEntryComponent,
     StudentsListComponent,
@@ -51,17 +66,22 @@ import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subje
     FilterPipe,
     DetailsDialogOverviewComponent,
     EditDialogOverviewComponent,
-    StudentDatails,
+    StudentDatailsComponent,
     StudentDetailModalComponent,
     DashboardComponent,
     SubjectsComponent,
+    NewYearComponent,
+    ClassFilterPipe,
+    TitlePipe,
+    AddStudentModalComponent,
+    AddStudentComponent,
+    StudentFilterPipe,
     ModifySubjectsComponent
   ],
   imports: [
     CommonModule,
     AdminPanelRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
     MatRadioModule,
     MatFormFieldModule,
     MatTableModule,
@@ -78,7 +98,17 @@ import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subje
     ChartsModule,
     MatFormFieldModule,
     ReactiveFormsModule,
+    MatInputModule,
+    MatRadioModule,
     MaterialModule,
+    MatSortModule,
+    MatCardModule,
+    MatExpansionModule,
+    MatCheckboxModule,
+    MatSlideToggleModule,
+    MatDatepickerModule,
+    MatMenuModule,
+    MatNativeDateModule,
     MatSortModule
   ],
   entryComponents: [
@@ -86,8 +116,10 @@ import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subje
     StudentDetailModalComponent,
     DetailsDialogOverviewComponent,
     EditDialogOverviewComponent,
-    ModifySubjectsComponent
+    ModifySubjectsComponent,
+    StudentDetailModalComponent,
+    AddStudentComponent
   ],
   providers: []
 })
-export class AdminPanelModule { }
+export class AdminPanelModule {}

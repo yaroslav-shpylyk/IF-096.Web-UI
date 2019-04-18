@@ -10,6 +10,47 @@ import {
   MatSnackBarConfig
 } from '@angular/material';
 
+
+@Component({
+  selector: 'app-confirmation-dialog',
+  templateUrl: './confirmation-dialog/app-confirmation-dialog.html',
+  styleUrls: ['./confirmation-dialog/app-confirmation-dialog.scss']
+})
+export class ConfirmationDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
+    private teachersStorageService: TeachersStorageService,
+    public snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA)
+    public data: any
+  ) {}
+
+  onDeleteClick() {
+    this.teachersStorageService
+      .deleteTeacher(this.data.id)
+      .subscribe(response => {
+        this.teachersStorageService.getTeachers();
+        this.dialogRef.close();
+        this.openSnackBar(
+          `Викладач ${response.lastname} ${response.firstname} видалений`,
+          'snack-class-success'
+        );
+      });
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  openSnackBar(message: string, classMessage: string) {
+    const config = new MatSnackBarConfig();
+    config.panelClass = [classMessage];
+    config.duration = 2000;
+    config.verticalPosition = 'top';
+    this.snackBar.open(message, null, config);
+  }
+}
+
 @Component({
   selector: 'app-teachers-list',
   templateUrl: './teachers-list.component.html',
@@ -58,13 +99,14 @@ export class TeachersListComponent implements OnInit, OnDestroy {
 
   onTeacherDetails(id) {
     this.teachersStorageService.modalsId = id;
-    this.router.navigate([id], { relativeTo: this.route, replaceUrl: true });
+    this.router.navigate([id], {
+      relativeTo: this.route,
+    });
   }
 
   onEdit(id) {
     this.router.navigate([id, 'edit'], {
       relativeTo: this.route,
-      replaceUrl: true
     });
   }
 
@@ -81,45 +123,5 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(() => {});
-  }
-}
-
-@Component({
-  selector: 'app-confirmation-dialog',
-  templateUrl: './confirmation-dialog/app-confirmation-dialog.html',
-  styleUrls: ['./confirmation-dialog/app-confirmation-dialog.scss']
-})
-export class ConfirmationDialogComponent {
-  constructor(
-    public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
-    private teachersStorageService: TeachersStorageService,
-    public snackBar: MatSnackBar,
-    @Inject(MAT_DIALOG_DATA)
-    public data: any
-  ) {}
-
-  onDeleteClick() {
-    this.teachersStorageService
-      .deleteTeacher(this.data.id)
-      .subscribe(response => {
-        this.teachersStorageService.getTeachers();
-        this.dialogRef.close();
-        this.openSnackBar(
-          `Викладач ${response.lastname} ${response.firstname} видалений`,
-          'snack-class-success'
-        );
-      });
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  openSnackBar(message: string, classMessage: string) {
-    const config = new MatSnackBarConfig();
-    config.panelClass = [classMessage];
-    config.duration = 2000;
-    config.verticalPosition = 'top';
-    this.snackBar.open(message, null, config);
   }
 }

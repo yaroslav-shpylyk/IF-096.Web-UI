@@ -1,6 +1,11 @@
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LayoutModule } from '@angular/cdk/layout';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 import {
   MatButtonModule,
   MatFormFieldModule,
@@ -18,7 +23,9 @@ import {
   MatDividerModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatSelectModule
+  MatSelectModule,
+  MatSortModule,
+  MatTableModule
 } from '@angular/material';
 
 @NgModule({
@@ -41,7 +48,13 @@ import {
     MatSnackBarModule,
     MatMenuModule,
     MatDividerModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSortModule,
+    MatTableModule,
+    MatRadioModule,
+    MatButtonToggleModule,
+    MatBottomSheetModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     MatButtonModule,
@@ -62,7 +75,13 @@ import {
     MatSnackBarModule,
     MatMenuModule,
     MatDividerModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSortModule,
+    MatTableModule,
+    MatRadioModule,
+    MatButtonToggleModule,
+    MatBottomSheetModule,
+    MatProgressSpinnerModule
   ]
 })
 export class MaterialModule {}

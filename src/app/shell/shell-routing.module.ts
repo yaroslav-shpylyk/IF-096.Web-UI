@@ -17,9 +17,9 @@ const routes: Routes = [
         loadChildren: '../admin-panel/admin-panel.module#AdminPanelModule'
       },
       {
-        path: 'journal',
+        path: 'journals',
         canActivate: [TeachersGuard],
-        canLoad: [TeachersGuard],
+        // canLoad: [TeachersGuard],
         loadChildren: '../journal/journal.module#JournalModule'
       },
       {
@@ -34,6 +34,12 @@ const routes: Routes = [
         canLoad: [StudentGuard],
         loadChildren: '../student-book/student-book.module#StudentBookModule'
       },
+      // {
+      //   path: 'new-year-transition',
+      //   canActivate: [AdminPanelGuard],
+      //   canLoad: [AdminPanelGuard],
+      //   loadChildren: '../new-year/new-year.module#NewYearModule'
+      // },
     ]
   }
 ];

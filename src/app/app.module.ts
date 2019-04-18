@@ -12,12 +12,14 @@ import { TeachersStorageService } from './services/teachers-storage.service';
 import { SubjectService } from './services/subject.service';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { JournalsStorageService } from './services/journals-storage.service';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TeacherService } from './services/teacher.service';
+import { MatNativeDateModule } from '@angular/material';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -26,12 +28,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MaterialModule,
     FlexLayoutModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatNativeDateModule
   ],
   providers: [
     AuthService,
     TeachersStorageService,
+    JournalsStorageService,
     SubjectService,
+    TeacherService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

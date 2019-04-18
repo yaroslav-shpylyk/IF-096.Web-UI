@@ -14,8 +14,9 @@ export class SubjectService {
    * Method gets number of all subjects
    * @returns - Number of classes
    */
-  public getSubjects(): Observable<SubjectData[]> {
-    return this.http.get('/subjects')
+  public getSubjects(classNumber?: string): Observable<SubjectData[]> {
+    const classId = classNumber || '';
+    return this.http.get(`/subjects?classId=${classId}`)
       .pipe(
         map((result: { status: any, data: SubjectData[] }) => result.data)
       );
@@ -27,14 +28,14 @@ export class SubjectService {
    */
   addSubject(subj: SubjectData): Observable<SubjectData> {
     return this.http.post<SubjectData>('/subjects/', subj);
-  };
+  }
 
   /**
    * Method sends changes to an object which we want to modify
    * @param id - the data on which we refer to the object
    * @param subj - object which we modify
    */
-  editSubject(id: Number, subj: SubjectData): Observable<SubjectData> {
+  editSubject(id: number, subj: SubjectData): Observable<SubjectData> {
     return this.http.put<SubjectData>(`/subjects/${id}`, subj);
   }
 }
