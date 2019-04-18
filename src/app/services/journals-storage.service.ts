@@ -58,7 +58,6 @@ export class JournalsStorageService {
         });
       }
     }
-    console.log(result);
     return result;
   }
 

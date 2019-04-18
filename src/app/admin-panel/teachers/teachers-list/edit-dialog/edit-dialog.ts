@@ -142,7 +142,6 @@ export class EditDialogOverviewComponent implements OnInit {
     if (!this.editMode) {
       this.teachersStorageService.addTeacher(newValues).subscribe(
         res => {
-          console.log(res);
           this.teachersStorageService.getTeachers();
           this.openSnackBar(
             `Викладач ${newValues.lastname} ${newValues.lastname} створений`,
@@ -207,7 +206,6 @@ export class EditDialogOverviewComponent implements OnInit {
       this.teacher.avatar = reader.result;
     } else {
       this.ava = reader.result;
-      console.log(this.ava);
     }
   }
 
