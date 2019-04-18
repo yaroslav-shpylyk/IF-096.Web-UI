@@ -139,4 +139,9 @@ export class AuthService {
       return false;
     }
   }
+
+  public getUserId(): number  {
+    const decodedToken: TokenInfo = JWTDecoder(this.getToken());
+    return decodedToken.jti;
+  }
 }

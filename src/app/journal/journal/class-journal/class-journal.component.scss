@@ -4,6 +4,10 @@ mat-accordion {
   max-width: 45em;
 }
 
+h2 {
+  text-align: center;
+}
+
 #wrapper {
   display: flex;
   flex-direction: column;
@@ -33,29 +37,21 @@ mat-radio-group {
   color: #6b6767;
 }
 
-.cdk-column-className,
-.cdk-column-lastname {
-  font-size: 1.2em;
-}
-
 .mat-row:hover {
   background-color: rgba(24, 151, 236, 0.685);
   cursor: pointer;
 }
 
 ::ng-deep {
-  .mat-elevation-z8 {
-    box-shadow: none;
-  }
-
-  & .mat-form-field-wrapper {
+  .mat-form-field-wrapper {
     width: 90%;
   }
-
+  & .mat-elevation-z8 {
+    box-shadow: none;
+  }
   & .mat-expansion-panel-body {
     padding: 0px !important;
   }
-
   & .mat-divider {
     margin-top: 1em !important;
   }

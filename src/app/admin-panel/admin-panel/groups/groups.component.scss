@@ -30,14 +30,3 @@ th.mat-sort-header-sorted {
 .filterBlok {
   background-color: white;
 }
-
-::ng-deep {
-  & tr.mat-header-row > th > div > button {
-    margin: auto !important;
-    font-size: 1.5em !important;
-    color:  #1565c0 !important;
-  }
-  & td {
-    text-align: center !important;
-  }
-}
