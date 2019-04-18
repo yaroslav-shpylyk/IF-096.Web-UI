@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ScheduleData } from '../../models/schedule-data';
 import { ClassData } from '../../models/class-data';
 import { SubjectData } from '../../models/subject-data';
@@ -28,7 +28,7 @@ export class ScheduleComponent implements OnInit {
   dateTermStartMsg = 'Дата початку семестру*';
   dateTermEndMsg = 'Дата закінчення семестру*';
 
-  weekDayName: Array<{legendDay: string, dailySubjects: string}> = [
+  weekDayName = [
     {legendDay: 'Понеділок', dailySubjects: 'mondaySubjects'},
     {legendDay: 'Вівторок', dailySubjects: 'tuesdaySubjects'},
     {legendDay: 'Середа', dailySubjects: 'wednesdaySubjects'},
@@ -36,13 +36,14 @@ export class ScheduleComponent implements OnInit {
     {legendDay: 'П`ятниця', dailySubjects: 'fridaySubjects'},
     {legendDay: 'Субота', dailySubjects: 'saturdaySubjects'}
   ];
-
-  emittedMondaySubjects: any;
-  emittedTuesdaySubjects: any;
-  emittedWednesdaySubjects: any;
-  emittedThursdaySubjects: any;
-  emittedFridaySubjects: any;
-  emittedSaturdaySubjects: any;
+  emittedDays = {
+    mondaySubjects: null,
+    tuesdaySubjects: null,
+    wednesdaySubjects: null,
+    thursdaySubjects: null,
+    fridaySubjects: null,
+    saturdaySubjects: null
+  }
 
   constructor(private frmBld: FormBuilder,
     private classService: ClassService,
@@ -82,27 +83,8 @@ export class ScheduleComponent implements OnInit {
     });
   }
 
-  onAddDailySubjects($event, dailySubjects: string): void {
-    switch (dailySubjects) {
-      case 'mondaySubjects' : {
-        this.emittedMondaySubjects = $event;
-      }
-      case 'tuesdaySubjects' : {
-        this.emittedTuesdaySubjects = $event;
-      }
-      case 'wednesdaySubjects' : {
-        this.emittedWednesdaySubjects = $event;
-      }
-      case 'thursdaySubjects' : {
-        this.emittedThursdaySubjects = $event;
-      }
-      case 'fridaySubjects' : {
-        this.emittedFridaySubjects = $event;
-      }
-      case 'saturdaySubjects' : {
-        this.emittedSaturdaySubjects = $event;
-      }
-    }
+  onAddDailySubjects($event: FormArray, daySubjects: string): void {
+    this.emittedDays[daySubjects] = $event;
   }
 
   /**
@@ -128,13 +110,6 @@ export class ScheduleComponent implements OnInit {
     }
     /* Handling form data */
 
-    console.log(this.emittedWednesdaySubjects.value); //for test
-
-    /*const lessonData: LessonData = {
-      lessonNumber: ,
-      subjectId: ,
-      subjectName: ,
-      subjectDescription:
-    };*/
+    console.log(this.emittedDays.wednesdaySubjects.value); //for test
   }
 }

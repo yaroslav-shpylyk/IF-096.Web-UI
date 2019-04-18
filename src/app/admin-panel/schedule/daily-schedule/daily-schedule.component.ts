@@ -14,7 +14,7 @@ export class DailyScheduleComponent implements OnInit {
   @Input() legendDay: string;
   @Input() arrSubjectsList: SubjectData[];
 
-  @Output() addDailySubjects: EventEmitter<any> = new EventEmitter();
+  @Output() addDailySubjects: EventEmitter<FormArray> = new EventEmitter();
 
   constructor(private frmBld: FormBuilder) {}
 

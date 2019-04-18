@@ -20,7 +20,7 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-select [placeholder]="selectClassMsg"
+      <mat-select #class [placeholder]="selectClassMsg"
        formControlName="selectClass"
        (selectionChange)="selectedClass($event.value)">
         <mat-option *ngFor="let class of arrClassList" [value]="class.id">
@@ -40,9 +40,6 @@
     </app-daily-schedule>
   </div>
 
-  <button mat-button type="submit"
-   [disabled]="!frmSchedule.valid"
-   class="save-button">
-    Зберегти
-  </button>
+  <button mat-button type="submit" class="save-button">Зберегти</button>
+  <!--[disabled]="!frmSchedule.valid"-->
 </form>
