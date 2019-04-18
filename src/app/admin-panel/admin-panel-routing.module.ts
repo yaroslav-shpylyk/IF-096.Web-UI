@@ -75,7 +75,7 @@ const routes: Routes = [
     component: AdminPanelComponent,
     children: [
       {
-        path:'teacher-connection',
+        path: 'teacher-connection',
         component: TeacherConnectionComponent
       },
     ]
