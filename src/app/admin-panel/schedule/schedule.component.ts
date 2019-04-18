@@ -15,12 +15,6 @@ import { ScheduleService } from '../../services/schedule.service';
 export class ScheduleComponent implements OnInit {
   scheduleData: ScheduleData;
 
-  /*mondaySubjects: LessonData[];
-    lessonNumber: string;
-    subjectId: number;
-    subjectName: string;
-    subjectDescription: string*/
-
   frmSchedule: FormGroup;
   arrClassList: Array<ClassData>;
   arrSubjectsList: Array<SubjectData>;
@@ -77,9 +71,6 @@ export class ScheduleComponent implements OnInit {
   selectedClass(classId: number) {
     this.scheduleService.getSchedule(classId).subscribe(data => {
       this.scheduleData = data;
-
-      console.log(this.scheduleData); //for test
-
     });
   }
 
@@ -109,7 +100,5 @@ export class ScheduleComponent implements OnInit {
       return;
     }
     /* Handling form data */
-
-    console.log(this.emittedDays.wednesdaySubjects.value); //for test
   }
 }
