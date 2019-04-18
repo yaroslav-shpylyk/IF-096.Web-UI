@@ -1,0 +1,46 @@
+<div class="info">
+  <h3>
+    Оцінка для учня
+    <h2>{{ studentFullName }}</h2>
+    за {{ mark.dateMark }}
+  </h3>
+  <h3>
+    Вид роботи: <b>{{ mark.typeMark }}</b>
+  </h3>
+</div>
+
+<div class="valera">
+  <div class="toggle">
+    <mat-button-toggle-group
+      #group="matButtonToggleGroup"
+      [value]="selectedVal"
+      (change)="onValChange(group.value)"
+      name="fontStyle"
+      aria-label="Font Style"
+    >
+      <mat-button-toggle
+        *ngFor="let in of counter(12); let i = index"
+        [value]="i + 1"
+        >{{ i + 1 }}
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <div class="bottom-section">
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <textarea
+        #textarea
+        (ngModelChange)="onValChange()"
+        matInput
+        placeholder="Коментар"
+        [(ngModel)]="selectedNote"
+        [value]="selectedNote"
+      ></textarea>
+    </mat-form-field>
+    <button 
+    [disabled]="!valChanged"
+    mat-raised-button color="primary" 
+    (click)="onSave()">Зберегти</button>
+  </div>
+</div>

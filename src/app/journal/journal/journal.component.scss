@@ -1,0 +1,62 @@
+mat-accordion {
+  width: 100%;
+  min-width: 17em;
+  max-width: 45em;
+}
+
+#wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wrapper {
+  margin: 1em;
+}
+
+.mat-expansion-panel {
+  margin: 1em auto !important;
+}
+
+mat-form-field,
+mat-radio-group {
+  display: flex;
+  justify-content: center;
+}
+mat-radio-group {
+  justify-content: space-evenly;
+}
+
+.cdk-column-num,
+.cdk-column-academicYear,
+mat-radio-group {
+  color: #6b6767;
+}
+
+.cdk-column-className,
+.cdk-column-lastname {
+  font-size: 1.2em;
+}
+
+.mat-row:hover {
+  background-color: rgba(24, 151, 236, 0.685);
+  cursor: pointer;
+}
+
+::ng-deep {
+  .mat-elevation-z8 {
+    box-shadow: none;
+  }
+
+  & .mat-form-field-wrapper {
+    width: 90%;
+  }
+
+  & .mat-expansion-panel-body {
+    padding: 0px !important;
+  }
+
+  & .mat-divider {
+    margin-top: 1em !important;
+  }
+}

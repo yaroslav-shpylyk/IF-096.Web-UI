@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       if (this.auth.getUserRole() === roles.admin) {
         this.router.navigate(['/admin-panel/']);
       } else if (this.auth.getUserRole() === roles.teacher) {
-        this.router.navigate(['/journal/']);
+        this.router.navigate(['journals', 'my-journals']);
       } else if (this.auth.getUserRole() === roles.students) {
         this.router.navigate(['/student-book/']);
       }
