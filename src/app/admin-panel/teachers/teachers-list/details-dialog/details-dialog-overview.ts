@@ -15,12 +15,12 @@ import { TeacherData } from 'src/app/models/teacher-data';
 export class DetailsDialogOverviewComponent implements OnInit {
   teacher: TeacherData;
   teacherJournal;
-
+  
   constructor(
     public dialogRef: MatDialogRef<DetailsDialogOverviewComponent>,
     private teachersStorageService: TeachersStorageService,
     private router: Router,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute,     
     @Inject(MAT_DIALOG_DATA)
     public data: any
   ) {}
