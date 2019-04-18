@@ -2,9 +2,7 @@
 <app-header></app-header>
 <div class="wrap-content">
   <div class="container">
-    <br />
-    <p>{{ title }}</p>
-    <br />
+    <p class="title">Приєднання вчителя до журналу</p>
     <form [formGroup]="myForm">
       <mat-vertical-stepper [linear]="isLinear" #stepper>
         <mat-step [stepControl]="teacherId">
@@ -81,7 +79,6 @@
               [disabled]="!myForm"
               (click)="onSubmit(myForm.value)"
             >
-              <mat-icon>save_alt</mat-icon>
               Зберегти
             </button>
           </div>

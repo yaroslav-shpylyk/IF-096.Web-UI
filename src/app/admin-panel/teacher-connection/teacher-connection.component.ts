@@ -23,8 +23,6 @@ import { MatStepperModule } from "@angular/material/stepper";
   styleUrls: ["./teacher-connection.component.scss"]
 })
 export class TeacherConnectionComponent implements OnInit {
-  isEditable = false;
-  public title = "Приєднання вчителя до журналу";
   teachers;
   subjects;
   classes;
