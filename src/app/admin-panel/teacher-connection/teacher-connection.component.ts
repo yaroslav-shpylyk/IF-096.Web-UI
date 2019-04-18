@@ -1,26 +1,26 @@
-import { Component, OnInit } from "@angular/core";
-import { TeacherService } from "src/app/services/teacher.service";
+import { Component, OnInit } from '@angular/core';
+import { TeacherService } from 'src/app/services/teacher.service';
 import {
   FormGroup,
   FormControl,
   Validators,
   FormArray,
   FormBuilder
-} from "@angular/forms";
-import { StudentsService } from "src/app/services/students.service";
-import { ClassService } from "src/app/services/class.service";
-import { FormsModule } from "@angular/forms";
-import { MatFormFieldModule } from "@angular/material";
-import { ReactiveFormsModule } from "@angular/forms";
-import { from } from "rxjs";
-import { SubjectService } from "src/app/services/subject.service";
-import { TeachersJournalService } from "src/app/services/teachers-journal.service";
-import { MatStepperModule } from "@angular/material/stepper";
+} from '@angular/forms';
+import { StudentsService } from 'src/app/services/students.service';
+import { ClassService } from 'src/app/services/class.service';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material';
+import { ReactiveFormsModule } from '@angular/forms';
+import { from } from 'rxjs';
+import { SubjectService } from 'src/app/services/subject.service';
+import { TeachersJournalService } from 'src/app/services/teachers-journal.service';
+import { MatStepperModule } from '@angular/material/stepper';
 
 @Component({
-  selector: "app-teacher-connection",
-  templateUrl: "./teacher-connection.component.html",
-  styleUrls: ["./teacher-connection.component.scss"]
+  selector: 'app-teacher-connection',
+  templateUrl: './teacher-connection.component.html',
+  styleUrls: ['./teacher-connection.component.scss']
 })
 export class TeacherConnectionComponent implements OnInit {
   teachers;
@@ -36,9 +36,9 @@ export class TeacherConnectionComponent implements OnInit {
   ) {}
 
   myForm = this.fb.group({
-    classId: ["", Validators.required],
-    subjectId: ["", Validators.required],
-    teacherId: ["", Validators.required]
+    classId: ['', Validators.required],
+    subjectId: ['', Validators.required],
+    teacherId: ['', Validators.required]
   });
 
   onSubmit(data) {
@@ -47,7 +47,7 @@ export class TeacherConnectionComponent implements OnInit {
       data.teacherId,
       data.classId,
       data.subjectId
-    ).subscribe(data)
+    ).subscribe(data);
   }
 
   ngOnInit() {
@@ -60,7 +60,7 @@ export class TeacherConnectionComponent implements OnInit {
       .subscribe(subjects => (this.subjects = subjects));
 
     this.classService
-      .getClasses("all")
+      .getClasses('all')
       .subscribe(classes => (this.classes = classes));
   }
 }
