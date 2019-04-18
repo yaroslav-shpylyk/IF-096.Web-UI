@@ -48,6 +48,9 @@ import { NewYearComponent } from './new-year/new-year.component';
 import { ClassFilterPipe } from './new-year/class-filter.pipe';
 import { TitlePipe } from './new-year/autotitle.pipe';
 import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subjects.component';
+import { TeacherConnectionComponent } from './teacher-connection/teacher-connection.component'; 
+import { SharedModule } from '../shared/shared.module';
+import {MatStepperModule} from '@angular/material/stepper';
 
 
 @NgModule({
@@ -73,7 +76,8 @@ import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subje
     TitlePipe,
     AddStudentModalComponent,
     AddStudentComponent,
-    ModifySubjectsComponent
+    ModifySubjectsComponent,
+    TeacherConnectionComponent
   ],
   imports: [
     CommonModule,
@@ -103,7 +107,9 @@ import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subje
     MatDatepickerModule,
     MatMenuModule,
     MatNativeDateModule,
-    MatSortModule
+    MatSelectModule,
+    SharedModule,
+    MatStepperModule
   ],
   entryComponents: [
     AddModifyGroupComponent,
