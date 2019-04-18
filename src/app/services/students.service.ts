@@ -64,8 +64,8 @@ export class StudentsService {
    */
 
   changeStudent(id, formdata): Observable<any> {
-    return this.http.put(`/admin/students/${id}`, formdata, { observe: 'response' }).
-      pipe(map(data => console.log('Student changed', data)));
+    return this.http.put(`/admin/students/${id}`, formdata, { observe: 'response' })
+      .pipe(map(data => console.log('Student changed', data)));
   }
 
   /**
@@ -81,6 +81,16 @@ export class StudentsService {
         })
       );
   }
+
+  /**
+   * Method delete student
+   */
+
+  deleteStudent(id): Observable<any> {
+    return this.http.patch(`/users/${id}`, { observe: 'response' })
+      .pipe(map(() => console.log('student deleted')));
+  }
+
 }
 
 

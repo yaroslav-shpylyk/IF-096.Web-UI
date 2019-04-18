@@ -45,6 +45,12 @@ mat-card {
   }
 }
 
+mat-card.locked.transited, mat-card.locked:hover.transited {
+  background-color: #5fb663;
+  cursor: default;
+  pointer-events: none;
+}
+
 mat-card.locked, mat-card.locked:hover {
   background-color: grey;
   mat-accordion, .class-title, .edit_title {
@@ -74,6 +80,7 @@ mat-card:hover {
 mat-panel-title {
   flex-direction: column;
   align-items: center;
+  min-width: 40px;
 }
 
 mat-expansion-panel-header {
@@ -118,8 +125,7 @@ mat-list-item {
 
 .validation-error {
   position: absolute;
-  z-index: 2;
-  bottom: -8px;
+  bottom: -9px;
   right: 10px;
   color:red;
   p { font-size: 0.5em; }
@@ -220,7 +226,6 @@ label {
     width: 20px;
     height: 20px;
     color: white;
-    font-weight: 800;
     margin: 5px;
     -webkit-box-shadow: -1px 1px 3px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: -1px 1px 3px 0px rgba(0,0,0,0.75);

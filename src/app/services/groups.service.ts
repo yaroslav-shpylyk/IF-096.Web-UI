@@ -19,12 +19,12 @@ export class GroupsService {
    */
   getGroups(): Observable<Group[]> {
     return this.http.get<Group[]>(`/classes`)
-    .pipe(
-      map((response: any) => {
-        return response.data;
-      }),
-      catchError(this.handleError<Group>(`Проблема з відображенням класів.`))
-    );
+      .pipe(
+        map((response: any) => {
+          return response.data;
+        }),
+        catchError(this.handleError<Group>(`Проблема з відображенням класів.`))
+      );
   }
 
   /**
@@ -35,20 +35,20 @@ export class GroupsService {
   addGrup(group: Group) {
     if (Number(group.id)) {
       return this.http.put<Group>(`/classes/` + group.id, group)
-      .pipe(
-        map((response: any) => {
-          return response.data;
-        }),
-        catchError(this.handleError<Group>(`Проблема з редагуванням класу.`))
-      );
+        .pipe(
+          map((response: any) => {
+            return response.data;
+          }),
+          catchError(this.handleError<Group>(`Проблема з редагуванням класу.`))
+        );
     } else {
       return this.http.post<Group>(`/classes/`, group)
-      .pipe(
-        map((response: any) => {
-          return response.data;
-        }),
-        catchError(this.handleError<Group>(`Проблема з додаванням класу.`))
-      );
+        .pipe(
+          map((response: any) => {
+            return response.data;
+          }),
+          catchError(this.handleError<Group>(`Проблема з додаванням класу.`))
+        );
     }
   }
 

@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Label} from 'ng2-charts';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { ProgressService } from '../services/progress.service';
 import { AvgMarkResponse } from '../../models/avg-mark-response';
 import { StudentChartMarks } from '../../models/student-chart-marks';
+import { Subject } from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements OnInit, OnDestroy {
+  private onDestroy = new Subject();
   public chartLabels: Label[] = [''];
   public chartType: ChartType = 'bar';
   public chartLegend = true;
@@ -32,8 +35,15 @@ export class ChartComponent implements OnInit {
   constructor(private progressService: ProgressService) { }
 
   ngOnInit() {
-    this.progressService.getSubjectChartData().subscribe(result => this.createSubjectChart(result));
-    this.progressService.getStudentChartData().subscribe(result => this.createStudentChart(result));
+    this.progressService.getSubjectChartData()
+      .pipe(takeUntil(this.onDestroy))
+      .subscribe(result => this.createSubjectChart(result));
+    this.progressService.getStudentChartData()
+      .pipe(takeUntil(this.onDestroy))
+      .subscribe(result => this.createStudentChart(result));
+  }
+  ngOnDestroy() {
+    this.onDestroy.next();
   }
 
   /**

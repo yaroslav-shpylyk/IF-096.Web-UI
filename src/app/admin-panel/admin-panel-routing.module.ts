@@ -15,6 +15,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditDialogEntryComponent } from './teachers/teachers-list/edit-dialog/edit-dialog';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { NewYearComponent } from './new-year/new-year.component';
+import { TeacherConnectionComponent } from './teacher-connection/teacher-connection.component';
 
 const routes: Routes = [
   {
@@ -73,6 +74,16 @@ const routes: Routes = [
         path: 'subjects',
         component: SubjectsComponent
       }
+    ]
+  },
+  {
+    path: '',
+    component: AdminPanelComponent,
+    children: [
+      {
+        path: 'teacher-connection',
+        component: TeacherConnectionComponent
+      },
     ]
   }
 ];
