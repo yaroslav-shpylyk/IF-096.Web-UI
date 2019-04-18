@@ -11,6 +11,7 @@ import { TeachersStorageService } from './services/teachers-storage.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SubjectService } from './services/subject.service';
+import { MatNativeDateModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { SubjectService } from './services/subject.service';
     BrowserAnimationsModule,
     FlexLayoutModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatNativeDateModule
   ],
   providers: [
     AuthService,
