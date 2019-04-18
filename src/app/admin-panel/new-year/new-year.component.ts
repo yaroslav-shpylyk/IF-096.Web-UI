@@ -122,6 +122,13 @@ export class NewYearComponent implements OnInit {
         const skipClass = ((this.transititionForm.controls.skipClassSwitcher as FormArray).controls[controlOrder].value);
         const input = matCard.querySelectorAll('input')[1];
         if (!skipClass) {
+          matCard.classList.add('locked','transited');
+          for (let element of this.allClasses) {
+            if ( element.id === Number(input.id) ){
+              element.isActive=false;
+            }
+          }
+          (this.transititionForm.controls.skipClassSwitcher as FormArray).controls[controlOrder].value=true;
           formData.push(
             {
               curTitle: input.dataset.classTitle,
