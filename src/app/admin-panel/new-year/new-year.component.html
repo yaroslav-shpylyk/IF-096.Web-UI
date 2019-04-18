@@ -7,7 +7,7 @@
           <mat-card [ngClass]="skipClassSwitcher.controls[item].value?'locked':'active'" >
             <ng-container formArrayName="skipClassSwitcher">
               <label>
-                <input attr.data-order="{{item}}" type="checkbox" [formControlName]="item"  (click)="skipClass($event, item, allClasses[item].id)">
+                <input attr.data-order="{{item}}" type="checkbox" [formControlName]="item"  (click)="skipClass(item)">
                 <i *ngIf="!skipClassSwitcher.controls[item].value" class="material-icons">lock_open</i>
                 <i *ngIf="skipClassSwitcher.controls[item].value" class="material-icons">lock</i>
               </label>
@@ -44,7 +44,7 @@
               <label>
                 <input type="checkbox" 
                   [formControlName]="item|autotitle:allClasses[item].className:newClassTitle.controls[item]" 
-                  (click)="editInput($event, item, allClasses[item].className, allClasses[item].id)">
+                  (click)="editInput(allClasses[item].id)">
                 <i class="material-icons">edit</i>
               </label>
             </div>

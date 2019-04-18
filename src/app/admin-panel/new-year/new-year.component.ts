@@ -65,7 +65,7 @@ export class NewYearComponent implements OnInit {
   get editTitleSwitcher() { return this.transititionForm.get('editTitleSwitcher'); }
   get skipClassSwitcher() { return this.transititionForm.get('skipClassSwitcher'); }
 
-    /**
+  /**
    * Title validation for new class
    * @param allClasses ClassInfo[] - Array of objects with data about classes
    * @param classYear number - current class year
@@ -88,20 +88,28 @@ export class NewYearComponent implements OnInit {
     };
   }
 
-  editInput(event, index: number, curTitle: string, id: string) {
+  /**
+   * Makes input with new class title enabled or disabled for editing
+   * @param id string - id of input for new title
+   */
+  editInput(id: string) {
     const input = document.getElementById(id);
     input.classList.toggle('locked');
     if (!input.classList.contains('locked')) { input.focus(); }
   }
 
-  skipClass(event, index: number, id: number) {
-    const classCard = event.target.parentNode.parentNode;
+  /**
+   * Include (exclude) class to (from) request
+   * @param id number - index of element from form control
+   */
+  skipClass(index: number) {
     const input = (this.transititionForm.controls.newClassTitle as FormArray).controls[index];
-    const name = (this.transititionForm.controls.newClassTitle as FormArray).controls[index].value;
-    if (!classCard.classList.contains('locked')) {
-      input.reset({ value: name, disabled: true });
+    const classSkiped = (this.transititionForm.controls.skipClassSwitcher as FormArray).controls[index].value;
+    const newTitle = input.value;
+    if (!classSkiped) {
+      input.reset({ value: newTitle, disabled: true });
     } else {
-      input.reset({ value: name, disabled: false });
+      input.reset({ value: newTitle, disabled: false });
     }
   }
 
