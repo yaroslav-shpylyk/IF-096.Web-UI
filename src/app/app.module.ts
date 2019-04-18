@@ -9,13 +9,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TeachersStorageService } from './services/teachers-storage.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { JournalsStorageService } from './services/journals-storage.service';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TeacherService } from './services/teacher.service';
 import { SubjectService } from './services/subject.service';
+import { MatNativeDateModule } from '@angular/material';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -24,12 +26,15 @@ import { SubjectService } from './services/subject.service';
     BrowserAnimationsModule,
     FlexLayoutModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatNativeDateModule
   ],
   providers: [
     AuthService,
     TeachersStorageService,
+    JournalsStorageService,
     SubjectService,
+    TeacherService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

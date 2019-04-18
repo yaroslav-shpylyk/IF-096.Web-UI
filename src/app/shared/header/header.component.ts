@@ -10,8 +10,8 @@ import { roles } from '../../enum/roles.enum';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  private hide: boolean;
-  private notransition: boolean;
+  public hide: boolean;
+  public notransition: boolean;
   private commonDisplay: boolean;
   private retinaDisplay: boolean;
   private scroll = new Subject();

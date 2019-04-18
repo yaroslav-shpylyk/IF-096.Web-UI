@@ -24,11 +24,11 @@ export class StudentDetailModalComponent implements OnInit {
     private studentServise: StudentsService,
     private route: ActivatedRoute,
     private router: Router) {
-    this.studentServise.getOneStudent(this.data.paramId)
-      .subscribe((student: Student) => this.studentInfo = student);
   }
 
   ngOnInit() {
+    this.studentServise.getOneStudent(this.data.paramId)
+      .subscribe((student: Student) => this.studentInfo = student);
     this.route.queryParams.subscribe(params => {
       this.classId = params.classId;
     });
@@ -53,7 +53,6 @@ export class StudentDetailModalComponent implements OnInit {
     );
     this.dialogRef.close();
   }
-
 }
 
 /**

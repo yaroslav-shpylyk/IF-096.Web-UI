@@ -1,0 +1,140 @@
+.mat-cell,
+.mat-header-cell {
+  text-align: center;
+  border-right: 1px solid rgb(224, 224, 224);
+}
+mat-spinner {
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+.mat-column-star {
+  text-align: center;
+}
+
+table {
+  width: 100%;
+}
+
+tr :last-of-type,
+i {
+  background-color: rgb(192, 181, 181);
+  color: white;
+  cursor: default;
+}
+
+tr :first-of-type:not(i) {
+  background-color: rgb(21, 101, 192);
+  color: white !important;
+  padding: 0.6em !important;
+  cursor: default;
+}
+
+th {
+  font-size: 1em;
+  padding: 0.5em 0em !important;
+  white-space: pre;
+  line-height: 1em;
+}
+
+td {
+  padding: 0 !important;
+}
+
+.wrapper {
+  margin: auto;
+  width: 94vw;
+  overflow: auto;
+  border: 0.3em rgb(255, 255, 255) solid;
+  border-radius: 1%;
+}
+
+.mat-row:hover {
+  background-color: rgba(24, 151, 236, 0.432);
+  cursor: pointer;
+}
+
+.mat-cell:hover {
+  background-color: rgba(24, 236, 119, 0.432);
+  cursor: pointer;
+}
+
+th.is-yellow {
+  background: rgb(255, 208, 0);
+}
+
+th.is-blue {
+  background: rgba(22, 198, 230, 0.719);
+}
+th.is-green {
+  background: rgb(51, 211, 171);
+}
+
+th::first-line {
+  font-size: 0.6em;
+}
+
+mat-divider {
+  margin: 1em
+}
+
+::ng-deep {
+  .mat-button-toggle-label-content {
+    padding: 0 0.7em !important;
+  }
+  & .valera {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
+  & .toggle {
+    display: flex !important;
+    justify-content: center !important;
+    padding: 5px;
+  }
+  & .mat-bottom-sheet-container {
+    padding: 0 !important;
+  }
+  & mat-button-toggle-group {
+    overflow: auto !important;
+  }
+  & .info {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    line-height: 1em;
+    color: grey;
+  }
+  & .bottom-section mat-form-field {
+    margin: 1em;
+    display: flex;
+    flex-direction: column;
+  }
+  & .bottom-section button {
+    margin: 1em auto !important;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+  & .mat-button-toggle-checked.mat-button-toggle-appearance-standard {
+    background-color: #acb8ff;
+  }
+  & .snack-class-success {
+    background-color: rgb(24, 168, 72);
+    display: flex !important;
+    justify-content: center !important;
+    color: white !important;
+  }
+  & .snack-class-fail {
+    background-color: rgb(175, 50, 1);
+    display: flex !important;
+    justify-content: center !important;
+    color: white !important;
+  }
+  & .mat-divider {
+    margin: 1em !important;
+  }
+}

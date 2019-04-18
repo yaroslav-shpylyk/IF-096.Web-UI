@@ -40,6 +40,12 @@ export class TeachersStorageService {
       );
   }
 
+  getTeacherS(): Observable<TeacherData[]> {
+    return this.httpClient
+      .get('/teachers')
+      .pipe(map((result: { status: any; data: TeacherData[] }) => result.data));
+  }
+
   /**
    * Method fetches from the server a single
    * teacher object by provided id.

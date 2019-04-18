@@ -1,5 +1,5 @@
 <i class="material-icons" id="buttonAdd" (click)="openPopupsSheet()">
-  add_circle_outline
+  add_circle
 </i>
 
 <div class="filterBlok">
@@ -21,7 +21,7 @@
   </ng-container>
 
   <ng-container matColumnDef="isActive">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Стан класу </th>
+    <th mat-header-cell *matHeaderCellDef> Стан класу </th>
     <td mat-cell *matCellDef="let element"><span *ngIf = "element.isActive">Відкритий</span><span *ngIf = "!element.isActive">Закритий</span></td>
   </ng-container>
 
@@ -52,17 +52,17 @@
     <table  mat-table [dataSource]="dataSourceCloseClass" matSort class="mat-elevation-z8">
 
       <ng-container matColumnDef="className">
-        <th mat-header-cell *matHeaderCellDef > Назва класу </th>
+        <th mat-header-cell *matHeaderCellDef> Назва класу </th>
         <td mat-cell *matCellDef="let element"> {{element.className}} </td>
       </ng-container>
 
       <ng-container matColumnDef="classYear">
-        <th mat-header-cell *matHeaderCellDef > Рік класа </th>
+        <th mat-header-cell *matHeaderCellDef> Рік класа </th>
         <td mat-cell *matCellDef="let element"> {{element.classYear}} </td>
       </ng-container>
 
       <ng-container matColumnDef="isActive">
-        <th mat-header-cell *matHeaderCellDef > Стан класу </th>
+        <th mat-header-cell *matHeaderCellDef> Стан класу </th>
         <td mat-cell *matCellDef="let element"><span *ngIf = "element.isActive">Відкритий</span><span *ngIf = "!element.isActive">Закритий</span></td>
       </ng-container>
 
