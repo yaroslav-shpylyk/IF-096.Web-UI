@@ -44,9 +44,13 @@
       <mat-form-field>
         <mat-label>Предмет</mat-label>
         <mat-select formControlName="subjectId">
-          <mat-option *ngFor="let item of subjects" [value]="item.subjectId" >
-            {{item.subjectName}}
-          </mat-option>
+          <input class="autoComplete" type="text"
+                 (keydown)="$event.stopPropagation()" formControlName="subjectAutoComplete">
+          <div class="options">
+            <mat-option *ngFor="let item of sortedSubjects$ | async" [value]="item.subjectId" >
+              {{item.subjectName}}
+            </mat-option>
+          </div>
         </mat-select>
         <mat-error *ngIf="chartOptionsForm.controls.subjectId.hasError('required')">
           Оберіть предмет
@@ -56,13 +60,17 @@
         <mat-label>Учень</mat-label>
         <mat-select  formControlName="studentId" multiple
                      *ngIf="chartOptionsForm.controls.markType.value !== 'avgOfStudent';else singleSelect">
-          <mat-option *ngFor="let item of students" [value]="item.id">
+          <input class="autoComplete" type="text"
+                 (keydown)="$event.stopPropagation()" formControlName="studentAutoComplete">
+          <mat-option *ngFor="let item of sortedStudents$ | async" [value]="item.id">
             {{item.firstname}} {{item.lastname}}
           </mat-option>
         </mat-select>
         <ng-template #singleSelect>
-          <mat-select  formControlName="studentId">
-            <mat-option *ngFor="let item of students" [value]="item.id">
+          <mat-select  formControlName="studentId" >
+            <input class="autoComplete" type="text"
+                   (keydown)="$event.stopPropagation()" formControlName="studentAutoComplete">
+            <mat-option *ngFor="let item of sortedStudents$ | async" [value]="item.id">
               {{item.firstname}} {{item.lastname}}
             </mat-option>
           </mat-select>

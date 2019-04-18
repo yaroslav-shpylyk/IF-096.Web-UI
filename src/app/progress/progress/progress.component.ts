@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SubjectService } from '../../services/subject.service';
 import { SubjectData } from '../../models/subject-data';
 import { ClassService } from '../../services/class.service';
 import { StudentsService } from '../../services/students.service';
 import { Student } from '../../models/student';
-import { ClassesFromStream } from '../../models/classes-from-stream';
 import { MarkService } from '../../services/mark.service';
 import { MarkRequestOptions } from '../../models/mark-request-options';
 import { ProgressService } from '../services/progress.service';
 import { DateValidator } from '../validators/date.validator';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { debounceTime, map, takeUntil } from 'rxjs/operators';
+import { ClassFromStream } from '../../models/class-from-stream';
 
 @Component({
   selector: 'app-progress',
@@ -17,11 +19,12 @@ import { DateValidator } from '../validators/date.validator';
   styleUrls: ['./progress.component.scss']
 })
 
-export class ProgressComponent implements OnInit {
+export class ProgressComponent implements OnInit, OnDestroy {
+  private onDestroy$ = new Subject();
   public chartOptionsForm: FormGroup;
   public stream = new Array(12);
   public subjects: SubjectData[] = [];
-  public classes: ClassesFromStream[] = [];
+  public classes: ClassFromStream[] = [];
   public students: Student[] = [];
   public markTypes = {
     allOfSubject: 'По предмету',
@@ -29,6 +32,22 @@ export class ProgressComponent implements OnInit {
     avgOfStudent: 'Всі середні учня'
   };
   public multipleSelect = false;
+  private studentPhrase$ = new BehaviorSubject<string>('');
+  private subjectPhrase$ = new BehaviorSubject<string>('');
+  public sortedSubjects$: Observable<SubjectData[]> = this.subjectPhrase$
+    .pipe(
+      debounceTime(500),
+      map(result => {
+        return this.subjects.filter(subject => subject.subjectName.includes(result));
+      })
+    );
+  public sortedStudents$: Observable<Student[]> = this.studentPhrase$
+    .pipe(
+      debounceTime(500),
+      map(result => {
+        return this.students.filter(student => `${student.firstname} ${student.lastname}`.includes(result));
+      })
+    );
   constructor(private subjectService: SubjectService, private classService: ClassService,
               private studentService: StudentsService, private markService: MarkService,
               private progressService: ProgressService) { }
@@ -36,11 +55,58 @@ export class ProgressComponent implements OnInit {
   ngOnInit() {
     this.createChartOptions();
     const controls = this.chartOptionsForm.controls;
-    this.chartOptionsForm.valueChanges.subscribe(() => this.formChange(controls));
-    controls.streamId.valueChanges.subscribe( result => this.streamChange(result, controls));
-    controls.classId.valueChanges.subscribe( result => this.classesChange(result, controls));
-    controls.markType.valueChanges.subscribe(result => this.markTypeChange(result, controls));
+    this.chartOptionsForm.valueChanges
+      .pipe( takeUntil(this.onDestroy$) )
+      .subscribe(() => this.formChange(controls));
+    controls.streamId.valueChanges
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe( result => this.streamChange(result, controls));
+    controls.classId.valueChanges
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe( result => this.classChange(result, controls));
+    controls.markType.valueChanges
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(result => this.markTypeChange(result, controls));
+    controls.subjectId.valueChanges
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(result => this.subjectChange(result, controls));
+    controls.studentId.valueChanges
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(result => this.studentChange(result, controls));
+    controls.subjectAutoComplete.valueChanges
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(result => this.subjectAutoCompleteChange(result, controls));
+    controls.studentAutoComplete.valueChanges
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(result => this.studentAutoCompleteChange(result, controls));
   }
+  ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
+
+  /**
+   * Method creates form for chart options
+   */
+  private createChartOptions(): void {
+    this.chartOptionsForm = new FormGroup({
+      streamId: new FormControl(null, Validators.required),
+      classId: new FormControl({ value: null, disabled: true }, Validators.required),
+      subjectId: new FormControl({ value: null, disabled: true }, Validators.required),
+      markType: new FormControl({ value: 'allOfSubject', disabled: true }, Validators.required),
+      studentId: new FormControl({ value: [], disabled: true }),
+      periodStart: new FormControl(null, Validators.required),
+      periodEnd: new FormControl(null, Validators.required),
+      subjectAutoComplete: new FormControl(''),
+      studentAutoComplete: new FormControl(''),
+    },
+      DateValidator
+    );
+  }
+
+  /**
+   * Method checks if form changed
+   * @param controls - Object with controls
+   */
   private formChange(controls): void {
     if (this.chartOptionsForm.hasError('periodError')) {
       controls.periodStart.setErrors({
@@ -58,24 +124,7 @@ export class ProgressComponent implements OnInit {
   }
 
   /**
-   * Method creates form for chart options
-   */
-  private createChartOptions(): void {
-    this.chartOptionsForm = new FormGroup({
-      streamId: new FormControl(null, Validators.required),
-      classId: new FormControl({ value: null, disabled: true }, Validators.required),
-      subjectId: new FormControl({ value: null, disabled: true }, Validators.required),
-      markType: new FormControl({ value: 'allOfSubject', disabled: true }, Validators.required),
-      studentId: new FormControl({ value: [], disabled: true }),
-      periodStart: new FormControl(null, Validators.required),
-      periodEnd: new FormControl(null, Validators.required)
-    },
-      DateValidator
-    );
-  }
-
-  /**
-   * Method changes stream in chart settings
+   * Method checks if stream changed
    * @param result - Value of form control
    * @param controls - Object with controls
    */
@@ -83,7 +132,9 @@ export class ProgressComponent implements OnInit {
     if (result !== null) {
       this.subjects = [];
       this.students = [];
-      this.classService.getClassesByStream(result).subscribe(response => this.classes = response.studentsData);
+      this.classService.getClassesByStream(result).subscribe(response => {
+        this.classes = response.studentsData;
+      });
       controls.classId.enable();
       controls.classId.markAsUntouched();
       controls.classId.setValidators([Validators.required]);
@@ -97,26 +148,33 @@ export class ProgressComponent implements OnInit {
   }
 
   /**
-   * Method changes stream in chart settings
+   * Method checks if class changed
    * @param result - Value of form control
    * @param controls - Object with controls
    */
-  private classesChange(result, controls): void {
+  private classChange(result, controls): void {
     if (result !== null) {
       this.students = [];
-      this.subjectService.getSubjects(result).subscribe(response => this.subjects = response);
-      this.studentService.getStudents(result).subscribe(response => this.students = response);
+      this.subjectService.getSubjects(result).subscribe(response => {
+        this.subjects = response;
+        this.subjectPhrase$.next('');
+      });
+      this.studentService.getStudents(result).subscribe(response => {
+        this.students = response;
+        this.studentPhrase$.next('');
+      });
       controls.subjectId.enable();
       controls.studentId.enable();
       controls.markType.enable();
     } else {
       controls.subjectId.disable();
       controls.studentId.disable();
+      controls.markType.disable();
     }
   }
 
   /**
-   * Method changes stream in chart settings
+   * Method checks if mark type changed
    * @param result - Value of form control
    * @param controls - Object with controls
    */
@@ -128,10 +186,12 @@ export class ProgressComponent implements OnInit {
     switch (result) {
       case 'allOfSubject':
       case 'avgOfSubject': {
-        controls.subjectId.setValidators([Validators.required]);
-        controls.studentId.clearValidators();
-        controls.subjectId.enable();
-        this.multipleSelect = false;
+        if (!controls.markType.disabled) {
+          controls.subjectId.setValidators([Validators.required]);
+          controls.studentId.clearValidators();
+          controls.subjectId.enable();
+          this.multipleSelect = false;
+        }
         break;
       }
       case 'avgOfStudent': {
@@ -147,6 +207,46 @@ export class ProgressComponent implements OnInit {
     controls.subjectId.updateValueAndValidity();
     controls.studentId.updateValueAndValidity();
     this.chartOptionsForm.markAsUntouched();
+  }
+
+  /**
+   * Method checks if subject changed
+   * @param result - Value of form control
+   * @param controls - Object with controls
+   */
+  private subjectChange(result, controls): void {
+    if (result !== null) {
+      controls.subjectAutoComplete.setValue('');
+      this.subjectPhrase$.next('');
+    }
+  }
+
+  /**
+   * Method checks if student changed
+   * @param result - Value of form control
+   * @param controls - Object with controls
+   */
+  private studentChange(result, controls): void {
+    if (result !== null) {
+    }
+  }
+
+  /**
+   * Method checks if subject auto complete changed
+   * @param result - Value of form control
+   * @param controls - Object with controls
+   */
+  private subjectAutoCompleteChange(result, controls): void {
+    this.subjectPhrase$.next(result);
+  }
+
+  /**
+   * Method checks if student auto complete changed
+   * @param result - Value of form control
+   * @param controls - Object with controls
+   */
+  private studentAutoCompleteChange(result, controls): void {
+    this.studentPhrase$.next(result);
   }
 
   /**
