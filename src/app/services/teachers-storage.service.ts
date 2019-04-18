@@ -58,7 +58,14 @@ export class TeachersStorageService {
     );
   }
 
-  getTeacherS2() {
+  /**
+   * Method fetches from server an array of all teachers via
+   * getTeacherS method, then makes a request to every single
+   * teacher out of array in order to fetch additional data and
+   * returns result being an array of teachers with all related data.
+   * @returns - array of teachers.
+   */
+  getTeachersWithClasses() {
     return this.getTeacherS().pipe(
       mergeMap(teachers => {
         const data = [];
@@ -193,6 +200,13 @@ export class TeachersStorageService {
     );
   }
 
+  /**
+   * Method takes an object of teacher, makes request to the server by provided teacher's
+   * id in order to get additional data such as teacher's classes and subjects
+   * supplies initial object with those data (if any) being sorted by classes and subjects.
+   * @param teacher - object representing teacher.
+   * @returns - object representing teacher.
+   */
   getTeacherSubjectsClasses2(teacher): Observable<any> {
     return this.httpClient.get(`/journals/teachers/${teacher.id}`).pipe(
       map((response: { status: any; data: any }) => {

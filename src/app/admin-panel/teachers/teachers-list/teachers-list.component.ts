@@ -110,32 +110,17 @@ export class TeachersListComponent implements OnInit, OnDestroy {
       }
     );
 
-    // this.teachersStorageService.getTeacherS().subscribe(arr => {
-    //   const data = [];
-    //   for (const teacher of arr) {
-    //     data.push(
-    //       this.teachersStorageService.getTeacherSubjectsClasses2(teacher)
-    //     );
-    //   }
-
-    //   forkJoin(data).subscribe(datas => {
-    //     for (const el of datas) {
-    //       this.mappedTeachers[el.id] = el;
-    //     }
-    //     this.teachers = datas;
-    //     console.log(this.mappedTeachers);
-    //     this.dataSource = new MatTableDataSource(datas);
-    //     this.dataSource.sort = this.sort;
-    //   });
-    // });
-
-    this.teachersStorageService.getTeacherS2().subscribe(datas => {
-      for (const el of datas) {
+    /**
+     * Right after getting an array of teachers I transform them into mapped type
+     * object with teachers ids being as keys. So that one may manipulate further on
+     * and react to adding/editing/deleting teachers.
+     */
+    this.teachersStorageService.getTeachersWithClasses().subscribe(teachers => {
+      for (const el of teachers) {
         this.mappedTeachers[el.id] = el;
       }
-      this.teachers = datas;
-      console.log(this.mappedTeachers);
-      this.dataSource = new MatTableDataSource(datas);
+      this.teachers = teachers;
+      this.dataSource = new MatTableDataSource(teachers);
       this.dataSource.sort = this.sort;
     });
 
@@ -151,19 +136,11 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     };
   }
 
-  ngOnDestroy() {
-    this.addSubscription.unsubscribe();
-    this.editSubscription.unsubscribe();
-    this.deleteSubscription.unsubscribe();
-    window.onscroll = null;
-  }
-
   onNewTeacher() {
     this.router.navigate(['new'], { relativeTo: this.route, replaceUrl: true });
   }
 
   onTeacherDetails(id) {
-    // this.teachersStorageService.modalsId = id;
     this.teachersStorageService.teacherToDisplay = this.mappedTeachers[id];
     this.router.navigate([id], {
       relativeTo: this.route
@@ -174,10 +151,6 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     this.router.navigate([id, 'edit'], {
       relativeTo: this.route
     });
-  }
-
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   onDelete(teacher): void {
@@ -195,7 +168,14 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(() => {});
   }
 
-  valik(e) {
-    console.log(e.target);
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  ngOnDestroy() {
+    this.addSubscription.unsubscribe();
+    this.editSubscription.unsubscribe();
+    this.deleteSubscription.unsubscribe();
+    window.onscroll = null;
   }
 }
