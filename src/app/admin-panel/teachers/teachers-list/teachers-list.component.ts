@@ -138,7 +138,8 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   }
 
   onTeacherDetails(id) {
-    this.teachersStorageService.modalsId = id;
+    // this.teachersStorageService.modalsId = id;
+    this.teachersStorageService.teacherToDisplay = this.mappedTeachers[id];
     this.router.navigate([id], {
       relativeTo: this.route
     });

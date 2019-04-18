@@ -6,7 +6,6 @@ import { TeachersStorageService } from 'src/app/services/teachers-storage.servic
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { TeacherData } from 'src/app/models/teacher-data';
 
-
 @Component({
   selector: 'app-dialog-overview',
   templateUrl: 'details-dialog-overview.html',
@@ -26,20 +25,24 @@ export class DetailsDialogOverviewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.teachersStorageService
-      .getTeacher(this.teachersStorageService.modalsId)
-      .subscribe(
-        teacher => {
-          this.teacher = teacher;
-          this.teacher.id = this.teachersStorageService.modalsId;
-        },
-        error => console.log(error)
-      );
+    this.teacher = this.teachersStorageService.teacherToDisplay;
+    if (!this.teacher) {
+      this.teachersStorageService
+        .getTeacher(this.teachersStorageService.modalsId)
+        .subscribe(
+          teacher => {
+            this.teacher = teacher;
+            this.teacher.id = this.teachersStorageService.modalsId;
+          },
+          error => console.log(error)
+        );
+    }
 
     this.teachersStorageService
       .getTeacherJournal(this.teachersStorageService.modalsId)
       .subscribe(
         teacherJournal => {
+          console.log(teacherJournal);
           this.teacherJournal = teacherJournal;
         },
         error => console.log(error)

@@ -6,6 +6,7 @@ import { TeacherData } from '../models/teacher-data';
 
 @Injectable()
 export class TeachersStorageService {
+  public teacherToDisplay;
   public modalsId: number;
   public editMode: boolean;
   public defaultAvatar = 'assets/default-avatar.svg';
