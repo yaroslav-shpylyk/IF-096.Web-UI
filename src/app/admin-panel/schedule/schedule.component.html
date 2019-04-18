@@ -1,0 +1,45 @@
+<div class="title-schedule">
+  <h5>РОЗКЛАД УРОКІВ</h5>
+</div>
+<form [formGroup] = "frmSchedule" (ngSubmit) = "onSubmit()">
+  <div class="schedule-top">
+    <mat-form-field class="datePiker">
+      <input matInput [matDatepicker]="pickerStart"
+       [placeholder]="dateTermStartMsg"
+       formControlName="dateTermStart">
+      <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+      <mat-datepicker #pickerStart></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="datePiker">
+        <input matInput [matDatepicker]="pickerEnd"
+         [placeholder]="dateTermEndMsg"
+         formControlName="dateTermEnd">
+        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+        <mat-datepicker #pickerEnd></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select #class [placeholder]="selectClassMsg"
+       formControlName="selectClass"
+       (selectionChange)="selectedClass($event.value)">
+        <mat-option *ngFor="let class of arrClassList" [value]="class.id">
+          {{ class.className }} {{class.id}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="isInputInvalid('selectClass')">Не обрано клас</mat-error>
+    </mat-form-field>
+  </div> <!--end of top-->
+
+  <div class="week-schedule">
+    <app-daily-schedule *ngFor="let day of weekDayName; let i=index"
+      [arrSubjectsList]="arrSubjectsList"
+      [legendDay]="day.legendDay"
+      [class]="day.dailySubjects"
+      (addDailySubjects)="onAddDailySubjects($event, day.dailySubjects)">
+    </app-daily-schedule>
+  </div>
+
+  <button mat-button type="submit" class="save-button">Зберегти</button>
+  <!--[disabled]="!frmSchedule.valid"-->
+</form>
