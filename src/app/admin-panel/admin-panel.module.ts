@@ -7,6 +7,7 @@ import { DailyScheduleComponent } from './schedule/daily-schedule/daily-schedule
 import { MaterialModule } from '../material.module';
 import {
   TeachersListComponent,
+  ConfirmationDialogComponent
 } from './teachers/teachers-list/teachers-list.component';
 import {
   DialogEntryComponent,
@@ -78,7 +79,8 @@ import {MatStepperModule} from '@angular/material/stepper';
     AddStudentModalComponent,
     AddStudentComponent,
     ModifySubjectsComponent,
-    TeacherConnectionComponent
+    TeacherConnectionComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     CommonModule,
@@ -123,7 +125,8 @@ import {MatStepperModule} from '@angular/material/stepper';
     ModifySubjectsComponent,
     StudentDetailModalComponent,
     AddStudentComponent,
-    ModifySubjectsComponent
+    ModifySubjectsComponent,
+    ConfirmationDialogComponent
   ],
   providers: []
 })
