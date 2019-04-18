@@ -18,14 +18,21 @@
                   <mat-panel-title>
                     <div class="className">{{allClasses[item].className}}</div> 
                     <div class="currentYear">{{allClasses[item].classYear}}</div>
-                  </mat-panel-title> 
-                  <mat-panel-description>
+                  </mat-panel-title>
+                  <mat-panel-description *ngIf="allClasses[item].numOfStudents>0; else emptyClass">
                     {{panelOpenState[item] ? 'Список учнів' : 'Переглянути список учнів'}}
                   </mat-panel-description>
                 </mat-expansion-panel-header>
+                <ng-template #emptyClass>
+                  <mat-panel-description>
+                    Немає учнів
+                  </mat-panel-description>
+                </ng-template>
+                <ng-container *ngIf="allClasses[item].numOfStudents>0">
                   <mat-list role="list" *ngFor="let pupil of allClasses[item]['pupilList'] | keyvalue; let i = index">
                     <mat-list-item role="listitem"><span>{{i+1}})</span><a href="students/{{(pupil.value).id}}" target="_blank">{{(pupil.value).lastname}} {{(pupil.value).firstname}}</a></mat-list-item>
-                  </mat-list>
+                  </mat-list>  
+                </ng-container>
               </mat-expansion-panel>
             </mat-accordion>
             <div formArrayName="newClassTitle" class="new-title">
