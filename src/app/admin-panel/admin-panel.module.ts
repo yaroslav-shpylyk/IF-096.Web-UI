@@ -76,13 +76,8 @@ import {MatStepperModule} from '@angular/material/stepper';
     TitlePipe,
     AddStudentModalComponent,
     AddStudentComponent,
-<<<<<<< HEAD
-    StudentFilterPipe,
     ModifySubjectsComponent,
     TeacherConnectionComponent
-=======
-    ModifySubjectsComponent
->>>>>>> master
   ],
   imports: [
     CommonModule,
