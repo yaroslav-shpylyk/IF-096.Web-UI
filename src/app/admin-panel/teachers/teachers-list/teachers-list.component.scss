@@ -27,11 +27,8 @@ span.lastname {
   margin-top: 0.3em;
 }
 
-// .block div:last-child {
-//   margin: auto 2em auto auto;
-// }
 .block-button-section {
-  margin: auto 2em auto auto;
+  margin: auto 0 auto auto;
 }
 
 img {
@@ -59,4 +56,52 @@ mat-icon:hover {
 
 ::ng-deep th.mat-header-cell {
   text-align: center !important;
+}
+
+@media only screen and (max-width: 405px) and (min-width: 320px) {
+  .cdk-column-num {
+    padding-left: 0.1em !important;
+    padding-right: 0 !important;
+  }
+  .mat-icon-button {
+    width: 20px;
+  }
+
+  img {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 406px) {
+  .cdk-column-num {
+    padding-left: 1em !important;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  table {
+    width: 65vw !important;
+  }
+}
+
+mat-form-field {
+  width: 65%;
+}
+
+// .cdk-column-num {
+//   padding-left: 1em !important;
+// }
+
+.cdk-column-subjects {
+  padding-right: 0 !important;
+}
+
+.cdk-column-teacherCard {
+  width: 6em !important;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

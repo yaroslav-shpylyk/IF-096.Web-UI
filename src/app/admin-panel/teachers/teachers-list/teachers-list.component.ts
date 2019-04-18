@@ -84,6 +84,7 @@ export class TeachersListComponent implements OnInit, OnDestroy {
         this.dataSource = new MatTableDataSource(
           Object.values(this.mappedTeachers)
         );
+        this.dataSource.sort = this.sort;
       }
     );
 
@@ -94,6 +95,7 @@ export class TeachersListComponent implements OnInit, OnDestroy {
         this.dataSource = new MatTableDataSource(
           Object.values(this.mappedTeachers)
         );
+        this.dataSource.sort = this.sort;
       }
     );
 
@@ -104,6 +106,7 @@ export class TeachersListComponent implements OnInit, OnDestroy {
         this.dataSource = new MatTableDataSource(
           Object.values(this.mappedTeachers)
         );
+        this.dataSource.sort = this.sort;
       }
     );
 
