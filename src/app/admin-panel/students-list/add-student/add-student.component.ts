@@ -85,12 +85,13 @@ export class AddStudentComponent implements OnInit {
     if (this.data.paramId) {
       this.studentService.changeStudent(this.data.paramId, data).subscribe(res => {
         this.studentService.loadStudents(this.data.classId);
-        this.openSnackBar('Дані змінено', '');
+        this.openSnackBar('Дані змінено', 'успішно');
       },
         err => this.openSnackBar('Дані не змінено', err));
     } else {
+      data.avatar = this.avatar;
       this.studentService.addStudents(data).subscribe(res => {
-        this.studentService.loadStudents(this.data.classId);
+        this.studentService.loadStudents(data.classId);
         this.openSnackBar('Студента додано', '');
       },
         err => this.openSnackBar('Сталась помилка, можливо неправильні дані', err));
@@ -123,7 +124,7 @@ export class AddStudentComponent implements OnInit {
       firstname: [student.firstname, validText],
       lastname: [student.lastname, validText],
       login: [student.login, validLogin],
-      classId: [{ value: student.classId, disabled: true }],
+      classId: [{ value: student.classId }],
       newPass: [''],
       patronymic: [student.patronymic, validText],
       phone: [student.phone, validPhone]

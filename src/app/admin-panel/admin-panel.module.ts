@@ -29,7 +29,6 @@ import { ChartsModule } from 'ng2-charts';
 import { MatMenuModule, MatNativeDateModule } from '@angular/material';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { StudentFilterPipe } from './students-list/student-filter.pipe';
 import { MatSortModule } from '@angular/material';
 import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subjects.component';
 
@@ -53,7 +52,6 @@ import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subje
     SubjectsComponent,
     AddStudentModalComponent,
     AddStudentComponent,
-    StudentFilterPipe,
     ModifySubjectsComponent
   ],
   imports: [
