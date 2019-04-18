@@ -20,6 +20,5 @@ export class TeachersJournalService {
         `/teachers/${teacherId}/classes/${classId}/subjects/${subjectId}/journal`,
         data
       )
-      .pipe(map(res => console.log(res)));
   }
 }

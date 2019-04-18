@@ -42,11 +42,12 @@ export class TeacherConnectionComponent implements OnInit {
   });
 
   onSubmit(data) {
-    this.teacherjournalServise
-      .sentDataToJournal(data, data.teacherId, data.classId, data.subjectId)
-    //   .subscribe(res => console.log(res));
-
-    // console.log(data);
+    this.teacherjournalServise.sentDataToJournal(
+      data,
+      data.teacherId,
+      data.classId,
+      data.subjectId
+    ).subscribe(data)
   }
 
   ngOnInit() {
