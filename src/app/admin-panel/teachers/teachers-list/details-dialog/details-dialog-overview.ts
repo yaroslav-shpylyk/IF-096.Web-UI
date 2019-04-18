@@ -14,6 +14,7 @@ import { TeacherData } from 'src/app/models/teacher-data';
 export class DetailsDialogOverviewComponent implements OnInit {
   teacher: TeacherData;
   teacherJournal;
+  teach;
 
   constructor(
     public dialogRef: MatDialogRef<DetailsDialogOverviewComponent>,
@@ -26,27 +27,34 @@ export class DetailsDialogOverviewComponent implements OnInit {
 
   ngOnInit() {
     this.teacher = this.teachersStorageService.teacherToDisplay;
+    // if (!this.teacher) {
+    //   this.teachersStorageService
+    //     .getTeacher(this.teachersStorageService.modalsId)
+    //     .subscribe(
+    //       teacher => {
+    //         this.teacher = teacher;
+    //         this.teacher.id = this.teachersStorageService.modalsId;
+    //       },
+    //       error => console.log(error)
+    //     );
+    // }
     if (!this.teacher) {
       this.teachersStorageService
-        .getTeacher(this.teachersStorageService.modalsId)
-        .subscribe(
-          teacher => {
-            this.teacher = teacher;
-            this.teacher.id = this.teachersStorageService.modalsId;
-          },
-          error => console.log(error)
-        );
+        .getTeacherAndJournal(this.teachersStorageService.modalsId)
+        .subscribe(teacher => {
+          this.teacher = teacher;
+          console.log(this.teacher);
+        });
     }
 
-    this.teachersStorageService
-      .getTeacherJournal(this.teachersStorageService.modalsId)
-      .subscribe(
-        teacherJournal => {
-          console.log(teacherJournal);
-          this.teacherJournal = teacherJournal;
-        },
-        error => console.log(error)
-      );
+    // this.teachersStorageService
+    //   .getTeacherJournal(this.teachersStorageService.modalsId)
+    //   .subscribe(
+    //     teacherJournal => {
+    //       this.teacherJournal = teacherJournal;
+    //     },
+    //     error => console.log(error)
+    //   );
   }
 
   onBackClick(): void {

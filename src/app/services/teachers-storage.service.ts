@@ -45,19 +45,17 @@ export class TeachersStorageService {
   }
 
   getTeacherS(): Observable<TeacherData[]> {
-    return this.httpClient
-      .get('/teachers')
-      .pipe(
-        map((response: { status: any; data: TeacherData[] }) => {
-          const teachers = response.data;
-          for (const teacher of teachers) {
-            if (!teacher.avatar) {
-              teacher.avatar = this.defaultAvatar;
-            }
+    return this.httpClient.get('/teachers').pipe(
+      map((response: { status: any; data: TeacherData[] }) => {
+        const teachers = response.data;
+        for (const teacher of teachers) {
+          if (!teacher.avatar) {
+            teacher.avatar = this.defaultAvatar;
           }
-          return teachers;
-        })
-      );
+        }
+        return teachers;
+      })
+    );
   }
 
   /**
@@ -78,6 +76,18 @@ export class TeachersStorageService {
           teacher.avatar = this.defaultAvatar;
         }
         return teacher;
+      })
+    );
+  }
+
+  getTeacherAndJournal(id) {
+    return this.getTeacher(id).pipe(
+      mergeMap(teacher => {
+        return this.getTeacherJournal(id).pipe(map(teacherJournal => {
+          teacher.journalData = teacherJournal;
+          console.log(teacher);
+          return teacher;
+        }));
       })
     );
   }
@@ -144,7 +154,6 @@ export class TeachersStorageService {
             academicYear: item.academicYear
           };
         }
-
         return Object.values(journalData);
       })
     );
@@ -172,7 +181,17 @@ export class TeachersStorageService {
       map((response: { status: any; data: any }) => {
         teacher.subjects = [];
         teacher.classes = [];
+        const journalData = {};
         for (const item of response.data) {
+          if (journalData[item.idClass]) {
+            journalData[item.idClass].subjectName.push(item.subjectName);
+            continue;
+          }
+          journalData[item.idClass] = {
+            className: item.className,
+            subjectName: [item.subjectName],
+            academicYear: item.academicYear
+          };
           if (!teacher.subjects.includes(item.subjectName)) {
             teacher.subjects.push(item.subjectName);
           }
@@ -180,6 +199,7 @@ export class TeachersStorageService {
             teacher.classes.push(item.className);
           }
         }
+        teacher.journalData = Object.values(journalData);
         return teacher;
       })
     );

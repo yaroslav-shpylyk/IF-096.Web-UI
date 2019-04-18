@@ -23,9 +23,11 @@
 <br />
 <mat-divider></mat-divider>
 
-<mat-accordion *ngIf="teacherJournal?.length > 0">
+<mat-accordion *ngIf="teacher">
+<!-- <mat-accordion *ngIf="teacher?.journalData.length > 0"> -->
+<!-- <mat-accordion > -->
   <mat-expansion-panel
-    *ngFor="let class of teacherJournal"
+    *ngFor="let class of teacher.journalData"
     (opened)="panelOpenState = true"
     (closed)="panelOpenState = false"
   >
