@@ -9,6 +9,7 @@ import * as JWTDecoder from 'jwt-decode';
   providedIn: 'root'
 })
 export class TeachersGuard implements CanActivate, CanLoad {
+  activatedRoute: ActivatedRouteSnapshot;
   constructor(private authService: AuthService, private router: Router) {}
 
   /**
@@ -30,7 +31,7 @@ export class TeachersGuard implements CanActivate, CanLoad {
    * @returns false if user's role is not ROLE_TEACHER
    */
   canLoad(route: Route): boolean {
-    return this.isTeacher();
+    return this.isTeacher(route.path);
   }
 
   /**

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -7,9 +7,10 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
   MatSnackBar,
-  MatSnackBarConfig
+  MatSnackBarConfig,
+  MatSort,
+  MatTableDataSource
 } from '@angular/material';
-
 
 @Component({
   selector: 'app-confirmation-dialog',
@@ -29,7 +30,7 @@ export class ConfirmationDialogComponent {
     this.teachersStorageService
       .deleteTeacher(this.data.id)
       .subscribe(response => {
-        this.teachersStorageService.getTeachers();
+        this.teachersStorageService.teacherDeleted.next(this.data.id);
         this.dialogRef.close();
         this.openSnackBar(
           `Викладач ${response.lastname} ${response.firstname} видалений`,
@@ -57,9 +58,15 @@ export class ConfirmationDialogComponent {
   styleUrls: ['./teachers-list.component.scss']
 })
 export class TeachersListComponent implements OnInit, OnDestroy {
-  teachers;
-  subscription: Subscription;
-  filteredTeachers = '';
+  addSubscription: Subscription;
+  editSubscription: Subscription;
+  deleteSubscription: Subscription;
+  dataSource;
+  mappedTeachers = new Object() as any;
+
+  displayedColumns: string[] = ['num', 'teacherCard', 'classes', 'subjects'];
+
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private teachersStorageService: TeachersStorageService,
@@ -69,18 +76,58 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.teachers = this.teachersStorageService.getTeachers();
-    this.subscription = this.teachersStorageService.teachersChanged.subscribe(
-      teachers => {
-        this.teachers = teachers;
+    this.addSubscription = this.teachersStorageService.teacherAdded.subscribe(
+      resp => {
+        const newTeacher: any = resp;
+        this.mappedTeachers[newTeacher.id] = newTeacher;
+        this.dataSource = new MatTableDataSource(
+          Object.values(this.mappedTeachers)
+        );
+        this.dataSource.sort = this.sort;
       }
     );
+
+    this.editSubscription = this.teachersStorageService.teacherEdited.subscribe(
+      resp => {
+        const newTeacher: any = resp;
+        Object.assign(this.mappedTeachers[newTeacher.id], newTeacher.obj);
+        this.dataSource = new MatTableDataSource(
+          Object.values(this.mappedTeachers)
+        );
+        this.dataSource.sort = this.sort;
+      }
+    );
+
+    this.deleteSubscription = this.teachersStorageService.teacherDeleted.subscribe(
+      resp => {
+        const toDelete: any = resp;
+        delete this.mappedTeachers[toDelete];
+        this.dataSource = new MatTableDataSource(
+          Object.values(this.mappedTeachers)
+        );
+        this.dataSource.sort = this.sort;
+      }
+    );
+
+    /**
+     * Right after getting an array of teachers ts is transformed them into
+     * mapped type object with teachers ids being as keys.
+     * So that one may manipulate further on
+     * and react to adding/editing/deleting teachers.
+     */
+    this.teachersStorageService.getTeachersWithClasses().subscribe(teachers => {
+      for (const el of teachers) {
+        this.mappedTeachers[el.id] = el;
+      }
+      this.dataSource = new MatTableDataSource(teachers);
+      this.dataSource.sort = this.sort;
+    });
 
     let prevScrollpos = window.pageYOffset;
     window.onscroll = () => {
       const currentScrollPos = window.pageYOffset;
       if (prevScrollpos > currentScrollPos) {
-        document.getElementById('mine').style.bottom = '3.5em';
+        document.getElementById('mine').style.bottom = '4.5em';
       } else {
         document.getElementById('mine').style.bottom = '-75px';
       }
@@ -88,25 +135,26 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     };
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-    window.onscroll = null;
-  }
-
   onNewTeacher() {
     this.router.navigate(['new'], { relativeTo: this.route, replaceUrl: true });
   }
 
+  /**
+   * Once the teacher is cliked its object is passed
+   * to the service so that it may be fetched from there
+   * and use as source of data for appropriate component.
+   */
   onTeacherDetails(id) {
-    this.teachersStorageService.modalsId = id;
+    this.teachersStorageService.teacherToDisplay = this.mappedTeachers[id];
     this.router.navigate([id], {
-      relativeTo: this.route,
+      relativeTo: this.route
     });
   }
 
   onEdit(id) {
+    this.teachersStorageService.teacherToDisplay = this.mappedTeachers[id];
     this.router.navigate([id, 'edit'], {
-      relativeTo: this.route,
+      relativeTo: this.route
     });
   }
 
@@ -123,5 +171,16 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(() => {});
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  ngOnDestroy() {
+    this.addSubscription.unsubscribe();
+    this.editSubscription.unsubscribe();
+    this.deleteSubscription.unsubscribe();
+    window.onscroll = null;
   }
 }
