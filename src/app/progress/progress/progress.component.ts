@@ -28,6 +28,7 @@ export class ProgressComponent implements OnInit {
     avgOfSubject: 'Середня по предмету',
     avgOfStudent: 'Всі середні учня'
   };
+  public multipleSelect = false;
   constructor(private subjectService: SubjectService, private classService: ClassService,
               private studentService: StudentsService, private markService: MarkService,
               private progressService: ProgressService) { }
@@ -35,46 +36,25 @@ export class ProgressComponent implements OnInit {
   ngOnInit() {
     this.createChartOptions();
     const controls = this.chartOptionsForm.controls;
-    this.chartOptionsForm.valueChanges.subscribe(() => {
-        if (this.chartOptionsForm.hasError('periodError')) {
-          controls.periodStart.setErrors({
-            period: true
-          });
-          console.log(controls.periodStart.errors);
-        } else {
-          if (controls.periodStart.hasError('period')) {
-            let errors = controls.periodStart.errors;
-            delete errors.period;
-            errors = Object.keys.length ? errors : null;
-            controls.periodStart.setErrors(errors);
-            controls.periodStart.updateValueAndValidity();
-          }
-        }
+    this.chartOptionsForm.valueChanges.subscribe(() => this.formChange(controls));
+    controls.streamId.valueChanges.subscribe( result => this.streamChange(result, controls));
+    controls.classId.valueChanges.subscribe( result => this.classesChange(result, controls));
+    controls.markType.valueChanges.subscribe(result => this.markTypeChange(result, controls));
+  }
+  private formChange(controls): void {
+    if (this.chartOptionsForm.hasError('periodError')) {
+      controls.periodStart.setErrors({
+        periodError: true
+      });
+    } else {
+      if (controls.periodStart.hasError('periodError')) {
+        let errors = controls.periodStart.errors;
+        delete errors.period;
+        errors = Object.keys.length ? errors : null;
+        controls.periodStart.setErrors(errors);
+        controls.periodStart.updateValueAndValidity();
       }
-    );
-    controls.streamId.valueChanges.subscribe( result => {
-      if (result !== null) {
-        controls.classId.enable();
-      } else {
-        controls.classId.disable();
-      }
-    });
-    controls.classId.valueChanges.subscribe( result => {
-      if (result !== null) {
-        controls.subjectId.enable();
-        controls.studentId.enable();
-      } else {
-        controls.subjectId.disable();
-        controls.studentId.disable();
-      }
-    });
-    controls.markType.valueChanges.subscribe(result => {
-      if (result === 'avgOfStudent') {
-        controls.subjectId.disable();
-      } else {
-        controls.subjectId.enable();
-      }
-    });
+    }
   }
 
   /**
@@ -85,7 +65,7 @@ export class ProgressComponent implements OnInit {
       streamId: new FormControl(null, Validators.required),
       classId: new FormControl({ value: null, disabled: true }, Validators.required),
       subjectId: new FormControl({ value: null, disabled: true }, Validators.required),
-      markType: new FormControl('allOfSubject', Validators.required),
+      markType: new FormControl({ value: 'allOfSubject', disabled: true }, Validators.required),
       studentId: new FormControl({ value: [], disabled: true }),
       periodStart: new FormControl(null, Validators.required),
       periodEnd: new FormControl(null, Validators.required)
@@ -96,51 +76,76 @@ export class ProgressComponent implements OnInit {
 
   /**
    * Method changes stream in chart settings
-   * @param event - Variable of change event
+   * @param result - Value of form control
+   * @param controls - Object with controls
    */
-  public streamChange(event): void {
-    this.subjects = [];
-    this.students = [];
-    this.classService.getClassesByStream(event.value).subscribe(result => this.classes = result.studentsData);
+  private streamChange(result, controls): void {
+    if (result !== null) {
+      this.subjects = [];
+      this.students = [];
+      this.classService.getClassesByStream(result).subscribe(response => this.classes = response.studentsData);
+      controls.classId.enable();
+      controls.classId.markAsUntouched();
+      controls.classId.setValidators([Validators.required]);
+      controls.classId.updateValueAndValidity();
+      controls.subjectId.disable();
+      controls.studentId.disable();
+      controls.markType.disable();
+    } else {
+      controls.classId.disable();
+    }
   }
 
   /**
    * Method changes stream in chart settings
-   * @param event - Variable of change event
+   * @param result - Value of form control
+   * @param controls - Object with controls
    */
-  public classesChange(event): void {
-    this.students = [];
-    this.subjectService.getSubjects(event.value).subscribe(result => this.subjects = result);
-    this.studentService.getStudents(event.value).subscribe(result => this.students = result);
+  private classesChange(result, controls): void {
+    if (result !== null) {
+      this.students = [];
+      this.subjectService.getSubjects(result).subscribe(response => this.subjects = response);
+      this.studentService.getStudents(result).subscribe(response => this.students = response);
+      controls.subjectId.enable();
+      controls.studentId.enable();
+      controls.markType.enable();
+    } else {
+      controls.subjectId.disable();
+      controls.studentId.disable();
+    }
   }
 
   /**
    * Method changes stream in chart settings
-   * @param event - Variable of change event
-   * @param type - Type of mark
+   * @param result - Value of form control
+   * @param controls - Object with controls
    */
-  public markTypeChange(event, type: string): void {
+  public markTypeChange(result, controls): void {
     this.chartOptionsForm.patchValue({
       studentId: [],
       subjectId: []
     });
-    switch (type) {
+    switch (result) {
       case 'allOfSubject':
       case 'avgOfSubject': {
-        this.chartOptionsForm.controls.subjectId.setValidators([Validators.required]);
-        this.chartOptionsForm.controls.studentId.clearValidators();
+        controls.subjectId.setValidators([Validators.required]);
+        controls.studentId.clearValidators();
+        controls.subjectId.enable();
+        this.multipleSelect = false;
         break;
       }
       case 'avgOfStudent': {
-        this.chartOptionsForm.controls.studentId.setValidators([Validators.required]);
-        this.chartOptionsForm.controls.subjectId.clearValidators();
+        controls.studentId.setValidators([Validators.required]);
+        controls.subjectId.clearValidators();
+        this.multipleSelect = true;
+        controls.subjectId.disable();
         break;
       }
     }
-    this.chartOptionsForm.controls.subjectId.markAsUntouched();
-    this.chartOptionsForm.controls.studentId.markAsUntouched();
-    this.chartOptionsForm.controls.subjectId.updateValueAndValidity();
-    this.chartOptionsForm.controls.studentId.updateValueAndValidity();
+    controls.subjectId.markAsUntouched();
+    controls.studentId.markAsUntouched();
+    controls.subjectId.updateValueAndValidity();
+    controls.studentId.updateValueAndValidity();
     this.chartOptionsForm.markAsUntouched();
   }
 
@@ -208,6 +213,7 @@ export class ProgressComponent implements OnInit {
         break;
       }
       case 'avgOfStudent': {
+        options.student_id = studentId;
         this.markService.getAvgMarks(options).subscribe(result => {
           this.progressService.updateStudentChartData(result);
         });

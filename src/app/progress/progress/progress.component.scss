@@ -5,10 +5,12 @@
     mat-icon {
       color: #757575;
     }
+
     mat-panel-description {
       font-size: 1.1em;
     }
   }
+
   form {
     font-size: 1.2em;
     display: flex;
@@ -21,6 +23,7 @@
     mat-form-field {
       width: 13em;
     }
+
     .class{
       display: flex;
       flex-direction: column;

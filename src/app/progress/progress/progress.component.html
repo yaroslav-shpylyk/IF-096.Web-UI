@@ -12,7 +12,7 @@
       <div class="class">
         <mat-form-field>
           <mat-label>Потік класів</mat-label>
-          <mat-select formControlName="streamId" (selectionChange)="streamChange($event)">
+          <mat-select formControlName="streamId">
             <mat-option *ngFor="let item of stream; let i = index" [value]="i+1">
               {{i+1}}
             </mat-option>
@@ -23,7 +23,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Клас</mat-label>
-          <mat-select formControlName="classId" (selectionChange)="classesChange($event)">
+          <mat-select formControlName="classId">
             <mat-option *ngFor="let item of classes" [value]="item.id">
               {{item.className}}
             </mat-option>
@@ -36,7 +36,7 @@
       <div class="markType">
         <mat-label>Тип оцінки</mat-label>
         <mat-radio-group formControlName="markType">
-          <mat-radio-button *ngFor="let item of markTypes | keyvalue" [value]="item.key" color="primary" (click)="markTypeChange($event, item.key)">
+          <mat-radio-button *ngFor="let item of markTypes | keyvalue" [value]="item.key" color="primary">
             {{item.value}}
           </mat-radio-button>
         </mat-radio-group>
@@ -54,12 +54,19 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Учень</mat-label>
-        <mat-select formControlName="studentId"
-                    [multiple]="chartOptionsForm.controls.markType.value !== 'avgOfStudents'">
+        <mat-select  formControlName="studentId" multiple
+                     *ngIf="chartOptionsForm.controls.markType.value !== 'avgOfStudent';else singleSelect">
           <mat-option *ngFor="let item of students" [value]="item.id">
             {{item.firstname}} {{item.lastname}}
           </mat-option>
         </mat-select>
+        <ng-template #singleSelect>
+          <mat-select  formControlName="studentId">
+            <mat-option *ngFor="let item of students" [value]="item.id">
+              {{item.firstname}} {{item.lastname}}
+            </mat-option>
+          </mat-select>
+        </ng-template>
         <mat-error *ngIf="chartOptionsForm.controls.studentId.hasError('required')">
           Оберіть учня
         </mat-error>
@@ -72,7 +79,7 @@
           <mat-error *ngIf="chartOptionsForm.controls.periodStart.hasError('required')">
             Оберіть початкову дату
           </mat-error>
-          <mat-error *ngIf="chartOptionsForm.controls.periodStart.hasError('period')">
+          <mat-error *ngIf="chartOptionsForm.controls.periodStart.hasError('periodError')">
             Початкова дата більша за кінцеву
           </mat-error>
         </mat-form-field>
