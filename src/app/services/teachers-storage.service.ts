@@ -6,7 +6,7 @@ import { TeacherData } from '../models/teacher-data';
 
 @Injectable()
 export class TeachersStorageService {
-  public teacherToDisplay;
+  public teacherToDisplay: TeacherData;
   public modalsId: number;
   public editMode: boolean;
   public defaultAvatar = 'assets/default-avatar.svg';
@@ -27,6 +27,10 @@ export class TeachersStorageService {
         map((response: { status: any; data: TeacherData[] }) => {
           const teachers = response.data;
           for (const teacher of teachers) {
+            teacher.dateOfBirth = teacher.dateOfBirth
+              .split('-')
+              .reverse()
+              .join('.');
             if (!teacher.avatar) {
               teacher.avatar = this.defaultAvatar;
             }
@@ -44,6 +48,11 @@ export class TeachersStorageService {
       );
   }
 
+  /**
+   * Method fetches from server an array of teachers
+   * and returns it.
+   * @returns - array of teachers.
+   */
   getTeacherS(): Observable<TeacherData[]> {
     return this.httpClient.get('/teachers').pipe(
       map((response: { status: any; data: TeacherData[] }) => {
@@ -70,9 +79,14 @@ export class TeachersStorageService {
       mergeMap(teachers => {
         const data = [];
         for (const teacher of teachers) {
-          data.push(
-            this.getTeacherSubjectsClasses2(teacher)
-          );
+          teacher.dateOfBirth = teacher.dateOfBirth
+            .split('-')
+            .reverse()
+            .join('.');
+          if (!teacher.avatar) {
+            teacher.avatar = this.defaultAvatar;
+          }
+          data.push(this.getTeacherSubjectsClasses(teacher));
         }
 
         return forkJoin(data);
@@ -102,13 +116,20 @@ export class TeachersStorageService {
     );
   }
 
+  /**
+   * Method gets id of the teacher makes request to the server
+   * by getTeacher(id) method, receives teacher related data, then
+   * makes another request by the getTeacherJournal(id) method,
+   * merges received, groups data and return a new object.
+   * @param id - number representing id of the teacher.
+   * @returns - object representing teacher.
+   */
   getTeacherAndJournal(id) {
     return this.getTeacher(id).pipe(
       mergeMap(teacher => {
         return this.getTeacherJournal(id).pipe(
           map(teacherJournal => {
             teacher.journalData = teacherJournal;
-            console.log(teacher);
             return teacher;
           })
         );
@@ -183,23 +204,6 @@ export class TeachersStorageService {
     );
   }
 
-  getTeacherSubjectsClasses(teacherId): Observable<any> {
-    return this.httpClient.get(`/journals/teachers/${teacherId}`).pipe(
-      map((response: { status: any; data: any }) => {
-        const data = { subjects: [], classes: [] };
-        for (const item of response.data) {
-          if (!data.subjects.includes(item.subjectName)) {
-            data.subjects.push(item.subjectName);
-          }
-          if (!data.classes.includes(item.className)) {
-            data.classes.push(item.className);
-          }
-        }
-        return data;
-      })
-    );
-  }
-
   /**
    * Method takes an object of teacher, makes request to the server by provided teacher's
    * id in order to get additional data such as teacher's classes and subjects
@@ -207,7 +211,7 @@ export class TeachersStorageService {
    * @param teacher - object representing teacher.
    * @returns - object representing teacher.
    */
-  getTeacherSubjectsClasses2(teacher): Observable<any> {
+  getTeacherSubjectsClasses(teacher): Observable<any> {
     return this.httpClient.get(`/journals/teachers/${teacher.id}`).pipe(
       map((response: { status: any; data: any }) => {
         teacher.subjects = [];
@@ -232,32 +236,6 @@ export class TeachersStorageService {
         }
         teacher.journalData = Object.values(journalData);
         return teacher;
-      })
-    );
-  }
-
-  varvara() {
-    return this.getTeacherS().subscribe(arr => {
-      console.log(arr);
-      const data = [];
-      for (const teacher of arr) {
-        data.push(this.getTeacherSubjectsClasses2(teacher));
-      }
-
-      forkJoin(data);
-    });
-  }
-
-  varvara2() {
-    return this.httpClient.get('/teachers').pipe(
-      map((result: { status: any; data: TeacherData[] }) => {
-        const arr = result.data;
-        const data = [];
-        for (const teacher of arr) {
-          data.push(this.getTeacherSubjectsClasses2(teacher));
-        }
-
-        forkJoin(data);
       })
     );
   }

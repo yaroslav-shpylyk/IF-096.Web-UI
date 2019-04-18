@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Inject, ViewChild } from '@angular/core';
-import { Subscription, forkJoin } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
@@ -58,7 +58,6 @@ export class ConfirmationDialogComponent {
   styleUrls: ['./teachers-list.component.scss']
 })
 export class TeachersListComponent implements OnInit, OnDestroy {
-  teachers;
   addSubscription: Subscription;
   editSubscription: Subscription;
   deleteSubscription: Subscription;
@@ -111,15 +110,15 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     );
 
     /**
-     * Right after getting an array of teachers I transform them into mapped type
-     * object with teachers ids being as keys. So that one may manipulate further on
+     * Right after getting an array of teachers ts is transformed them into
+     * mapped type object with teachers ids being as keys.
+     * So that one may manipulate further on
      * and react to adding/editing/deleting teachers.
      */
     this.teachersStorageService.getTeachersWithClasses().subscribe(teachers => {
       for (const el of teachers) {
         this.mappedTeachers[el.id] = el;
       }
-      this.teachers = teachers;
       this.dataSource = new MatTableDataSource(teachers);
       this.dataSource.sort = this.sort;
     });
@@ -140,6 +139,11 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     this.router.navigate(['new'], { relativeTo: this.route, replaceUrl: true });
   }
 
+  /**
+   * Once the teacher is cliked its object is passed
+   * to the service so that it may be fetched from there
+   * and use as source of data for appropriate component.
+   */
   onTeacherDetails(id) {
     this.teachersStorageService.teacherToDisplay = this.mappedTeachers[id];
     this.router.navigate([id], {
@@ -148,6 +152,7 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   }
 
   onEdit(id) {
+    this.teachersStorageService.teacherToDisplay = this.mappedTeachers[id];
     this.router.navigate([id, 'edit'], {
       relativeTo: this.route
     });

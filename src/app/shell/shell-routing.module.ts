@@ -19,7 +19,7 @@ const routes: Routes = [
       {
         path: 'journals',
         canActivate: [TeachersGuard],
-        // canLoad: [TeachersGuard],
+        canLoad: [TeachersGuard],
         loadChildren: '../journal/journal.module#JournalModule'
       },
       {

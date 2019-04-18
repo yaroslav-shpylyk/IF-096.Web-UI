@@ -20,12 +20,10 @@
     </div>
   </div>
 </div>
-<br />
-<mat-divider></mat-divider>
+
+<mat-divider class="details-dialog-divider"></mat-divider>
 
 <mat-accordion *ngIf="teacher">
-<!-- <mat-accordion *ngIf="teacher?.journalData.length > 0"> -->
-<!-- <mat-accordion > -->
   <mat-expansion-panel
     *ngFor="let class of teacher.journalData"
     (opened)="panelOpenState = true"
