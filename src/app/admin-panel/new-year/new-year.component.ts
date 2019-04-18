@@ -20,7 +20,7 @@ export class NewYearComponent implements OnInit {
   public isCurrentYear = true;
   public filterHasResults = false;
   public controlIndexes: number[] = [];
-  panelOpenState = [];
+  public panelOpenState:boolean[] = [];
 
   constructor(
     private newYearTransitition: NewYearService) { }
@@ -35,7 +35,7 @@ export class NewYearComponent implements OnInit {
                 this.controlIndexes.push(i);
                 this.panelOpenState.push(false);
                 const newInput = new FormControl(
-                  {value:  '', disabled: false},
+                  {value: '', disabled: false},
                   [Validators.pattern('^([1-9]|1[0-2])-[А-Я]{1}$'),
                   this.classTitleValidator(this.allClasses, schoolClass.classYear, schoolClass.className)]);
                 (this.transititionForm.controls.newClassTitle as FormArray).push(newInput);
@@ -122,13 +122,13 @@ export class NewYearComponent implements OnInit {
         const skipClass = ((this.transititionForm.controls.skipClassSwitcher as FormArray).controls[controlOrder].value);
         const input = matCard.querySelectorAll('input')[1];
         if (!skipClass) {
-          matCard.classList.add('locked','transited');
-          for (let element of this.allClasses) {
-            if ( element.id === Number(input.id) ){
-              element.isActive=false;
+          matCard.classList.add('locked', 'transited');
+          for (const element of this.allClasses) {
+            if (element.id === Number(input.id)) {
+              element.isActive = false;
             }
           }
-          (this.transititionForm.controls.skipClassSwitcher as FormArray).controls[controlOrder].value=true;
+          (this.transititionForm.controls.skipClassSwitcher as FormArray).controls[controlOrder].value = true;
           formData.push(
             {
               curTitle: input.dataset.classTitle,

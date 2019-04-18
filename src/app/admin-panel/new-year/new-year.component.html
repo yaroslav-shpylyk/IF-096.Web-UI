@@ -1,13 +1,13 @@
 <div class="container">
   <h2>Перехід на новий навчальний рік</h2>
-  <form [formGroup]="transititionForm"  class="component" (ngSubmit)="formSubmit()">
+  <form [formGroup]="transititionForm" class="component" (ngSubmit)="formSubmit()">
     <div>
       <ng-container *ngFor="let item of controlIndexes|classFilter:isActive:isNotEmpty:isCurrentYear:allClasses:newClassTitle.controls:skipClassSwitcher.controls;  let index = index">
         <ng-container *ngIf="item>-1; else emptyFilter">
-          <mat-card [ngClass]="skipClassSwitcher.controls[item].value?'locked':'active'" >
+          <mat-card [ngClass]="skipClassSwitcher.controls[item].value?'locked':'active'">
             <ng-container formArrayName="skipClassSwitcher">
               <label>
-                <input attr.data-order="{{item}}" type="checkbox" [formControlName]="item"  (click)="skipClass(item)">
+                <input attr.data-order="{{item}}" type="checkbox" [formControlName]="item" (click)="skipClass(item)">
                 <i *ngIf="!skipClassSwitcher.controls[item].value" class="material-icons">lock_open</i>
                 <i *ngIf="skipClassSwitcher.controls[item].value" class="material-icons">lock</i>
               </label>
@@ -25,13 +25,13 @@
                 </mat-expansion-panel-header>
                 <ng-template #emptyClass>
                   <mat-panel-description>
-                    Немає учнів
+                    Немає учнів у даному класі
                   </mat-panel-description>
                 </ng-template>
                 <ng-container *ngIf="allClasses[item].numOfStudents>0">
                   <mat-list role="list" *ngFor="let pupil of allClasses[item]['pupilList'] | keyvalue; let i = index">
                     <mat-list-item role="listitem"><span>{{i+1}})</span><a href="students/{{(pupil.value).id}}" target="_blank">{{(pupil.value).lastname}} {{(pupil.value).firstname}}</a></mat-list-item>
-                  </mat-list>  
+                  </mat-list>
                 </ng-container>
               </mat-expansion-panel>
             </mat-accordion>
@@ -79,7 +79,7 @@
       <mat-checkbox [(ngModel)]="isActive" >Активний</mat-checkbox>
       <mat-checkbox [(ngModel)]="isNotEmpty" >З учнями</mat-checkbox>
       <mat-checkbox [(ngModel)]="isCurrentYear" >Поточний рік</mat-checkbox>
-    </div>      
+    </div>
   </div>
   <div class="marks">
     <div class="isactive" *ngIf="isActive">А</div>
