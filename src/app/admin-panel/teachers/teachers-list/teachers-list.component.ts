@@ -65,7 +65,6 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   dataSource;
   mappedTeachers = new Object() as any;
 
-
   displayedColumns: string[] = ['num', 'teacherCard', 'classes', 'subjects'];
 
   @ViewChild(MatSort) sort: MatSort;
@@ -78,41 +77,64 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.addSubscription = this.teachersStorageService.teacherAdded.subscribe(resp => {
-      const newTeacher: any = resp;
-      this.mappedTeachers[newTeacher.id] = newTeacher;
-      this.dataSource = new MatTableDataSource(Object.values(this.mappedTeachers));
-    });
-
-    this.editSubscription = this.teachersStorageService.teacherEdited.subscribe(resp => {
-      const newTeacher: any = resp;
-      Object.assign(this.mappedTeachers[newTeacher.id], newTeacher.obj);
-      this.dataSource = new MatTableDataSource(Object.values(this.mappedTeachers));
-    });
-
-    this.deleteSubscription = this.teachersStorageService.teacherDeleted.subscribe(resp => {
-      const toDelete: any = resp;
-      delete this.mappedTeachers[toDelete];
-      this.dataSource = new MatTableDataSource(Object.values(this.mappedTeachers));
-    });
-
-    this.teachersStorageService.getTeacherS().subscribe(arr => {
-      const data = [];
-      for (const teacher of arr) {
-        data.push(this.teachersStorageService.getTeacherSubjectsClasses2(teacher));
+    this.addSubscription = this.teachersStorageService.teacherAdded.subscribe(
+      resp => {
+        const newTeacher: any = resp;
+        this.mappedTeachers[newTeacher.id] = newTeacher;
+        this.dataSource = new MatTableDataSource(
+          Object.values(this.mappedTeachers)
+        );
       }
+    );
 
-      forkJoin(data).subscribe(datas => {
-        for (const el of datas) {
-          this.mappedTeachers[el.id] = el;
-        }
-        this.teachers = datas;
-        console.log(this.mappedTeachers);
-        this.dataSource = new MatTableDataSource(datas);
-        this.dataSource.sort = this.sort;
-      });
+    this.editSubscription = this.teachersStorageService.teacherEdited.subscribe(
+      resp => {
+        const newTeacher: any = resp;
+        Object.assign(this.mappedTeachers[newTeacher.id], newTeacher.obj);
+        this.dataSource = new MatTableDataSource(
+          Object.values(this.mappedTeachers)
+        );
+      }
+    );
+
+    this.deleteSubscription = this.teachersStorageService.teacherDeleted.subscribe(
+      resp => {
+        const toDelete: any = resp;
+        delete this.mappedTeachers[toDelete];
+        this.dataSource = new MatTableDataSource(
+          Object.values(this.mappedTeachers)
+        );
+      }
+    );
+
+    // this.teachersStorageService.getTeacherS().subscribe(arr => {
+    //   const data = [];
+    //   for (const teacher of arr) {
+    //     data.push(
+    //       this.teachersStorageService.getTeacherSubjectsClasses2(teacher)
+    //     );
+    //   }
+
+    //   forkJoin(data).subscribe(datas => {
+    //     for (const el of datas) {
+    //       this.mappedTeachers[el.id] = el;
+    //     }
+    //     this.teachers = datas;
+    //     console.log(this.mappedTeachers);
+    //     this.dataSource = new MatTableDataSource(datas);
+    //     this.dataSource.sort = this.sort;
+    //   });
+    // });
+
+    this.teachersStorageService.getTeacherS2().subscribe(datas => {
+      for (const el of datas) {
+        this.mappedTeachers[el.id] = el;
+      }
+      this.teachers = datas;
+      console.log(this.mappedTeachers);
+      this.dataSource = new MatTableDataSource(datas);
+      this.dataSource.sort = this.sort;
     });
-
 
     let prevScrollpos = window.pageYOffset;
     window.onscroll = () => {

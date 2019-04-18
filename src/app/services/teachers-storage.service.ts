@@ -58,6 +58,21 @@ export class TeachersStorageService {
     );
   }
 
+  getTeacherS2() {
+    return this.getTeacherS().pipe(
+      mergeMap(teachers => {
+        const data = [];
+        for (const teacher of teachers) {
+          data.push(
+            this.getTeacherSubjectsClasses2(teacher)
+          );
+        }
+
+        return forkJoin(data);
+      })
+    );
+  }
+
   /**
    * Method fetches from the server a single
    * teacher object by provided id.
@@ -83,11 +98,13 @@ export class TeachersStorageService {
   getTeacherAndJournal(id) {
     return this.getTeacher(id).pipe(
       mergeMap(teacher => {
-        return this.getTeacherJournal(id).pipe(map(teacherJournal => {
-          teacher.journalData = teacherJournal;
-          console.log(teacher);
-          return teacher;
-        }));
+        return this.getTeacherJournal(id).pipe(
+          map(teacherJournal => {
+            teacher.journalData = teacherJournal;
+            console.log(teacher);
+            return teacher;
+          })
+        );
       })
     );
   }
