@@ -20,7 +20,7 @@ export class NewYearComponent implements OnInit {
   public isCurrentYear = true;
   public filterHasResults = false;
   public controlIndexes: number[] = [];
-  panelOpenState = [];
+  public panelOpenState:boolean[] = [];
 
   constructor(
     private newYearTransitition: NewYearService) { }
@@ -35,9 +35,9 @@ export class NewYearComponent implements OnInit {
                 this.controlIndexes.push(i);
                 this.panelOpenState.push(false);
                 const newInput = new FormControl(
-                  {value:  '', disabled: false},
+                  {value: '', disabled: false},
                   [Validators.pattern('^([1-9]|1[0-2])-[А-Я]{1}$'),
-                  this.classExistValidator(this.allClasses, schoolClass.classYear)]);
+                  this.classTitleValidator(this.allClasses, schoolClass.classYear, schoolClass.className)]);
                 (this.transititionForm.controls.newClassTitle as FormArray).push(newInput);
                 this.addFormControls();
               }
@@ -65,9 +65,16 @@ export class NewYearComponent implements OnInit {
   get editTitleSwitcher() { return this.transititionForm.get('editTitleSwitcher'); }
   get skipClassSwitcher() { return this.transititionForm.get('skipClassSwitcher'); }
 
-  classExistValidator = (allClasses: ClassInfo[], classYear?: number) => {
+  /**
+   * Title validation for new class
+   * @param allClasses ClassInfo[] - Array of objects with data about classes
+   * @param classYear number - current class year
+   * @param classTitle string - current class title
+   * @returns - return FormControl with validation error or null
+   */
+  classTitleValidator = (allClasses: ClassInfo[], classYear: number, classTitle: string ) => {
     return (control: FormControl) => {
-      if (this.currentClassTitle === control.value) {
+      if (classTitle === control.value) {
         return {title_dublicate: {valid: false}};
       }
       const error = allClasses.some(
@@ -81,20 +88,28 @@ export class NewYearComponent implements OnInit {
     };
   }
 
-  editInput(event, index: number, curTitle: string, id: string) {
+  /**
+   * Makes input with new class title enabled or disabled for editing
+   * @param id string - id of input for new title
+   */
+  editInput(id: string) {
     const input = document.getElementById(id);
     input.classList.toggle('locked');
     if (!input.classList.contains('locked')) { input.focus(); }
   }
 
-  skipClass(event, index: number, id: number) {
-    const classCard = event.target.parentNode.parentNode;
+  /**
+   * Include (exclude) class to (from) request
+   * @param id number - index of element from form control
+   */
+  skipClass(index: number) {
     const input = (this.transititionForm.controls.newClassTitle as FormArray).controls[index];
-    const name = (this.transititionForm.controls.newClassTitle as FormArray).controls[index].value;
-    if (!classCard.classList.contains('locked')) {
-      input.reset({ value: name, disabled: true });
+    const classSkiped = (this.transititionForm.controls.skipClassSwitcher as FormArray).controls[index].value;
+    const newTitle = input.value;
+    if (!classSkiped) {
+      input.reset({ value: newTitle, disabled: true });
     } else {
-      input.reset({ value: name, disabled: false });
+      input.reset({ value: newTitle, disabled: false });
     }
   }
 
@@ -107,6 +122,13 @@ export class NewYearComponent implements OnInit {
         const skipClass = ((this.transititionForm.controls.skipClassSwitcher as FormArray).controls[controlOrder].value);
         const input = matCard.querySelectorAll('input')[1];
         if (!skipClass) {
+          matCard.classList.add('locked', 'transited');
+          for (const element of this.allClasses) {
+            if (element.id === Number(input.id)) {
+              element.isActive = false;
+            }
+          }
+          (this.transititionForm.controls.skipClassSwitcher as FormArray).controls[controlOrder].value = true;
           formData.push(
             {
               curTitle: input.dataset.classTitle,
