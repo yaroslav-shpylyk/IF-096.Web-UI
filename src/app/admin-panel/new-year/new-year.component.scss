@@ -118,7 +118,6 @@ mat-list-item {
 
 .validation-error {
   position: absolute;
-  z-index: 2;
   bottom: -8px;
   right: 10px;
   color:red;
@@ -220,7 +219,6 @@ label {
     width: 20px;
     height: 20px;
     color: white;
-    font-weight: 800;
     margin: 5px;
     -webkit-box-shadow: -1px 1px 3px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: -1px 1px 3px 0px rgba(0,0,0,0.75);

@@ -37,7 +37,7 @@ export class NewYearComponent implements OnInit {
                 const newInput = new FormControl(
                   {value:  '', disabled: false},
                   [Validators.pattern('^([1-9]|1[0-2])-[А-Я]{1}$'),
-                  this.classExistValidator(this.allClasses, schoolClass.classYear)]);
+                  this.classTitleValidator(this.allClasses, schoolClass.classYear, schoolClass.className)]);
                 (this.transititionForm.controls.newClassTitle as FormArray).push(newInput);
                 this.addFormControls();
               }
@@ -65,9 +65,16 @@ export class NewYearComponent implements OnInit {
   get editTitleSwitcher() { return this.transititionForm.get('editTitleSwitcher'); }
   get skipClassSwitcher() { return this.transititionForm.get('skipClassSwitcher'); }
 
-  classExistValidator = (allClasses: ClassInfo[], classYear?: number) => {
+    /**
+   * Title validation for new class
+   * @param allClasses ClassInfo[] - Array of objects with data about classes
+   * @param classYear number - current class year
+   * @param classTitle string - current class title
+   * @returns - return FormControl with validation error or null
+   */
+  classTitleValidator = (allClasses: ClassInfo[], classYear: number, classTitle: string ) => {
     return (control: FormControl) => {
-      if (this.currentClassTitle === control.value) {
+      if (classTitle === control.value) {
         return {title_dublicate: {valid: false}};
       }
       const error = allClasses.some(
