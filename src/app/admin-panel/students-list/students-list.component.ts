@@ -35,6 +35,10 @@ export class StudentsListComponent implements OnInit {
     this.initStudentList();
   }
 
+  /**
+   * Method init student list, sort and refresh student in table
+   */
+
   initStudentList(): void {
     this.studentsService.getSubject().subscribe((res: Array<Student>) => {
       this.dataSource = new MatTableDataSource(res);
@@ -44,7 +48,6 @@ export class StudentsListComponent implements OnInit {
 
   /**
    * Method return students list from one class
-   * @returns - array with students in class
    */
 
   onSelectionClass($event): void {

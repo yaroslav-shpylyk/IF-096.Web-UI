@@ -47,7 +47,7 @@ export class AddStudentComponent implements OnInit {
     private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.classService.getClasses('all').subscribe((res: Array<ClassInfo>) => {
+    this.classService.getClasses('active').subscribe((res: Array<ClassInfo>) => {
       this.allClasses = res;
       this.initStudentData();
     });
@@ -78,7 +78,7 @@ export class AddStudentComponent implements OnInit {
    * Method type form (add mode or edit), submit form and sent data to server
    */
 
-  onSubmit(data): void {
+  onSubmit(data: any): void {
     if (typeof (data.dateOfBirth) !== 'string') {
       data.dateOfBirth = data.dateOfBirth.toLocaleDateString().split('.').reverse().join('-');
     }
