@@ -12,6 +12,8 @@ import { FullscreenOverlayContainer } from '@angular/cdk/overlay';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditDialogEntryComponent } from './teachers/teachers-list/edit-dialog/edit-dialog';
 import { SubjectsComponent } from './subjects/subjects.component';
+import { NewYearComponent } from './new-year/new-year.component';
+import { TeacherConnectionComponent } from './teacher-connection/teacher-connection.component';
 
 const routes: Routes = [
   {
@@ -55,6 +57,10 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'new-year-transition',
+        component: NewYearComponent
+      },
+      {
         path: '',
         component: DashboardComponent
       },
@@ -63,11 +69,22 @@ const routes: Routes = [
         component: SubjectsComponent
       }
     ]
+  },
+  {
+    path: '',
+    component: AdminPanelComponent,
+    children: [
+      {
+        path: 'teacher-connection',
+        component: TeacherConnectionComponent
+      },
+    ]
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
+
 })
 export class AdminPanelRoutingModule { }

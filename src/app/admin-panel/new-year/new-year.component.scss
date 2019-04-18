@@ -1,0 +1,247 @@
+@import "../../../styles.scss";
+
+mat-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 2px;
+  padding: 10px 5px;
+  position: relative;
+  @media (min-width: 768px) { padding: 15px; }
+
+  input {
+    width: 70%;
+    height: 35px;
+    position: relative;
+    font-size: 1em;
+    @media (min-width: 481px) and (max-width: 767px) { font-size: 0.55em; }
+    @media (min-width: 768px) { font-size: 0.8em; }
+  }
+  
+  input[type="checkbox"] {
+    display:none;
+  }
+
+  label {
+    display: block;
+    width: 24px;
+    height: 48px;
+    font-size: 2em;
+    margin: 2px;
+    cursor: pointer;
+  }
+
+  .doted-marks {
+    position: absolute;
+    display: flex;
+    right: 5px;
+    top: 5px;
+    div{
+      width: 5px;
+      height: 5px;
+      margin: 1px;
+      border: 1px solid black;
+    }
+  }
+}
+
+mat-card.locked.transited, mat-card.locked:hover.transited {
+  background-color: #5fb663;
+  cursor: default;
+  pointer-events: none;
+}
+
+mat-card.locked, mat-card.locked:hover {
+  background-color: grey;
+  mat-accordion, .class-title, .edit_title {
+    cursor: default;
+    pointer-events: none;
+  }
+  .mat-expansion-panel-header-description {
+    color: #545454;
+  }  
+}
+
+input.locked {
+  cursor: default;
+  pointer-events: none;
+  color: rgb(84, 84, 84);
+  background-color: rgb(235, 235, 228);
+}
+
+
+mat-card:hover {
+  background-color: #00000024;
+  .mat-expansion-panel-header-description {
+    color: #000e5a;
+  }
+}
+
+mat-panel-title {
+  flex-direction: column;
+  align-items: center;
+  min-width: 40px;
+}
+
+mat-expansion-panel-header {
+  padding: 0 10px;
+  mat-panel-description.mat-expansion-panel-header-description { align-items: center; }
+  mat-panel-description {
+    display: none;
+    @media (min-width: 481px) { display: block; }
+  }
+}
+
+::ng-deep div.mat-expansion-panel-body { padding: 0 5px 16px; }
+
+mat-list:nth-of-type(2n+1) {
+  background-color: #e8e8e891;
+}
+
+mat-list-item {
+  a {
+    color: #404040;
+    text-decoration: none;
+  }
+
+  span { 
+    display: inline-block;
+    padding: 0 5px;
+  }
+}
+
+::ng-deep mat-list.mat-list-base mat-list-item.mat-list-item { height: 30px; }
+::ng-deep .mat-list-base .mat-list-item div.mat-list-item-content {
+  padding: 0px;
+  font-size: 0.75em;
+}
+
+.className { font-weight: 800; }
+
+.new-class-name {
+  padding-left: 5px;
+  overflow: hidden;
+}
+
+.validation-error {
+  position: absolute;
+  bottom: -9px;
+  right: 10px;
+  color:red;
+  p { font-size: 0.5em; }
+}
+
+.submit {
+  display: block;
+  background: $main-color;
+  color: #fff;
+  width: 200px;
+  height: 50px;
+  margin: 10px auto;
+  font-size: 1em;
+}
+
+.container{
+  text-align: center;
+  margin: 20px auto;
+  h2 { font-size: 1.5em; }
+  @media (min-width: 481px) and (max-width: 767px) { width: 80%; }
+  @media (min-width: 768px) { width: 70%; }
+}
+
+::ng-deep .mat-expansion-panel-content { min-width: 135px; }
+
+@media (min-width: 481px) {
+  ::ng-deep div.mat-expansion-panel-body { padding: 0 24px 16px; }
+  ::ng-deep mat-list.mat-list-base mat-list-item.mat-list-item { height: 48px; }
+  ::ng-deep .mat-list-base .mat-list-item div.mat-list-item-content{
+    padding: 0 16px;
+    font-size: 1em;
+  }
+}
+
+/*Toggle stripe*/
+
+input[type=checkbox] {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  z-index: 3;
+}
+
+label {
+  display: block;
+  width: 48px;
+  height: 48px;
+  font-size: 2em;
+  margin: 10px 0 10px 0;
+  cursor: pointer;
+  i.active{color: white}
+}
+
+.toggle-stripe {
+  width: 250px;
+  height: 60px;
+  right: -210px;
+  color: white;
+  text-align: center;
+  padding: 5px;
+  position: fixed;
+  top: 130px;
+  z-index:2;
+  transition: right 0.5s ease;
+  
+  div.wrap {
+    position: relative;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: 100%;
+    padding: 0px 10px;
+    background-color: #1565c0;
+    border-radius: 30px 0px 0px 30px;
+
+    .checkbox-group {
+      height: 100%;
+      font-size: 0.75em;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      mat-checkbox{
+        padding: 5px;
+      }
+    }
+  }
+}
+
+.marks {
+  position: absolute;
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0.25s linear, opacity 2s linear;
+  left: 20px;
+  float: right;
+  div {
+    width: 20px;
+    height: 20px;
+    color: white;
+    margin: 5px;
+    -webkit-box-shadow: -1px 1px 3px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 1px 3px 0px rgba(0,0,0,0.75);
+    box-shadow: -1px 1px 3px 0px rgba(0,0,0,0.75);
+  }
+}
+
+input[type=checkbox]:checked ~ .toggle-stripe {
+  .marks {
+    position: initial;
+    visibility: hidden;
+    opacity: 0;
+  }
+  right: -5px;
+}
+
+.isactive { background-color: rgba(232, 50, 26, 0.75); }
+.pupils { background-color: rgba(215, 26, 232, 0.75); }
+.year { background-color: rgba(100, 228, 68, 0.75) }

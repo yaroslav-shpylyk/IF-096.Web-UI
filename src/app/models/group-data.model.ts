@@ -5,7 +5,7 @@ export class Group {
   classDescription: string;
   isActive: boolean;
   numOfStudents: number;
-  constructor(fields: any) {
+  constructor(fields: object) {
     Object.assign(this, fields);
   }
 }
