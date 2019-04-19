@@ -87,7 +87,8 @@ export class DialogEntryComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DetailsDialogOverviewComponent, {
-      width: '400px'
+      width: '400px',
+      panelClass: 'teacher-details-dialog'
     });
     dialogRef.afterClosed().subscribe(() => {
       this.router.navigate(['../'], {
