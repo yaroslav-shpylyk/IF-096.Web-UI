@@ -118,17 +118,14 @@ export class DashboardComponent implements OnInit {
     const controls = form.controls;
     const values = form.value;
     if (controls.graphType.errors || controls.classes.errors) {
+      const controlKeys = Object.keys(controls);
+      controlKeys.forEach(key => controls[key].markAsTouched());
       return;
     }
     this.classService.getClassesByStream(values.classes)
       .subscribe((result: ClassesFromStream) => {
         this.chartType = values.graphType;
         this.updateChart(result);
-        this.chartOptions.resetForm();
-        this.streamClasses.reset({
-          classes: '',
-          graphType: 'bar'
-        });
     });
   }
 
