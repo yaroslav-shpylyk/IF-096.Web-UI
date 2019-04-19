@@ -1,7 +1,6 @@
-import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MatSnackBarConfig } from '@angular/material';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
 import {
@@ -14,19 +13,16 @@ import {
 import { MatSnackBar } from '@angular/material';
 import { TeacherData } from 'src/app/models/teacher-data';
 
-
-
 @Component({
   selector: 'app-edit-dialog-overview',
   templateUrl: './edit-dialog.html',
   styleUrls: ['./edit-dialog.scss']
 })
-export class EditDialogOverviewComponent implements OnInit, OnDestroy {
+export class EditDialogOverviewComponent implements OnInit {
   teacher: TeacherData;
-  subscription: Subscription;
   teacherForm: FormGroup;
   editMode: boolean;
-  ava;
+  ava: string;
 
   constructor(
     public dialogRef: MatDialogRef<EditDialogOverviewComponent>,
@@ -35,38 +31,44 @@ export class EditDialogOverviewComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     public snackBar: MatSnackBar
-  ) { }
+  ) {}
 
+  /**
+   * Right at the begining it has to be defined the mode we're in. Depending
+   * on that the teacher object is fetched/not fetched and initialized form method.
+   */
   ngOnInit() {
     this.editMode = this.teachersStorageService.editMode;
     if (this.editMode) {
-      this.teachersStorageService
-        .getTeacher(this.teachersStorageService.modalsId)
-        .subscribe(
-          teacher => {
-            this.teacher = teacher;
-            this.initForm();
-            return;
-          },
-          error => {
-            console.log(error);
-            this.openSnackBar(
-              `На сервері відбулась помилка`,
-              'snack-class-fail'
-            );
-          }
-        );
+      this.teacher = this.teachersStorageService.teacherToDisplay;
+      this.teachersStorageService.teacherToDisplay = null;
+      if (!this.teacher) {
+        this.teachersStorageService
+          .getTeacher(this.teachersStorageService.modalsId)
+          .subscribe(
+            teacher => {
+              this.teacher = teacher;
+              this.initForm();
+              return;
+            },
+            error => {
+              console.log(error);
+              this.openSnackBar(
+                `На сервері відбулась помилка`,
+                'snack-class-fail'
+              );
+            }
+          );
+      }
       this.initForm();
     }
     this.initForm();
   }
 
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
-
+  /**
+   * No matter current mode the set of variables for form
+   * fields are declared being empty strings.
+   */
   private initForm() {
     let teacherFirstname = '';
     let teacherLastname = '';
@@ -76,6 +78,10 @@ export class EditDialogOverviewComponent implements OnInit, OnDestroy {
     let teacherPhone = '';
     let teacherLogin = '';
 
+    /**
+     * If it's edit mode - values are taken from already fetched object.
+     * Otherwise the fields persist empty as they are.
+     */
     if (this.teacher) {
       teacherFirstname = this.teacher.firstname;
       teacherLastname = this.teacher.lastname;
@@ -86,6 +92,10 @@ export class EditDialogOverviewComponent implements OnInit, OnDestroy {
       teacherLogin = this.teacher.login;
     }
 
+    /**
+     * Form group with vilidation configuration is created accordingly
+     * in accordance to the values of above mentioned variables.
+     */
     this.teacherForm = this.formBuilder.group(
       {
         teacherFirstname: [teacherFirstname, validConfig],
@@ -109,6 +119,10 @@ export class EditDialogOverviewComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Once the form is about to be submitted the new values are gathered in
+   * newValues viriable and slightly transformed to fit the server's format needs.
+   */
   onSubmit() {
     const newValues = {
       avatar: this.editMode ? this.teacher.avatar : this.ava,
@@ -127,7 +141,7 @@ export class EditDialogOverviewComponent implements OnInit, OnDestroy {
     };
     if (!this.editMode) {
       this.teachersStorageService.addTeacher(newValues).subscribe(
-        () => {
+        res => {
           this.teachersStorageService.getTeachers();
           this.openSnackBar(
             `Викладач ${newValues.lastname} ${newValues.lastname} створений`,
@@ -143,8 +157,17 @@ export class EditDialogOverviewComponent implements OnInit, OnDestroy {
       this.teachersStorageService
         .updateTeacher(this.teachersStorageService.modalsId, newValues)
         .subscribe(
-          () => {
-            this.teachersStorageService.getTeachers();
+          res => {
+            res.dateOfBirth = res.dateOfBirth
+              .split('-')
+              .reverse()
+              .join('.');
+            const id = this.teachersStorageService.modalsId;
+            res.id = id;
+            this.teachersStorageService.teacherEdited.next({
+              id,
+              obj: res
+            });
             this.openSnackBar(`Нові дані внесено`, 'snack-class-success');
           },
           error => {
@@ -195,15 +218,16 @@ export class EditDialogOverviewComponent implements OnInit, OnDestroy {
   }
 }
 
+/**
+ * Dummy component for the path ':id/edit' and 'new' that manages opening,
+ * closing, and passing data to the dialog. When the dummy component gets
+ * initialized on ‘:id/edit’ or 'new' navigation, it will open the dialog.
+ */
 @Injectable()
 @Component({
   template: ''
 })
-export class EditDialogEntryComponent implements OnInit, OnDestroy {
-  teacher;
-  id: number;
-  subscription: Subscription;
-
+export class EditDialogEntryComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private router: Router,
@@ -213,18 +237,17 @@ export class EditDialogEntryComponent implements OnInit, OnDestroy {
     this.openDialog();
   }
 
+  /**
+   * As OverviewComponent component doesn’t have direct access to the
+   * activated route its parameter 'id'/'new' is taken from current component
+   * and passed along using a service.
+   * So that OverviewComponent knows id of a teacher to work with and mode it is in.
+   */
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.id = +params.id;
       this.teachersStorageService.editMode = params.id != null;
-      this.teachersStorageService.modalsId = this.id;
+      this.teachersStorageService.modalsId = +params.id;
     });
-  }
-
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 
   openDialog(): void {

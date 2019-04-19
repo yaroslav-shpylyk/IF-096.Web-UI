@@ -1,0 +1,29 @@
+$icon-color: rgb(118, 118, 168);
+
+fieldset {
+    padding-bottom: 0.5em;
+}
+.daily-schedule {
+    display: flex;
+    flex-wrap: wrap;
+}
+.select-subject {
+    margin: 0 0.5em;
+    width: 35%;
+}
+mat-icon {
+    color: $icon-color;
+}
+.invisible {
+    display: none;
+}
+
+/* Screen = B/w 320px to 479px */
+@media (min-width: 320px) and (max-width: 480px) {
+    .daily-schedule {
+        flex-direction: column;
+    }
+    .select-subject {
+        width: 80%;
+    }
+}

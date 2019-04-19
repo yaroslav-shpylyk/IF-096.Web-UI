@@ -1,0 +1,39 @@
+<div [formGroup] = "frmDailySchedule">
+  <fieldset  formArrayName="dailySchedule">
+    <legend>{{legendDay}}</legend>
+    <div *ngFor="let lesson of dailySchedule.controls; let lessonNumber=index"
+     class="daily-schedule">
+      <span>{{ lessonNumber + 1 }}. </span>
+
+      <mat-form-field class="select-subject">
+        <mat-select [formControl]="lesson.controls.firstGroup"
+         [placeholder]="selectSubjectMsg"
+         (selectionChange)="addSubjest(lessonNumber)">
+          <mat-option *ngFor="let subj of arrSubjectsList" [value]="subj">
+            {{ subj.subjectName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="select-subject"
+       [ngClass]="{invisible: lesson.controls.secondGroup.disabled}">
+        <mat-select [formControl]="lesson.controls.secondGroup"
+         [placeholder]="selectSubjectMsg">
+          <mat-option *ngFor="let subj of arrSubjectsList" [value]="subj">
+            {{ subj.subjectName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div>
+        <button mat-icon-button type="button" (click)="addSecondGroup(lessonNumber)">
+          <mat-icon>add_box</mat-icon>
+        </button>
+
+        <button mat-icon-button type="button" (click)="removeSubjest(lessonNumber)">
+            <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </fieldset>
+</div>

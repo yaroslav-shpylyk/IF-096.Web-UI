@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
@@ -22,6 +21,9 @@ import {
   MatSnackBarModule,
   MatMenuModule,
   MatDividerModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatSelectModule,
   MatSortModule,
   MatTableModule
 } from '@angular/material';
@@ -37,6 +39,8 @@ import {
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatCheckboxModule,
     MatCardModule,
     MatDialogModule,
@@ -62,6 +66,8 @@ import {
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatCheckboxModule,
     MatCardModule,
     MatDialogModule,

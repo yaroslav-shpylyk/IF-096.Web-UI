@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { DialogEntryComponent } from './teachers/teachers-list/details-dialog/details-dialog-overview';
 import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
+import { ScheduleComponent } from './schedule/schedule.component';
+
 import { StudentsListComponent } from './students-list/students-list.component';
 import { GroupsComponent } from './admin-panel/groups/groups.component';
 import { StudentDatailsComponent } from './students-list/student-detail-modal/student-detail-modal.component';
@@ -13,6 +15,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditDialogEntryComponent } from './teachers/teachers-list/edit-dialog/edit-dialog';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { NewYearComponent } from './new-year/new-year.component';
+import { TeacherConnectionComponent } from './teacher-connection/teacher-connection.component';
 
 const routes: Routes = [
   {
@@ -64,9 +67,23 @@ const routes: Routes = [
         component: DashboardComponent
       },
       {
+        path: 'schedule',
+        component: ScheduleComponent
+      },
+      {
         path: 'subjects',
         component: SubjectsComponent
       }
+    ]
+  },
+  {
+    path: '',
+    component: AdminPanelComponent,
+    children: [
+      {
+        path: 'teacher-connection',
+        component: TeacherConnectionComponent
+      },
     ]
   }
 ];
