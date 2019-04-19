@@ -34,7 +34,7 @@ export class ConfirmationDialogComponent {
         this.dialogRef.close();
         this.openSnackBar(
           `Викладач ${response.lastname} ${response.firstname} видалений`,
-          'snack-class-success'
+          'snack-class-success-teacher'
         );
       });
   }
