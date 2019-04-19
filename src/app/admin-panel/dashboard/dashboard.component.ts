@@ -27,9 +27,9 @@ export class DashboardComponent implements OnInit {
     teachers: 0
   };
   public graphTypes = {
-    bar: 'Лінійний',
-    pie: 'Пиріг',
-    doughnut: 'Бублик',
+    bar: 'Стовпчикова',
+    pie: 'Секторна',
+    doughnut: 'Кільцева',
   };
   public objectKeys = Object.keys;
   public numberOfClasses = new Array(12).fill('');
