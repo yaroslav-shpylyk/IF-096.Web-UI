@@ -1,4 +1,4 @@
 <div class="avatar" #avatarComponent>
   <ng-template [ngIf]="name">{{abbreviation}}</ng-template>
-  <ng-template [ngIf]="!name"><mat-icon>person_outline</mat-icon></ng-template>
+  <ng-template [ngIf]="name === undefined && avatar === undefined"><mat-icon>person_outline</mat-icon></ng-template>
 </div>
