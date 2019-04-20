@@ -55,7 +55,7 @@ export class EditDialogOverviewComponent implements OnInit {
               console.log(error);
               this.openSnackBar(
                 `На сервері відбулась помилка`,
-                'snack-class-fail'
+                'snack-class-fail-teacher'
               );
             }
           );
@@ -145,12 +145,12 @@ export class EditDialogOverviewComponent implements OnInit {
           this.teachersStorageService.getTeachers();
           this.openSnackBar(
             `Викладач ${newValues.lastname} ${newValues.lastname} створений`,
-            'snack-class-success'
+            'snack-class-success-teacher'
           );
         },
         error => {
           console.log(error);
-          this.openSnackBar(`На сервері відбулась помилка`, 'snack-class-fail');
+          this.openSnackBar(`На сервері відбулась помилка`, 'snack-class-fail-teacher');
         }
       );
     } else {
@@ -168,13 +168,13 @@ export class EditDialogOverviewComponent implements OnInit {
               id,
               obj: res
             });
-            this.openSnackBar(`Нові дані внесено`, 'snack-class-success');
+            this.openSnackBar(`Нові дані внесено`, 'snack-class-success-teacher');
           },
           error => {
             console.log(error);
             this.openSnackBar(
               `На сервері відбулась помилка`,
-              'snack-class-fail'
+              'snack-class-fail-teacher'
             );
           }
         );
@@ -252,7 +252,8 @@ export class EditDialogEntryComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(EditDialogOverviewComponent, {
-      maxWidth: '90vw'
+      maxWidth: '90vw',
+      panelClass: 'teacher-edit-dialog'
     });
     dialogRef.afterClosed().subscribe(() => {
       this.router.navigate(['/admin-panel', 'teachers'], {
