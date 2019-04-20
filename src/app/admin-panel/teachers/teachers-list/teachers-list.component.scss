@@ -31,16 +31,10 @@ span.lastname {
   margin: auto 0 auto auto;
 }
 
-img {
-  height: 44px;
-  width: 44px;
-  border-radius: 50%;
-  padding: 0.3em;
-  margin-right: 1em;
-}
-
 .block-info-avatar {
   display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .block-info-avatar:hover {
