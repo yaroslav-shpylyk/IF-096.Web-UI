@@ -35,8 +35,12 @@
 
 span.lastname {
   display: block;
-  font-size: 1.4em;
+  font-size: 1.2em;
   margin-top: 0.3em;
+}
+
+span.first-patr {
+  margin-bottom: 0.2em;
 }
 
 .block-button-section {
@@ -84,6 +88,10 @@ mat-icon:hover {
   .cdk-column-num {
     padding-left: 1em !important;
   }
+}
+
+table {
+  width: 100%;
 }
 
 @media only screen and (min-width: 600px) {
