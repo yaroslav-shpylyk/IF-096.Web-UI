@@ -23,10 +23,40 @@ th.mat-sort-header-sorted {
 
 .mat-form-field {
   font-size: 1.2em;
-  width: 90%;
+  width: 95%;
   padding-left: 0.5em;
 }
 
 .filterBlok {
-  background-color: white;
+  width: 95%;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media only screen and (min-width: 600px) {
+  table,
+  mat-accordion {
+    width: 65vw !important;
+  }
+
+  .filterBlok {
+    width: 65%;
+  }
+}
+
+mat-accordion {
+  width: 100%;
+}
+
+mat-expansion-panel,
+mat-accordion {
+  margin-top: 0.7em;
+}
+
+::ng-deep .groups-mat-exp-pnl .mat-expansion-panel-body {
+  padding: 0;
 }

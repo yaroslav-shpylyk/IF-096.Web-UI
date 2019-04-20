@@ -1,7 +1,5 @@
 mat-accordion {
   width: 100%;
-  min-width: 17em;
-  max-width: 45em;
 }
 
 h2 {
@@ -12,10 +10,6 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.wrapper {
-  margin: 1em;
 }
 
 .mat-expansion-panel {
@@ -46,12 +40,23 @@ table {
   width: 100%;
 }
 
-::ng-deep .wrapper {
+::ng-deep #class-journal-wrapper {
   .mat-form-field-wrapper {
     width: 90%;
   }
 
   & .journal-divider {
     margin-top: 1em !important;
+  }
+
+  & .mat-form-field-wrapper {
+    width: 95% !important;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  table,
+  mat-accordion {
+    width: 65vw !important;
   }
 }

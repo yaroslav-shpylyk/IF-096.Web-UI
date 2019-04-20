@@ -61,3 +61,19 @@
     right: 1.2em;
   }
 }
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media only screen and (min-width: 600px) {
+  table {
+    width: 65vw !important;
+  }
+}
+
+mat-form-field {
+  width: 95%;
+}
