@@ -43,23 +43,7 @@
               </span>
             </div>
           </div>
-
-          <div class="block-button-section">
-            <button
-              class="teacher-button"
-              id="menu-trigger"
-              mat-icon-button
-              #menuTrigger="matMenuTrigger"
-              [matMenuTriggerFor]="menu"
-            >
-              <mat-icon>more_vert</mat-icon>
-            </button>
-          </div>
         </div>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="onEdit(element.id)">Редагувати</button>
-          <button mat-menu-item (click)="onDelete(element)">Видалити</button>
-        </mat-menu>
       </td>
     </ng-container>
 
@@ -74,6 +58,28 @@
       <th mat-sort-header mat-header-cell *matHeaderCellDef>Дисципліни</th>
       <td mat-cell *matCellDef="let element">
         {{ element.subjects?.join(', ') }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dots">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <div class="block-button-section">
+          <button
+            class="teacher-button"
+            id="menu-trigger"
+            mat-icon-button
+            #menuTrigger="matMenuTrigger"
+            [matMenuTriggerFor]="menu"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </div>
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="onEdit(element.id)">Редагувати</button>
+          <button mat-menu-item (click)="onDelete(element)">Видалити</button>
+        </mat-menu>
       </td>
     </ng-container>
 

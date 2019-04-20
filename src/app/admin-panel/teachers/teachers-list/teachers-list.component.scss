@@ -109,3 +109,12 @@ mat-form-field {
   flex-direction: column;
   align-items: center;
 }
+
+.cdk-column-classes  {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.cdk-column-dots  {
+  padding-right: 0.4em !important;
+}

@@ -64,7 +64,7 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   dataSource;
   mappedTeachers = new Object() as any;
 
-  displayedColumns: string[] = ['num', 'teacherCard', 'classes', 'subjects'];
+  displayedColumns: string[] = ['num', 'teacherCard', 'classes', 'subjects', 'dots'];
 
   @ViewChild(MatSort) sort: MatSort;
 
