@@ -21,8 +21,6 @@ export class AvatarComponent implements OnInit, OnChanges {
     changesKeys.forEach(variable => {
       this[variable] = changes[variable].currentValue;
     });
-    console.log(this.firstName);
-    console.log(this.lastName);
     this.createAvatar();
   }
 
@@ -48,11 +46,11 @@ export class AvatarComponent implements OnInit, OnChanges {
    */
   private generateAbbreviation(): string {
     const words = [this.firstName, this.lastName];
-    return words.length > 1 ?
+    return words.every(word => this.checkValue(word)) ?
       words
         .map(word => word.slice(0, 1).toUpperCase())
         .join('') :
-      words[0].slice(0, 2).toUpperCase();
+      '';
   }
 
   /**

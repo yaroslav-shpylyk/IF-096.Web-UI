@@ -79,7 +79,6 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     this.addSubscription = this.teachersStorageService.teacherAdded.subscribe(
       resp => {
         const newTeacher: any = resp;
-        console.log(resp);
         this.mappedTeachers[newTeacher.id] = newTeacher;
         this.dataSource = new MatTableDataSource(
           Object.values(this.mappedTeachers)
@@ -95,7 +94,6 @@ export class TeachersListComponent implements OnInit, OnDestroy {
         this.dataSource = new MatTableDataSource(
           Object.values(this.mappedTeachers)
         );
-        console.log(this.mappedTeachers);
         this.dataSource.sort = this.sort;
       }
     );
@@ -123,7 +121,6 @@ export class TeachersListComponent implements OnInit, OnDestroy {
       }
       this.dataSource = new MatTableDataSource(teachers);
       this.dataSource.sort = this.sort;
-      console.log(this.mappedTeachers);
     });
 
     let prevScrollpos = window.pageYOffset;
