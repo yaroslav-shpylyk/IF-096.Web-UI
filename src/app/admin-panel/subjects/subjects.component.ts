@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SubjectService } from 'src/app/services/subject.service';
 import { SubjectData } from 'src/app/models/subject-data';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSort } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { ModifySubjectsComponent } from './modify-subjects/modify-subjects.component';
 
@@ -15,6 +15,7 @@ export class SubjectsComponent implements OnInit {
   public subjects: SubjectData[];
   public displayedColumns: string[] = ['subjectName', 'subjectDescription', 'edit'];
   public dataSource: MatTableDataSource<SubjectData>;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(public subjectService: SubjectService,
               public dialog: MatDialog) { }
@@ -30,6 +31,7 @@ export class SubjectsComponent implements OnInit {
     this.subjectService.getSubjects().subscribe(result => {
       this.subjects = result;
       this.dataSource = new MatTableDataSource(this.subjects);
+      this.dataSource.sort = this.sort;
     });
   }
 
