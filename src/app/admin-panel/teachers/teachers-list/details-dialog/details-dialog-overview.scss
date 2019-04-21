@@ -1,36 +1,42 @@
-::ng-deep .mat-dialog-container .avatar {
-  display: flex;
-  justify-content: center;
-}
+::ng-deep {
+  .mat-dialog-container .avatar {
+    display: flex;
+    justify-content: center;
+  }
 
-::ng-deep .mat-dialog-container h3 {
-  text-align: center;
-  line-height: 0.6em;
-}
+  & .mat-dialog-container h3 {
+    text-align: center;
+    line-height: 0.6em;
+  }
 
-::ng-deep .mat-dialog-container h2 {
-  text-align: center;
-}
+  & .mat-dialog-container h2 {
+    text-align: center;
+  }
 
-::ng-deep .mat-dialog-container img {
-  border-radius: 6.25em;
-  padding: 0.2em;
-  border: 0.2em solid rgb(63, 81, 181);
-  overflow: hidden;
-  height: 9.375em;
-  width: 9.375em;
-  position: relative;
-  margin: auto;
-}
+  & .mat-dialog-container img {
+    border-radius: 6.25em;
+    padding: 0.2em;
+    border: 0.2em solid rgb(63, 81, 181);
+    overflow: hidden;
+    height: 9.375em;
+    width: 9.375em;
+    position: relative;
+    margin: auto;
+  }
 
-::ng-deep mat-dialog-container {
-  display: flex !important;
-  height: inherit !important;
-  margin: 0.5em;
-}
+  & mat-dialog-container {
+    display: flex !important;
+    height: inherit !important;
+    margin: 0.5em;
+  }
 
-::ng-deep app-dialog-overview {
-  margin: auto !important;
+  & app-dialog-overview {
+    margin: auto !important;
+  }
+
+  & .details-dialog-divider {
+    margin: 0.5em 0 1em;
+  }
 }
 
 #not-assigned {
