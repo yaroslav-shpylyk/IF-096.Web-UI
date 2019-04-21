@@ -1,7 +1,9 @@
 <div>
   <div *ngIf="teacher">
     <div class="avatar">
-      <app-avatar [avatar]="teacher.avatar" [name]="teacher.firstname + ' ' + teacher.lastname"></app-avatar>
+      <app-avatar [avatar]="teacher.avatar"
+                  [firstName]="teacher.firstname"
+                  [lastName]="teacher.lastname"></app-avatar>
     </div>
     <h2>{{ teacher.lastname + ' ' + teacher.firstname }}</h2>
     <h3>{{ teacher.patronymic }}</h3>
