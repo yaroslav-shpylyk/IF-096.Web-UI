@@ -12,6 +12,7 @@ import {
   validLogin
 } from '../validator';
 import { MatSnackBar } from '@angular/material';
+import {BehaviorSubject} from 'rxjs';
 
 
 @Component({
@@ -20,7 +21,6 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./add-student.component.scss']
 })
 export class AddStudentComponent implements OnInit {
-
   allClasses: Array<ClassInfo>;
   avatar: any = '';
   startDate: Date = new Date(2010, 0, 1);
@@ -67,13 +67,6 @@ export class AddStudentComponent implements OnInit {
     this.initStudentData();
   }
 
-
-  checkAvatar(img): any {
-    if (img) {
-      return img;
-    } else { return this.avatar; }
-  }
-
   /**
    * Method type form (add mode or edit), submit form and sent data to server
    */
@@ -118,7 +111,7 @@ export class AddStudentComponent implements OnInit {
 
   private editStudentForm(student: Student): void {
     this.addStudent = this.fb.group({
-      avatar: [this.checkAvatar(student.avatar)],
+      avatar: [student.avatar],
       dateOfBirth: [student.dateOfBirth],
       email: [student.email],
       firstname: [student.firstname, validText],
