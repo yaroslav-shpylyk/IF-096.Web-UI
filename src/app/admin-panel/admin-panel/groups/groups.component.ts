@@ -85,6 +85,7 @@ export class GroupsComponent implements OnInit {
   refreshGroups() {
     this.groupServices.getGroups().subscribe(data => {
       this.groups = data;
+      this.groups.sort((a, b) => parseInt(a.className, 10) - parseInt(b.className, 10));
       this.matTableFilter();
     });
   }
