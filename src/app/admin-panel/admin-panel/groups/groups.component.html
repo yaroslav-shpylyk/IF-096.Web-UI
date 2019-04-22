@@ -11,23 +11,31 @@
 <table  mat-table [dataSource]="dataSourceActivClass" matSort class="mat-elevation-z8">
 
   <ng-container matColumnDef="className">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Назва класу </th>
-    <td mat-cell *matCellDef="let element"> {{element.className}} </td>
+    <th mat-header-cell *matHeaderCellDef> Назва класу </th>
+    <td mat-cell *matCellDef="let element" (click)="openPopupsSheet(element)"> {{element.className}} </td>
   </ng-container>
 
   <ng-container matColumnDef="classYear">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Рік класу </th>
-    <td mat-cell *matCellDef="let element"> {{element.classYear}} </td>
+    <td mat-cell *matCellDef="let element" (click)="openPopupsSheet(element)"> {{element.classYear}} </td>
   </ng-container>
 
   <ng-container matColumnDef="isActive">
     <th mat-header-cell *matHeaderCellDef> Стан класу </th>
-    <td mat-cell *matCellDef="let element"><span *ngIf = "element.isActive">Відкритий</span><span *ngIf = "!element.isActive">Закритий</span></td>
+    <td mat-cell *matCellDef="let element"><span *ngIf = "element.isActive">
+      Відкритий
+    </span>
+    <span *ngIf = "!element.isActive">Закритий</span></td>
   </ng-container>
 
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef> Ред. </th>
-    <td mat-cell *matCellDef="let element"> <a (click)="openPopupsSheet(element)" class="edit" title="Редагувати">⋮</a> </td>
+    <td mat-cell *matCellDef="let element" >
+    <button mat-button [matMenuTriggerFor]="menu" class="edit">⋮</button>
+    <mat-menu #menu="matMenu">
+     <button mat-menu-item (click)="openPopupsSheet(element)" title="Редагувати"><mat-icon>edit</mat-icon>Редагувати</button>
+     <button mat-menu-item><mat-icon>backspace</mat-icon>Назад</button>
+    </mat-menu>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

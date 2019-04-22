@@ -34,9 +34,8 @@ export class AddModifyGroupComponent implements OnInit {
    * Method saves data about a new or modified class
    */
   save() {
-    const group = new Group(this.data);
-    this.groupServices.addGrup(group).subscribe((dataResponse: any) => {
-      if (group.id && !(dataResponse === undefined)) {
+    this.groupServices.addGrup(this.data).subscribe((dataResponse: any) => {
+      if (this.data.id && !(dataResponse === undefined)) {
         if (this.groupBeforeChange.className === dataResponse.className
           && this.groupBeforeChange.classYear === dataResponse.classYear
           && this.groupBeforeChange.isActive === dataResponse.isActive
@@ -52,7 +51,7 @@ export class AddModifyGroupComponent implements OnInit {
             'snack-class-success'
           );
         }
-      } else if (group.id === undefined && !(dataResponse === undefined)) {
+      } else if (this.data.id === undefined && !(dataResponse === undefined)) {
         this.dialogRef.close(dataResponse);
         this.openSnackBar(
           `Клас ${dataResponse.className}  ${dataResponse.classYear} року створений`,
