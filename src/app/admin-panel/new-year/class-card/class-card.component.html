@@ -1,0 +1,72 @@
+<mat-card
+  [formGroup]="form" 
+  [ngClass]="skipClassSwitcher.value?'locked':'active'">
+  <ng-container formArrayName="skipClassSwitcher">
+    <label>
+      <input 
+        attr.data-order="{{controlIndex}}" 
+        type="checkbox" 
+        #skipClass
+        [formControlName]="controlIndex"
+        (click)="lockClass(controlIndex, skipClass)"
+        >
+      <i *ngIf="!skipClassSwitcher.value" class="material-icons">lock_open</i>
+      <i *ngIf="skipClassSwitcher.value" class="material-icons">lock</i>
+    </label>
+  </ng-container>
+  <mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="className">{{curClass.className}}</div> 
+          <div class="currentYear">{{curClass.classYear}}</div>
+        </mat-panel-title>
+        <mat-panel-description *ngIf="curClass.numOfStudents>0; else emptyClass">
+          {{panelOpenState ? 'Список учнів' : 'Переглянути список учнів'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <ng-template #emptyClass>
+        <mat-panel-description>
+          Немає учнів у даному класі
+        </mat-panel-description>
+      </ng-template>
+      <ng-container *ngIf="curClass.numOfStudents>0">
+        <mat-list role="list" *ngFor="let pupil of curClass['pupilList'] | keyvalue; let i = index">
+          <mat-list-item role="listitem"><span>{{i+1}})</span><a href="students/{{(pupil.value).id}}" target="_blank">{{(pupil.value).lastname}} {{(pupil.value).firstname}}</a></mat-list-item>
+        </mat-list>
+      </ng-container>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <div formArrayName="newClassTitle" class="new-title">
+    <input [formControlName]="controlIndex"
+      #newClassTitle
+      [ngClass]="!editClassTitle.checked?'locked':''"
+      attr.data-class-year="{{curClass.classYear}}" 
+      attr.data-class-title="{{curClass.className}}"
+      class="new-class-name" 
+      id={{curClass.id}} placeholder="нова назва"/>
+    <div class="validation-error"
+      *ngIf="newTitleField.invalid">
+      <p *ngIf="newTitleField.errors.pattern">Недопустима назва (Приклад: "8-А")</p>
+      <p *ngIf="newTitleField.errors.class_exist">Клас вже існує в наступному н. р.</p>
+      <p *ngIf="newTitleField.errors.title_dublicate">Назви класів співпадають</p>
+    </div>
+  </div>
+  <div class="edit_title" formArrayName="editTitleSwitcher">
+      <label>
+        <input type="checkbox" 
+          #editClassTitle
+          [formControlName]="controlIndex|autotitle:curClass.className:newTitleField" 
+          (click)="editInput(newClassTitle)"
+          />
+        <i class="material-icons">edit</i>
+      </label>
+    </div>
+    <div class="doted-marks">
+      <div class="isactive" *ngIf="!curClass.isActive"></div>
+      <div class="pupils" *ngIf="curClass.numOfStudents <= 0"></div>
+      <div class="year" *ngIf="curClass.classYear!==2018"></div>
+    </div>
+</mat-card>
+
+

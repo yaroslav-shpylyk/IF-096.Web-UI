@@ -35,9 +35,10 @@ export class ClassFilterPipe implements PipeTransform {
         }
       }
     );
-    if (res.length === 0) {
-      res.push(-1);
-    }
+    // if (res.length === 0) {
+    //   res.push(-1);
+    // }
+    console.log(res.length);
     return res;
   }
 }

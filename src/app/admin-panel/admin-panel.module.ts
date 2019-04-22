@@ -53,6 +53,7 @@ import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subje
 import { TeacherConnectionComponent } from './teacher-connection/teacher-connection.component';
 import { SharedModule } from '../shared/shared.module';
 import {MatStepperModule} from '@angular/material/stepper';
+import { ClassCardComponent } from './new-year/class-card/class-card.component';
 
 
 @NgModule({
@@ -80,7 +81,8 @@ import {MatStepperModule} from '@angular/material/stepper';
     AddStudentComponent,
     ModifySubjectsComponent,
     TeacherConnectionComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    ClassCardComponent
   ],
   imports: [
     CommonModule,
