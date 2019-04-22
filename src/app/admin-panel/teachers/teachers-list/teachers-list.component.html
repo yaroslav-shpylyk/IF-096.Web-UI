@@ -10,6 +10,7 @@
 <div class="wrapper">
   <mat-form-field>
     <input
+      #filterInp
       matInput
       (keyup)="applyFilter($event.target.value)"
       placeholder="Фільтр"
