@@ -60,14 +60,13 @@ export class NewYearService {
     return this.http.get(`/classes`)
     .pipe(
       map((response: any) => {
-        return response.data;
+        return response.data.filter(currClass => currClass.isActive);
       }),
       catchError((error: any) => {
         return error;
       })
     );
   }
-
   /**
    * Method use class id to get list of pupils
    * @returns list of pupils
