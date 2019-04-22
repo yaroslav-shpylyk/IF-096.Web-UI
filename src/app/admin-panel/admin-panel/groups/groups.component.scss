@@ -18,7 +18,6 @@ th.mat-sort-header-sorted {
 
 .edit {
   font-size: 1.8em;
-  cursor: pointer;
 }
 
 .mat-form-field {
@@ -59,4 +58,22 @@ mat-accordion {
 
 ::ng-deep .groups-mat-exp-pnl .mat-expansion-panel-body {
   padding: 0;
+}
+
+td.mat-cell:first-of-type:hover {
+  cursor: pointer;
+}
+
+td.mat-cell:nth-child(2):hover {
+  cursor: pointer;
+}
+
+tr.mat-footer-row,
+tr.mat-row:hover {
+  background-color: rgb(187, 184, 184);
+}
+
+tr.mat-footer-row,
+tr.mat-row:active {
+  background-color: rgb(58, 55, 55);
 }
