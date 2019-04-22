@@ -7,6 +7,14 @@
   </div>
 </a>
 
+<a *ngIf="activeRoute()" routerLink="{{pathActive}}" routerLinkActive="active">
+  <div class="icons">
+    <mat-icon>{{iconActive}}</mat-icon>
+    <br>
+    <span>{{nameActive}}</span>
+  </div>
+</a>
+
 <!--3 dots toggle menu-->
 <button mat-icon-button [matMenuTriggerFor]="menu">
   <mat-icon>more_vert</mat-icon>
