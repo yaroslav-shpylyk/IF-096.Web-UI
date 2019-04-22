@@ -2,8 +2,31 @@ import { Component, OnInit, Input, ViewChild, ElementRef, OnChanges, SimpleChang
 
 @Component({
   selector: 'app-avatar',
-  templateUrl: './avatar.component.html',
-  styleUrls: ['./avatar.component.scss']
+  template: `
+    <div class="avatar" #avatarComponent>
+      <ng-template [ngIf]="abbreviation">{{abbreviation}}</ng-template>
+      <mat-icon *ngIf="!abbreviation && !checkValue(avatar)">person_outline</mat-icon>
+    </div>`,
+  styles: [`
+  .avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
+    color: white;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+  .avatar > mat-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+  }
+  `]
 })
 export class AvatarComponent implements OnInit, OnChanges {
   @Input() avatar: string;
