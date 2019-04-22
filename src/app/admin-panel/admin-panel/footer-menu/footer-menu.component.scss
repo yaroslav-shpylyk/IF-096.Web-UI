@@ -12,6 +12,14 @@ a {
   overflow: hidden;
 }
 
+.active { // selected section
+    background: lighten($main-color, 15%)!important;
+}
+
+.active-more { // selected section in 3 dots menu
+
+}
+
 .mat-menu-item { // 3 dots toggle menu
   color: $dark-color;
   .mat-icon {

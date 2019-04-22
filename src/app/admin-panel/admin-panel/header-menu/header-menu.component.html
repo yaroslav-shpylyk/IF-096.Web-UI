@@ -1,15 +1,12 @@
 <mat-nav-list class="navigation-items">
-  <a mat-list-item routerLinkActive="active" routerLink="/admin-panel/students">
-    <mat-icon>school</mat-icon>
-    УЧНІ</a>
 
-  <a mat-list-item routerLinkActive="active" routerLink="/admin-panel/teachers">
-    <mat-icon>person</mat-icon>
-    ВЧИТЕЛІ</a>
+  <div *ngFor="let i of routes">
 
-  <a mat-list-item routerLinkActive="active" routerLink="/admin-panel/groups">
-    <mat-icon>group_work</mat-icon>
-    КЛАСИ</a>
+  <a mat-list-item routerLinkActive="active" routerLink="{{i.path}}">
+    <mat-icon>{{i.icon}}</mat-icon>
+    {{i.name}}</a>
+
+  </div>
 
   <!--dropdown menu-->
   <a mat-list-item [matMenuTriggerFor]="menu">
@@ -18,42 +15,21 @@
 
   <!--list for dropdown menu-->
   <mat-menu #menu="matMenu" class="dropdown-menu">
-    <a routerLink="/admin-panel/subjects">
+
+    <div *ngFor="let i of routesMore">
+
+    <a routerLink="{{i.path}}" routerLinkActive="active-more">
       <button mat-menu-item>
-        <mat-icon>library_books</mat-icon>
-        <span>Предмети</span>
+        <mat-icon>{{i.icon}}</mat-icon>
+        <span>{{i.name}}</span>
       </button>
     </a>
     <mat-divider></mat-divider>
-    <a routerLink="/journals">
-      <button mat-menu-item>
-        <mat-icon>collections_bookmark</mat-icon>
-        <span>Журнали</span>
-      </button>
-    </a>
+
+    </div>
+
     <mat-divider></mat-divider>
-    <a routerLink="/admin-panel">
-      <button mat-menu-item>
-        <mat-icon>today</mat-icon>
-        <span>Розклад</span>
-      </button>
-    </a>
-    <mat-divider></mat-divider>
-    <a routerLink="/admin-panel/teacher-connection">
-      <button mat-menu-item>
-        <mat-icon>person_add</mat-icon>
-        <span>Додати вчителя до журналу</span>
-      </button>
-    </a>
-    <mat-divider></mat-divider>
-    <a routerLink="/admin-panel/new-year-transition">
-      <button mat-menu-item>
-        <mat-icon>queue</mat-icon>
-        <span>Новий навчальний рік</span>
-      </button>
-    </a>
-    <mat-divider></mat-divider>
-    <a routerLink="/admin-panel" (click)="auth.logout()">
+    <a (click)="auth.logout()">
       <button mat-menu-item>
         <mat-icon>exit_to_app</mat-icon>
         <span>Вийти</span>
@@ -62,7 +38,7 @@
   </mat-menu>
 
   <!-- account photo icon -->
-  <a routerLinkActive="active" routerLink="/admin-panel">
+  <a routerLink="/admin-panel">
     <div class="account-photo">
       <mat-icon [inline]="true">account_circle</mat-icon>
     </div>
