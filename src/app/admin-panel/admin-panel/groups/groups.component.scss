@@ -31,10 +31,19 @@ th.mat-sort-header-sorted {
 }
 
 td.mat-cell:first-of-type:hover {
-  background-color: rgb(187, 184, 184);
   cursor: pointer;
 }
 
-td.mat-cell:first-of-type:active {
+td.mat-cell:nth-child(2):hover {
+  cursor: pointer;
+}
+
+tr.mat-footer-row,
+tr.mat-row:hover {
+  background-color: rgb(187, 184, 184);
+}
+
+tr.mat-footer-row,
+tr.mat-row:active {
   background-color: rgb(58, 55, 55);
 }

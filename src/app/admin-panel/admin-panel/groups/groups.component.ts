@@ -4,7 +4,6 @@ import { Group } from '../../../models/group-data.model';
 import { GroupsService } from 'src/app/services/groups.service';
 import { AddModifyGroupComponent } from './add-modify/add-modify.component';
 import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
-import { group } from '@angular/animations';
 
 @Component({
   selector: 'app-groups',
@@ -75,6 +74,7 @@ export class GroupsComponent implements OnInit {
       if (addOrEdit) {
         this.groups = [...this.groups, data];
       }
+      this.sorting();
       this.matTableFilter();
     });
   }
@@ -85,7 +85,7 @@ export class GroupsComponent implements OnInit {
   refreshGroups() {
     this.groupServices.getGroups().subscribe(data => {
       this.groups = data;
-      this.groups.sort((a, b) => parseInt(a.className, 10) - parseInt(b.className, 10));
+      this.sorting();
       this.matTableFilter();
     });
   }
@@ -100,5 +100,12 @@ export class GroupsComponent implements OnInit {
     this.dataSourceCloseClass = new MatTableDataSource(this.groups
       .filter(gr => !gr.isActive));
     this.dataSourceCloseClass.sort = this.sort;
+  }
+
+  /**
+   * Method sorts classes
+   */
+  sorting() {
+    this.groups.sort( (a, b) => parseInt(a.className, 10) - parseInt(b.className, 10));
   }
 }
