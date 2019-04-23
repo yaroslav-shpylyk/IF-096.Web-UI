@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ScheduleData } from '../../models/schedule-data';
 import { ClassData } from '../../models/class-data';
@@ -97,6 +97,7 @@ export class ScheduleComponent implements OnInit {
     /* Check the form for validity */
     if (this.frmSchedule.invalid) {
       Object.keys(controls).forEach(controlName => controls[controlName].markAsTouched() );
+      window.scrollTo(0, 0);
       return;
     }
     /* Handling form data */

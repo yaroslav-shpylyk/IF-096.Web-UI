@@ -2,8 +2,8 @@
   <h5>РОЗКЛАД УРОКІВ</h5>
 </div>
 <form [formGroup] = "frmSchedule" (ngSubmit) = "onSubmit()">
-  <div class="schedule-top">
-    <mat-form-field class="datePiker">
+  <div class="schedule-top" >
+    <mat-form-field class="datePiker" >
       <input matInput [matDatepicker]="pickerStart"
        [placeholder]="dateTermStartMsg"
        formControlName="dateTermStart">
@@ -20,11 +20,12 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-select #class [placeholder]="selectClassMsg"
+
+      <mat-select [placeholder]="selectClassMsg"
        formControlName="selectClass"
        (selectionChange)="selectedClass($event.value)">
         <mat-option *ngFor="let class of arrClassList" [value]="class.id">
-          {{ class.className }} {{class.id}}
+          {{ class.className }}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="isInputInvalid('selectClass')">Не обрано клас</mat-error>
