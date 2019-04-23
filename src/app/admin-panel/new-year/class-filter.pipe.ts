@@ -5,18 +5,14 @@ import { ClassInfo } from '../../models/class-info';
 })
 export class ClassFilterPipe implements PipeTransform {
 
-  transform( value: number[], Active: boolean, NotEmpty: boolean, curYear: boolean,
+  transform( value: number[], NotEmpty: boolean, curYear: boolean,
              allClasses: ClassInfo[], titleInput: any, skipCheckbox: any ): any {
     const curDate = new Date();
     const year = (curDate.getMonth() < 12 && curDate.getMonth() > 7) ? curDate.getFullYear() : curDate.getFullYear() - 1;
     const filterParams = [];
-    const isActive = (item) => allClasses[item].isActive;
     const isCurrentYear = (item) => allClasses[item].classYear === year;
     const isNotEmpty = (item) => allClasses[item].numOfStudents > 0;
 
-    if (Active) {
-      filterParams.push(isActive);
-    }
     if (NotEmpty) {
       filterParams.push(isNotEmpty);
     }

@@ -2,16 +2,17 @@
   <h2>Перехід на новий навчальний рік</h2>
   <form [formGroup]="transititionForm" class="component" (ngSubmit)="formSubmit()">
     <div>
-      <app-class-card
-        *ngFor="let controlIndex of controlIndexes|classFilter:isActive:isNotEmpty:isCurrentYear:allClasses:newClassTitle.controls:skipClassSwitcher.controls; let index=index"
-        [controlIndex]="controlIndex"
-        [form]="transititionForm"
-        [curClass]="allClasses[controlIndex]"
-        [skipClassSwitcher]="skipClassSwitcher.controls[controlIndex]"
-        [editTitleSwitcher]="editTitleSwitcher.controls[controlIndex]"
-        [newTitleField]="newClassTitle.controls[controlIndex]"
-        #classCard>
-      </app-class-card>
+      <app-class-card 
+      *ngFor="let index of filteredindexes"
+      [controlIndex]="index"
+      [form]="transititionForm"
+      [curClass]="allClasses[index]"
+      [newTitleField]="newClassTitle.controls[index]"
+      [isEditEnable]="false"
+      [isClassTransited]="false"
+      [isCardLock] = "false"
+      #classCard>
+    </app-class-card>
     </div>
     <button mat-raised-button class="submit" type="submit" [disabled]="!transititionForm.valid" > Перевести учнів </button>
   </form>
@@ -22,13 +23,11 @@
   <div class="wrap">
     <label for="toggle-1"><i class="material-icons">filter_list</i></label>
     <div class="checkbox-group">
-      <mat-checkbox [(ngModel)]="isActive" >Активний</mat-checkbox>
       <mat-checkbox [(ngModel)]="isNotEmpty" >З учнями</mat-checkbox>
       <mat-checkbox [(ngModel)]="isCurrentYear" >Поточний рік</mat-checkbox>
     </div>
   </div>
   <div class="marks">
-    <div class="isactive" *ngIf="isActive">А</div>
     <div class="pupils" *ngIf="isNotEmpty">У</div>
     <div class="year" *ngIf="isCurrentYear">П</div>
   </div>

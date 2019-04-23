@@ -1,17 +1,10 @@
 <mat-card
   [formGroup]="form" 
-  [ngClass]="skipClassSwitcher.value?'locked':'active'">
-  <ng-container formArrayName="skipClassSwitcher">
-    <label>
-      <input 
-        attr.data-order="{{controlIndex}}" 
-        type="checkbox" 
-        #skipClass
-        [formControlName]="controlIndex"
-        (click)="lockClass(controlIndex, skipClass)"
-        >
-      <i *ngIf="!skipClassSwitcher.value" class="material-icons">lock_open</i>
-      <i *ngIf="skipClassSwitcher.value" class="material-icons">lock</i>
+  [ngClass]="{'locked': isCardLock, 'active': !isCardLocked, 'transited': isClassTransited}">
+  <ng-container>
+    <label #skipClass (click)="lockClass(controlIndex, skipClass)">
+      <i *ngIf="!isCardLock" class="material-icons">lock_open</i>
+      <i *ngIf="isCardLock" class="material-icons">lock</i>
     </label>
   </ng-container>
   <mat-accordion>
@@ -40,9 +33,8 @@
   <div formArrayName="newClassTitle" class="new-title">
     <input [formControlName]="controlIndex"
       #newClassTitle
-      [ngClass]="!editClassTitle.checked?'locked':''"
-      attr.data-class-year="{{curClass.classYear}}" 
-      attr.data-class-title="{{curClass.className}}"
+      [ngClass]="!isEditEnable?'locked':''"
+      [value]="controlIndex|autotitle:curClass.className:newTitleField"
       class="new-class-name" 
       id={{curClass.id}} placeholder="нова назва"/>
     <div class="validation-error"
@@ -52,21 +44,15 @@
       <p *ngIf="newTitleField.errors.title_dublicate">Назви класів співпадають</p>
     </div>
   </div>
-  <div class="edit_title" formArrayName="editTitleSwitcher">
-      <label>
-        <input type="checkbox" 
-          #editClassTitle
-          [formControlName]="controlIndex|autotitle:curClass.className:newTitleField" 
-          (click)="editInput(newClassTitle)"
-          />
-        <i class="material-icons">edit</i>
-      </label>
-    </div>
-    <div class="doted-marks">
-      <div class="isactive" *ngIf="!curClass.isActive"></div>
-      <div class="pupils" *ngIf="curClass.numOfStudents <= 0"></div>
-      <div class="year" *ngIf="curClass.classYear!==2018"></div>
-    </div>
+  <div class="edit_title">
+    <label #editClassTitle (click)="editInput(newClassTitle)">
+      <i class="material-icons">edit</i>
+    </label>
+  </div>
+  <div class="doted-marks">
+    <div class="pupils" *ngIf="curClass.numOfStudents <= 0"></div>
+    <div class="year" *ngIf="curClass.classYear!==2018"></div>
+  </div>
 </mat-card>
 
 

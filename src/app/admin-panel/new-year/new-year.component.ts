@@ -24,8 +24,6 @@ export class NewYearComponent implements OnInit {
   public panelOpenState: boolean[] = [];
 
   @ViewChildren('classCard') classCards: QueryList<ClassCardComponent>;
-  @ViewChildren('classCard', {read: ElementRef}) private MatCard: ElementRef[];
-
 
   constructor(
     private newYearTransitition: NewYearService) { }
@@ -44,7 +42,6 @@ export class NewYearComponent implements OnInit {
               [Validators.pattern('^([1-9]|1[0-2])-[А-Я]{1}$'),
               this.classTitleValidator(this.allClasses, schoolClass.classYear, schoolClass.className)]);
             (this.transititionForm.controls.newClassTitle as FormArray).push(newInput);
-            this.addFormControls();
           }
         );
       }
@@ -54,21 +51,10 @@ export class NewYearComponent implements OnInit {
   createTransititionForm(): void {
     this.transititionForm = new FormGroup({
       newClassTitle: new FormArray([]),
-      editTitleSwitcher: new FormArray([]),
-      skipClassSwitcher: new FormArray([])
     });
   }
 
-  addFormControls() {
-    const newCheckbox = new FormControl(false);
-    (this.transititionForm.controls.editTitleSwitcher as FormArray).push(newCheckbox);
-
-    const skipClass = new FormControl(false);
-    (this.transititionForm.controls.skipClassSwitcher as FormArray).push(skipClass);
-  }
   get newClassTitle() { return this.transititionForm.get('newClassTitle'); }
-  get editTitleSwitcher() { return this.transititionForm.get('editTitleSwitcher'); }
-  get skipClassSwitcher() { return this.transititionForm.get('skipClassSwitcher'); }
 
   /**
    * Title validation for new class
@@ -95,14 +81,9 @@ export class NewYearComponent implements OnInit {
 
   formSubmit() {
     const formData = [];
-    this.MatCard.forEach( (element, i) => {
-      if (!this.classCards._results[i].skipClassSwitcher.value) {
-        element.nativeElement.childNodes[0].classList.add('locked', 'transited');
-      }
-    });
-
+    console.log(this.classCards);
     this.classCards.forEach( el => {
-      if (!el.skipClassSwitcher.value) {
+      if (!el.isCardLock) {
         formData.push(
           {
             curTitle: el.curClass.className,
@@ -111,11 +92,34 @@ export class NewYearComponent implements OnInit {
             id: el.curClass.id
           }
         );
+        el.isClassTransited = true;
+        el.isCardLock = true;
       }
     } );
     if (this.transititionForm.status === 'VALID') {
       console.log(formData);
       // this.newYearTransitition.transitClasses(formData);
     }
+  }
+
+  get filteredindexes() {
+    const filterParams = [];
+    const isCurrentYear = (item) => this.allClasses[item].classYear === 2018;
+    const isNotEmpty = (item) => this.allClasses[item].numOfStudents > 0;
+
+    if (this.isNotEmpty) {
+      filterParams.push(isNotEmpty);
+    }
+    if (this.isCurrentYear) {
+      filterParams.push(isCurrentYear);
+    }
+
+    return this.controlIndexes.filter(
+      (item, index) => {
+        if ( filterParams.every(func => func(item))) {
+          return true;
+        }
+      }
+    );
   }
 }

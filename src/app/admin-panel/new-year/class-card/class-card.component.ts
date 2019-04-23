@@ -11,10 +11,11 @@ export class ClassCardComponent implements OnInit {
   @Input() newClassTitle;
   @Input() curClass: ClassInfo;
   @Input() controlIndex: number;
-  @Input() skipClassSwitcher: FormControl;
-  @Input() editTitleSwitcher: FormControl;
   @Input() newTitleField: FormControl;
   @Input() form: FormGroup;
+  @Input() isClassTransited: boolean;
+  @Input() isCardLock: boolean;
+  @Input() isEditEnable: boolean;
   public panelOpenState = false;
 
   constructor() { }
@@ -27,7 +28,10 @@ export class ClassCardComponent implements OnInit {
    * @param classNameInput HTML element - input for new title
    */
   editInput(classNameInput: HTMLInputElement) {
-    if (classNameInput.classList.contains('locked')) {
+    if (this.isEditEnable) {
+      this.isEditEnable = false;
+    } else {
+      this.isEditEnable = true;
       classNameInput.focus();
     }
   }
@@ -40,9 +44,11 @@ export class ClassCardComponent implements OnInit {
   lockClass(index: number, skipClass: HTMLInputElement) {
     const input = this.newTitleField;
     const newTitle = input.value;
-    if (skipClass.checked) {
+    if (!this.isCardLock) {
+      this.isCardLock = true;
       input.reset({ value: newTitle, disabled: true });
     } else {
+      this.isCardLock = false;
       input.reset({ value: newTitle, disabled: false });
     }
   }

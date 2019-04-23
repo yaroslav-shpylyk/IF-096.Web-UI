@@ -54,7 +54,7 @@ export class NewYearService {
 
   /**
    * Method return list of classes
-   * @returns list of classes
+   * @returns list of active classes
    */
   public getClasses(): Observable<ClassInfo[]> {
     return this.http.get(`/classes`)

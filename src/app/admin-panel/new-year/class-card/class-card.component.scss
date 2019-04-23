@@ -1,4 +1,4 @@
-@import "../../../styles.scss";
+@import "../../../../styles.scss";
 
 mat-card {
   display: flex;
@@ -242,6 +242,5 @@ input[type=checkbox]:checked ~ .toggle-stripe {
   right: -5px;
 }
 
-.isactive { background-color: rgba(232, 50, 26, 0.75); }
 .pupils { background-color: rgba(215, 26, 232, 0.75); }
 .year { background-color: rgba(100, 228, 68, 0.75) }
