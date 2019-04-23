@@ -30,3 +30,7 @@ a {
   }
 
 }
+
+::ng-deep mat-toolbar {
+  z-index: 999
+}

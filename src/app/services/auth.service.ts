@@ -124,7 +124,7 @@ export class AuthService {
         return this.refreshToken().subscribe();
       }
     }
-    localStorage.setItem('token', '');
+    this.logout();
   }
 
   /**

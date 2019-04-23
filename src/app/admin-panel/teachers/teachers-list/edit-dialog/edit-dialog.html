@@ -1,18 +1,12 @@
 <div class="wrapper">
   <div class="container">
     <div class="avatar">
-      <img
-        *ngIf="editMode"
-        [src]="teacher ? teacher.avatar : 'assets/default-avatar.svg'"
-        height="150"
-        width="150"
-      />
-      <img
-        *ngIf="!editMode"
-        [src]="ava ? ava : 'assets/default-avatar.svg'"
-        height="150"
-        width="150"
-      />
+      <app-avatar *ngIf="editMode" [avatar]="teacher.avatar"
+                  [firstName]="teacher.firstname"
+                  [lastName]="teacher.lastname">
+      </app-avatar>
+      <app-avatar *ngIf="!editMode" [avatar]="ava">
+      </app-avatar>
     </div>
 
     <form [formGroup]="teacherForm" (ngSubmit)="onSubmit()">

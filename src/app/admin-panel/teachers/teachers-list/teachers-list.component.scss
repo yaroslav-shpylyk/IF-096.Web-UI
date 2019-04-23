@@ -4,17 +4,29 @@
   right: 3em;
   transition: bottom 0.3s;
 }
+::ng-deep {
+  th.mat-header-cell.teacher-header-cell {
+    text-align: center !important;
+  }
 
-::ng-deep .snack-class-success {
-  background-color: rgb(24, 168, 72);
-  display: flex !important;
-  justify-content: center !important;
-  color: white !important;
-}
+  & .snack-class-success-teacher {
+    background-color: rgb(24, 168, 72);
+    display: flex !important;
+    justify-content: center !important;
+    color: white !important;
+  }
 
-::ng-deep .mat-icon-button {
-  padding-right: 0.4em;
-  margin-right: 0.1em;
+  & .snack-class-fail-teacher {
+    background-color: rgb(175, 50, 1);
+    display: flex !important;
+    justify-content: center !important;
+    color: white !important;
+  }
+
+  & .mat-icon-button.teacher-button {
+    padding-right: 0.4em;
+    margin-right: 0.1em;
+  }
 }
 
 .block {
@@ -31,16 +43,10 @@ span.lastname {
   margin: auto 0 auto auto;
 }
 
-img {
-  height: 44px;
-  width: 44px;
-  border-radius: 50%;
-  padding: 0.3em;
-  margin-right: 1em;
-}
-
 .block-info-avatar {
   display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .block-info-avatar:hover {
@@ -52,10 +58,6 @@ img {
 mat-icon:hover {
   background-color: rgba(24, 151, 236, 0.685);
   border-radius: 50%;
-}
-
-::ng-deep th.mat-header-cell {
-  text-align: center !important;
 }
 
 @media only screen and (max-width: 405px) and (min-width: 320px) {
@@ -87,10 +89,6 @@ mat-icon:hover {
 mat-form-field {
   width: 65%;
 }
-
-// .cdk-column-num {
-//   padding-left: 1em !important;
-// }
 
 .cdk-column-subjects {
   padding-right: 0 !important;

@@ -1,4 +1,4 @@
-::ng-deep {
+::ng-deep .teacher-details-dialog {
   .mat-dialog-container .avatar {
     display: flex;
     justify-content: center;
@@ -67,4 +67,8 @@ h3 {
 
 p {
   margin: 0.4em 0;
+}
+
+.avatar {
+  font-size: 3.5em;
 }
