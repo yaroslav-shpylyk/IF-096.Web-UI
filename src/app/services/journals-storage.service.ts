@@ -48,7 +48,6 @@ export class JournalsStorageService {
     this.loadingStateChanged.next(true);
     return this.getHomework(idSubject, idClass).pipe(
       mergeMap(homeworks => {
-        console.log(homeworks);
         const journ = new Object() as any;
         journ.homeworks = _.mapKeys(homeworks, 'idLesson');
         return this.getJournaL(idSubject, idClass).pipe(

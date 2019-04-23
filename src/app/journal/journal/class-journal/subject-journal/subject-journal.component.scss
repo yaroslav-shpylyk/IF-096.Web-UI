@@ -134,3 +134,15 @@ th::first-line {
     color: white !important;
   }
 }
+
+th:not(.cdk-column-star) {
+  position: relative;
+}
+
+th:not(.cdk-column-star):not(.cdk-column-studentFullName) > i {
+  top: 0;
+  right: -5px;
+  position: absolute;
+  background-color: rgba(250, 235, 215, 0);
+  color: grey;
+}

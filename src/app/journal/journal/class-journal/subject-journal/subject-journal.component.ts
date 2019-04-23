@@ -22,7 +22,7 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
   elData: any[];
   private loadingSub: Subscription;
   isLoading = false;
-  homeworks = [];
+  homeworks = {};
 
   constructor(
     private journalsStorageService: JournalsStorageService,
@@ -76,7 +76,6 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
       // .getJournaL(this.idSubject, this.idClass)
       .getJournalsAndHomeworks(this.idSubject, this.idClass)
       .subscribe(journal => {
-        console.log(journal);
         this.homeworks = journal.homeworks;
         let studentData = new Object() as any;
         for (const student of journal.journals) {
@@ -108,9 +107,10 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
         temp.push('star');
 
         this.displayedColumns = temp;
+        console.log(temp);
         // this.journal = journal;
         this.journal = journal.journals;
-
+        console.log(this.homeworks);
         this.journalsStorageService.loadingStateChanged.next(false);
       });
   }
