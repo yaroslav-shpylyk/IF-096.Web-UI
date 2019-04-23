@@ -1,24 +1,36 @@
-import {Component, OnInit} from '@angular/core';
-import {StudentBookService} from '../../services/student-book.service';
-import {StudentBookData} from 'src/app/models/student-book-data';
-import {MatTableDataSource} from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { StudentBookService } from '../../services/student-book.service';
+import { StudentBookData } from 'src/app/models/student-book-data';
+import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
 @Component({
   selector: 'app-student-book',
   templateUrl: './student-book.component.html',
   styleUrls: ['./student-book.component.scss'],
+  providers: [
+    // The locale would typically be provided on the root module of your application. We do it at
+    // the component level here, due to limitations of our example generation script.
+    {provide: MAT_DATE_LOCALE, useValue: 'uk-UA'},
+
+    // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
+    // `MatMomentDateModule` in your applications root module. We provide it at the component level
+    // here, due to limitations of our example generation script.
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+  ],
 })
 export class StudentBookComponent implements OnInit {
 
   public studentData: StudentBookData[];
   public displayedColumns: string[] = ['position', 'lesson', 'homeWork', 'mark', 'note'];
 
-  constructor(private studentBookService: StudentBookService) {
+  constructor(private studentBookService: StudentBookService, private adapter: DateAdapter<any>) {
   }
 
-  value = '';
-  serverData;
-  groupArr;
+  public value;
+  public serverData;
+  public groupArr;
 
   /*groupArr = this.serverData.reduce((r, {date}) => {
     if (!r.some(o => o.date === date)) {
@@ -122,4 +134,15 @@ export class StudentBookComponent implements OnInit {
       }, []);
     });
   }
+
+  /**
+   * Method format date to yyyy-mm-dd
+   * @param date - Date in common form
+   * @returns - String with formatted date
+   */
+  private formatDate(date: Date): string {
+    return date.toISOString().slice(0, 10);
+  }
+
+
 }

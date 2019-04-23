@@ -2,6 +2,16 @@
   <input matInput placeholder="Введіть дату: 'yyyy-MM-dd'" value="" #box (keyup.enter)="onEnter(box.value)">
 </mat-form-field>
 
+<br>
+
+<mat-form-field>
+  <input matInput [matDatepicker]="dp" placeholder="Оберіть дату">
+  <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+  <mat-datepicker #dp></mat-datepicker>
+</mat-form-field>
+
+
+
 <!--<p>{{day.date | date :'EEEE'}}</p>-->
 <!--<div *ngFor="let day of serverData">-->
 <!--<p>{{day.date | date :'EEEE'}}</p>-->
