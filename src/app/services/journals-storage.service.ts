@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { Journal } from '../models/journal-data';
+import * as _ from 'lodash';
 
 @Injectable()
 export class JournalsStorageService {
@@ -39,6 +40,34 @@ export class JournalsStorageService {
         map((response: { status: any; data: Journal[] }) => {
           const journal = response.data;
           return journal;
+        })
+      );
+  }
+
+  getJournalsAndHomeworks(idSubject, idClass) {
+    this.loadingStateChanged.next(true);
+    return this.getHomework(idSubject, idClass).pipe(
+      mergeMap(homeworks => {
+        console.log(homeworks);
+        const journ = new Object() as any;
+        journ.homeworks = _.mapKeys(homeworks, 'idLesson');
+        return this.getJournaL(idSubject, idClass).pipe(
+          map(journals => {
+            journ.journals = journals;
+            return journ;
+          })
+        );
+      })
+    );
+  }
+
+  getHomework(idSubject, idClass) {
+    return this.httpClient
+      .get(`/homeworks/subjects/${idSubject}/classes/${idClass}`)
+      .pipe(
+        map((response: { status: any; data: any }) => {
+          const homeworks = response.data;
+          return homeworks;
         })
       );
   }

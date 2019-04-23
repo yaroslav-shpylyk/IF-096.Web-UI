@@ -11,6 +11,7 @@
       <th
         mat-header-cell
         *matHeaderCellDef
+        (click)="onHeadClc(column, journal[i], $event, i)"
         [ngClass]="{
           'is-yellow': thRow[i]?.includes('Модуль'),
           'is-blue': thRow[i]?.includes('Контрольна'),

@@ -22,6 +22,7 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
   elData: any[];
   private loadingSub: Subscription;
   isLoading = false;
+  homeworks = [];
 
   constructor(
     private journalsStorageService: JournalsStorageService,
@@ -43,6 +44,10 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
 
       this.renderTable();
     });
+
+    // this.journalsStorageService
+    //   .getJournalsAndHomeworks(this.idSubject, this.idClass)
+    //   .subscribe(ob => console.log(ob));
   }
 
   /**
@@ -68,10 +73,13 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
    */
   renderTable() {
     this.journalsStorageService
-      .getJournaL(this.idSubject, this.idClass)
+      // .getJournaL(this.idSubject, this.idClass)
+      .getJournalsAndHomeworks(this.idSubject, this.idClass)
       .subscribe(journal => {
+        console.log(journal);
+        this.homeworks = journal.homeworks;
         let studentData = new Object() as any;
-        for (const student of journal) {
+        for (const student of journal.journals) {
           studentData.studentFullName = student.studentFullName;
           this.studentIds.push(student.idStudent);
           for (const mark of student.marks) {
@@ -100,7 +108,8 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
         temp.push('star');
 
         this.displayedColumns = temp;
-        this.journal = journal;
+        // this.journal = journal;
+        this.journal = journal.journals;
 
         this.journalsStorageService.loadingStateChanged.next(false);
       });
@@ -116,6 +125,13 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
    * @param event - object representing a click event;
    * @param i - index of column in a row;
    */
+  onHeadClc(idLesson, studentEl, event, i) {
+    console.log(idLesson);
+    console.log(studentEl);
+    console.log(event);
+    console.log(i);
+  }
+
   onClc(idLesson, studentEl, event, i) {
     if (!Number.isInteger(+idLesson)) {
       return;
