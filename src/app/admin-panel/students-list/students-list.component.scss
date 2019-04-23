@@ -1,44 +1,15 @@
-.select {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-wrap: wrap;
-}
+mat-card-content {
 
-.mat-elevation-z8 {
-  margin-top: 2em;
-  width: 100%;
-  table {
-    width: 100%;
-    th,
-    td {
-      width: 20%;
-    }
-    .name {
-      cursor: pointer;
-      &:hover {
-        background-color: lightgray;
-      }
-      span {
-        margin-left: 0.7em;
-      }
+  .select {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    & > * {
+      margin-left: 12%;
     }
   }
-}
 
-.students {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.add {
-  position: fixed;
-  bottom: 5em;
-  right: 5em;
-}
-
-@media only screen and (max-width: 700px) {
   .mat-elevation-z8 {
     margin-top: 2em;
     width: 100%;
@@ -46,18 +17,69 @@
       width: 100%;
       th,
       td {
-        width: 18%;
+        &:hover {
+          background-color: lightgray;
+        }
       }
       .name {
-        display: flex;
-        flex-direction: column;
+        cursor: pointer;
+
+        span {
+          margin-left: 0.7em;
+        }
       }
     }
   }
 
+  .students {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .add {
     position: fixed;
-    bottom: 4em;
-    right: 1.2em;
+    bottom: 5em;
+    right: 5em;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  mat-card-content {
+
+    .select {
+      display: flex;
+      // justify-content: flex-start;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    // .students {
+    //   display: flex;
+    //   flex-direction: column;
+    //   align-items: flex-start;
+    // }
+
+    .mat-elevation-z8 {
+      // border: 1px solid red;
+      width: auto;
+      table {
+        // width: 50%;
+        // th,
+        // td {
+        //   width: 18%;
+        // }
+        .name {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+    }
+
+    .add {
+      position: fixed;
+      bottom: 4em;
+      right: 1.2em;
+    }
   }
 }

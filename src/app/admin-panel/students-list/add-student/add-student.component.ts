@@ -73,6 +73,7 @@ export class AddStudentComponent implements OnInit {
     if (typeof (data.dateOfBirth) !== 'string') {
       data.dateOfBirth = data.dateOfBirth.toLocaleDateString().split('.').reverse().join('-');
     }
+    data.avatar = this.avatar;
     if (this.data.paramId) {
       this.studentService.changeStudent(this.data.paramId, data).subscribe(res => {
         this.studentService.loadStudents(this.data.classId);

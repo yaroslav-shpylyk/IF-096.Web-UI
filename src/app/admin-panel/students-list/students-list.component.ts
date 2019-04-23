@@ -7,6 +7,7 @@ import { ClassInfo } from '../../models/class-info';
 import { Observable } from 'rxjs';
 import { MatSort, MatTableDataSource } from '@angular/material';
 
+
 @Component({
   selector: 'app-students-list',
   templateUrl: './students-list.component.html',
@@ -21,6 +22,8 @@ export class StudentsListComponent implements OnInit {
   dataSource: MatTableDataSource<Student>;
   displayedColumns: string[] = ['avatar', 'name', 'dateOfBirth', 'schoolClass', 'moreButton'];
   @ViewChild(MatSort) sort: MatSort;
+
+  
 
   constructor(
     private classListService: ClassService,
