@@ -51,9 +51,13 @@ export class AdminFooterMenuComponent implements OnInit {
   public pathActive: string;
   public active;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+    router.events.subscribe(() => {
+      this.activeRoute();
+    });
+  }
 
-  activeRoute(): boolean {
+  activeRoute() {
     for (const i in this.routesMore) {
       if (this.router.url ===  this.routesMore[i].path) {
           [this.pathActive, this.iconActive, this.nameActive] =
@@ -66,7 +70,6 @@ export class AdminFooterMenuComponent implements OnInit {
         this.active = false;
       }
     }
-    return true;
   }
 
   truncateName(name): string {
@@ -76,6 +79,7 @@ export class AdminFooterMenuComponent implements OnInit {
   ngOnInit() {
     [this.pathActive, this.iconActive, this.nameActive] =
       [this.routesMore[0].path, this.routesMore[0].icon, this.routesMore[0].name.toUpperCase()];
+    this.activeRoute();
   }
 
 }

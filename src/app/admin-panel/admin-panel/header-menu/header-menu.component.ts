@@ -52,6 +52,9 @@ export class AdminHeaderMenuComponent implements OnInit {
   public active;
 
   constructor(private router: Router) {
+    router.events.subscribe(() => {
+      this.activeRoute();
+    });
   }
   activeRoute(): boolean {
     for (const i in this.routesMore) {
@@ -76,6 +79,7 @@ export class AdminHeaderMenuComponent implements OnInit {
   ngOnInit() {
     [this.pathActive, this.iconActive, this.nameActive] =
       [this.routesMore[0].path, this.routesMore[0].icon, this.routesMore[0].name.toUpperCase()];
+    this.activeRoute();
   }
 
 }

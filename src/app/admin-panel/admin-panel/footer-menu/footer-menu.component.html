@@ -1,5 +1,5 @@
 <a *ngFor="let i of routes"
-  routerLink="{{i.path}}" routerLinkActive="active">
+   routerLink="{{i.path}}" routerLinkActive="active">
   <div class="icons">
     <mat-icon>{{i.icon}}</mat-icon>
     <br>
@@ -7,13 +7,14 @@
   </div>
 </a>
 
-<a *ngIf="activeRoute()" routerLink="{{pathActive}}" [ngClass]="{active: active}">
-  <div class="icons">
-    <mat-icon>{{iconActive}}</mat-icon>
-    <br>
-    <span>{{nameActive}}</span>
-  </div>
-</a>
+  <a routerLink="{{pathActive}}" [ngClass]="{active: active}">
+    <div class="icons">
+      <mat-icon>{{iconActive}}</mat-icon>
+      <br>
+      <span>{{nameActive}}</span>
+    </div>
+  </a>
+
 
 <!--3 dots toggle menu-->
 <button mat-icon-button [matMenuTriggerFor]="menu">

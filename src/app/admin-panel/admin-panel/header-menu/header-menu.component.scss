@@ -1,23 +1,18 @@
 @import "../../../../styles";
 
 mat-nav-list {
-  height: 75px!important;
+  height: 64px!important;
 }
 
 .mat-list-item { // menu list
-  color: lighten($main-color, 45%)!important;
+  color: lighten($main-color, 50%)!important;
   cursor: pointer;
-  height: 75px!important;
+  height: 64px!important;
 
 
   &.active { // selected section
-    background-color: #3498db!important;
+    background-color: #3da6db !important;
     color: white!important;
-  }
-
-  &:hover,
-  &:active {
-    color: lighten($main-color, 30%);
   }
 
   .mat-icon { // icons
