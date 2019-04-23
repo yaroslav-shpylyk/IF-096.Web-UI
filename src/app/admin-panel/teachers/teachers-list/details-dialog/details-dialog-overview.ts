@@ -1,11 +1,9 @@
 import { Component, Injectable, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { TeacherData } from 'src/app/models/teacher-data';
-
 
 @Component({
   selector: 'app-dialog-overview',
@@ -14,7 +12,6 @@ import { TeacherData } from 'src/app/models/teacher-data';
 })
 export class DetailsDialogOverviewComponent implements OnInit {
   teacher: TeacherData;
-  teacherJournal;
 
   constructor(
     public dialogRef: MatDialogRef<DetailsDialogOverviewComponent>,
@@ -25,25 +22,21 @@ export class DetailsDialogOverviewComponent implements OnInit {
     public data: any
   ) {}
 
+  /**
+   * Once component is loaded it tries to get previously stored teacher
+   * object from service. If there is no one found it will take parameter
+   * for the current route and use it to fetch from server a single teacher.
+   */
   ngOnInit() {
-    this.teachersStorageService
-      .getTeacher(this.teachersStorageService.modalsId)
-      .subscribe(
-        teacher => {
+    this.teacher = this.teachersStorageService.teacherToDisplay;
+    this.teachersStorageService.teacherToDisplay = null;
+    if (!this.teacher) {
+      this.teachersStorageService
+        .getTeacherAndJournal(this.teachersStorageService.modalsId)
+        .subscribe(teacher => {
           this.teacher = teacher;
-          this.teacher.id = this.teachersStorageService.modalsId;
-        },
-        error => console.log(error)
-      );
-
-    this.teachersStorageService
-      .getTeacherJournal(this.teachersStorageService.modalsId)
-      .subscribe(
-        teacherJournal => {
-          this.teacherJournal = teacherJournal;
-        },
-        error => console.log(error)
-      );
+        });
+    }
   }
 
   onBackClick(): void {
@@ -51,6 +44,7 @@ export class DetailsDialogOverviewComponent implements OnInit {
   }
 
   onEditClick(): void {
+    this.teachersStorageService.teacherToDisplay = this.teacher;
     this.dialogRef.close();
     this.router.navigate(['admin-panel', 'teachers', this.teacher.id, 'edit'], {
       relativeTo: this.route,
@@ -59,14 +53,16 @@ export class DetailsDialogOverviewComponent implements OnInit {
   }
 }
 
+/**
+ * Dummy component for the path 'teachers:id' that manages opening,
+ * closing, and passing data to the dialog. When the dummy component gets
+ * initialized on ‘teachers:id’ navigation, it will open the dialog.
+ */
 @Injectable()
 @Component({
   template: ''
 })
 export class DialogEntryComponent implements OnInit {
-  teacher;
-  id: number;
-  subscription: Subscription;
 
   constructor(
     public dialog: MatDialog,
@@ -77,16 +73,22 @@ export class DialogEntryComponent implements OnInit {
     this.openDialog();
   }
 
+  /**
+   * As OverviewComponent component doesn’t have direct access to the
+   * activated route its parameter 'id' is taken from current component
+   * and passed along using a service.
+   * So that OverviewComponent knows which teacher must be showed.
+   */
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.id = +params.id;
-      this.teachersStorageService.modalsId = this.id;
+      this.teachersStorageService.modalsId = +params.id;
     });
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DetailsDialogOverviewComponent, {
-      width: '400px'
+      width: '400px',
+      panelClass: 'teacher-details-dialog'
     });
     dialogRef.afterClosed().subscribe(() => {
       this.router.navigate(['../'], {

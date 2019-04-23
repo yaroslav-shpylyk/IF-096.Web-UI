@@ -43,11 +43,15 @@ mat-radio-group {
   cursor: pointer;
 }
 
-::ng-deep {
-  .mat-elevation-z8 {
-    box-shadow: none;
-  }
+table {
+  width: 100%;
+}
 
+mat-expansion-panel {
+  margin: 1em;
+}
+
+::ng-deep .journal-comp-exp-pnl {
   & .mat-form-field-wrapper {
     width: 90%;
   }
@@ -56,7 +60,7 @@ mat-radio-group {
     padding: 0px !important;
   }
 
-  & .mat-divider {
+  & .journal-divider {
     margin-top: 1em !important;
   }
 }

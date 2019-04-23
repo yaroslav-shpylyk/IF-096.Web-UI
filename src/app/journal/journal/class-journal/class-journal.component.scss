@@ -42,17 +42,16 @@ mat-radio-group {
   cursor: pointer;
 }
 
-::ng-deep {
+table {
+  width: 100%;
+}
+
+::ng-deep .wrapper {
   .mat-form-field-wrapper {
     width: 90%;
   }
-  & .mat-elevation-z8 {
-    box-shadow: none;
-  }
-  & .mat-expansion-panel-body {
-    padding: 0px !important;
-  }
-  & .mat-divider {
+
+  & .journal-divider {
     margin-top: 1em !important;
   }
 }

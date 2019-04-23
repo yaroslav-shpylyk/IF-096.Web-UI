@@ -3,9 +3,11 @@ mat-card {
   flex-direction: column;
   align-items: center;
 
-  img {
-    width: 7em;
-    height: 7em;
+  .avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5em;
   }
 
   mat-card-title {
@@ -26,11 +28,6 @@ mat-card {
     span {
       margin-top: 1em;
     }
-  }
-
-  .iconAvatar {
-    display: flex;
-    justify-content: center;
   }
 
   mat-card-actions {

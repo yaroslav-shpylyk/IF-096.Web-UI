@@ -1,140 +1,122 @@
 <div class="wrapper">
-    <div class="container">
-      <div class="avatar">
-        <img
-          *ngIf="editMode"
-          [src]="teacher ? teacher.avatar : 'assets/default-avatar.svg'"
-          height="150"
-          width="150"
-        />
-        <img
-          *ngIf="!editMode"
-          [src]="ava ? ava : 'assets/default-avatar.svg'"
-          height="150"
-          width="150"
-        />
-      </div>
-  
-      <form [formGroup]="teacherForm" (ngSubmit)="onSubmit()">
-        <div>
-          <input
-            formControlName="teacherAvatar"
-            type="file"
-            (change)="onFileSelected($event)"
-          />
-  
-          <mat-form-field>
-            <input
-              matInput
-              placeholder="Ім'я"
-              formControlName="teacherFirstname"
-            />
-          </mat-form-field>
-  
-          <br />
-  
-          <mat-form-field>
-            <input
-              type="text"
-              matInput
-              placeholder="Прізвище"
-              formControlName="teacherLastname"
-              id="setWidth"
-            />
-          </mat-form-field>
-  
-          <br />
-  
-          <mat-form-field>
-            <input
-              type="text"
-              matInput
-              placeholder="По-батькові"
-              formControlName="teacherPatronymic"
-            />
-          </mat-form-field>
-  
-          <br />
-  
-          <mat-form-field>
-            <input
-              matInput
-              placeholder="Дата народження"
-              formControlName="teacherDateOfBirth"
-            />
-            <mat-hint>В форматі: <strong>дд.мм.рррр</strong></mat-hint>
-          </mat-form-field>
-  
-          <br />
-  
-          <mat-form-field>
-            <input
-              matInput
-              type="email"
-              placeholder="Електронна адреса"
-              formControlName="teacherEmail"
-            />
-          </mat-form-field>
-  
-          <br />
-  
-          <mat-form-field>
-            <input matInput placeholder="Логін" formControlName="teacherLogin" />
-          </mat-form-field>
-  
-          <br />
-  
-          <mat-form-field>
-            <input
-              matInput
-              placeholder="Номер телефону"
-              formControlName="teacherPhone"
-            />
-          </mat-form-field>
-  
-          <mat-form-field *ngIf="editMode">
-            <input
-              type="password"
-              matInput
-              placeholder="Пароль"
-              formControlName="oldPassword"
-            />
-          </mat-form-field>
-  
-          <mat-form-field *ngIf="editMode">
-            <input
-              type="password"
-              matInput
-              placeholder="Новий пароль"
-              formControlName="newPassword"
-            />
-          </mat-form-field>
-  
-          <mat-form-field *ngIf="editMode" id="latInp">
-            <input
-              type="password"
-              matInput
-              placeholder="Повторіть новий пароль"
-              formControlName="confirmPassword"
-            />
-            <mat-error> Паролі не співпадають </mat-error>
-          </mat-form-field>
-  
-          <div mat-dialog-actions id="button-section">
-            <button
-              [disabled]="!teacherForm.valid || teacherForm.pristine"
-              mat-raised-button
-              color="primary"
-              type="submit"
-            >
-              Зберегти
-            </button>
-  
-            <button mat-raised-button type="button" (click)="onCancel()">
-              Відмінити
-            </button>
-          </div>
-        </div>
-      </form>
+  <div class="container">
+    <div class="avatar">
+      <app-avatar *ngIf="editMode" [avatar]="teacher.avatar"
+                  [firstName]="teacher.firstname"
+                  [lastName]="teacher.lastname">
+      </app-avatar>
+      <app-avatar *ngIf="!editMode" [avatar]="ava">
+      </app-avatar>
     </div>
+
+    <form [formGroup]="teacherForm" (ngSubmit)="onSubmit()">
+      <div>
+        <input
+          formControlName="teacherAvatar"
+          type="file"
+          (change)="onFileSelected($event)"
+        />
+
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Ім'я"
+            formControlName="teacherFirstname"
+          />
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            type="text"
+            matInput
+            placeholder="Прізвище"
+            formControlName="teacherLastname"
+            id="setWidth"
+          />
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            type="text"
+            matInput
+            placeholder="По-батькові"
+            formControlName="teacherPatronymic"
+          />
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Дата народження"
+            formControlName="teacherDateOfBirth"
+          />
+          <mat-hint>В форматі: <strong>дд.мм.рррр</strong></mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            matInput
+            type="email"
+            placeholder="Електронна адреса"
+            formControlName="teacherEmail"
+          />
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Логін" formControlName="teacherLogin" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Номер телефону"
+            formControlName="teacherPhone"
+          />
+        </mat-form-field>
+
+        <mat-form-field *ngIf="editMode">
+          <input
+            type="password"
+            matInput
+            placeholder="Пароль"
+            formControlName="oldPassword"
+          />
+        </mat-form-field>
+
+        <mat-form-field *ngIf="editMode">
+          <input
+            type="password"
+            matInput
+            placeholder="Новий пароль"
+            formControlName="newPassword"
+          />
+        </mat-form-field>
+
+        <mat-form-field *ngIf="editMode" id="latInp">
+          <input
+            type="password"
+            matInput
+            placeholder="Повторіть новий пароль"
+            formControlName="confirmPassword"
+          />
+          <mat-error> Паролі не співпадають </mat-error>
+        </mat-form-field>
+
+        <div mat-dialog-actions id="button-section">
+          <button
+            [disabled]="!teacherForm.valid || teacherForm.pristine"
+            mat-raised-button
+            color="primary"
+            type="submit"
+          >
+            Зберегти
+          </button>
+
+          <button mat-raised-button type="button" (click)="onCancel()">
+            Відмінити
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
+</div>

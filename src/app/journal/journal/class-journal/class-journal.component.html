@@ -18,15 +18,12 @@
         />
       </mat-form-field>
 
-      <mat-divider></mat-divider>
+      <mat-divider class="journal-divider"></mat-divider>
 
       <table
         matSort
-        class="mat-elevation-z8"
         mat-table
         [dataSource]="journalData"
-        class="mat-elevation-z8"
-        style="width: 100%"
       >
         <ng-container matColumnDef="num">
           <th mat-header-cell *matHeaderCellDef>№</th>
