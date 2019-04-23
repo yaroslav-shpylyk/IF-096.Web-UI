@@ -8,6 +8,10 @@
 
   </div>
 
+  <a mat-list-item *ngIf="activeRoute()" routerLink="{{pathActive}}" [ngClass]="{active: active}">
+    <mat-icon>{{iconActive}}</mat-icon>
+    {{nameActive}}</a>
+
   <!--dropdown menu-->
   <a mat-list-item [matMenuTriggerFor]="menu">
     <mat-icon>expand_more</mat-icon>
@@ -18,7 +22,7 @@
 
     <div *ngFor="let i of routesMore">
 
-    <a routerLink="{{i.path}}" routerLinkActive="active-more">
+    <a routerLink="{{i.path}}">
       <button mat-menu-item>
         <mat-icon>{{i.icon}}</mat-icon>
         <span>{{i.name}}</span>

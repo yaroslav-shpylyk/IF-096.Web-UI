@@ -1,22 +1,23 @@
 @import "../../../../styles";
 
-
-.active { // selected section
-  background: lighten($main-color, 15%)!important;
-}
-
 mat-nav-list {
   height: 75px!important;
 }
 
 .mat-list-item { // menu list
-  color: white !important;
+  color: lighten($main-color, 45%)!important;
   cursor: pointer;
   height: 75px!important;
 
+
+  &.active { // selected section
+    background-color: #3498db!important;
+    color: white!important;
+  }
+
   &:hover,
   &:active {
-    color: lighten($main-color, 40%);
+    color: lighten($main-color, 30%);
   }
 
   .mat-icon { // icons
@@ -35,11 +36,6 @@ mat-nav-list {
 
 a {
   text-decoration: none;
-}
-
-
-.active-more { // selected section in toggle more menu
-  color: white!important;
 }
 
 .mat-menu-item { // dropdown menu

@@ -3,7 +3,7 @@
 a {
   height: 100%;
   width: 100%;
-  color: white;
+  color: lighten($main-color, 45%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,11 +13,8 @@ a {
 }
 
 .active { // selected section
-    background: lighten($main-color, 15%)!important;
-}
-
-.active-more { // selected section in 3 dots menu
-
+  background-color: #3498db!important;
+  color: white!important;
 }
 
 .mat-menu-item { // 3 dots toggle menu

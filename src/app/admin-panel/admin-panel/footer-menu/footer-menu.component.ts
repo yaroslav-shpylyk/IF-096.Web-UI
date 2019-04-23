@@ -49,38 +49,33 @@ export class AdminFooterMenuComponent implements OnInit {
   public iconActive: string;
   public nameActive: string;
   public pathActive: string;
+  public active;
 
   constructor(private router: Router) { }
 
   activeRoute(): boolean {
-    [this.pathActive, this.iconActive, this.nameActive] =
-      [this.routesMore[0].path, this.routesMore[0].icon, this.routesMore[0].name];
-    switch (this.router.url) {
-      case '/admin-panel/subjects':
-        [this.pathActive, this.iconActive, this.nameActive] =
-          [this.routesMore[0].path, this.routesMore[0].icon, this.routesMore[0].name];
-        break;
-      case '/journals':
-        [this.pathActive, this.iconActive, this.nameActive] =
-          [this.routesMore[1].path, this.routesMore[1].icon, this.routesMore[1].name];
-        break;
-      case '/admin-panel/schedule':
-        [this.pathActive, this.iconActive, this.nameActive] =
-          [this.routesMore[2].path, this.routesMore[2].icon, this.routesMore[2].name];
-        break;
-      case '/admin-panel/teacher-connection':
-        [this.pathActive, this.iconActive, this.nameActive] =
-          [this.routesMore[3].path, this.routesMore[3].icon, this.routesMore[3].name];
-        break;
-      case '/admin-panel/new-year-transition':
-        [this.pathActive, this.iconActive, this.nameActive] =
-          [this.routesMore[4].path, this.routesMore[4].icon, this.routesMore[4].name];
-        break;
+    for (const i in this.routesMore) {
+      if (this.router.url ===  this.routesMore[i].path) {
+          [this.pathActive, this.iconActive, this.nameActive] =
+            [this.routesMore[i].path, this.routesMore[i].icon, this.truncateName(this.routesMore[i].name.toUpperCase())];
+          this.active = true;
+      }
+    }
+    for (const i in this.routes) {
+      if (this.router.url ===  this.routes[i].path) {
+        this.active = false;
+      }
     }
     return true;
   }
 
+  truncateName(name): string {
+    return name.length > 10 ? name.slice(0, 10) + '…' : name;
+  }
+
   ngOnInit() {
+    [this.pathActive, this.iconActive, this.nameActive] =
+      [this.routesMore[0].path, this.routesMore[0].icon, this.routesMore[0].name.toUpperCase()];
   }
 
 }
