@@ -1,3 +1,76 @@
-<p>
-  student-book works!
-</p>
+<mat-form-field class="example-full-width">
+  <input matInput placeholder="Введіть дату: 'yyyy-MM-dd'" value="" #box (keyup.enter)="onEnter(box.value)">
+</mat-form-field>
+
+<!--<p>{{day.date | date :'EEEE'}}</p>-->
+<!--<div *ngFor="let day of serverData">-->
+<!--<p>{{day.date | date :'EEEE'}}</p>-->
+<!--<mat-table [dataSource]="serverData" class="mat-elevation-z8">
+
+
+
+<!--<table>
+  <tbody *ngFor="let item of groupArr">
+  <ng-container>
+    <tr >
+      <td colspan="2"><b>{{item.date}}</b></td>
+    </tr>
+    <tr class="row">
+      <th>№</th>
+      <th>Урок</th>
+      <th>Домашнє завдання</th>
+      <th>Оцінка</th>
+      <th>Примітка</th>
+    </tr>
+    <tr *ngFor="let value of item.groupItem">
+      <td>{{value.lessonNumber}}</td>
+      <td>{{value.subjectName}}</td>
+      <td>{{value.homeWork}}</td>
+      <td *ngIf="value.mark != 0">{{value.mark}}</td>
+      <td>{{value.note}}</td>
+    </tr>
+  </ng-container></tbody>
+</table>-->
+
+<table>
+  <tbody *ngFor="let item of groupArr">
+  <ng-container>
+    <h3 colspan="2">{{item.date}}</h3>
+    <table mat-table [dataSource]="item.groupItem" class="mat-elevation-z8">
+
+      <!-- lessonNumber Column -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> №</th>
+        <td mat-cell *matCellDef="let value"> {{value.lessonNumber}}</td>
+      </ng-container>
+
+      <!-- subjectName Column -->
+      <ng-container matColumnDef="lesson">
+        <th mat-header-cell *matHeaderCellDef> Урок</th>
+        <td mat-cell *matCellDef="let value"> {{value.subjectName}}</td>
+      </ng-container>
+
+      <!-- homeWork Column -->
+      <ng-container matColumnDef="homeWork">
+        <th mat-header-cell *matHeaderCellDef> Домашнє завдання</th>
+        <td mat-cell *matCellDef="let value"> {{value.homeWork}}</td>
+      </ng-container>
+
+      <!-- mark Column -->
+      <ng-container matColumnDef="mark" *ngIf="value.mark != 0">
+        <th mat-header-cell *matHeaderCellDef> Оцінка</th>
+        <td mat-cell *matCellDef="let value"> {{value.mark}}</td>
+      </ng-container>
+
+      <!-- note Column -->
+      <ng-container matColumnDef="note">
+        <th mat-header-cell *matHeaderCellDef> Примітка</th>
+        <td mat-cell *matCellDef="let value"> {{value.note}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </ng-container>
+  </tbody>
+</table>
