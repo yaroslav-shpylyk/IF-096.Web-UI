@@ -17,6 +17,7 @@ import {
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
 import { ChartComponent } from './chart/chart.component';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   declarations: [ProgressComponent, ChartComponent],
@@ -35,7 +36,8 @@ import { ChartComponent } from './chart/chart.component';
     MatIconModule,
     MatButtonModule,
     MatAutocompleteModule,
-    FormsModule
+    FormsModule,
+    LayoutModule
   ]
 })
 export class ProgressModule { }
