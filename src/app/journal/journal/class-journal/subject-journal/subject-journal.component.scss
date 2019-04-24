@@ -77,15 +77,11 @@ th::first-line {
   font-size: 0.6em;
 }
 
-mat-divider {
-  margin: 1em
-}
-
-::ng-deep {
+::ng-deep .sbj-jrnl-cmp-bottom-container {
   .mat-button-toggle-label-content {
     padding: 0 0.7em !important;
   }
-  & .valera {
+  & .wrapper {
     display: flex;
     flex-direction: column;
     overflow: auto;
@@ -122,19 +118,19 @@ mat-divider {
   & .mat-button-toggle-checked.mat-button-toggle-appearance-standard {
     background-color: #acb8ff;
   }
-  & .snack-class-success {
+}
+
+::ng-deep {
+  .snack-class-success-journal {
     background-color: rgb(24, 168, 72);
     display: flex !important;
     justify-content: center !important;
     color: white !important;
   }
-  & .snack-class-fail {
+  & .snack-class-fail-journal {
     background-color: rgb(175, 50, 1);
     display: flex !important;
     justify-content: center !important;
     color: white !important;
-  }
-  & .mat-divider {
-    margin: 1em !important;
   }
 }

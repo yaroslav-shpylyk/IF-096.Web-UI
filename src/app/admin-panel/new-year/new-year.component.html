@@ -1,67 +1,24 @@
 <div class="container">
   <h2>Перехід на новий навчальний рік</h2>
-  <form [formGroup]="transititionForm"  class="component" (ngSubmit)="formSubmit()">
+  <form *ngIf="filteredindexes.length>0; else emptyFilter" [formGroup]="transititionForm" class="component" (ngSubmit)="formSubmit()">
     <div>
-      <ng-container *ngFor="let item of controlIndexes|classFilter:isActive:isNotEmpty:isCurrentYear:allClasses:newClassTitle.controls:skipClassSwitcher.controls;  let index = index">
-        <ng-container *ngIf="item>-1; else emptyFilter">
-          <mat-card [ngClass]="skipClassSwitcher.controls[item].value?'locked':'active'" >
-            <ng-container formArrayName="skipClassSwitcher">
-              <label>
-                <input attr.data-order="{{item}}" type="checkbox" [formControlName]="item"  (click)="skipClass($event, item, allClasses[item].id)">
-                <i *ngIf="!skipClassSwitcher.controls[item].value" class="material-icons">lock_open</i>
-                <i *ngIf="skipClassSwitcher.controls[item].value" class="material-icons">lock</i>
-              </label>
-            </ng-container>
-            <mat-accordion>
-              <mat-expansion-panel (opened)="panelOpenState[index] = true" (closed)="panelOpenState[index] = false">
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    <div class="className">{{allClasses[item].className}}</div> 
-                    <div class="currentYear">{{allClasses[item].classYear}}</div>
-                  </mat-panel-title> 
-                  <mat-panel-description>
-                    {{panelOpenState[item] ? 'Список учнів' : 'Переглянути список учнів'}}
-                  </mat-panel-description>
-                </mat-expansion-panel-header>
-                  <mat-list role="list" *ngFor="let pupil of allClasses[item]['pupilList'] | keyvalue; let i = index">
-                    <mat-list-item role="listitem"><span>{{i+1}})</span><a href="students/{{(pupil.value).id}}" target="_blank">{{(pupil.value).lastname}} {{(pupil.value).firstname}}</a></mat-list-item>
-                  </mat-list>
-              </mat-expansion-panel>
-            </mat-accordion>
-            <div formArrayName="newClassTitle" class="new-title">
-              <input [formControlName]="item"
-                    attr.data-class-year="{{allClasses[item].classYear}}" 
-                    attr.data-class-title="{{allClasses[item].className}} " 
-                    class="new-class-name locked" id="{{allClasses[item].id}}" placeholder="нова назва"/>
-              <div class="validation-error"
-                *ngIf="newClassTitle.controls[item].invalid">
-                <p *ngIf="newClassTitle.controls[item].errors.pattern">Недопустима назва (Приклад: "8-А")</p>
-                <p *ngIf="newClassTitle.controls[item].errors.class_exist">Клас вже існує в наступному н. р.</p>
-                <p *ngIf="newClassTitle.controls[item].errors.title_dublicate">Назви класів співпадають</p>
-              </div>
-            </div>
-            <div class="edit_title" formArrayName="editTitleSwitcher">
-              <label>
-                <input type="checkbox" 
-                  [formControlName]="item|autotitle:allClasses[item].className:newClassTitle.controls[item]" 
-                  (click)="editInput($event, item, allClasses[item].className, allClasses[item].id)">
-                <i class="material-icons">edit</i>
-              </label>
-            </div>
-            <div class="doted-marks">
-              <div class="isactive" *ngIf="!allClasses[item].isActive"></div>
-              <div class="pupils" *ngIf="allClasses[item].numOfStudents <= 0"></div>
-              <div class="year" *ngIf="allClasses[item].classYear!==2018"></div>
-            </div>
-          </mat-card>
-        </ng-container>
-      </ng-container>
-      <ng-template #emptyFilter>
-          Немає класів, що відповідають критеріям фільтру. Ви можете змінити налаштування фільтру кнопкою, що розміщена справа 
-      </ng-template>
+      <app-class-card
+      *ngFor="let index of filteredindexes"
+      [controlIndex]="index"
+      [form]="transititionForm"
+      [curClass]="activeClasses[index]"
+      [newTitleField]="newClassTitle.controls[index]"
+      [isEditEnable]="false"
+      [isClassTransited]="false"
+      [isCardLock] = "false"
+      #classCard>
+    </app-class-card>
     </div>
     <button mat-raised-button class="submit" type="submit" [disabled]="!transititionForm.valid" > Перевести учнів </button>
   </form>
+  <ng-template #emptyFilter>
+    <p>Немає класів, що відповідають критеріям фільтру. Ви можете змінити налаштування фільтру кнопкою, що розміщена справа</p>
+</ng-template>
 </div>
   <!-- Toggle menu -->
 <input type="checkbox" id="toggle-1">
@@ -69,13 +26,11 @@
   <div class="wrap">
     <label for="toggle-1"><i class="material-icons">filter_list</i></label>
     <div class="checkbox-group">
-      <mat-checkbox [(ngModel)]="isActive" >Активний</mat-checkbox>
       <mat-checkbox [(ngModel)]="isNotEmpty" >З учнями</mat-checkbox>
       <mat-checkbox [(ngModel)]="isCurrentYear" >Поточний рік</mat-checkbox>
-    </div>      
+    </div>
   </div>
   <div class="marks">
-    <div class="isactive" *ngIf="isActive">А</div>
     <div class="pupils" *ngIf="isNotEmpty">У</div>
     <div class="year" *ngIf="isCurrentYear">П</div>
   </div>

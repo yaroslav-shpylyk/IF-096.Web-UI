@@ -18,15 +18,62 @@ th.mat-sort-header-sorted {
 
 .edit {
   font-size: 1.8em;
-  cursor: pointer;
 }
 
 .mat-form-field {
   font-size: 1.2em;
-  width: 90%;
+  width: 95%;
   padding-left: 0.5em;
 }
 
 .filterBlok {
-  background-color: white;
+  width: 95%;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media only screen and (min-width: 600px) {
+  table,
+  mat-accordion {
+    width: 65vw !important;
+  }
+
+  .filterBlok {
+    width: 65%;
+  }
+}
+
+mat-accordion {
+  width: 100%;
+}
+
+mat-expansion-panel,
+mat-accordion {
+  margin-top: 0.7em;
+}
+
+::ng-deep .groups-mat-exp-pnl .mat-expansion-panel-body {
+  padding: 0;
+}
+
+td.mat-cell:first-of-type:hover {
+  cursor: pointer;
+}
+
+td.mat-cell:nth-child(2):hover {
+  cursor: pointer;
+}
+
+tr.mat-footer-row,
+tr.mat-row:hover {
+  background-color: rgb(187, 184, 184);
+}
+
+tr.mat-footer-row,
+tr.mat-row:active {
+  background-color: rgb(58, 55, 55);
 }

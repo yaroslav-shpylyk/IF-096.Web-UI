@@ -1,16 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
 import { Label} from 'ng2-charts';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { ProgressService } from '../services/progress.service';
 import { AvgMarkResponse } from '../../models/avg-mark-response';
 import { StudentChartMarks } from '../../models/student-chart-marks';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements OnInit, OnDestroy {
+  public chartWidth: string;
+  private windowWidth: number;
+  private onDestroy = new Subject();
   public chartLabels: Label[] = [''];
   public chartType: ChartType = 'bar';
   public chartLegend = true;
@@ -32,8 +37,25 @@ export class ChartComponent implements OnInit {
   constructor(private progressService: ProgressService) { }
 
   ngOnInit() {
-    this.progressService.getSubjectChartData().subscribe(result => this.createSubjectChart(result));
-    this.progressService.getStudentChartData().subscribe(result => this.createStudentChart(result));
+    this.progressService.getSubjectChartData()
+      .pipe(takeUntil(this.onDestroy))
+      .subscribe(result => this.createSubjectChart(result));
+    this.progressService.getStudentChartData()
+      .pipe(takeUntil(this.onDestroy))
+      .subscribe(result => this.createStudentChart(result));
+  }
+  ngOnDestroy() {
+    this.onDestroy.next();
+  }
+
+  /**
+   * Method binds to window resize event to control chart size on different resolutions
+   */
+  @HostListener('window:resize') onResize() {
+    this.windowWidth = window.innerWidth;
+    this.chartWidth = this.chartLabels.length * 100 > this.windowWidth ?
+      `${this.chartLabels.length * 100}px` :
+      'auto';
   }
 
   /**
@@ -41,7 +63,6 @@ export class ChartComponent implements OnInit {
    * @param data - New chart data
    */
   private createSubjectChart(data: StudentChartMarks[]): void {
-    console.log(data);
     this.chartLabels = [];
     this.chartData = [];
     const newData = [];
@@ -55,6 +76,7 @@ export class ChartComponent implements OnInit {
     });
     this.chartLabels = data[0].marks.map(item => item.date);
     this.chartData = newData;
+    this.onResize();
   }
 
   /**
@@ -73,5 +95,6 @@ export class ChartComponent implements OnInit {
       newData.push(markInfo);
     });
     this.chartData = newData;
+    this.onResize();
   }
 }

@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { DialogEntryComponent } from './teachers/teachers-list/details-dialog/details-dialog-overview';
 import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
+import { ScheduleComponent } from './schedule/schedule.component';
+
 import { StudentsListComponent } from './students-list/students-list.component';
 import { GroupsComponent } from './admin-panel/groups/groups.component';
 import { StudentDatailsComponent } from './students-list/student-detail-modal/student-detail-modal.component';
@@ -65,6 +67,10 @@ const routes: Routes = [
         component: DashboardComponent
       },
       {
+        path: 'schedule',
+        component: ScheduleComponent
+      },
+      {
         path: 'subjects',
         component: SubjectsComponent
       }
@@ -75,7 +81,7 @@ const routes: Routes = [
     component: AdminPanelComponent,
     children: [
       {
-        path:'teacher-connection',
+        path: 'teacher-connection',
         component: TeacherConnectionComponent
       },
     ]

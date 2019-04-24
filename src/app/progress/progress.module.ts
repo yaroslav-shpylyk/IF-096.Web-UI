@@ -11,11 +11,13 @@ import {
   MatRadioModule,
   MatExpansionModule,
   MatIconModule,
-  MatButtonModule
+  MatButtonModule,
+  MatAutocompleteModule
 } from '@angular/material';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
 import { ChartComponent } from './chart/chart.component';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   declarations: [ProgressComponent, ChartComponent],
@@ -32,7 +34,10 @@ import { ChartComponent } from './chart/chart.component';
     MatRadioModule,
     MatExpansionModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatAutocompleteModule,
+    FormsModule,
+    LayoutModule
   ]
 })
 export class ProgressModule { }

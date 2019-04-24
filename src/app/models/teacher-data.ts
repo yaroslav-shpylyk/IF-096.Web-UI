@@ -10,4 +10,5 @@ export interface TeacherData {
   login?: string;
   newPass?: string;
   oldPass?: string;
+  journalData?: [];
 }

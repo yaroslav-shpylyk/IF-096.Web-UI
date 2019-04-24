@@ -4,7 +4,6 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ClassData } from '../models/class-data';
 import { ClassFromStream } from '../models/class-from-stream';
-import { ClassesFromStream } from '../models/classes-from-stream';
 
 @Injectable({
   providedIn: 'root'
@@ -76,7 +75,7 @@ export class ClassService {
     const streams: number[] = [];
     classes.forEach(item => {
       const streamNumber = parseInt(item.className, 10);
-      if (!streams.includes(streamNumber)) {
+      if (!streams.includes(streamNumber) && item.numOfStudents) {
         streams.push(streamNumber);
       }
     });

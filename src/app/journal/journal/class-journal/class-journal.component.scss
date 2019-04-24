@@ -1,21 +1,15 @@
 mat-accordion {
   width: 100%;
-  min-width: 17em;
-  max-width: 45em;
 }
 
 h2 {
   text-align: center;
 }
 
-#wrapper {
+#class-journal-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.wrapper {
-  margin: 1em;
 }
 
 .mat-expansion-panel {
@@ -38,21 +32,31 @@ mat-radio-group {
 }
 
 .mat-row:hover {
-  background-color: rgba(24, 151, 236, 0.685);
+  background-color: #dcdcdc;
   cursor: pointer;
 }
 
-::ng-deep {
+table {
+  width: 100%;
+}
+
+::ng-deep #class-journal-wrapper {
   .mat-form-field-wrapper {
     width: 90%;
   }
-  & .mat-elevation-z8 {
-    box-shadow: none;
-  }
-  & .mat-expansion-panel-body {
-    padding: 0px !important;
-  }
-  & .mat-divider {
+
+  & .journal-divider {
     margin-top: 1em !important;
+  }
+
+  & .mat-form-field-wrapper {
+    width: 95% !important;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  table,
+  mat-accordion {
+    width: 65vw !important;
   }
 }

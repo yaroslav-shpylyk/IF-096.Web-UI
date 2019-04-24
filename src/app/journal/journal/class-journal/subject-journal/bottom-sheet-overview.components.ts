@@ -16,9 +16,7 @@ export class BottomSheetOverviewSheetComponent {
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
     private journalsStorageService: JournalsStorageService,
     public snackBar: MatSnackBar,
-    private bottomSheetRef: MatBottomSheetRef<
-      BottomSheetOverviewSheetComponent
-    >
+    private bottomSheetRef: MatBottomSheetRef<BottomSheetOverviewSheetComponent>
   ) {}
 
   studentFullName = this.data.student.studentFullName;
@@ -71,7 +69,7 @@ export class BottomSheetOverviewSheetComponent {
         resp => {
           this.elData[this.id][this.lessonId] = resp.body.data.mark;
           this.bottomSheetRef.dismiss();
-          this.openSnackBar(`Нові дані внесено`, 'snack-class-success');
+          this.openSnackBar(`Нові дані внесено`, 'snack-class-success-journal');
           this.journal[this.id].marks[this.journalIndx].mark =
             resp.body.data.mark;
           this.journal[this.id].marks[this.journalIndx].note =
@@ -80,7 +78,10 @@ export class BottomSheetOverviewSheetComponent {
         error => {
           console.log(error);
           this.bottomSheetRef.dismiss();
-          this.openSnackBar(`На сервері відбулась помилка`, 'snack-class-fail');
+          this.openSnackBar(
+            `На сервері відбулась помилка`,
+            'snack-class-fail-journal'
+          );
         }
       );
   }

@@ -27,9 +27,9 @@ export class DashboardComponent implements OnInit {
     teachers: 0
   };
   public graphTypes = {
-    bar: 'Лінійний',
-    pie: 'Пиріг',
-    doughnut: 'Бублик',
+    bar: 'Стовпчикова',
+    pie: 'Секторна',
+    doughnut: 'Кільцева',
   };
   public objectKeys = Object.keys;
   public numberOfClasses = new Array(12).fill('');
@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit {
   public classesStream: number;
   public icons = ['library_books', 'school', 'group_work', 'person'];
   public titles = ['Предмети', 'Учні', 'Класи', 'Вчителі'];
-  public listLinks = ['subjects', 'students', 'classes', 'teachers'];
+  public listLinks = ['subjects', 'students', 'groups', 'teachers'];
   public buttonTitles = ['СПИСОК ПРЕДМЕТІВ', 'СПИСОК УЧНІВ', 'СПИСОК КЛАСІВ', 'СПИСОК ВЧИТЕЛІВ'];
   public chartLabels = [];
   public chartData = [];
@@ -103,7 +103,7 @@ export class DashboardComponent implements OnInit {
     this.streamClasses = new FormGroup({
       classes: new FormControl('', [
         Validators.required,
-      ], AsyncStreamValidator.createValidator(this.classService)),
+      ], AsyncStreamValidator(this.classService)),
       graphType: new FormControl('bar', [
         Validators.required
       ])
@@ -118,17 +118,14 @@ export class DashboardComponent implements OnInit {
     const controls = form.controls;
     const values = form.value;
     if (controls.graphType.errors || controls.classes.errors) {
+      const controlKeys = Object.keys(controls);
+      controlKeys.forEach(key => controls[key].markAsTouched());
       return;
     }
     this.classService.getClassesByStream(values.classes)
       .subscribe((result: ClassesFromStream) => {
         this.chartType = values.graphType;
         this.updateChart(result);
-        this.chartOptions.resetForm();
-        this.streamClasses.reset({
-          classes: '',
-          graphType: 'bar'
-        });
     });
   }
 
@@ -160,4 +157,3 @@ export class DashboardComponent implements OnInit {
     this.chartData = data;
   }
 }
-
