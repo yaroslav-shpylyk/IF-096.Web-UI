@@ -90,9 +90,8 @@ export class NewYearComponent implements OnInit {
       if (!el.isCardLock) {
         formData.push(
           {
-            curTitle: el.curClass.className,
-            newTitle: el.newTitleField.value,
-            newYear: +el.curClass.classYear + 1,
+            className: el.newTitleField.value,
+            classYear: +el.curClass.classYear + 1,
             id: el.curClass.id
           }
         );
