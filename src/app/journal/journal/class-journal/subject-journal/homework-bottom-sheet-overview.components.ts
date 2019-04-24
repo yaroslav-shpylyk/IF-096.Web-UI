@@ -101,7 +101,13 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
       .subscribe(
         resp => {
           console.log(resp);
-          this.homeworks[this.lessonId].homework = this.homeworkForm.value.message;
+          this.homeworks[
+            this.lessonId
+          ].homework = this.homeworkForm.value.message;
+          if (this.fileName) {
+            this.homeworks[this.lessonId].fileName = this.fileName;
+          }
+          this.bottomSheetRef.dismiss();
         },
         error => {
           console.log(error);
@@ -114,9 +120,7 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
       );
   }
 
-  convertBase64ToBlobData(
-    data
-  ) {
+  convertBase64ToBlobData(data) {
     const sliceSize = 512;
     console.log(data);
     const byteCharacters = atob(data.fileData);
