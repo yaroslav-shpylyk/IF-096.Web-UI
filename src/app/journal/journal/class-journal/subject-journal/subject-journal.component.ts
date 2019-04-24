@@ -6,6 +6,7 @@ import { MatBottomSheet } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { BottomSheetOverviewSheetComponent } from './bottom-sheet-overview.components';
 import { HomeworkBottomSheetOverviewSheetComponent } from './homework-bottom-sheet-overview.components';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-subject-journal',
@@ -70,7 +71,6 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
    */
   renderTable() {
     this.journalsStorageService
-      // .getJournaL(this.idSubject, this.idClass)
       .getJournalsAndHomeworks(this.idSubject, this.idClass)
       .subscribe(journal => {
         this.homeworks = journal.homeworks;
@@ -104,10 +104,7 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
         temp.push('star');
 
         this.displayedColumns = temp;
-        // this.journal = journal;
         this.journal = journal.journals;
-        console.log(this.thRow);
-        console.log(this.homeworks);
         this.journalsStorageService.loadingStateChanged.next(false);
       });
   }
@@ -123,12 +120,12 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
    * @param i - index of column in a row;
    */
   onHeadClc(idLesson, headerEl, event, i) {
-    console.log(idLesson);
-    console.log(headerEl);
-    console.log(event.srcElement.innerText.split('\n')[0]);
-    console.log(event);
-    console.log(i);
-    console.log(this.homeworks[idLesson]);
+    // console.log(idLesson);
+    // console.log(headerEl);
+    // console.log(event.srcElement.innerText.split('\n')[0]);
+    // console.log(event);
+    // console.log(i);
+    // console.log(this.homeworks[idLesson]);
 
 
     if (!i || i === this.thRow.length) {
@@ -159,7 +156,12 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     });
   }
 
-  onClc(idLesson, studentEl, event, i) {
+  onClc(idLesson, studentEl, event, i, ii) {
+    console.log(idLesson);
+    console.log(studentEl);
+    console.log(i);
+    console.log(ii);
+    console.log(this.elData);
     if (!Number.isInteger(+idLesson)) {
       return;
     }

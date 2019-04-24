@@ -25,9 +25,10 @@
         (change)="onFileSelected($event)"
       />
 
-      <mat-divider 
-      *ngIf="homeworks[lessonId].fileName"
-      class="homework-divider"></mat-divider>
+      <mat-divider
+        *ngIf="homeworks[lessonId].fileName"
+        class="homework-divider"
+      ></mat-divider>
 
       <a class="fileDwn" (click)="dwnl()">
         {{ homeworks[lessonId].fileName }}
@@ -36,13 +37,30 @@
       <mat-divider class="homework-divider"></mat-divider>
 
       <button
-        [disabled]="homeworkForm.pristine"
         mat-raised-button
-        color="primary"
-        type="submit"
+        type="button"
+        matTooltip="Видалити домашнє завдання та повернутись до попереднього меню"
+        (click)="onClear()"
       >
-        Зберегти
+        Видалити
       </button>
+
+      <mat-divider class="homework-divider"></mat-divider>
+
+      <div class="homework-bottom-section">
+        <button
+          [disabled]="homeworkForm.pristine"
+          mat-raised-button
+          color="primary"
+          type="submit"
+        >
+          Зберегти
+        </button>
+
+        <button mat-raised-button type="button" (click)="onBack()">
+          Назад
+        </button>
+      </div>
     </form>
   </div>
 </div>

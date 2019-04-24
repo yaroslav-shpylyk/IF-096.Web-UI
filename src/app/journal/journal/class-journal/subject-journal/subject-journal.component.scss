@@ -180,3 +180,7 @@ th:not(.cdk-column-star):not(.cdk-column-studentFullName) > i {
   margin-top: 1em !important;
   margin-bottom: 1em !important;
 }
+
+::ng-deep .homework-bottom-section {
+  display: flex;
+}

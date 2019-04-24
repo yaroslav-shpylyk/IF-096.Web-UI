@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   MatBottomSheetRef,
   MAT_BOTTOM_SHEET_DATA,
@@ -62,8 +63,27 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
     });
   }
 
-  onValChange() {
-    this.valChanged = true;
+  onBack() {
+    this.bottomSheetRef.dismiss();
+  }
+
+  onClear() {
+    this.homeworkStorageService
+      .saveHomework({
+        homework: '',
+        idLesson: +this.lessonId,
+        fileData: '',
+        fileType: '',
+        fileName: ''
+      })
+      .subscribe(resp => {
+        this.homeworks[
+          this.lessonId
+        ].homework = '';
+        this.homeworks[
+          this.lessonId
+        ].fileName = '';
+      });
   }
 
   openSnackBar(message: string, classMessage: string) {
