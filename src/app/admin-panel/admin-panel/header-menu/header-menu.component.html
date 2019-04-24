@@ -1,5 +1,13 @@
 <mat-nav-list class="navigation-items">
 
+  <div>
+
+    <!--dropdown menu-->
+    <a mat-list-item [matMenuTriggerFor]="menu">
+      <mat-icon>expand_more</mat-icon>
+      Більше</a>
+  </div>
+
   <div *ngFor="let i of routes">
 
   <a mat-list-item routerLinkActive="active" routerLink="{{i.path}}">
@@ -8,14 +16,17 @@
 
   </div>
 
+
+
+
+  <div>
+
   <a mat-list-item routerLink="{{pathActive}}" [ngClass]="{active: active}">
     <mat-icon>{{iconActive}}</mat-icon>
     {{nameActive}}</a>
+  </div>
 
-  <!--dropdown menu-->
-  <a mat-list-item [matMenuTriggerFor]="menu">
-    <mat-icon>expand_more</mat-icon>
-    БІЛЬШЕ</a>
+
 
   <!--list for dropdown menu-->
   <mat-menu #menu="matMenu" class="dropdown-menu">
@@ -42,9 +53,12 @@
   </mat-menu>
 
   <!-- account photo icon -->
-  <a routerLink="/admin-panel">
+  <a routerLink="/admin-panel" class="right">
+    <span>{{admin}}</span>
     <div class="account-photo">
       <mat-icon [inline]="true">account_circle</mat-icon>
     </div>
   </a>
+
 </mat-nav-list>
+

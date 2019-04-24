@@ -1,7 +1,6 @@
-<mat-toolbar [ngClass]="{hide: hide, notransition: notransition}"
-             fxFlex fxLayout fxLayoutAlign="flex-end">
+<mat-toolbar [ngClass]="{hide: hide, notransition: notransition}">
   <!-- list for header menu-->
-  <div *ngIf="isAdmin()"> <!-- show if user is admin-->
+  <div *ngIf="isAdmin()" class="header-menu"> <!-- show if user is admin-->
     <app-admin-header-menu></app-admin-header-menu>
   </div>
 </mat-toolbar>

@@ -11,19 +11,19 @@ export class AdminFooterMenuComponent implements OnInit {
   public routes = [
     { path: '/admin-panel/students',
       icon: 'school',
-      name: 'УЧНІ'
+      name: 'Учні'
     },
     { path: '/admin-panel/teachers',
       icon: 'person',
-      name: 'ВЧИТЕЛІ'
-    },
-    { path: '/admin-panel/groups',
-      icon: 'group_work',
-      name: 'КЛАСИ'
+      name: 'Вчителі'
     }
   ];
 
   public routesMore = [
+    { path: '/admin-panel/groups',
+      icon: 'group_work',
+      name: 'Класи'
+    },
     { path: '/admin-panel/subjects',
       icon: 'library_books',
       name: 'Предмети'
@@ -61,7 +61,7 @@ export class AdminFooterMenuComponent implements OnInit {
     for (const i in this.routesMore) {
       if (this.router.url ===  this.routesMore[i].path) {
           [this.pathActive, this.iconActive, this.nameActive] =
-            [this.routesMore[i].path, this.routesMore[i].icon, this.truncateName(this.routesMore[i].name.toUpperCase())];
+            [this.routesMore[i].path, this.routesMore[i].icon, this.truncateName(this.routesMore[i].name)];
           this.active = true;
       }
     }
@@ -78,7 +78,7 @@ export class AdminFooterMenuComponent implements OnInit {
 
   ngOnInit() {
     [this.pathActive, this.iconActive, this.nameActive] =
-      [this.routesMore[0].path, this.routesMore[0].icon, this.routesMore[0].name.toUpperCase()];
+      [this.routesMore[0].path, this.routesMore[0].icon, this.routesMore[0].name];
     this.activeRoute();
   }
 

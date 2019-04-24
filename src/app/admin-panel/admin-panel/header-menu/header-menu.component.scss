@@ -3,16 +3,14 @@
 mat-nav-list {
   height: 64px!important;
 }
-
 .mat-list-item { // menu list
-  color: lighten($main-color, 50%)!important;
+  color: white !important;
   cursor: pointer;
   height: 64px!important;
 
 
   &.active { // selected section
     background-color: #3da6db !important;
-    color: white!important;
   }
 
   .mat-icon { // icons
@@ -42,7 +40,7 @@ a {
 }
 
 .navigation-items { // menu list
-  font-size: 0.7em;
+  font-size: 0.8em!important;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -51,9 +49,22 @@ a {
   align-items: center;
 }
 
+.right {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+
+  span {
+    font-size: 0.8em;
+    padding: 0 5px;
+  }
+}
+
 .account-photo { // account photo
   padding: 0 2%;
-  margin: 0 auto;
   font-size: 48px;
   width: 48px;
 }

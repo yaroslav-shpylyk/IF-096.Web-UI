@@ -1,5 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../../../services/auth.service';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 @Component({
@@ -11,11 +10,11 @@ export class AdminHeaderMenuComponent implements OnInit {
   public routes = [
     { path: '/admin-panel/students',
       icon: 'school',
-      name: 'УЧНІ'
+      name: 'Учні'
     },
     { path: '/admin-panel/teachers',
       icon: 'person',
-      name: 'ВЧИТЕЛІ'
+      name: 'Вчителі'
     }
   ];
 
@@ -50,6 +49,9 @@ export class AdminHeaderMenuComponent implements OnInit {
   public nameActive: string;
   public pathActive: string;
   public active;
+  private commonDisplay;
+  private retinaDisplay;
+  public admin = 'Адміністратор';
 
   constructor(private router: Router) {
     router.events.subscribe(() => {
@@ -60,7 +62,7 @@ export class AdminHeaderMenuComponent implements OnInit {
     for (const i in this.routesMore) {
       if (this.router.url ===  this.routesMore[i].path) {
         [this.pathActive, this.iconActive, this.nameActive] =
-          [this.routesMore[i].path, this.routesMore[i].icon, this.truncateName(this.routesMore[i].name.toUpperCase())];
+          [this.routesMore[i].path, this.routesMore[i].icon, this.truncateName(this.routesMore[i].name, 10)];
         this.active = true;
       }
     }
@@ -72,13 +74,28 @@ export class AdminHeaderMenuComponent implements OnInit {
     return true;
   }
 
-  truncateName(name): string {
-    return name.length > 10 ? name.slice(0, 10) + '…' : name;
+  truncateName(name, size): string {
+    return name.length > size ? name.slice(0, size) + '…' : name;
+  }
+
+  /**
+   * listen to window width resizing
+   * to get current device screen width
+   */
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.commonDisplay = window.matchMedia('(max-width: 700px) and (min-width: 600px)').matches; // most smartphones in portrait mode
+    this.retinaDisplay = window.matchMedia('(max-width: 700px) ' +
+      'and (min-resolution: 2dppx) and (orientation: portrait)').matches; // smartphones with retina display in portrait mode
+    if (this.commonDisplay || this.retinaDisplay) {
+    this.truncateName(this.admin, 6);
+  }
+
   }
 
   ngOnInit() {
     [this.pathActive, this.iconActive, this.nameActive] =
-      [this.routesMore[0].path, this.routesMore[0].icon, this.routesMore[0].name.toUpperCase()];
+      [this.routesMore[0].path, this.routesMore[0].icon, this.routesMore[0].name];
     this.activeRoute();
   }
 
