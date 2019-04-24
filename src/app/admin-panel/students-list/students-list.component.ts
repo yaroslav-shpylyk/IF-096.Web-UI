@@ -7,7 +7,6 @@ import { ClassInfo } from '../../models/class-info';
 import { Observable } from 'rxjs';
 import { MatSort, MatTableDataSource } from '@angular/material';
 
-
 @Component({
   selector: 'app-students-list',
   templateUrl: './students-list.component.html',

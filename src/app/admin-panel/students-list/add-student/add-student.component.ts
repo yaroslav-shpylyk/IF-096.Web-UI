@@ -65,6 +65,12 @@ export class AddStudentComponent implements OnInit {
     this.initStudentData();
   }
 
+  checkAvatar(img): any {
+    if (img && !this.avatar) {
+      return img;
+    } else { return this.avatar; }
+  }
+
   /**
    * Method type form (add mode or edit), submit form and sent data to server
    */
@@ -81,7 +87,6 @@ export class AddStudentComponent implements OnInit {
       },
         err => this.openSnackBar('Дані не змінено', err));
     } else {
-      data.avatar = this.avatar;
       this.studentService.addStudents(data).subscribe(res => {
         this.studentService.loadStudents(data.classId);
         this.openSnackBar('Студента додано', '');
@@ -110,7 +115,7 @@ export class AddStudentComponent implements OnInit {
 
   private editStudentForm(student: Student): void {
     this.addStudent = this.fb.group({
-      avatar: [student.avatar],
+      avatar: [this.checkAvatar(student.avatar)],
       dateOfBirth: [student.dateOfBirth],
       email: [student.email],
       firstname: [student.firstname, validText],
