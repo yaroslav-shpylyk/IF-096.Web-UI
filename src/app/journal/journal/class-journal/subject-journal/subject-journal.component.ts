@@ -161,7 +161,6 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     console.log(studentEl);
     console.log(i);
     console.log(ii);
-    console.log(this.elData);
     if (!Number.isInteger(+idLesson)) {
       return;
     }

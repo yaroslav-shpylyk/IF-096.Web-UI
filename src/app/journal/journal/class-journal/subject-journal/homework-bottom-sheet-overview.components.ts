@@ -76,14 +76,22 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
         fileType: '',
         fileName: ''
       })
-      .subscribe(resp => {
-        this.homeworks[
-          this.lessonId
-        ].homework = '';
-        this.homeworks[
-          this.lessonId
-        ].fileName = '';
-      });
+      .subscribe(
+        () => {
+          this.homeworks[this.lessonId].homework = '';
+          this.homeworks[this.lessonId].fileName = '';
+          this.bottomSheetRef.dismiss();
+          this.openSnackBar(`Завдання видалено`, 'snack-class-success-journal');
+        },
+        error => {
+          console.log(error);
+          this.bottomSheetRef.dismiss();
+          this.openSnackBar(
+            `На сервері відбулась помилка`,
+            'snack-class-fail-journal'
+          );
+        }
+      );
   }
 
   openSnackBar(message: string, classMessage: string) {
@@ -128,6 +136,7 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
             this.homeworks[this.lessonId].fileName = this.fileName;
           }
           this.bottomSheetRef.dismiss();
+          this.openSnackBar(`Нові дані внесено`, 'snack-class-success-journal');
         },
         error => {
           console.log(error);
