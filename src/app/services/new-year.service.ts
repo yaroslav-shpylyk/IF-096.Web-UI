@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ClassInfo } from '../models/class-info';
 import { Student } from '../models/student';
@@ -40,16 +40,22 @@ export class NewYearService {
    * @returns list of classes
    * @param   formData object that contain new titles for classes
    */
-  public transitClasses(formData) {
+  public transitClasses(formData): Observable<number> {
     const request = this.getTransitRequest(formData);
+    const subject = new Subject<number>();
     this.createClasses(request.transitClassesQuery).subscribe(
       res => {
         res.data.forEach(
           (newClass, index) => { request.bindPupilsQuery[index].newClassID = newClass.id; }
         );
-        this.bindPupils(request.bindPupilsQuery).subscribe();
+        this.bindPupils(request.bindPupilsQuery).subscribe(
+          result => {
+            subject.next(result.status.code);
+          }
+        );
       }
      );
+    return subject.asObservable();
   }
 
   /**
@@ -60,7 +66,7 @@ export class NewYearService {
     return this.http.get(`/classes`)
     .pipe(
       map((response: any) => {
-        return response.data.filter(currClass => currClass.isActive);
+        return response.data;
       }),
       catchError((error: any) => {
         return error;
@@ -135,6 +141,10 @@ export class NewYearService {
    * @param req  objects array with id's for classes (old and new id's)
    */
   public bindPupils(req: { newClassId: number, oldClassId: number }[]): Observable<any> {
-    return this.http.put(`/students/transition`, req);
+    return this.http.put(`/students/transition`, req).pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
   }
 }

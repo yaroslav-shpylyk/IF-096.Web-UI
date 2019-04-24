@@ -6,7 +6,7 @@
       *ngFor="let index of filteredindexes"
       [controlIndex]="index"
       [form]="transititionForm"
-      [curClass]="allClasses[index]"
+      [curClass]="activeClasses[index]"
       [newTitleField]="newClassTitle.controls[index]"
       [isEditEnable]="false"
       [isClassTransited]="false"

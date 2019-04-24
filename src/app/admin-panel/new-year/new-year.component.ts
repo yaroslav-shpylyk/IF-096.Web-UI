@@ -13,16 +13,16 @@ import { ClassCardComponent } from './class-card/class-card.component';
 export class NewYearComponent implements OnInit {
 
   public allClasses: ClassInfo[] = [];
+  public activeClasses: ClassInfo[] = [];
   public transititionForm: FormGroup;
   public currentClassYear: number;
   public currentClassTitle: string;
   public isNotEmpty = true;
-  public isActive = true;
   public isCurrentYear = true;
   public filterHasResults = false;
   public controlIndexes: number[] = [];
   public panelOpenState: boolean[] = [];
-
+  public transitedCards: ClassCardComponent[] = [];
   @ViewChildren('classCard') classCards: QueryList<ClassCardComponent>;
 
   constructor(
@@ -33,7 +33,10 @@ export class NewYearComponent implements OnInit {
     this.newYearTransitition.getAllClasesInfo().subscribe(
       data => {
         this.allClasses = data;
-        data.forEach(
+        this.activeClasses = this.allClasses.filter(
+          curClass => curClass.isActive
+        );
+        this.activeClasses.forEach(
           (schoolClass, i) => {
             this.controlIndexes.push(i);
             this.panelOpenState.push(false);
@@ -48,12 +51,14 @@ export class NewYearComponent implements OnInit {
     );
   }
 
+  /**
+   * Сreate reactive form for classes transitition
+   */
   createTransititionForm(): void {
     this.transititionForm = new FormGroup({
       newClassTitle: new FormArray([]),
     });
   }
-
   get newClassTitle() { return this.transititionForm.get('newClassTitle'); }
 
   /**
@@ -81,7 +86,6 @@ export class NewYearComponent implements OnInit {
 
   formSubmit() {
     const formData = [];
-    console.log(this.classCards);
     this.classCards.forEach( el => {
       if (!el.isCardLock) {
         formData.push(
@@ -92,20 +96,35 @@ export class NewYearComponent implements OnInit {
             id: el.curClass.id
           }
         );
-        el.isClassTransited = true;
-        el.isCardLock = true;
+        this.transitedCards.push(el);
       }
     } );
     if (this.transititionForm.status === 'VALID') {
-      console.log(formData);
-      // this.newYearTransitition.transitClasses(formData);
+      this.newYearTransitition.transitClasses(formData).subscribe(
+        (status) => {
+          if (status === 201) {
+            this.transitedCards.forEach (
+              el => {
+                el.isClassTransited = true;
+                el.isCardLock = true;
+                // el.curClass.isActive = false;
+              }
+            );
+          }
+        }
+      );
     }
   }
 
+  /**
+   * Return indexes of filtereted classes
+   */
   get filteredindexes() {
+    const curDate = new Date();
+    const year = (curDate.getMonth() < 12 && curDate.getMonth() > 7) ? curDate.getFullYear() : curDate.getFullYear() - 1;
+    const isCurrentYear = (item) => this.activeClasses[item].classYear === year;
+    const isNotEmpty = (item) => this.activeClasses[item].numOfStudents > 0;
     const filterParams = [];
-    const isCurrentYear = (item) => this.allClasses[item].classYear === 2018;
-    const isNotEmpty = (item) => this.allClasses[item].numOfStudents > 0;
 
     if (this.isNotEmpty) {
       filterParams.push(isNotEmpty);
@@ -115,7 +134,7 @@ export class NewYearComponent implements OnInit {
     }
 
     return this.controlIndexes.filter(
-      (item, index) => {
+      (item) => {
         if ( filterParams.every(func => func(item))) {
           return true;
         }
