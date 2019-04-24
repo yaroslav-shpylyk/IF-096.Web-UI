@@ -1,3 +1,63 @@
+@import "../../../styles.scss";
+
 table {
-  width: 100%;
+  width: 80%;
+  margin: 0 auto !important;
+
+  /*
+##Device = Most of the Smartphones Mobiles (Portrait)
+*/
+  @media (min-width: 320px) and (max-width: 1024px) {
+    width: 100%;
+  }
+}
+
+h4{
+  text-align: center;
+  color: $dark-color;
+  padding-top: 1em;
+}
+
+.lessonNumber {
+  width: 10% !important;
+}
+.subjectName {
+  width: 25% !important;
+  padding: 0 15px !important;
+}
+.homeWork {
+  width: 35% !important;
+  padding: 0 15px !important;
+}
+.mark {
+  width: 10% !important;
+}
+.note {
+  width: 20% !important;
+}
+
+th.mat-header-cell {
+  text-align: center !important;
+}
+
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+  padding-left: 0 !important;
+  text-align: center;
+}
+
+td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type, th.mat-header-cell:last-of-type {
+  padding-right: 0 !important;
+}
+
+td.mat-cell.mark{
+  text-align: center !important;
+}
+
+th.mat-header-cell {
+  background-color: $main-color !important;
+  color: white !important;
+}
+
+td.mat-cell {
+  border-right: 1px solid gainsboro !important;
 }

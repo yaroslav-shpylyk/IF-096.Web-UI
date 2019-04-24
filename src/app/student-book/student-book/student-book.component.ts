@@ -4,7 +4,6 @@ import { StudentBookData } from 'src/app/models/student-book-data';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDatepickerInputEvent } from '@angular/material';
-import { Pipe, PipeTransform } from '@angular/core';
 
 @Component({
   selector: 'app-student-book',
@@ -22,7 +21,7 @@ import { Pipe, PipeTransform } from '@angular/core';
     {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
   ]
 })
-export class StudentBookComponent implements OnInit, PipeTransform {
+export class StudentBookComponent implements OnInit {
   public studentData: StudentBookData[];
   public displayedColumns: string[] = ['position', 'lesson', 'homeWork', 'mark', 'note'];
 
@@ -154,9 +153,9 @@ export class StudentBookComponent implements OnInit, PipeTransform {
     });
   }*/
 
-  addEvent(event: MatDatepickerInputEvent<Date>) {
-    console.log(event.value.format('YYYY-MM-DD').toString());
-    this.pickerDate = event.value.format('YYYY-MM-DD').toString();
+  addEvent(event: any) {
+    console.log(event.value.format('YYYY-MM-DD'));
+    this.pickerDate = event.value.format('YYYY-MM-DD');
     this.studentBookService.getInputDate(this.pickerDate);
     this.studentBookService.getStudentBook().subscribe(result => {
       this.serverData = result;

@@ -44,36 +44,36 @@
 <table>
   <tbody *ngFor="let item of groupArr">
   <ng-container>
-    <h3 colspan="2">{{item.date | date :'EEEE'}}</h3>
+    <h4 colspan="2">{{item.date | date :'EEEE'}}</h4>
     <table mat-table [dataSource]="item.groupItem" class="mat-elevation-z8">
 
       <!-- lessonNumber Column -->
       <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> №</th>
+        <th mat-header-cell *matHeaderCellDef  class="lessonNumber"> №</th>
         <td mat-cell *matCellDef="let value"> {{value.lessonNumber}}</td>
       </ng-container>
 
       <!-- subjectName Column -->
       <ng-container matColumnDef="lesson">
-        <th mat-header-cell *matHeaderCellDef> Урок</th>
-        <td mat-cell *matCellDef="let value"> {{value.subjectName}}</td>
+        <th mat-header-cell *matHeaderCellDef class="subjectName"> Урок</th>
+        <td class="subjectName" mat-cell *matCellDef="let value"> {{value.subjectName}}</td>
       </ng-container>
 
       <!-- homeWork Column -->
       <ng-container matColumnDef="homeWork">
-        <th mat-header-cell *matHeaderCellDef> Домашнє завдання</th>
-        <td mat-cell *matCellDef="let value"> {{value.homeWork}}</td>
+        <th mat-header-cell *matHeaderCellDef class="homeWork"> Домашнє завдання</th>
+        <td class="homeWork" mat-cell *matCellDef="let value"> {{value.homeWork}}</td>
       </ng-container>
 
       <!-- mark Column -->
       <ng-container matColumnDef="mark">
-        <th mat-header-cell *matHeaderCellDef> Оцінка</th>
-        <td mat-cell *matCellDef="let value"> {{value.mark}}</td>
+        <th mat-header-cell *matHeaderCellDef class="mark"> Оцінка</th>
+        <td class="mark" mat-cell *matCellDef="let value"> {{value.mark}}</td>
       </ng-container>
 
       <!-- note Column -->
       <ng-container matColumnDef="note">
-        <th mat-header-cell *matHeaderCellDef> Примітка</th>
+        <th mat-header-cell *matHeaderCellDef class="note"> Примітка</th>
         <td mat-cell *matCellDef="let value"> {{value.note}}</td>
       </ng-container>
 
