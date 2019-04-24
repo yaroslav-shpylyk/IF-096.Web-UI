@@ -23,8 +23,8 @@
 
       <mat-select [placeholder]="selectClassMsg"
        formControlName="selectClass"
-       (selectionChange)="selectedClass($event.value)">
-        <mat-option *ngFor="let class of arrClassList" [value]="class.id">
+       (selectionChange)="selectedClass($event.value.id)">
+        <mat-option *ngFor="let class of arrClassList" [value]="class">
           {{ class.className }}
         </mat-option>
       </mat-select>

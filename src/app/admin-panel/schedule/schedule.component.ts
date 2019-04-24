@@ -6,6 +6,7 @@ import { SubjectData } from '../../models/subject-data';
 import { ClassService } from '../../services/class.service';
 import { SubjectService } from '../../services/subject.service';
 import { ScheduleService } from '../../services/schedule.service';
+import { LessonData } from '../../models/lesson-data';
 
 @Component({
   selector: 'app-schedule',
@@ -37,12 +38,14 @@ export class ScheduleComponent implements OnInit {
     thursdaySubjects: null,
     fridaySubjects: null,
     saturdaySubjects: null
-  }
+  };
 
-  constructor(private frmBld: FormBuilder,
+  constructor(
+    private frmBld: FormBuilder,
     private classService: ClassService,
     private subjectsService: SubjectService,
-    private scheduleService: ScheduleService) { }
+    private scheduleService: ScheduleService
+  ) { }
 
   ngOnInit() {
     this.classService.getClasses('active').subscribe(data => {
@@ -69,8 +72,10 @@ export class ScheduleComponent implements OnInit {
    * @returns - Schedule for selected class
    */
   selectedClass(classId: number) {
+
     this.scheduleService.getSchedule(classId).subscribe(data => {
       this.scheduleData = data;
+      //console.log(this.scheduleData);
     });
   }
 
@@ -90,7 +95,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   /**
-   * The method checks the form for validity and then handle form data
+   * The method checks the form for validity and then handle form data and generates data for creating a week schedule
    */
   onSubmit() {
     const controls = this.frmSchedule.controls;
@@ -101,5 +106,50 @@ export class ScheduleComponent implements OnInit {
       return;
     }
     /* Handling form data */
+
+    this.scheduleData.startOfSemester = this.frmSchedule.controls['dateTermStart'].value;
+    this.scheduleData.endOfSemester = this.frmSchedule.controls['dateTermEnd'].value;
+    this.scheduleData.classId = this.frmSchedule.controls['selectClass'].value.id;
+    this.scheduleData.className = this.frmSchedule.controls['selectClass'].value;
+
+    Object.keys(this.emittedDays).forEach(dailySubjects => {
+      this.scheduleData[dailySubjects] = this.addDailyData(dailySubjects);
+    })
+    console.log(this.scheduleData);
+  }
+
+  /**
+   * The method generates data for the daily schedule
+   * @param dailySubjects - Daily schedule's name
+   * @returns - Data for the daily schedule
+   */
+  addDailyData(dailySubjects: string): LessonData[] {
+    const dailyLesson: LessonData[] = [];
+    for (let i = 0; i < (this.emittedDays[dailySubjects].value.length - 1); i++) {
+      const lessonFirstGroup = {
+        lessonNumber: '',
+        subjectId: 0,
+        subjectName: '',
+        subjectDescription: ''
+      }
+      Object.keys(lessonFirstGroup).forEach(keyName =>
+        lessonFirstGroup[keyName] = this.emittedDays[dailySubjects].value[i].firstGroup[keyName]);
+        lessonFirstGroup.lessonNumber = `${i + 1}`;
+      dailyLesson.push(lessonFirstGroup);
+
+      if ('secondGroup' in this.emittedDays[dailySubjects].value[i]) {
+        const lessonSecondGroup = {
+          lessonNumber: '',
+          subjectId: 0,
+          subjectName: '',
+          subjectDescription: ''
+        }
+        Object.keys(lessonSecondGroup).forEach(keyName =>
+          lessonSecondGroup[keyName] = this.emittedDays[dailySubjects].value[i].secondGroup[keyName]);
+          lessonSecondGroup.lessonNumber = `${i + 1}`;
+          dailyLesson.push(lessonSecondGroup);
+      }
+    }
+    return dailyLesson;
   }
 }
