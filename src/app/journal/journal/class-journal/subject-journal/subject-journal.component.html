@@ -11,7 +11,7 @@
       <th
         mat-header-cell
         *matHeaderCellDef
-        (click)="onHeadClc(column, journal[i], $event, i)"
+        (click)="onHeadClc(column, $event, i)"
         [ngClass]="{
           'is-yellow': thRow[i]?.includes('Модуль'),
           'is-blue': thRow[i]?.includes('Контрольна'),
@@ -38,7 +38,7 @@
       <td
         mat-cell
         *matCellDef="let element; let y = index"
-        (click)="onClc(column, journal[y], $event, y, i)"
+        (click)="onClc(column, journal[y], $event, y)"
         [matTooltip]="
           i > 0 && i <= journal[y].marks.length ? journal[y].marks[i - 1].note : ''
         "
@@ -51,4 +51,3 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 </div>
-<!--[matTooltip]="i - 1 >= 0 ? journal[y].marks[i - 1].note : ''"  -->

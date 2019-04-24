@@ -7,25 +7,28 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class HomeworkStorageService {
-
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   /**
-   * Method gets id of the teacher to be changed and an object
-   * with new values. Then passes it to the server in put request.
-   * @param id - number representing id of the teacher.
-   * @param teacher - object with new values.
-   * @returns - object representing teacher.
+   * Method takes an object with new values for the homework and
+   * sends it to the server in PUT request.
+   * @param homeworkData - object with new values for homework.
    */
   saveHomework(homeworkData): Observable<any> {
-    return this.httpClient.put(`/homeworks/files`, homeworkData).pipe(
-      map((response: { status: any; data: any }) => response.data)
-    );
+    return this.httpClient
+      .put(`/homeworks/files`, homeworkData)
+      .pipe(map((response: { status: any; data: any }) => response.data));
   }
 
+  /**
+   * Method takes an id of the lesson to be fetched and
+   * sends it to the server in GET request.
+   * @param idLesson - id of the lesson to be fetched.
+   * @returns - object representing a homework.
+   */
   saveFile(idLesson): Observable<any> {
-    return this.httpClient.get(`/homeworks/files/${idLesson}`).pipe(
-      map((response: { status: any; data: any }) => response.data)
-    );
+    return this.httpClient
+      .get(`/homeworks/files/${idLesson}`)
+      .pipe(map((response: { status: any; data: any }) => response.data));
   }
 }

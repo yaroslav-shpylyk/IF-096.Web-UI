@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   MatBottomSheetRef,
   MAT_BOTTOM_SHEET_DATA,
@@ -52,7 +51,6 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
 
   dwnl() {
     this.homeworkStorageService.saveFile(this.lessonId).subscribe(data => {
-      console.log(data);
       const blobData = this.convertBase64ToBlobData(data);
       const blob = new Blob([blobData], { type: data.filetype });
       const url = window.URL.createObjectURL(blob);
@@ -114,7 +112,6 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
   _handleReaderLoaded(e) {
     const reader = e.target;
     this.file = reader.result.split(',')[1];
-    console.log(this.file);
   }
 
   onSubmit() {
@@ -127,8 +124,7 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
         fileName: this.fileName ? this.fileName : null
       })
       .subscribe(
-        resp => {
-          console.log(resp);
+        () => {
           this.homeworks[
             this.lessonId
           ].homework = this.homeworkForm.value.message;
@@ -151,7 +147,6 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
 
   convertBase64ToBlobData(data) {
     const sliceSize = 512;
-    console.log(data);
     const byteCharacters = atob(data.fileData);
     const byteArrays = [];
 
@@ -171,33 +166,4 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
     const blob = new Blob(byteArrays, { type: data.fileType });
     return blob;
   }
-
-  // onSave() {
-  //   this.journalsStorageService
-  //     .saveMark({
-  //       idLesson: this.data.lessonId,
-  //       idStudent: this.data.student.idStudent,
-  //       mark: this.selectedVal,
-  //       note: this.selectedNote
-  //     })
-  //     .subscribe(
-  //       resp => {
-  //         this.elData[this.id][this.lessonId] = resp.body.data.mark;
-  //         this.bottomSheetRef.dismiss();
-  //         this.openSnackBar(`Нові дані внесено`, 'snack-class-success-journal');
-  //         this.journal[this.id].marks[this.journalIndx].mark =
-  //           resp.body.data.mark;
-  //         this.journal[this.id].marks[this.journalIndx].note =
-  //           resp.body.data.note;
-  //       },
-  //       error => {
-  //         console.log(error);
-  //         this.bottomSheetRef.dismiss();
-  //         this.openSnackBar(
-  //           `На сервері відбулась помилка`,
-  //           'snack-class-fail-journal'
-  //         );
-  //       }
-  //     );
-  // }
 }

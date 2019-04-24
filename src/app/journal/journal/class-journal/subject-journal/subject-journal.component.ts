@@ -109,31 +109,12 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
       });
   }
 
-  /**
-   * Method receives from the table all needed values for assigning a mark,
-   * appropriately transforms them, changes clicked cell and row color
-   * and passes to the bottom sheet component needed data.
-   * Om closing bottom sheet the table's cell and row colors are changed to the ddfault.
-   * @param idLesson - id number of the lesson;
-   * @param studentEl - object representing student;
-   * @param event - object representing a click event;
-   * @param i - index of column in a row;
-   */
-  onHeadClc(idLesson, headerEl, event, i) {
-    // console.log(idLesson);
-    // console.log(headerEl);
-    // console.log(event.srcElement.innerText.split('\n')[0]);
-    // console.log(event);
-    // console.log(i);
-    // console.log(this.homeworks[idLesson]);
-
-
+  onHeadClc(idLesson, event, i) {
     if (!i || i === this.thRow.length) {
       return;
     }
     let styleRef;
     if (event.target.innerText === 'attach_file') {
-      console.log(123);
       styleRef = event.path[1].style;
     } else {
       styleRef = event.target.style;
@@ -156,11 +137,7 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     });
   }
 
-  onClc(idLesson, studentEl, event, i, ii) {
-    console.log(idLesson);
-    console.log(studentEl);
-    console.log(i);
-    console.log(ii);
+  onClc(idLesson, studentEl, event, i) {
     if (!Number.isInteger(+idLesson)) {
       return;
     }
