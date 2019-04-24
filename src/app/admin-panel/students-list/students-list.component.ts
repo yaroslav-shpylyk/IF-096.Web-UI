@@ -23,8 +23,6 @@ export class StudentsListComponent implements OnInit {
   displayedColumns: string[] = ['avatar', 'name', 'dateOfBirth', 'schoolClass', 'moreButton'];
   @ViewChild(MatSort) sort: MatSort;
 
-  
-
   constructor(
     private classListService: ClassService,
     private studentsService: StudentsService,
