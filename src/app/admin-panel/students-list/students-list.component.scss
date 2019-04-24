@@ -4,43 +4,35 @@ mat-card-content {
   justify-content: flex-start;
   align-items: center;
   .select {
+    width: 60%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
     & > * {
-      margin-left: 12%;
+      margin-left: 15%;
     }
   }
-
   .mat-elevation-z8 {
     margin-top: 2em;
     width: 100%;
+    border: 1px solid rgb(143, 210, 233);
     table {
       width: 100%;
       th,
       td {
         &:hover {
-          background-color: lightgray;
+          background-color: rgb(143, 210, 233);
         }
       }
       .name {
         cursor: pointer;
-
         span {
           margin-left: 0.7em;
         }
       }
     }
   }
-
-  .students {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  
 }
 .add {
   position: fixed;
@@ -50,37 +42,20 @@ mat-card-content {
 
 @media only screen and (max-width: 700px) {
   mat-card-content {
-
     .select {
       display: flex;
-      // justify-content: flex-start;
       flex-direction: column;
       align-items: flex-start;
     }
-
-    // .students {
-    //   display: flex;
-    //   flex-direction: column;
-    //   align-items: flex-start;
-    // }
-
     .mat-elevation-z8 {
-      // border: 1px solid red;
       width: auto;
       table {
-        // width: 50%;
-        // th,
-        // td {
-        //   width: 18%;
-        // }
         .name {
           display: flex;
           flex-direction: column;
         }
       }
     }
-
-   
   }
   .add {
     position: fixed;
