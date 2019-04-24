@@ -26,13 +26,13 @@
     </ng-container>
 
     <ng-container matColumnDef="teacherCard">
-      <th mat-header-cell *matHeaderCellDef>ПІП</th>
+      <th mat-header-cell class="teacher-header-cell" *matHeaderCellDef>ПІП</th>
       <td mat-cell *matCellDef="let element">
         <div class="block">
           <div class="block-info-avatar" (click)="onTeacherDetails(element.id)">
-            <div class="avatar">
-              <img [src]="element.avatar" [alt]="element.lastname" />
-            </div>
+            <app-avatar [avatar]="element.avatar"
+                        [firstName]="element.firstname"
+                        [lastName]="element.lastname"></app-avatar>
             <div class="block-info-section">
               <span class="lastname">
                 {{ element.lastname }}
@@ -46,6 +46,7 @@
 
           <div class="block-button-section">
             <button
+              class="teacher-button"
               id="menu-trigger"
               mat-icon-button
               #menuTrigger="matMenuTrigger"

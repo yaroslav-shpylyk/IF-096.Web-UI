@@ -1,5 +1,9 @@
 <mat-card>
-    <img mat-card-image *ngIf="studentInfo?.avatar; else avatar" src="{{studentInfo?.avatar}}">
+  <div class="avatar" *ngIf="studentInfo">
+    <app-avatar [avatar]="studentInfo.avatar"
+                [firstName]="studentInfo.firstname"
+                [lastName]="studentInfo.lastname"></app-avatar>
+  </div>
     <mat-card-title>
         <span>{{studentInfo?.lastname + " " + studentInfo?.firstname}}</span>
         <span>{{studentInfo?.patronymic}}</span>

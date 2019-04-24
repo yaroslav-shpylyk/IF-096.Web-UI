@@ -74,6 +74,7 @@ export class GroupsComponent implements OnInit {
       if (addOrEdit) {
         this.groups = [...this.groups, data];
       }
+      this.sorting();
       this.matTableFilter();
     });
   }
@@ -84,6 +85,7 @@ export class GroupsComponent implements OnInit {
   refreshGroups() {
     this.groupServices.getGroups().subscribe(data => {
       this.groups = data;
+      this.sorting();
       this.matTableFilter();
     });
   }
@@ -93,10 +95,17 @@ export class GroupsComponent implements OnInit {
    */
   matTableFilter() {
     this.dataSourceActivClass = new MatTableDataSource(this.groups
-      .filter((value: Group, index: number, array: Group[]) => array[index].isActive));
+      .filter(gr => gr.isActive));
     this.dataSourceActivClass.sort = this.sort;
     this.dataSourceCloseClass = new MatTableDataSource(this.groups
-      .filter((value: Group, index: number, array: Group[]) => !array[index].isActive));
+      .filter(gr => !gr.isActive));
     this.dataSourceCloseClass.sort = this.sort;
+  }
+
+  /**
+   * Method sorts classes
+   */
+  sorting() {
+    this.groups.sort( (a, b) => parseInt(a.className, 10) - parseInt(b.className, 10));
   }
 }

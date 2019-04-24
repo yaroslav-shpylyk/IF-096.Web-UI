@@ -31,9 +31,6 @@ export class TeachersStorageService {
               .split('-')
               .reverse()
               .join('.');
-            if (!teacher.avatar) {
-              teacher.avatar = this.defaultAvatar;
-            }
           }
           return teachers;
         })
@@ -55,15 +52,7 @@ export class TeachersStorageService {
    */
   getTeacherS(): Observable<TeacherData[]> {
     return this.httpClient.get('/teachers').pipe(
-      map((response: { status: any; data: TeacherData[] }) => {
-        const teachers = response.data;
-        for (const teacher of teachers) {
-          if (!teacher.avatar) {
-            teacher.avatar = this.defaultAvatar;
-          }
-        }
-        return teachers;
-      })
+      map((response: { status: any; data: TeacherData[] }) => response.data)
     );
   }
 
@@ -83,12 +72,8 @@ export class TeachersStorageService {
             .split('-')
             .reverse()
             .join('.');
-          if (!teacher.avatar) {
-            teacher.avatar = this.defaultAvatar;
-          }
           data.push(this.getTeacherSubjectsClasses(teacher));
         }
-
         return forkJoin(data);
       })
     );
@@ -108,9 +93,6 @@ export class TeachersStorageService {
           .split('-')
           .reverse()
           .join('.');
-        if (!teacher.avatar) {
-          teacher.avatar = this.defaultAvatar;
-        }
         return teacher;
       })
     );
@@ -146,13 +128,7 @@ export class TeachersStorageService {
    */
   updateTeacher(id, updTeacher): Observable<TeacherData> {
     return this.httpClient.put(`/admin/teachers/${id}`, updTeacher).pipe(
-      map((response: { status: any; data: TeacherData }) => {
-        const teacher = response.data;
-        if (!teacher.avatar) {
-          teacher.avatar = this.defaultAvatar;
-        }
-        return teacher;
-      })
+      map((response: { status: any; data: TeacherData }) => response.data)
     );
   }
 

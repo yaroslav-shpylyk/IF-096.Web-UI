@@ -14,7 +14,6 @@ import { Student } from '../../../models/student';
   styleUrls: ['student-detail-modal.component.scss']
 })
 export class StudentDetailModalComponent implements OnInit {
-
   studentInfo: Student;
   classId: number;
 

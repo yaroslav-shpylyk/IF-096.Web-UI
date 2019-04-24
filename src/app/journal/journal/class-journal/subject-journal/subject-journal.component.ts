@@ -132,7 +132,7 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
           id: i,
           journal: this.journal
         },
-        panelClass: 'bottom-container'
+        panelClass: 'sbj-jrnl-cmp-bottom-container'
       }
     );
 
