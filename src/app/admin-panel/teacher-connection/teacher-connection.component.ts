@@ -16,6 +16,9 @@ import { from } from "rxjs";
 import { SubjectService } from "src/app/services/subject.service";
 import { TeachersJournalService } from "src/app/services/teachers-journal.service";
 import { MatStepperModule } from "@angular/material/stepper";
+import { SubjectData } from "src/app/models/subject-data";
+import { ClassData } from "src/app/models/class-data";
+import { TeacherData } from "src/app/models/teacher-data";
 
 @Component({
   selector: "app-teacher-connection",
@@ -23,9 +26,12 @@ import { MatStepperModule } from "@angular/material/stepper";
   styleUrls: ["./teacher-connection.component.scss"]
 })
 export class TeacherConnectionComponent implements OnInit {
-  teachers;
-  subjects;
-  classes;
+  teachers: TeacherData[];
+  subjects: SubjectData[];
+  classes: ClassData[];
+  teacherChoise = "Виберіть вчителя";
+  subjectChoise = "Виберіть предмет";
+  classesChoise = "Виберіть клас";
 
   constructor(
     private teacherService: TeacherService,
@@ -35,25 +41,41 @@ export class TeacherConnectionComponent implements OnInit {
     private teacherjournalServise: TeachersJournalService
   ) {}
 
+  addTeacherChoice(event) {
+    this.teacherChoise = `Вибрано вчителя: ${event.value.firstname} ${
+      event.value.lastname
+    }`;
+  }
+
+  addSubjChoice(event) {
+    this.subjectChoise = `Вибрано предмет: ${event.value.subjectName}`;
+  }
+
+  addClassesChoice(event) {
+    this.classesChoise = `Вибрано клас: ${event.value.className}`;
+  }
+
   myForm = this.fb.group({
-    classId: ["", Validators.required],
-    subjectId: ["", Validators.required],
-    teacherId: ["", Validators.required]
+    class: ["", Validators.required],
+    subject: ["", Validators.required],
+    teacher: ["", Validators.required]
   });
 
   onSubmit(data) {
-    this.teacherjournalServise.sentDataToJournal(
-      data,
-      data.teacherId,
-      data.classId,
-      data.subjectId
-    ).subscribe(data)
+    this.teacherjournalServise
+      .sentDataToJournal(
+        data,
+        data.teacher.id,
+        data.class.id,
+        data.subject.subjectId
+      )
+      .subscribe();
   }
 
   ngOnInit() {
-    this.teacherService
-      .getTeachers()
-      .subscribe(teachers => (this.teachers = teachers));
+    this.teacherService.getTeachers().subscribe(teachers => {
+      this.teachers = teachers;
+    });
 
     this.subjectService
       .getSubjects()
