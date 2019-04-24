@@ -25,7 +25,9 @@
         (change)="onFileSelected($event)"
       />
 
-      <mat-divider class="homework-divider"></mat-divider>
+      <mat-divider 
+      *ngIf="homeworks[lessonId].fileName"
+      class="homework-divider"></mat-divider>
 
       <a class="fileDwn" (click)="dwnl()">
         {{ homeworks[lessonId].fileName }}

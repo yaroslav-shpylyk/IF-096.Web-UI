@@ -140,6 +140,10 @@ th:not(.cdk-column-star):not(.cdk-column-studentFullName) {
   cursor: pointer;
 }
 
+:not(.cdk-column-star):not(.cdk-column-studentFullName):not(.cdk-column-star) > i {
+  cursor: pointer; 
+}
+
 th:not(.cdk-column-star):not(.cdk-column-studentFullName):hover {
   box-shadow:inset 0px 0px 0px 3px rgb(21, 101, 192);
 }

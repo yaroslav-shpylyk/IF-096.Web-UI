@@ -45,10 +45,6 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
 
       this.renderTable();
     });
-
-    // this.journalsStorageService
-    //   .getJournalsAndHomeworks(this.idSubject, this.idClass)
-    //   .subscribe(ob => console.log(ob));
   }
 
   /**
@@ -130,13 +126,22 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     console.log(idLesson);
     console.log(headerEl);
     console.log(event.srcElement.innerText.split('\n')[0]);
+    console.log(event);
     console.log(i);
+    console.log(this.homeworks[idLesson]);
 
-    if (!i || i === this.thRow.length ) {
+
+    if (!i || i === this.thRow.length) {
       return;
     }
-
-    event.target.style.boxShadow = 'inset 0px 0px 0px 3px rgb(21, 101, 192)';
+    let styleRef;
+    if (event.target.innerText === 'attach_file') {
+      console.log(123);
+      styleRef = event.path[1].style;
+    } else {
+      styleRef = event.target.style;
+    }
+    styleRef.boxShadow = 'inset 0px 0px 0px 3px rgb(21, 101, 192)';
     const bottomSheetRef = this.bottomSheet.open(
       HomeworkBottomSheetOverviewSheetComponent,
       {
@@ -150,7 +155,7 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     );
 
     bottomSheetRef.afterDismissed().subscribe(() => {
-      event.target.style.boxShadow = '';
+      styleRef.boxShadow = '';
     });
   }
 

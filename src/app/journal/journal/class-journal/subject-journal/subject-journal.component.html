@@ -21,7 +21,8 @@
         {{ column !== 'star' ? thRow[i] : '' }}
         <i
           *ngIf="
-            homeworks[column]?.homework !== '' &&
+            (homeworks[column]?.homework !== '' ||
+              homeworks[column]?.fileName !== null) &&
             column !== 'star' &&
             column !== 'studentFullName'
           "

@@ -13,7 +13,9 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   templateUrl: 'homework-bottom-sheet-overview.html'
 })
 export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
-  file: any;
+  file: string;
+  fileName: string;
+  fileType: string;
   valChanged = false;
   homeworkForm: FormGroup;
 
@@ -48,8 +50,9 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
   }
 
   dwnl() {
-    this.homeworkStorageService.saveFile(3072).subscribe(data => {
-      const blobData = this.convertBase64ToBlobData(data.fileData);
+    this.homeworkStorageService.saveFile(this.lessonId).subscribe(data => {
+      console.log(data);
+      const blobData = this.convertBase64ToBlobData(data);
       const blob = new Blob([blobData], { type: data.filetype });
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -76,24 +79,29 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
     const reader = new FileReader();
     reader.onload = this._handleReaderLoaded.bind(this);
     reader.readAsDataURL(file);
-    console.log(file);
+    this.fileName = file.name;
+    this.fileType = file.type;
   }
 
   _handleReaderLoaded(e) {
     const reader = e.target;
-    this.file = reader.result;
+    this.file = reader.result.split(',')[1];
+    console.log(this.file);
   }
 
   onSubmit() {
     this.homeworkStorageService
       .saveHomework({
-        fileData: this.file,
-        homework: this.homeworks[this.lessonId].homework,
-        idLesson: this.lessonId
+        homework: this.homeworkForm.value.message,
+        idLesson: this.lessonId,
+        fileData: this.homeworkForm.value.homeworkFile ? this.file : null,
+        fileType: this.fileType ? this.fileType : null,
+        fileName: this.fileName ? this.fileName : null
       })
       .subscribe(
         resp => {
           console.log(resp);
+          this.homeworks[this.lessonId].homework = this.homeworkForm.value.message;
         },
         error => {
           console.log(error);
@@ -107,11 +115,11 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
   }
 
   convertBase64ToBlobData(
-    base64Data: string,
-    contentType: string = 'image/png',
-    sliceSize = 512
+    data
   ) {
-    const byteCharacters = atob(base64Data);
+    const sliceSize = 512;
+    console.log(data);
+    const byteCharacters = atob(data.fileData);
     const byteArrays = [];
 
     for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
@@ -127,7 +135,7 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
       byteArrays.push(byteArray);
     }
 
-    const blob = new Blob(byteArrays, { type: contentType });
+    const blob = new Blob(byteArrays, { type: data.fileType });
     return blob;
   }
 
