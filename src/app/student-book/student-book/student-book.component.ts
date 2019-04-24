@@ -3,6 +3,8 @@ import { StudentBookService } from '../../services/student-book.service';
 import { StudentBookData } from 'src/app/models/student-book-data';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDatepickerInputEvent } from '@angular/material';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Component({
   selector: 'app-student-book',
@@ -18,10 +20,9 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
     // here, due to limitations of our example generation script.
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
-  ],
+  ]
 })
-export class StudentBookComponent implements OnInit {
-
+export class StudentBookComponent implements OnInit, PipeTransform {
   public studentData: StudentBookData[];
   public displayedColumns: string[] = ['position', 'lesson', 'homeWork', 'mark', 'note'];
 
@@ -31,6 +32,7 @@ export class StudentBookComponent implements OnInit {
   public value;
   public serverData;
   public groupArr;
+  public pickerDate;
 
   /*groupArr = this.serverData.reduce((r, {date}) => {
     if (!r.some(o => o.date === date)) {
@@ -119,7 +121,7 @@ export class StudentBookComponent implements OnInit {
    * Method gets data from input and send it to service
    * @param value from input
    */
-  onEnter(value: string) {
+/*  onEnter(value: string) {
     this.value = value;
     console.log(value);
     this.studentBookService.getInputDate(this.value);
@@ -133,16 +135,38 @@ export class StudentBookComponent implements OnInit {
         return r;
       }, []);
     });
+  }*/
+
+
+  /*addEvent(event: MatDatepickerInputEvent<Date>) {
+    console.log(event.value.toISOString().slice(0, 10));
+    this.pickerDate = event.value.toISOString().slice(0, 10);
+    this.studentBookService.getInputDate(this.pickerDate);
+    this.studentBookService.getStudentBook().subscribe(result => {
+      this.serverData = result;
+      console.log(this.serverData);
+      this.groupArr = this.serverData.reduce((r, {date}) => {
+        if (!r.some(o => o.date.toString() === date.toString())) {
+          r.push({date, groupItem: this.serverData.filter(v => v.date.toString() === date.toString())});
+        }
+        return r;
+      }, []);
+    });
+  }*/
+
+  addEvent(event: MatDatepickerInputEvent<Date>) {
+    console.log(event.value.format('YYYY-MM-DD').toString());
+    this.pickerDate = event.value.format('YYYY-MM-DD').toString();
+    this.studentBookService.getInputDate(this.pickerDate);
+    this.studentBookService.getStudentBook().subscribe(result => {
+      this.serverData = result;
+      console.log(this.serverData);
+      this.groupArr = this.serverData.reduce((r, {date}) => {
+        if (!r.some(o => o.date.toString() === date.toString())) {
+          r.push({date, groupItem: this.serverData.filter(v => v.date.toString() === date.toString())});
+        }
+        return r;
+      }, []);
+    });
   }
-
-  /**
-   * Method format date to yyyy-mm-dd
-   * @param date - Date in common form
-   * @returns - String with formatted date
-   */
-  private formatDate(date: Date): string {
-    return date.toISOString().slice(0, 10);
-  }
-
-
 }
