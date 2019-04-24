@@ -1,4 +1,11 @@
-import { Component, OnInit, OnDestroy, Inject, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Inject,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -26,7 +33,8 @@ export class ConfirmationDialogComponent {
     public data: any
   ) {}
 
-  onDeleteClick() {
+  onDeleteClick(el) {
+    console.log(el);
     this.teachersStorageService
       .deleteTeacher(this.data.id)
       .subscribe(response => {
@@ -64,9 +72,17 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   dataSource;
   mappedTeachers = new Object() as any;
 
-  displayedColumns: string[] = ['num', 'teacherCard', 'classes', 'subjects'];
+  displayedColumns: string[] = [
+    'num',
+    'teacherCard',
+    'classes',
+    'subjects',
+    'dots'
+  ];
 
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('filterInp')
+  filt: ElementRef;
 
   constructor(
     private teachersStorageService: TeachersStorageService,
@@ -106,6 +122,7 @@ export class TeachersListComponent implements OnInit, OnDestroy {
           Object.values(this.mappedTeachers)
         );
         this.dataSource.sort = this.sort;
+        this.filt.nativeElement.value = '';
       }
     );
 
