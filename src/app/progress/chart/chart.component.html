@@ -1,9 +1,11 @@
-<mat-card class="chart">
-  <canvas baseChart
-          [datasets]="chartData"
-          [labels]="chartLabels"
-          [options]="chartOptions"
-          [legend]="chartLegend"
-          [chartType]="chartType">
-  </canvas>
+<mat-card class="chart" *ngIf="chartData[0].data.length">
+  <div class="chartContainer" [ngStyle]="{ width: chartWidth }">
+    <canvas baseChart
+            [datasets]="chartData"
+            [labels]="chartLabels"
+            [options]="chartOptions"
+            [legend]="chartLegend"
+            [chartType]="chartType">
+    </canvas>
+  </div>
 </mat-card>

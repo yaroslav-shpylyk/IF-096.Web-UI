@@ -1,7 +1,9 @@
 <div>
   <div *ngIf="teacher">
     <div class="avatar">
-      <img [src]="teacher.avatar" height="150" width="150" />
+      <app-avatar [avatar]="teacher.avatar"
+                  [firstName]="teacher.firstname"
+                  [lastName]="teacher.lastname"></app-avatar>
     </div>
     <h2>{{ teacher.lastname + ' ' + teacher.firstname }}</h2>
     <h3>{{ teacher.patronymic }}</h3>
@@ -45,7 +47,7 @@
   </mat-expansion-panel>
 </mat-accordion>
 
-<h2 id="not-assigned" *ngIf="!teacherJournal?.length">
+<h2 id="not-assigned" *ngIf="!teacher || !teacher.journalData?.length">
   За обраним викладачем не закріплено жодного класу
 </h2>
 

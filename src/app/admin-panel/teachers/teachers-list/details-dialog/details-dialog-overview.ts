@@ -34,6 +34,7 @@ export class DetailsDialogOverviewComponent implements OnInit {
       this.teachersStorageService
         .getTeacherAndJournal(this.teachersStorageService.modalsId)
         .subscribe(teacher => {
+          teacher.id = this.teachersStorageService.modalsId;
           this.teacher = teacher;
         });
     }
@@ -63,7 +64,7 @@ export class DetailsDialogOverviewComponent implements OnInit {
   template: ''
 })
 export class DialogEntryComponent implements OnInit {
-
+  prevModalId = +this.route.snapshot.params.id;
   constructor(
     public dialog: MatDialog,
     private router: Router,
@@ -82,14 +83,19 @@ export class DialogEntryComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.teachersStorageService.modalsId = +params.id;
+      if (this.prevModalId !== +params.id) {
+        this.prevModalId = +params.id;
+        this.openDialog();
+      }
     });
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DetailsDialogOverviewComponent, {
-      width: '400px'
+      width: '400px',
+      panelClass: 'teacher-details-dialog'
     });
-    dialogRef.afterClosed().subscribe(() => {
+    dialogRef.backdropClick().subscribe(() => {
       this.router.navigate(['../'], {
         relativeTo: this.route,
         replaceUrl: true

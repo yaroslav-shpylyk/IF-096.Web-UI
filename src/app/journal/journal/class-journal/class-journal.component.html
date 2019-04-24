@@ -1,61 +1,61 @@
-<div id="wrapper">
+<div id="class-journal-wrapper">
   <h1 *ngIf="!isLoading && !journal?.length">Не закріплено жодного журналу</h1>
   <mat-spinner *ngIf="isLoading"></mat-spinner>
   <mat-accordion [ngClass]="{ display: journal?.length ? block : none }">
     <h2 *ngIf="idTeacher">
-      {{ teacher ? 'Викладач ' + teacher.lastname + ' ' + teacher.firstname : 'Мої журнали' }}
+      {{
+        teacher
+          ? 'Викладач ' + teacher.lastname + ' ' + teacher.firstname
+          : 'Мої журнали'
+      }}
     </h2>
     <h2 *ngIf="!idTeacher && journal?.length">
       Журнал {{ journal[0].className }} класу
     </h2>
-    <div class="wrapper">
-      <mat-form-field>
-        <input
-          matInput
-          (keyup)="applyFilter($event.target.value)"
-          placeholder="Фільтр"
-          autocomplete="off"
-        />
-      </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        (keyup)="applyFilter($event.target.value)"
+        placeholder="Фільтр"
+        autocomplete="off"
+      />
+    </mat-form-field>
 
-      <mat-divider class="journal-divider"></mat-divider>
+    <mat-divider class="journal-divider"></mat-divider>
 
-      <table
-        matSort
-        mat-table
-        [dataSource]="journalData"
-        style="width: 100%"
-      >
-        <ng-container matColumnDef="num">
-          <th mat-header-cell *matHeaderCellDef>№</th>
-          <td mat-cell *matCellDef="let element; let i = index">
-            {{ i + 1 }}.
-          </td>
-        </ng-container>
+    <table
+      class="mat-elevation-z8"
+      matSort
+      mat-table
+      [dataSource]="journalData"
+    >
+      <ng-container matColumnDef="num">
+        <th mat-header-cell *matHeaderCellDef>№</th>
+        <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}.</td>
+      </ng-container>
 
-        <ng-container matColumnDef="subjectName">
-          <th mat-sort-header mat-header-cell *matHeaderCellDef>Дисципліна</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.subjectName }}
-          </td>
-        </ng-container>
+      <ng-container matColumnDef="subjectName">
+        <th mat-sort-header mat-header-cell *matHeaderCellDef>Дисципліна</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.subjectName }}
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="academicYear">
-          <th mat-sort-header mat-header-cell *matHeaderCellDef>
-            Рік навчання
-          </th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.academicYear }}
-          </td>
-        </ng-container>
+      <ng-container matColumnDef="academicYear">
+        <th mat-sort-header mat-header-cell *matHeaderCellDef>
+          Рік навчання
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.academicYear }}
+        </td>
+      </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr
-          mat-row
-          *matRowDef="let row; columns: displayedColumns"
-          (click)="selectRow(row)"
-        ></tr>
-      </table>
-    </div>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        (click)="selectRow(row)"
+      ></tr>
+    </table>
   </mat-accordion>
 </div>

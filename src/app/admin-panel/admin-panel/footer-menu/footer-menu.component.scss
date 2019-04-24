@@ -33,3 +33,7 @@ a { // button links
     font-size: 0.5em; // text under icons
   }
 }
+
+::ng-deep mat-toolbar {
+  z-index: 999
+}

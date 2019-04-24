@@ -4,17 +4,29 @@
   right: 3em;
   transition: bottom 0.3s;
 }
+::ng-deep {
+  th.mat-header-cell.teacher-header-cell {
+    text-align: center !important;
+  }
 
-::ng-deep .snack-class-success {
-  background-color: rgb(24, 168, 72);
-  display: flex !important;
-  justify-content: center !important;
-  color: white !important;
-}
+  & .snack-class-success-teacher {
+    background-color: rgb(24, 168, 72);
+    display: flex !important;
+    justify-content: center !important;
+    color: white !important;
+  }
 
-::ng-deep .mat-icon-button {
-  padding-right: 0.4em;
-  margin-right: 0.1em;
+  & .snack-class-fail-teacher {
+    background-color: rgb(175, 50, 1);
+    display: flex !important;
+    justify-content: center !important;
+    color: white !important;
+  }
+
+  & .mat-icon-button.teacher-button {
+    padding-right: 0.4em;
+    margin-right: 0.1em;
+  }
 }
 
 .block {
@@ -23,24 +35,22 @@
 
 span.lastname {
   display: block;
-  font-size: 1.4em;
+  font-size: 1.1em;
   margin-top: 0.3em;
+}
+
+span.first-patr {
+  margin-bottom: 0.2em;
 }
 
 .block-button-section {
   margin: auto 0 auto auto;
 }
 
-img {
-  height: 44px;
-  width: 44px;
-  border-radius: 50%;
-  padding: 0.3em;
-  margin-right: 1em;
-}
-
 .block-info-avatar {
   display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .block-info-avatar:hover {
@@ -54,13 +64,17 @@ mat-icon:hover {
   border-radius: 50%;
 }
 
-::ng-deep th.mat-header-cell {
-  text-align: center !important;
+.cdk-column-num {
+  text-align: center;
+  padding-left: 0px !important;
+}
+
+.block-info-section {
+  padding-left: 0.3em;
 }
 
 @media only screen and (max-width: 405px) and (min-width: 320px) {
   .cdk-column-num {
-    padding-left: 0.1em !important;
     padding-right: 0 !important;
   }
   .mat-icon-button {
@@ -72,25 +86,23 @@ mat-icon:hover {
   }
 }
 
-@media only screen and (min-width: 406px) {
-  .cdk-column-num {
-    padding-left: 1em !important;
-  }
+table {
+  width: 100%;
 }
 
 @media only screen and (min-width: 600px) {
   table {
     width: 65vw !important;
   }
+  .cdk-column-num {
+    padding-left: 0.4em !important;
+    padding-right: 0.4em !important;
+  }
 }
 
 mat-form-field {
   width: 65%;
 }
-
-// .cdk-column-num {
-//   padding-left: 1em !important;
-// }
 
 .cdk-column-subjects {
   padding-right: 0 !important;
@@ -104,4 +116,13 @@ mat-form-field {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.cdk-column-classes {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.cdk-column-dots {
+  padding-right: 0.4em !important;
 }
