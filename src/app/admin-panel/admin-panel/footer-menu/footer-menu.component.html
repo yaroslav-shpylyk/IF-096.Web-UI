@@ -1,29 +1,26 @@
-<a *ngFor="let i of routes"
-   routerLink="{{i.path}}" routerLinkActive="active">
+<!--static sections in footer menu-->
+<a *ngFor="let i of routes" routerLink="{{i.path}}" routerLinkActive="active">
   <div class="icons">
     <mat-icon>{{i.icon}}</mat-icon>
     <br>
     <span>{{i.name}}</span>
   </div>
 </a>
-
-  <a routerLink="{{pathActive}}" [ngClass]="{active: active}">
-    <div class="icons">
-      <mat-icon>{{iconActive}}</mat-icon>
-      <br>
-      <span>{{nameActive}}</span>
-    </div>
-  </a>
-
-
+<!--show selected section from matMenuTriggerFor menu-->
+<a routerLink="{{pathActive}}" [ngClass]="{active: active}">
+  <div class="icons">
+    <mat-icon>{{iconActive}}</mat-icon>
+    <br>
+    <span>{{nameActive}}</span>
+  </div>
+</a>
 <!--3 dots toggle menu-->
 <button mat-icon-button [matMenuTriggerFor]="menu">
   <mat-icon>more_vert</mat-icon>
 </button>
-
-<!--links for toggle menu-->
+<!--link for toggle menu-->
 <mat-menu #menu="matMenu">
-
+  <!--loop of sections from matMenuTriggerFor menu-->
   <a routerLink="{{i.path}}" *ngFor="let i of routesMore">
     <button mat-menu-item>
       <mat-icon>{{i.icon}}</mat-icon>
@@ -31,7 +28,7 @@
     </button>
   </a>
   <mat-divider></mat-divider>
-
+  <!--logout button-->
   <a (click)="auth.logout()"> <!-- logout function -->
     <button mat-menu-item>
       <mat-icon>exit_to_app</mat-icon>

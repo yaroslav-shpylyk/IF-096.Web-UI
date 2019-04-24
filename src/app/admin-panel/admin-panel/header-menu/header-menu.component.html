@@ -1,64 +1,51 @@
+<!--header list-->
 <mat-nav-list class="navigation-items">
-
-  <div>
-
-    <!--dropdown menu-->
+  <div> <!--dropdown menu-->
     <a mat-list-item [matMenuTriggerFor]="menu">
       <mat-icon>expand_more</mat-icon>
-      Більше</a>
+      Більше
+    </a>
   </div>
-
+  <!--static sections in header menu-->
   <div *ngFor="let i of routes">
-
-  <a mat-list-item routerLinkActive="active" routerLink="{{i.path}}">
-    <mat-icon>{{i.icon}}</mat-icon>
-    {{i.name}}</a>
-
+    <a mat-list-item routerLinkActive="active" routerLink="{{i.path}}">
+      <mat-icon>{{i.icon}}</mat-icon>
+      {{i.name}}
+    </a>
   </div>
-
-
-
-
+  <!--show selected section from matMenuTriggerFor menu-->
   <div>
-
-  <a mat-list-item routerLink="{{pathActive}}" [ngClass]="{active: active}">
-    <mat-icon>{{iconActive}}</mat-icon>
-    {{nameActive}}</a>
+    <a mat-list-item routerLink="{{pathActive}}" [ngClass]="{active: active}">
+      <mat-icon>{{iconActive}}</mat-icon>
+      {{nameActive}}
+    </a>
   </div>
-
-
-
   <!--list for dropdown menu-->
   <mat-menu #menu="matMenu" class="dropdown-menu">
-
+    <!--loop of sections from matMenuTriggerFor menu-->
     <div *ngFor="let i of routesMore">
-
-    <a routerLink="{{i.path}}">
-      <button mat-menu-item>
-        <mat-icon>{{i.icon}}</mat-icon>
-        <span>{{i.name}}</span>
-      </button>
-    </a>
-    <mat-divider></mat-divider>
-
+      <a routerLink="{{i.path}}">
+        <button mat-menu-item>
+          <mat-icon>{{i.icon}}</mat-icon>
+          <span>{{i.name}}</span>
+        </button>
+      </a>
+      <mat-divider></mat-divider>
     </div>
-
-    <mat-divider></mat-divider>
-    <a (click)="auth.logout()">
+    <!--logout button-->
+    <a (click)="auth.logout()"> <!-- logout function -->
       <button mat-menu-item>
         <mat-icon>exit_to_app</mat-icon>
         <span>Вийти</span>
       </button>
     </a>
   </mat-menu>
-
   <!-- account photo icon -->
   <a routerLink="/admin-panel" class="right">
-    <span>{{admin}}</span>
+    <span>Адміністратор</span>
     <div class="account-photo">
       <mat-icon [inline]="true">account_circle</mat-icon>
     </div>
   </a>
-
 </mat-nav-list>
 

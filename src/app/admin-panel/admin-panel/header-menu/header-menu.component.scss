@@ -1,21 +1,14 @@
 @import "../../../../styles";
 
-mat-nav-list {
-  height: 64px!important;
+mat-nav-list { // header list
+  height: 64px !important;
 }
-.mat-list-item { // menu list
+
+.mat-list-item { // menu list float left
   color: white !important;
   cursor: pointer;
-  height: 64px!important;
-
-
-  &.active { // selected section
-    background-color: #3da6db !important;
-  }
-
-  .mat-icon { // icons
-    padding-right: 5px;
-  }
+  height: 64px !important;
+  font-size: 0.65em !important;
 
   /* Most of the Smartphones (Portrait) */
   @media only screen and (max-width: 600px) {
@@ -24,6 +17,27 @@ mat-nav-list {
   /* Most of the Retina Display Smartphones (Portrait) */
   @media only screen and (max-width: 600px) and (min-resolution: 2dppx) and (orientation: portrait) {
     display: none !important; // hide
+  }
+
+  &.active { // selected section
+    background-color: #3da6db !important;
+  }
+
+  &:hover {
+    color: lighten($main-color, 45%) !important;
+  }
+
+  .mat-icon { // icons
+    padding-right: 5px;
+  }
+
+  /*Small Tablets*/
+  @media only screen and (max-width: 750px) and (min-width: 601px) {
+    font-size: 0.5em !important; // link buttons
+  }
+  /*Small Tablets with Retina Display*/
+  @media only screen and (max-width: 750px) and (min-width: 601px) and (min-resolution: 2dppx) and (orientation: portrait) {
+    font-size: 0.5em !important; // link buttons
   }
 }
 
@@ -40,7 +54,6 @@ a {
 }
 
 .navigation-items { // menu list
-  font-size: 0.8em!important;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -49,7 +62,7 @@ a {
   align-items: center;
 }
 
-.right {
+.right { // account photo with name of user float right
   height: 100%;
   display: flex;
   flex-direction: row;
@@ -57,9 +70,25 @@ a {
   align-items: center;
   margin-left: auto;
 
-  span {
-    font-size: 0.8em;
+  span { // name of user - Administrator
+    font-size: 0.65em;
     padding: 0 5px;
+    /*Small Tablets*/
+    @media only screen and (max-width: 750px) and (min-width: 601px) {
+      font-size: 0.5em !important;
+      width: 50%;
+      overflow: hidden; /* to hide anything that doesn't fit in the containing element. */
+      white-space: nowrap; /* to make sure the line doesn't break when it is longer than the containing div. */
+      text-overflow: ellipsis; /* add ... */
+    }
+    /*Small Tablets with Retina Display*/
+    @media only screen and (max-width: 750px) and (min-width: 601px) and (min-resolution: 2dppx) and (orientation: portrait) {
+      font-size: 0.5em !important;
+      width: 50%;
+      overflow: hidden; /* to hide anything that doesn't fit in the containing element. */
+      white-space: nowrap; /* to make sure the line doesn't break when it is longer than the containing div. */
+      text-overflow: ellipsis; /* add ... */
+    }
   }
 }
 
