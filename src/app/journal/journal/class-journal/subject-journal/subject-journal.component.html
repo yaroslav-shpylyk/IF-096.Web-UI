@@ -19,8 +19,14 @@
         }"
       >
         {{ column !== 'star' ? thRow[i] : '' }}
-        <i *ngIf="homeworks[column]?.homework !== '' && column !== 'star' && column !== 'studentFullName'"
-          class="material-icons">
+        <i
+          *ngIf="
+            homeworks[column]?.homework !== '' &&
+            column !== 'star' &&
+            column !== 'studentFullName'
+          "
+          class="material-icons"
+        >
           attach_file
         </i>
         <i *ngIf="column == 'star'" class="material-icons">

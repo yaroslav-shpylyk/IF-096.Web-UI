@@ -1,0 +1,53 @@
+<div class="info">
+  <h3>Домашнє завдання</h3>
+  <h2>на {{ homeworks[lessonId].date }}</h2>
+  <h3>
+    Вид роботи: <b>{{ markType }}</b>
+  </h3>
+</div>
+
+<div class="wrapper">
+  <div class="bottom-section">
+    <mat-divider></mat-divider>
+    <form [formGroup]="homeworkForm" (ngSubmit)="onSubmit()">
+      <mat-form-field>
+        <textarea
+          matInput
+          formControlName="message"
+          placeholder="Коментар"
+        ></textarea>
+      </mat-form-field>
+
+      <input
+        formControlName="homeworkFile"
+        type="file"
+        (change)="onFileSelected($event)"
+      />
+
+      <!-- <input
+        *ngIf="this.homeworks[this.lessonId].fileName"
+        formControlName="homeworkGetFile"
+        href="path_to_file"
+        download="proposed_file_name"
+        type="button"
+      /> -->
+
+      <button
+        [disabled]="homeworkForm.pristine"
+        mat-raised-button
+        color="primary"
+        type="submit"
+      >
+        Зберегти
+      </button>
+
+      <a class="fileClc"
+    
+        (click)="dwnl()"
+        
+      >
+      {{ homeworks[lessonId].fileName }}
+      </a>
+    </form>
+  </div>
+</div>

@@ -135,8 +135,13 @@ th::first-line {
   }
 }
 
-th:not(.cdk-column-star) {
+th:not(.cdk-column-star):not(.cdk-column-studentFullName) {
   position: relative;
+  cursor: pointer;
+}
+
+th:not(.cdk-column-star):not(.cdk-column-studentFullName):hover {
+  box-shadow:inset 0px 0px 0px 3px rgb(21, 101, 192);
 }
 
 th:not(.cdk-column-star):not(.cdk-column-studentFullName) > i {
@@ -145,4 +150,15 @@ th:not(.cdk-column-star):not(.cdk-column-studentFullName) > i {
   position: absolute;
   background-color: rgba(250, 235, 215, 0);
   color: grey;
+}
+
+::ng-deep .fileClc {
+  cursor: pointer;
+  color: #007bff;
+}
+
+::ng-deep .fileClc:hover {
+  cursor: pointer;
+  color: #2f00ff;
+  text-decoration: underline;
 }

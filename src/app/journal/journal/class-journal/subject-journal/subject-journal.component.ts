@@ -5,6 +5,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { MatBottomSheet } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { BottomSheetOverviewSheetComponent } from './bottom-sheet-overview.components';
+import { HomeworkBottomSheetOverviewSheetComponent } from './homework-bottom-sheet-overview.components';
 
 @Component({
   selector: 'app-subject-journal',
@@ -107,9 +108,9 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
         temp.push('star');
 
         this.displayedColumns = temp;
-        console.log(temp);
         // this.journal = journal;
         this.journal = journal.journals;
+        console.log(this.thRow);
         console.log(this.homeworks);
         this.journalsStorageService.loadingStateChanged.next(false);
       });
@@ -125,11 +126,32 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
    * @param event - object representing a click event;
    * @param i - index of column in a row;
    */
-  onHeadClc(idLesson, studentEl, event, i) {
+  onHeadClc(idLesson, headerEl, event, i) {
     console.log(idLesson);
-    console.log(studentEl);
-    console.log(event);
+    console.log(headerEl);
+    console.log(event.srcElement.innerText.split('\n')[0]);
     console.log(i);
+
+    if (!i || i === this.thRow.length ) {
+      return;
+    }
+
+    event.target.style.boxShadow = 'inset 0px 0px 0px 3px rgb(21, 101, 192)';
+    const bottomSheetRef = this.bottomSheet.open(
+      HomeworkBottomSheetOverviewSheetComponent,
+      {
+        data: {
+          lessonId: idLesson,
+          homeworks: this.homeworks,
+          markType: event.srcElement.innerText.split('\n')[0]
+        },
+        panelClass: 'sbj-jrnl-cmp-bottom-container'
+      }
+    );
+
+    bottomSheetRef.afterDismissed().subscribe(() => {
+      event.target.style.boxShadow = '';
+    });
   }
 
   onClc(idLesson, studentEl, event, i) {
