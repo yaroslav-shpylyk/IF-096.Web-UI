@@ -21,13 +21,15 @@
 <!--link for toggle menu-->
 <mat-menu #menu="matMenu">
   <!--loop of sections from matMenuTriggerFor menu-->
-  <a routerLink="{{i.path}}" *ngFor="let i of routesMore">
-    <button mat-menu-item>
-      <mat-icon>{{i.icon}}</mat-icon>
-      <span>{{i.name}}</span>
-    </button>
-  </a>
-  <mat-divider></mat-divider>
+  <div *ngFor="let i of routesMore">
+    <a routerLink="{{i.path}}">
+      <button mat-menu-item>
+        <mat-icon>{{i.icon}}</mat-icon>
+        <span>{{i.name}}</span>
+      </button>
+    </a>
+    <mat-divider></mat-divider>
+  </div>
   <!--logout button-->
   <a (click)="auth.logout()"> <!-- logout function -->
     <button mat-menu-item>
@@ -35,4 +37,5 @@
       <span>Вийти</span>
     </button>
   </a>
+  <mat-divider></mat-divider>
 </mat-menu>

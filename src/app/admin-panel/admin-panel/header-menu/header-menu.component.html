@@ -1,11 +1,5 @@
 <!--header list-->
 <mat-nav-list class="navigation-items">
-  <div> <!--dropdown menu-->
-    <a mat-list-item [matMenuTriggerFor]="menu">
-      <mat-icon>expand_more</mat-icon>
-      Більше
-    </a>
-  </div>
   <!--static sections in header menu-->
   <div *ngFor="let i of routes">
     <a mat-list-item routerLinkActive="active" routerLink="{{i.path}}">
@@ -18,6 +12,12 @@
     <a mat-list-item routerLink="{{pathActive}}" [ngClass]="{active: active}">
       <mat-icon>{{iconActive}}</mat-icon>
       {{nameActive}}
+    </a>
+  </div>
+  <div> <!--dropdown menu-->
+    <a mat-list-item [matMenuTriggerFor]="menu">
+      <mat-icon>expand_more</mat-icon>
+      Більше
     </a>
   </div>
   <!--list for dropdown menu-->
@@ -39,6 +39,7 @@
         <span>Вийти</span>
       </button>
     </a>
+    <mat-divider></mat-divider>
   </mat-menu>
   <!-- account photo icon -->
   <a routerLink="/admin-panel" class="right">
