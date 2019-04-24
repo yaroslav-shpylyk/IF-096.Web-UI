@@ -1,7 +1,5 @@
 mat-accordion {
   width: 100%;
-  min-width: 17em;
-  max-width: 45em;
 }
 
 #wrapper {
@@ -39,7 +37,7 @@ mat-radio-group {
 }
 
 .mat-row:hover {
-  background-color: rgba(24, 151, 236, 0.685);
+  background-color: #dcdcdc;
   cursor: pointer;
 }
 
@@ -62,5 +60,12 @@ mat-expansion-panel {
 
   & .journal-divider {
     margin-top: 1em !important;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  table,
+  mat-accordion {
+    width: 65vw !important;
   }
 }

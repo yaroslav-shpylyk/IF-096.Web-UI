@@ -2,16 +2,16 @@ table {
   width: 100%;
 }
 
-.editDot{
+.editDot {
   font-size: 1.5em;
   padding-left: 7px;
 }
 
-.mat-form-field {
-  width: 100%;
+mat-form-field {
+  width: 95%;
 }
 
-.threeDots{
+.threeDots {
   cursor: pointer;
 }
 
@@ -27,7 +27,22 @@ table {
   font-size: 1.6em;
 }
 
-.mat-row:hover{
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media only screen and (min-width: 600px) {
+  table {
+    width: 65vw !important;
+  }
+
+  mat-form-field {
+    width: 65%;
+  }
+}
+.mat-row:hover {
   background-color: #dcdcdc;
   cursor: pointer;
 }
