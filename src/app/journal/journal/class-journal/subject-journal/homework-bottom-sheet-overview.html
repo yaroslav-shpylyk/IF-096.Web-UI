@@ -19,18 +19,19 @@
       </mat-form-field>
 
       <input
+        class="fileUpl"
         formControlName="homeworkFile"
         type="file"
         (change)="onFileSelected($event)"
       />
 
-      <!-- <input
-        *ngIf="this.homeworks[this.lessonId].fileName"
-        formControlName="homeworkGetFile"
-        href="path_to_file"
-        download="proposed_file_name"
-        type="button"
-      /> -->
+      <mat-divider class="homework-divider"></mat-divider>
+
+      <a class="fileDwn" (click)="dwnl()">
+        {{ homeworks[lessonId].fileName }}
+      </a>
+
+      <mat-divider class="homework-divider"></mat-divider>
 
       <button
         [disabled]="homeworkForm.pristine"
@@ -40,14 +41,6 @@
       >
         Зберегти
       </button>
-
-      <a class="fileClc"
-    
-        (click)="dwnl()"
-        
-      >
-      {{ homeworks[lessonId].fileName }}
-      </a>
     </form>
   </div>
 </div>

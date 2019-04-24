@@ -152,13 +152,27 @@ th:not(.cdk-column-star):not(.cdk-column-studentFullName) > i {
   color: grey;
 }
 
-::ng-deep .fileClc {
+::ng-deep .fileDwn {
   cursor: pointer;
   color: #007bff;
+  display: block;
+  text-align: center !important;
 }
 
-::ng-deep .fileClc:hover {
+::ng-deep .fileDwn:hover {
   cursor: pointer;
   color: #2f00ff;
   text-decoration: underline;
+  display: block;
+  text-align: center !important;
+}
+
+::ng-deep .fileUpl {
+  display: block;
+  margin: auto;
+}
+
+::ng-deep .homework-divider {
+  margin-top: 1em !important;
+  margin-bottom: 1em !important;
 }
