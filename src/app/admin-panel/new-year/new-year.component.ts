@@ -20,7 +20,7 @@ export class NewYearComponent implements OnInit {
   public isCurrentYear = true;
   public filterHasResults = false;
   public controlIndexes: number[] = [];
-  public panelOpenState:boolean[] = [];
+  public panelOpenState: boolean[] = [];
 
   constructor(
     private newYearTransitition: NewYearService) { }
