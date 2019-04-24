@@ -52,7 +52,7 @@ mat-card.locked.transited, mat-card.locked:hover.transited {
 }
 
 mat-card.locked, mat-card.locked:hover {
-  background-color: grey;
+  opacity: 0.6;
   mat-accordion, .class-title, .edit_title {
     cursor: default;
     pointer-events: none;
@@ -141,14 +141,6 @@ mat-list-item {
   font-size: 1em;
 }
 
-.container{
-  text-align: center;
-  margin: 20px auto;
-  h2 { font-size: 1.5em; }
-  @media (min-width: 481px) and (max-width: 767px) { width: 80%; }
-  @media (min-width: 768px) { width: 70%; }
-}
-
 ::ng-deep .mat-expansion-panel-content { min-width: 135px; }
 
 @media (min-width: 481px) {
@@ -158,88 +150,6 @@ mat-list-item {
     padding: 0 16px;
     font-size: 1em;
   }
-}
-
-/*Toggle stripe*/
-
-input[type=checkbox] {
-  position: absolute;
-  top: -9999px;
-  left: -9999px;
-  z-index: 3;
-}
-
-label {
-  display: block;
-  width: 48px;
-  height: 48px;
-  font-size: 2em;
-  margin: 10px 0 10px 0;
-  cursor: pointer;
-  i.active{color: white}
-}
-
-.toggle-stripe {
-  width: 250px;
-  height: 60px;
-  right: -210px;
-  color: white;
-  text-align: center;
-  padding: 5px;
-  position: fixed;
-  top: 130px;
-  z-index:2;
-  transition: right 0.5s ease;
-  
-  div.wrap {
-    position: relative;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    height: 100%;
-    padding: 0px 10px;
-    background-color: #1565c0;
-    border-radius: 30px 0px 0px 30px;
-
-    .checkbox-group {
-      height: 100%;
-      font-size: 0.75em;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-
-      mat-checkbox{
-        padding: 5px;
-      }
-    }
-  }
-}
-
-.marks {
-  position: absolute;
-  visibility: visible;
-  opacity: 1;
-  transition: visibility 0.25s linear, opacity 2s linear;
-  left: 20px;
-  float: right;
-  div {
-    width: 20px;
-    height: 20px;
-    color: white;
-    margin: 5px;
-    -webkit-box-shadow: -1px 1px 3px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: -1px 1px 3px 0px rgba(0,0,0,0.75);
-    box-shadow: -1px 1px 3px 0px rgba(0,0,0,0.75);
-  }
-}
-
-input[type=checkbox]:checked ~ .toggle-stripe {
-  .marks {
-    position: initial;
-    visibility: hidden;
-    opacity: 0;
-  }
-  right: -5px;
 }
 
 .pupils { background-color: rgba(215, 26, 232, 0.75); }

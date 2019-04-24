@@ -106,7 +106,6 @@ export class NewYearComponent implements OnInit {
               el => {
                 el.isClassTransited = true;
                 el.isCardLock = true;
-                // el.curClass.isActive = false;
               }
             );
           }
@@ -136,6 +135,9 @@ export class NewYearComponent implements OnInit {
       (item) => {
         if ( filterParams.every(func => func(item))) {
           return true;
+        } else {
+          const input = (this.transititionForm.controls.newClassTitle as FormArray).controls[item];
+          input.reset({ value: '', disabled: true });
         }
       }
     );
