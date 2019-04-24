@@ -2,7 +2,7 @@
   <h2>Перехід на новий навчальний рік</h2>
   <form *ngIf="filteredindexes.length>0; else emptyFilter" [formGroup]="transititionForm" class="component" (ngSubmit)="formSubmit()">
     <div>
-      <app-class-card 
+      <app-class-card
       *ngFor="let index of filteredindexes"
       [controlIndex]="index"
       [form]="transititionForm"
@@ -17,7 +17,7 @@
     <button mat-raised-button class="submit" type="submit" [disabled]="!transititionForm.valid" > Перевести учнів </button>
   </form>
   <ng-template #emptyFilter>
-    Немає класів, що відповідають критеріям фільтру. Ви можете змінити налаштування фільтру кнопкою, що розміщена справа 
+    <p>Немає класів, що відповідають критеріям фільтру. Ви можете змінити налаштування фільтру кнопкою, що розміщена справа</p>
 </ng-template>
 </div>
   <!-- Toggle menu -->

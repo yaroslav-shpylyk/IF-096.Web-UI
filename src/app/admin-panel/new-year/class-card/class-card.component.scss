@@ -59,7 +59,7 @@ mat-card.locked, mat-card.locked:hover {
   }
   .mat-expansion-panel-header-description {
     color: #545454;
-  }  
+  }
 }
 
 input.locked {
@@ -104,7 +104,7 @@ mat-list-item {
     text-decoration: none;
   }
 
-  span { 
+  span {
     display: inline-block;
     padding: 0 5px;
   }
@@ -129,16 +129,6 @@ mat-list-item {
   right: 10px;
   color:red;
   p { font-size: 0.5em; }
-}
-
-.submit {
-  display: block;
-  background: $main-color;
-  color: #fff;
-  width: 200px;
-  height: 50px;
-  margin: 10px auto;
-  font-size: 1em;
 }
 
 ::ng-deep .mat-expansion-panel-content { min-width: 135px; }

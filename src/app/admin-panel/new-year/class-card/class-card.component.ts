@@ -8,7 +8,6 @@ import { ClassInfo } from '../../../models/class-info';
   styleUrls: ['./class-card.component.scss']
 })
 export class ClassCardComponent implements OnInit {
-  @Input() newClassTitle;
   @Input() curClass: ClassInfo;
   @Input() controlIndex: number;
   @Input() newTitleField: FormControl;
@@ -20,8 +19,7 @@ export class ClassCardComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    }
+  ngOnInit() { }
 
   /**
    * Makes input with new class title enabled or disabled for editing
@@ -38,10 +36,8 @@ export class ClassCardComponent implements OnInit {
 
   /**
    * Include (exclude) class to (from) request
-   * @param index number - index of element from form control
-   * @param skipClass HTML element - checkbox for class skiping
    */
-  lockClass(index: number, skipClass: HTMLInputElement) {
+  lockClass() {
     const input = this.newTitleField;
     const newTitle = input.value;
     if (!this.isCardLock) {
