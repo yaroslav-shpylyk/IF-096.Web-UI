@@ -1,55 +1,21 @@
-<!--<mat-form-field class="example-full-width">
-  <input matInput placeholder="Введіть дату: 'yyyy-MM-dd'" value="" #box (keyup.enter)="onEnter(box.value)">
-</mat-form-field>
-
-<br>-->
-
+<!--DatePicker-->
 <mat-form-field>
   <input matInput [matDatepicker]="picker" placeholder="Оберіть дату"
-         (dateInput)="addEvent($event)">
+         (dateInput)="addEvent($event)" [formControl]="date">
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker></mat-datepicker>
 </mat-form-field>
 
-<!--<p>{{day.date | date :'EEEE'}}</p>-->
-<!--<div *ngFor="let day of serverData">-->
-<!--<p>{{day.date | date :'EEEE'}}</p>-->
-<!--<mat-table [dataSource]="serverData" class="mat-elevation-z8">
-
-
-
-<!--<table>
-  <tbody *ngFor="let item of groupArr">
-  <ng-container>
-    <tr >
-      <td colspan="2"><b>{{item.date}}</b></td>
-    </tr>
-    <tr class="row">
-      <th>№</th>
-      <th>Урок</th>
-      <th>Домашнє завдання</th>
-      <th>Оцінка</th>
-      <th>Примітка</th>
-    </tr>
-    <tr *ngFor="let value of item.groupItem">
-      <td>{{value.lessonNumber}}</td>
-      <td>{{value.subjectName}}</td>
-      <td>{{value.homeWork}}</td>
-      <td *ngIf="value.mark != 0">{{value.mark}}</td>
-      <td>{{value.note}}</td>
-    </tr>
-  </ng-container></tbody>
-</table>-->
-
+<!--Tables with student-book data-->
 <table>
   <tbody *ngFor="let item of groupArr">
   <ng-container>
-    <h4 colspan="2">{{item.date | date :'EEEE'}}</h4>
+    <h4 colspan="2">{{item.date | date : 'fullDate' | uppercase}}</h4>
     <table mat-table [dataSource]="item.groupItem" class="mat-elevation-z8">
 
       <!-- lessonNumber Column -->
       <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef  class="lessonNumber"> №</th>
+        <th mat-header-cell *matHeaderCellDef class="lessonNumber"> №</th>
         <td mat-cell *matCellDef="let value"> {{value.lessonNumber}}</td>
       </ng-container>
 
@@ -74,7 +40,7 @@
       <!-- note Column -->
       <ng-container matColumnDef="note">
         <th mat-header-cell *matHeaderCellDef class="note"> Примітка</th>
-        <td mat-cell *matCellDef="let value"> {{value.note}}</td>
+        <td mat-cell class="note" *matCellDef="let value"> {{value.note}}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
