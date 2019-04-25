@@ -15,7 +15,7 @@ export class JournalComponent implements OnInit {
   activeClasses = [];
   inactiveClasses = [];
   teachers: TeacherData[];
-  chosenClasses = 'activeClasses';
+  chosenOption = 'activeClasses';
 
   displayedColumns: string[] = ['nums', 'className', 'classYear'];
   dataSource;
@@ -40,7 +40,7 @@ export class JournalComponent implements OnInit {
         }
       }
 
-      this.dataSource = new MatTableDataSource(this[this.chosenClasses]);
+      this.dataSource = new MatTableDataSource(this[this.chosenOption]);
       this.dataSource.sort = this.sortCol;
     });
 
@@ -77,34 +77,14 @@ export class JournalComponent implements OnInit {
   }
 
   /**
-   * Method receives input data from a filter field
-   * in teacher table turns it into lower case and assigns it
-   * to the table data source.
-   * @param filterValue - string of provided value to filter by.
-   */
-  applyTeacherFilter(filterValue: string = '') {
-    this.filter = filterValue.trim().toLowerCase();
-    this.teachersData.filter = this.filter;
-  }
-
-  /**
    * Method navigates to the route with
    * selected class from appropriate row
-   * @param row - object representing a class
+   * @param row - object representing a class.
+   * @param chosenOption - string representing either class or teacher id.
    */
-  selectRow(row) {
-    this.router.navigate(['class', row.id], {
-      relativeTo: this.route
-    });
-  }
-
-  /**
-   * Method navigates to the route with
-   * selected teacher from appropriate row
-   * @param row - object representing a teacher
-   */
-  selectTeacherRow(row) {
-    this.router.navigate(['teacher', row.id], {
+  selectRow(row, chosenOption) {
+    const path = chosenOption === 'teachers' ? 'teacher' : 'class';
+    this.router.navigate([path, row.id], {
       relativeTo: this.route
     });
   }

@@ -11,7 +11,7 @@
 
     <mat-radio-group
       aria-label="Вибрана опція"
-      [(ngModel)]="chosenClasses"
+      [(ngModel)]="chosenOption"
       (change)="handleChange($event)"
     >
       <div class="radio-block">
@@ -39,29 +39,29 @@
       </ng-container>
 
       <ng-container
-        [matColumnDef]="chosenClasses === 'teachers' ? 'lastname' : 'className'"
+        [matColumnDef]="chosenOption === 'teachers' ? 'lastname' : 'className'"
       >
         <th mat-sort-header mat-header-cell *matHeaderCellDef>
-          {{ chosenClasses === 'teachers' ? 'Прізвище' : 'Клас' }}
+          {{ chosenOption === 'teachers' ? 'Прізвище' : 'Клас' }}
         </th>
         <td mat-cell *matCellDef="let element">
           {{
-            chosenClasses === 'teachers' ? element.lastname : element.className
+            chosenOption === 'teachers' ? element.lastname : element.className
           }}
         </td>
       </ng-container>
 
       <ng-container
         [matColumnDef]="
-          chosenClasses === 'teachers' ? 'firstname' : 'classYear'
+          chosenOption === 'teachers' ? 'firstname' : 'classYear'
         "
       >
         <th mat-sort-header mat-header-cell *matHeaderCellDef>
-          {{ chosenClasses === 'teachers' ? "Ім'я" : 'Рік' }}
+          {{ chosenOption === 'teachers' ? "Ім'я" : 'Рік' }}
         </th>
         <td mat-cell *matCellDef="let element">
           {{
-            chosenClasses === 'teachers' ? element.firstname : element.classYear
+            chosenOption === 'teachers' ? element.firstname : element.classYear
           }}
         </td>
       </ng-container>
@@ -70,7 +70,7 @@
       <tr
         mat-row
         *matRowDef="let row; columns: displayedColumns"
-        (click)="selectRow(row)"
+        (click)="selectRow(row, chosenOption)"
       ></tr>
     </table>
   </mat-accordion>
