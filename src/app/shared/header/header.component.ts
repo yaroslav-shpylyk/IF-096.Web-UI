@@ -77,4 +77,13 @@ export class HeaderComponent implements OnInit {
     const isAdmin = this.auth.getUserRole() === roles.admin;
     return isAdmin;
   }
+
+  /**
+   * checks user's role for being student (user)
+   * @returns true if user is student (user)
+   */
+  isStudent() {
+    const isStudent = this.auth.getUserRole() === roles.students;
+    return isStudent;
+  }
 }

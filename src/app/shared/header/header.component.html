@@ -3,4 +3,7 @@
   <div *ngIf="isAdmin()" class="header-menu"> <!-- show if user is admin-->
     <app-admin-header-menu></app-admin-header-menu>
   </div>
+  <div *ngIf="isStudent()" class="header-menu"> <!-- menu list for student-->
+    <app-student-header-menu></app-student-header-menu> <!-- show for mobiles and tablets -->
+  </div>
 </mat-toolbar>
