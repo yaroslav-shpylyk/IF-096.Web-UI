@@ -17,13 +17,11 @@ export class JournalComponent implements OnInit {
   teachers: TeacherData[];
   chosenClasses = 'activeClasses';
 
-  displayedColumns: string[] = ['num', 'className', 'classYear'];
-  displayedTeachersColumns: string[] = ['num', 'lastname', 'firstname'];
+  displayedColumns: string[] = ['nums', 'className', 'classYear'];
   dataSource;
   teachersData;
 
-  @ViewChild('sortCol1') sortCol1: MatSort;
-  @ViewChild('sortCol2') sortCol2: MatSort;
+  @ViewChild('sortCol') sortCol: MatSort;
 
   constructor(
     private teachersStorageService: TeachersStorageService,
@@ -43,13 +41,11 @@ export class JournalComponent implements OnInit {
       }
 
       this.dataSource = new MatTableDataSource(this[this.chosenClasses]);
-      this.dataSource.sort = this.sortCol1;
+      this.dataSource.sort = this.sortCol;
     });
 
     this.teachersStorageService.getTeacherS().subscribe(teachers => {
       this.teachers = teachers;
-      this.teachersData = new MatTableDataSource(this.teachers);
-      this.teachersData.sort = this.sortCol2;
     });
   }
 
@@ -60,8 +56,12 @@ export class JournalComponent implements OnInit {
    * @param e - event object from a radio group.
    */
   handleChange(e) {
+    this.displayedColumns =
+      e.value === 'teachers'
+        ? ['nums', 'lastname', 'firstname']
+        : ['nums', 'className', 'classYear'];
     this.dataSource = new MatTableDataSource(this[e.value]);
-    this.dataSource.sort = this.sortCol1;
+    this.dataSource.sort = this.sortCol;
     this.applyFilter(this.filter);
   }
 
