@@ -11,6 +11,7 @@
       <th
         mat-header-cell
         *matHeaderCellDef
+        (click)="onHeadClc(column, $event, i)"
         [ngClass]="{
           'is-yellow': thRow[i]?.includes('Модуль'),
           'is-blue': thRow[i]?.includes('Контрольна'),
@@ -18,6 +19,17 @@
         }"
       >
         {{ column !== 'star' ? thRow[i] : '' }}
+        <i
+          *ngIf="
+            (homeworks[column]?.homework !== '' ||
+              homeworks[column]?.fileName !== '') &&
+            column !== 'star' &&
+            column !== 'studentFullName'
+          "
+          class="material-icons"
+        >
+          attach_file
+        </i>
         <i *ngIf="column == 'star'" class="material-icons">
           trending_up
         </i>
@@ -25,8 +37,11 @@
 
       <td
         mat-cell
-        *matCellDef="let element; let i = index"
-        (click)="onClc(column, journal[i], $event, i)"
+        *matCellDef="let element; let y = index"
+        (click)="onClc(column, journal[y], $event, y)"
+        [matTooltip]="
+          i > 0 && i <= journal[y].marks.length ? journal[y].marks[i - 1].note : ''
+        "
       >
         {{ column !== 'star' ? element[column] : average(element) }}
       </td>
@@ -36,4 +51,3 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 </div>
-
