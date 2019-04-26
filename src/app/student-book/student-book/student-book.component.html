@@ -1,15 +1,20 @@
+<button mat-button (click)="backDate()"><mat-icon>arrow_back</mat-icon></button>
+
 <!--DatePicker-->
 <mat-form-field>
   <input matInput [matDatepicker]="picker" placeholder="Оберіть дату"
-         (dateInput)="addEvent($event)" [formControl]="date">
+         (dateInput)="getDatePicker($event)"
+         [(ngModel)]="dateValue">
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker></mat-datepicker>
 </mat-form-field>
 
+<button mat-button (click)="forwardDate()"><mat-icon>arrow_forward</mat-icon></button>
+
 <!--Tables with student-book data-->
 <table>
   <tbody *ngFor="let item of groupArr">
-  <ng-container>
+  <ng-container *ngIf="showTable">
     <h4 colspan="2">{{item.date | date : 'fullDate' | uppercase}}</h4>
     <table mat-table [dataSource]="item.groupItem" class="mat-elevation-z8">
 
@@ -49,3 +54,10 @@
   </ng-container>
   </tbody>
 </table>
+
+<div *ngIf="showMessage">
+  <h4>На обрану вами дату розкладу немає. Спробуйте вказати іншу дату.</h4>
+  <div class="iconContainer">
+  <mat-icon class="icon">sentiment_dissatisfied</mat-icon>
+  </div>
+</div>

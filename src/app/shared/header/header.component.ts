@@ -58,7 +58,7 @@ export class HeaderComponent implements OnInit {
   }
 
   /**
-   * show header when user stops scrolling with 2s delay
+   * showMessage header when user stops scrolling with 2s delay
    */
   showHeader() {
     this.scroll.pipe(

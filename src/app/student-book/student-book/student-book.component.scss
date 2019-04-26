@@ -62,3 +62,24 @@ th.mat-header-cell {
 td.mat-cell {
   border-right: 1px solid gainsboro !important;
 }
+
+.iconContainer {
+  width: 100%;
+}
+
+.icon {
+  font-size: 3em;
+  display: block !important;
+  margin: 0 auto !important;
+  color: $dark-color;
+}
+
+button.mat-flat-button {
+  background-color: $main-color;
+  color: white;
+  padding: 0 1em;
+}
+
+mat-form-field {
+  margin: 1em;
+}
