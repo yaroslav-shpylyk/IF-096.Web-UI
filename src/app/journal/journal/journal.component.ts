@@ -30,6 +30,10 @@ export class JournalComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
+  /**
+   * Method fetches from all class and teachers, sorts them in appropriate
+   * arrays and creates a tables depending on received values.
+   */
   ngOnInit() {
     this.classService.getClasses('all').subscribe(classes => {
       for (const clas of classes) {
