@@ -33,4 +33,13 @@ export class FooterComponent implements OnInit {
     return isStudent;
   }
 
+  /**
+   * checks user's role for being teacher
+   * @returns true if user is teacher
+   */
+  isTeacher() {
+    const isTeacher = this.auth.getUserRole() === roles.teacher;
+    return isTeacher;
+  }
+
 }

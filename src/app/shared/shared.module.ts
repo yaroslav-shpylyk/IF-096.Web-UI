@@ -9,6 +9,8 @@ import { AdminFooterMenuComponent } from '../admin-panel/admin-panel/footer-menu
 import { AvatarComponent } from './avatar/avatar.component';
 import { StudentHeaderMenuComponent } from '../student-book/header-menu/header-menu.component';
 import { StudentFooterMenuComponent } from '../student-book/footer-menu/footer-menu.component';
+import { TeacherHeaderMenuComponent } from '../journal/header-menu/header-menu.component';
+import { TeacherFooterMenuComponent } from '../journal/footer-menu/footer-menu.component';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { StudentFooterMenuComponent } from '../student-book/footer-menu/footer-m
     AdminHeaderMenuComponent,
     AvatarComponent,
     StudentHeaderMenuComponent,
-    StudentFooterMenuComponent
+    StudentFooterMenuComponent,
+    TeacherHeaderMenuComponent,
+    TeacherFooterMenuComponent
   ],
   imports: [
     CommonModule,

@@ -6,4 +6,7 @@
   <div *ngIf="isStudent()"> <!-- menu list for student-->
     <app-student-footer-menu></app-student-footer-menu> <!-- show for mobiles and tablets -->
   </div>
+  <div *ngIf="isTeacher()"> <!-- menu list for teacher-->
+    <app-teacher-footer-menu></app-teacher-footer-menu> <!-- show for mobiles and tablets -->
+  </div>
 </mat-toolbar>
