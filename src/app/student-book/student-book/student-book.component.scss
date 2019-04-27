@@ -1,5 +1,17 @@
 @import "../../../styles.scss";
 
+.dateSwitcher {
+  border: 1px solid gainsboro;
+  display: flex;
+  justify-content: center;
+}
+
+button.mat-button {
+}
+
+mat-form-field {
+}
+
 table {
   width: 80%;
   margin: 0 auto !important;
@@ -34,7 +46,7 @@ h4{
 }
 .note {
   width: 20% !important;
-  padding: 0 15px !important;
+  padding: 0 15px 0 15px!important;
 }
 
 th.mat-header-cell {
@@ -72,14 +84,4 @@ td.mat-cell {
   display: block !important;
   margin: 0 auto !important;
   color: $dark-color;
-}
-
-button.mat-flat-button {
-  background-color: $main-color;
-  color: white;
-  padding: 0 1em;
-}
-
-mat-form-field {
-  margin: 1em;
 }

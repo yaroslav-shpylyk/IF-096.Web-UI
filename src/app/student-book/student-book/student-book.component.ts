@@ -1,12 +1,29 @@
 import {Component, OnInit} from '@angular/core';
 import { StudentBookService } from '../../services/student-book.service';
 import { StudentBookData } from 'src/app/models/student-book-data';
-import { DateAdapter } from '@angular/material/core';
+import {FormControl} from '@angular/forms';
+import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+
+// Depending on whether rollup is used, moment needs to be imported differently.
+// Since Moment.js doesn't have a default export, we normally need to import using the `* as`
+// syntax. However, rollup creates a synthetic default module and we thus need to import it using
+// the `default as` syntax.
+import * as _moment from 'moment';
+
+const moment = _moment;
 
 @Component({
   selector: 'app-student-book',
   templateUrl: './student-book.component.html',
-  styleUrls: ['./student-book.component.scss']
+  styleUrls: ['./student-book.component.scss'],
+  providers: [
+    // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
+    // `MatMomentDateModule` in your applications root module. We provide it at the component level
+    // here, due to limitations of our example generation script.
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+  ],
 })
 
 export class StudentBookComponent implements OnInit {
@@ -19,7 +36,7 @@ export class StudentBookComponent implements OnInit {
   public pickerDate;
   public showMessage: boolean;
   public showTable: boolean;
-  public dateValue = new Date();
+  public dateValue = moment();
 
   constructor(private studentBookService: StudentBookService, private adapter: DateAdapter<any>) {
   }
@@ -28,20 +45,20 @@ export class StudentBookComponent implements OnInit {
   }
 
   backDate() {
-    this.dateValue = new Date(this.dateValue.getTime() - (1000 * 60 * 60 * 24 * 7));
+    this.dateValue = moment(this.dateValue.subtract(7, 'd').format('YYYY-MM-DD'));
     console.log(this.dateValue);
     this.showSchedule();
   }
   forwardDate() {
-    this.dateValue = new Date(this.dateValue.getTime() + (1000 * 60 * 60 * 24 * 7));
+    this.dateValue = moment(this.dateValue.add(7, 'd').format('YYYY-MM-DD'));
     console.log(this.dateValue);
     this.showSchedule();
   }
 
   showSchedule() {
-    this.pickerDate = this.dateValue.toISOString().slice(0, 10);
-    console.log(this.pickerDate);
-    this.studentBookService.getInputDate(this.pickerDate);
+    this.pickerDate = moment(this.dateValue.format('YYYY-MM-DD'));
+    console.log('pickerDate in showSchedule:' + this.pickerDate.format('YYYY-MM-DD'));
+    this.studentBookService.getInputDate(this.pickerDate.format('YYYY-MM-DD'));
     this.studentBookService.getStudentBook().subscribe(result => {
       this.serverData = result;
       console.log(this.serverData);
@@ -62,10 +79,10 @@ export class StudentBookComponent implements OnInit {
   }
 
   getDatePicker(event: any) {
-    this.pickerDate = event.value.format('YYYY-MM-DD');
-    this.dateValue = new Date(this.pickerDate.split('-'));
-    console.log(this.dateValue);
-    this.studentBookService.getInputDate(this.pickerDate);
+    this.dateValue = moment(event.value.format('YYYY-MM-DD'));
+    this.pickerDate = this.dateValue;
+    console.log(this.pickerDate);
+    this.studentBookService.getInputDate(this.pickerDate.format('YYYY-MM-DD'));
     this.studentBookService.getStudentBook().subscribe(result => {
       this.serverData = result;
       console.log(this.serverData);
