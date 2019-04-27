@@ -1,56 +1,77 @@
 <mat-card
   [formGroup]="form" 
-  [ngClass]="{'locked': isCardLock, 'active': !isCardLocked, 'transited': isClassTransited}">
+  [ngClass]="{
+    'locked': isCardLock,
+    'active': !isCardLocked,
+    'transited': isClassTransited,
+    'normal': !newTitleField.invalid,
+    'warning': newTitleField.invalid
+  }">
   <ng-container>
-    <label #skipClass (click)="lockClass(controlIndex, skipClass)">
+    <div class="class-lock" #skipClass (click)="lockClass(controlIndex, skipClass)">
       <i *ngIf="!isCardLock" class="material-icons">lock_open</i>
       <i *ngIf="isCardLock" class="material-icons">lock</i>
-    </label>
-  </ng-container>
-  <mat-accordion>
-    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <div class="className">{{curClass.className}}</div> 
-          <div class="currentYear">{{curClass.classYear}}</div>
-        </mat-panel-title>
-        <mat-panel-description *ngIf="curClass.numOfStudents>0; else emptyClass">
-          {{panelOpenState ? 'Список учнів' : 'Переглянути список учнів'}}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <ng-template #emptyClass>
-        <mat-panel-description>
-          Немає учнів у даному класі
-        </mat-panel-description>
-      </ng-template>
-      <ng-container *ngIf="curClass.numOfStudents>0">
-        <mat-list role="list" *ngFor="let pupil of curClass['pupilList'] | keyvalue; let i = index">
-          <mat-list-item role="listitem"><span>{{i+1}})</span><a href="students/{{(pupil.value).id}}" target="_blank">{{(pupil.value).lastname}} {{(pupil.value).firstname}}</a></mat-list-item>
-        </mat-list>
-      </ng-container>
-    </mat-expansion-panel>
-  </mat-accordion>
-  <div formArrayName="newClassTitle" class="new-title">
-    <input [formControlName]="controlIndex"
-      #newClassTitle
-      [ngClass]="!isEditEnable?'locked':''"
-      [value]="controlIndex|autotitle:curClass.className:newTitleField"
-      class="new-class-name" 
-      id={{curClass.id}} placeholder="нова назва"/>
-    <div class="validation-error"
-      *ngIf="newTitleField.invalid">
-      <p *ngIf="newTitleField.errors.pattern">Недопустима назва (Приклад: "8-А")</p>
-      <p *ngIf="newTitleField.errors.class_exist">Клас вже існує в наступному н. р.</p>
-      <p *ngIf="newTitleField.errors.title_dublicate">Назви класів співпадають</p>
     </div>
+  </ng-container>
+  <ng-container>
+    <div class="class-info" *ngIf="curClass.numOfStudents>0; else emptyClass" (click)="openDialog(curClass.id)">
+      <div>
+        <div class="class-name">{{curClass.className}}</div>
+        <div class="class-year">{{curClass.classYear}}</div>
+      </div>
+      <i class="material-icons">people</i>  
+    </div>
+    <ng-template #emptyClass>
+      <div class="class-info empty-class" *ngIf="!curClass.numOfStudents>0">
+        <div>
+          <div class="class-name">{{curClass.className}}</div>
+          <div class="class-year">{{curClass.classYear}}</div>
+        </div>
+      </div>
+    </ng-template>
+  </ng-container>
+  <div class="class-transition">
+      <i class="material-icons">trending_flat</i>
   </div>
-  <div class="edit_title">
+  <div class="new-class-title" [ngClass]="isEditEnable?'locked':''">
+    <ng-container>
+      <div class="class-info empty-class" [ngClass]="{'locked': newTitleField.invalid, 'hidden': isEditEnable}">
+        <div>
+          <div class="class-name">{{newClassTitle.value|autotitle:curClass.className}}</div>
+          <div class="class-year">{{curClass.classYear+1}}</div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container formArrayName="newClassTitle">
+      <mat-form-field [ngClass]="!isEditEnable?'locked':''">
+        <input matInput placeholder="Нова назва класу"
+          cdkFocusInitial
+          [formControlName]="controlIndex"
+          #newClassTitle
+          class="new-class-name" 
+          id={{curClass.id}} placeholder="нова назва"/>
+      </mat-form-field>
+      <div class="validation-error"
+          *ngIf="newTitleField.invalid">
+        <p *ngIf="newTitleField.errors.pattern">Недопустима назва (Приклад: "8-А")</p>
+        <p *ngIf="newTitleField.errors.class_exist">Клас вже існує в наступному н. р.</p>
+        <p *ngIf="newTitleField.errors.title_dublicate">Назви класів співпадають</p>
+      </div>
+    </ng-container>
+  </div>
+  <div class="class-edit-title">
     <label #editClassTitle (click)="editInput(newClassTitle)">
       <i class="material-icons">edit</i>
     </label>
   </div>
   <div class="doted-marks">
-    <div class="pupils" *ngIf="curClass.numOfStudents <= 0"></div>
-    <div class="year" *ngIf="curClass.classYear!==2018"></div>
+    <div class="pupils" 
+      *ngIf="curClass.numOfStudents <= 0"
+      matTooltip="у класі немає учнів">
+    </div>
+    <div class="year" 
+      *ngIf="curClass.classYear!==2017"
+      matTooltip="Цей клас не з поточного н. р.">
+    </div>
   </div>
 </mat-card>

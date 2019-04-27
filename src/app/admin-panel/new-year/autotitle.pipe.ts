@@ -5,12 +5,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TitlePipe implements PipeTransform {
 
-  transform(value: any, curTitle: string, input: any): any {
-    const classNameData = curTitle.split('-');
-    const newTitle = (+classNameData[0] + 1 > 11) ? '' : (+classNameData[0] + 1) + '-' + classNameData[1];
-    setTimeout(() => {
-      input.reset({ value: newTitle, disabled: false });
-    });
-    return value;
+  transform(value: any, curClassName: string): string {
+    const curClassNumber = +curClassName.split('-')[0];
+    if (value === '' && curClassNumber === 11 ) {
+      return 'випуск';
+    } else if (value === '') {
+      return 'розформ.';
+    } else {
+      return value;
+    }
   }
 }

@@ -42,7 +42,7 @@ export class NewYearComponent implements OnInit {
             this.panelOpenState.push(false);
             const newInput = new FormControl(
               {value: '', disabled: false},
-              [Validators.pattern('^([1-9]|1[0-2])-[А-Я]{1}$'),
+              [Validators.pattern('(^[1-7][(]([1-9]|1[0-2])-[А-Я]{1}[)]$)|(^([1-9]|1[0-2])-[А-Я]{1}$)'),
               this.classTitleValidator(this.allClasses, schoolClass.classYear, schoolClass.className)]);
             (this.transititionForm.controls.newClassTitle as FormArray).push(newInput);
           }

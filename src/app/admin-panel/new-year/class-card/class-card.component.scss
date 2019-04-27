@@ -1,5 +1,27 @@
 @import "../../../../styles.scss";
 
+.warning {
+  background: rgba(21,101,192,1);
+  background: -moz-linear-gradient(left, rgba(255,0,0,1) 0%, rgba(255,255,255,1) 0.75%, rgba(255,255,255,1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,0,0,1)), color-stop(0.75%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
+  background: -webkit-linear-gradient(left, rgba(255,0,0,1) 0%, rgba(255,255,255,1) 0.75%, rgba(255,255,255,1) 100%);
+  background: -o-linear-gradient(left, rgba(255,0,0,1) 0%, rgba(255,255,255,1) 0.75%, rgba(255,255,255,1) 100%);
+  background: -ms-linear-gradient(left, rgba(255,0,0,1) 0%, rgba(255,255,255,1) 0.75%, rgba(255,255,255,1) 100%);
+  background: linear-gradient(to right, rgba(255,0,0,1) 0%, rgba(255,255,255,1) 0.75%, rgba(255,255,255,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0000', endColorstr='#ffffff', GradientType=1 );
+}
+
+.normal {
+  background: rgba(21,101,192,1);
+  background: -moz-linear-gradient(left, rgba(21,101,192,1) 0%, rgba(255,255,255,1) 0.75%, rgba(255,255,255,1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(21,101,192,1)), color-stop(0.75%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
+  background: -webkit-linear-gradient(left, rgba(21,101,192,1) 0%, rgba(255,255,255,1) 0.75%, rgba(255,255,255,1) 100%);
+  background: -o-linear-gradient(left, rgba(21,101,192,1) 0%, rgba(255,255,255,1) 0.75%, rgba(255,255,255,1) 100%);
+  background: -ms-linear-gradient(left, rgba(21,101,192,1) 0%, rgba(255,255,255,1) 0.75%, rgba(255,255,255,1) 100%);
+  background: linear-gradient(to right, rgba(21,101,192,1) 0%, rgba(255,255,255,1) 0.75%, rgba(255,255,255,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1565c0', endColorstr='#ffffff', GradientType=1 );
+}
+
 mat-card {
   display: flex;
   justify-content: space-between;
@@ -7,15 +29,35 @@ mat-card {
   margin: 5px 2px;
   padding: 10px 5px;
   position: relative;
+  i {cursor: pointer; }
+
   @media (min-width: 768px) { padding: 15px; }
 
+  .class-lock {width: 10%; }
+  .class-info {width: 35%;
+    .class-name { font-weight: 800; }
+    .class-year {
+      color: gray;
+      font-size: 0.8em;
+      font-style: italic;
+    }
+    .material-icons { color: gray; }
+  }
+  .clas-transition {width: 10%; }
+  .new-class-title {
+    position: relative;
+    width: 35%; 
+    .class-info {width: 100%; }
+  }
+  .class-edit-title { width: 10%; }
   input {
-    width: 70%;
+    // width: 70%;
     height: 35px;
     position: relative;
     font-size: 1em;
-    @media (min-width: 481px) and (max-width: 767px) { font-size: 0.55em; }
-    @media (min-width: 768px) { font-size: 0.8em; }
+    text-align: center;
+    // @media (min-width: 481px) and (max-width: 767px) { font-size: 0.55em; }
+    // @media (min-width: 768px) { font-size: 0.8em; }
   }
   
   input[type="checkbox"] {
@@ -43,6 +85,30 @@ mat-card {
       border: 1px solid black;
     }
   }
+  .class-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    >div{
+      min-width: 100px;
+    }
+    .material-icons{
+      font-size: 1em;
+      margin-left: -25px; 
+    }
+  }
+  .class-info.empty-class{
+    cursor: default;
+  }
+
+  .class-info.hidden {
+    display: none;
+  }
+}
+
+mat-card:hover {
+  background: blue;
 }
 
 mat-card.locked.transited, mat-card.locked:hover.transited {
@@ -53,70 +119,30 @@ mat-card.locked.transited, mat-card.locked:hover.transited {
 
 mat-card.locked, mat-card.locked:hover {
   opacity: 0.6;
-  mat-accordion, .class-title, .edit_title {
-    cursor: default;
-    pointer-events: none;
-  }
-  .mat-expansion-panel-header-description {
-    color: #545454;
-  }
+  background: #dad3d385;
 }
 
-input.locked {
+::ng-deep mat-form-field {
+   width: 100%;
+  @media (min-width: 768px) {
+    .mat-form-field-wrapper {
+      // width: 100px;
+      margin: 0 auto;
+    }
+   }
+}
+
+mat-form-field.locked {
+  display: none;
   cursor: default;
   pointer-events: none;
   color: rgb(84, 84, 84);
   background-color: rgb(235, 235, 228);
 }
 
-
 mat-card:hover {
   background-color: #00000024;
-  .mat-expansion-panel-header-description {
-    color: #000e5a;
-  }
 }
-
-mat-panel-title {
-  flex-direction: column;
-  align-items: center;
-  min-width: 40px;
-}
-
-mat-expansion-panel-header {
-  padding: 0 10px;
-  mat-panel-description.mat-expansion-panel-header-description { align-items: center; }
-  mat-panel-description {
-    display: none;
-    @media (min-width: 481px) { display: block; }
-  }
-}
-
-::ng-deep div.mat-expansion-panel-body { padding: 0 5px 16px; }
-
-mat-list:nth-of-type(2n+1) {
-  background-color: #e8e8e891;
-}
-
-mat-list-item {
-  a {
-    color: #404040;
-    text-decoration: none;
-  }
-
-  span {
-    display: inline-block;
-    padding: 0 5px;
-  }
-}
-
-::ng-deep mat-list.mat-list-base mat-list-item.mat-list-item { height: 30px; }
-::ng-deep .mat-list-base .mat-list-item div.mat-list-item-content {
-  padding: 0px;
-  font-size: 0.75em;
-}
-
-.className { font-weight: 800; }
 
 .new-class-name {
   padding-left: 5px;
@@ -124,23 +150,22 @@ mat-list-item {
 }
 
 .validation-error {
+  margin: 0 auto;
+  padding: 0px;
+  color: red;
+  min-width: 165px;
   position: absolute;
-  bottom: -9px;
-  right: 10px;
-  color:red;
+  bottom: -20px;
+  height: 25px;
+  overflow: hidden;
   p { font-size: 0.5em; }
+  @media (max-width: 481px) { right: -25%; }
+  @media (min-width: 768px) and (max-width: 1300px){ right: 5%; }
+  @media (min-width: 1300px) { right: 25%; }
 }
-
-::ng-deep .mat-expansion-panel-content { min-width: 135px; }
-
-@media (min-width: 481px) {
-  ::ng-deep div.mat-expansion-panel-body { padding: 0 24px 16px; }
-  ::ng-deep mat-list.mat-list-base mat-list-item.mat-list-item { height: 48px; }
-  ::ng-deep .mat-list-base .mat-list-item div.mat-list-item-content{
-    padding: 0 16px;
-    font-size: 1em;
-  }
-}
+.new-class-title.locked{
+  .validation-error {bottom: -5px;}
+} 
 
 .pupils { background-color: rgba(215, 26, 232, 0.75); }
 .year { background-color: rgba(100, 228, 68, 0.75) }
