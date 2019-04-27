@@ -4,20 +4,23 @@
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1000;
+  height: 64px;
+  z-index: 999;
   color: white;
   background-color: $main-color;
   font-size: 2rem;
-  height: 75px;
   opacity: 1;
   transition: top 400ms ease-in-out, opacity 400ms ease-in-out;
 
   &.hide { // hide when scrolling
-    top: -75px;
+    top: -64px;
     opacity: 0;
   }
 
   &.notransition {
     transition: none;
   }
+}
+.header-menu {
+  width: 100%;
 }

@@ -4,11 +4,15 @@
     <p class="title">Приєднання вчителя до журналу</p>
     <form [formGroup]="myForm">
       <mat-vertical-stepper [linear]="isLinear" #stepper>
-        <mat-step [stepControl]="teacherId">
-          <ng-template matStepLabel>Виберіть вчителя</ng-template>
+        <mat-step [stepControl]="teacher">
+          <ng-template matStepLabel>{{ teacherChoise }}</ng-template>
           <mat-form-field>
-            <mat-select placeholder="" formControlName="teacherId">
-              <mat-option *ngFor="let item of teachers" [value]="item.id">{{
+            <mat-select
+              placeholder=""
+              formControlName="teacher"
+              (selectionChange)="addTeacherChoice($event)"
+            >
+              <mat-option *ngFor="let item of teachers" [value]="item">{{
                 item.firstname + " " + item.lastname
               }}</mat-option>
             </mat-select>
@@ -16,22 +20,24 @@
           <div>
             <button
               mat-button
-              [disabled]="myForm.controls.teacherId.errors?.required"
+              [disabled]="myForm.controls.teacher.errors?.required"
               matStepperNext
             >
               Далі
             </button>
           </div>
         </mat-step>
-        <mat-step [stepControl]="subjectId">
-          <ng-template matStepLabel>Виберіть предмет</ng-template>
+        <mat-step [stepControl]="subject">
+          <ng-template matStepLabel>{{ subjectChoise }}</ng-template>
           <mat-form-field>
-            <mat-select placeholder="" formControlName="subjectId">
-              <mat-option
-                *ngFor="let item of subjects"
-                [value]="item.subjectId"
-                >{{ item.subjectName }}</mat-option
-              >
+            <mat-select
+              placeholder=""
+              formControlName="subject"
+              (selectionChange)="addSubjChoice($event)"
+            >
+              <mat-option *ngFor="let item of subjects" [value]="item">{{
+                item.subjectName
+              }}</mat-option>
             </mat-select>
           </mat-form-field>
           <div>
@@ -39,17 +45,21 @@
             <button
               mat-button
               matStepperNext
-              [disabled]="myForm.controls.subjectId.errors?.required"
+              [disabled]="myForm.controls.subject.errors?.required"
             >
               Далі
             </button>
           </div>
         </mat-step>
-        <mat-step [stepControl]="classId">
-          <ng-template matStepLabel>Виберіть клас</ng-template>
+        <mat-step [stepControl]="class">
+          <ng-template matStepLabel>{{ classesChoise }}</ng-template>
           <mat-form-field>
-            <mat-select placeholder="" formControlName="classId">
-              <mat-option *ngFor="let item of classes" [value]="item.id">{{
+            <mat-select
+              placeholder=""
+              formControlName="class"
+              (selectionChange)="addClassesChoice($event)"
+            >
+              <mat-option *ngFor="let item of classes" [value]="item">{{
                 item.className
               }}</mat-option>
             </mat-select>
@@ -59,15 +69,14 @@
             <button
               mat-button
               matStepperNext
-              [disabled]="myForm.controls.classId.errors?.required"
+              [disabled]="myForm.controls.class.errors?.required"
             >
               Далі
             </button>
           </div>
         </mat-step>
         <mat-step>
-          <ng-template matStepLabel>Підтвердити</ng-template>
-          Ви зробили вибір?
+          <ng-template matStepLabel>Підтвердіть вибір</ng-template>
           <div>
             <button mat-button matStepperPrevious>Назад</button>
             <button mat-button (click)="stepper.reset()">Спочатку</button><br />

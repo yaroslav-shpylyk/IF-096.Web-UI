@@ -47,12 +47,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSortModule } from '@angular/material';
 import { MatCardModule, MatExpansionModule, MatCheckboxModule, MatSlideToggleModule} from '@angular/material';
 import { NewYearComponent } from './new-year/new-year.component';
-import { ClassFilterPipe } from './new-year/class-filter.pipe';
 import { TitlePipe } from './new-year/autotitle.pipe';
 import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subjects.component';
 import { TeacherConnectionComponent } from './teacher-connection/teacher-connection.component';
 import { SharedModule } from '../shared/shared.module';
 import {MatStepperModule} from '@angular/material/stepper';
+import { ClassCardComponent } from './new-year/class-card/class-card.component';
 
 
 @NgModule({
@@ -74,13 +74,13 @@ import {MatStepperModule} from '@angular/material/stepper';
     DashboardComponent,
     SubjectsComponent,
     NewYearComponent,
-    ClassFilterPipe,
     TitlePipe,
     AddStudentModalComponent,
     AddStudentComponent,
     ModifySubjectsComponent,
     TeacherConnectionComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    ClassCardComponent
   ],
   imports: [
     CommonModule,
