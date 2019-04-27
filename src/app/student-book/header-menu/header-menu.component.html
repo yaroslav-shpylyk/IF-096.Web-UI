@@ -1,0 +1,24 @@
+<!--header list-->
+<mat-nav-list class="navigation-items">
+  <!--logout button-->
+  <div>
+    <a mat-list-item (click)="auth.logout()"> <!-- logout function -->
+      <mat-icon>exit_to_app</mat-icon>
+      Вийти
+    </a>
+  </div>
+  <!--student book button-->
+  <div>
+    <a mat-list-item routerLinkActive="active" routerLink="/student-book">
+      <mat-icon>book</mat-icon>
+      Щоденник
+    </a>
+  </div>
+  <!-- account photo icon -->
+  <a routerLink="/" class="right">
+    <span>{{fullName}}</span>
+    <div class="account-photo">
+      <mat-icon [inline]="true">account_circle</mat-icon>
+    </div>
+  </a>
+</mat-nav-list>
