@@ -65,12 +65,6 @@ export class AddStudentComponent implements OnInit {
     this.initStudentData();
   }
 
-  checkAvatar(img): any {
-    if (img && !this.avatar) {
-      return img;
-    } else { return this.avatar; }
-  }
-
   /**
    * Method type form (add mode or edit), submit form and sent data to server
    */
@@ -79,7 +73,7 @@ export class AddStudentComponent implements OnInit {
     if (typeof (data.dateOfBirth) !== 'string') {
       data.dateOfBirth = data.dateOfBirth.toLocaleDateString().split('.').reverse().join('-');
     }
-    data.avatar = this.avatar;
+    data.avatar = this.avatar || data.avatar;
     if (this.data.paramId) {
       this.studentService.changeStudent(this.data.paramId, data).subscribe(res => {
         this.studentService.loadStudents(this.data.classId);
@@ -115,7 +109,7 @@ export class AddStudentComponent implements OnInit {
 
   private editStudentForm(student: Student): void {
     this.addStudent = this.fb.group({
-      avatar: [this.checkAvatar(student.avatar)],
+      avatar: [student.avatar],
       dateOfBirth: [student.dateOfBirth],
       email: [student.email],
       firstname: [student.firstname, validText],
