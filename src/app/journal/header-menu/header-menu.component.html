@@ -25,7 +25,14 @@
   <a routerLink="/" class="right">
     <span>{{fullName}}</span>
     <div class="account-photo">
-      <mat-icon [inline]="true">account_circle</mat-icon>
+      <div *ngIf="showAvatar">
+        <img src = "{{avatar}}">
+      </div>
+      <div *ngIf="showAbbr" class="avatar">
+        <app-avatar [firstName]="teacherData.firstname"
+                    [lastName]="teacherData.lastname">
+        </app-avatar>
+      </div>
     </div>
   </a>
 </mat-nav-list>

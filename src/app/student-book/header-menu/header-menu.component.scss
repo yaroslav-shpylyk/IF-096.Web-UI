@@ -86,6 +86,12 @@ a {
 
 .account-photo { // account photo
   padding: 0 2%;
-  font-size: 48px;
-  width: 48px;
+
+  img {
+    height: 48px;
+    width: 48px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
 }
