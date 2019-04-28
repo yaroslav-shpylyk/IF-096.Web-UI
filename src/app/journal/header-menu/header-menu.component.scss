@@ -86,11 +86,9 @@ a {
 
 .account-photo { // account photo
   padding: 0 2%;
+}
 
-  img {
-    height: 48px;
-    width: 48px;
-    object-fit: cover;
-    border-radius: 50%;
-  }
+:host ::ng-deep .avatar {
+  height: 48px!important;
+  width: 48px!important;
 }

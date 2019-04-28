@@ -22,17 +22,13 @@
     </a>
   </div>
   <!-- account photo icon -->
-  <a routerLink="/" class="right">
+  <div class="right">
     <span>{{fullName}}</span>
     <div class="account-photo">
-      <div *ngIf="showAvatar">
-        <img src = "{{avatar}}">
-      </div>
-      <div *ngIf="showAbbr" class="avatar">
-        <app-avatar [firstName]="teacherData.firstname"
-                    [lastName]="teacherData.lastname">
-        </app-avatar>
-      </div>
+      <app-avatar [avatar]="avatar"
+                  [firstName]="firstName"
+                  [lastName]="lastName">
+      </app-avatar>
     </div>
-  </a>
+  </div>
 </mat-nav-list>
