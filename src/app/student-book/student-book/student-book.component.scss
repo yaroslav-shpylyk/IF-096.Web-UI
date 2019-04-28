@@ -1,26 +1,32 @@
 @import "../../../styles.scss";
 
 .dateSwitcher {
-  border: 1px solid gainsboro;
   display: flex;
   justify-content: center;
-}
 
-button.mat-button {
-}
+  button.mat-button {
+  }
 
-mat-form-field {
+  mat-form-field {
+    width: 7em;
+  }
 }
 
 table {
   width: 80%;
   margin: 0 auto !important;
 
-  /*
-##Device = Most of the Smartphones Mobiles (Portrait)
-*/
-  @media (min-width: 320px) and (max-width: 1024px) {
+  /* Small and medium devices (portrait tablets and large phones, 600px and up) */
+  @media (max-width: 1024px) {
     width: 100%;
+  }
+  /* Extra small devices (phones, 600px and down) */
+  @media (max-width: 600px) {
+    width: 100% !important;
+
+    .note {
+      display: none;
+    }
   }
 }
 
@@ -34,7 +40,7 @@ h4{
   width: 10% !important;
 }
 .subjectName {
-  width: 25% !important;
+  width: 22% !important;
   padding: 0 15px !important;
 }
 .homeWork {
@@ -42,7 +48,7 @@ h4{
   padding: 0 15px !important;
 }
 .mark {
-  width: 10% !important;
+  width: 13% !important;
 }
 .note {
   width: 20% !important;
@@ -51,6 +57,7 @@ h4{
 
 th.mat-header-cell {
   text-align: center !important;
+  font-size: 14px;
 }
 
 td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {

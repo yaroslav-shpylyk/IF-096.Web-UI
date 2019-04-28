@@ -36,20 +36,20 @@
 
       <!-- homeWork Column -->
       <ng-container matColumnDef="homeWork">
-        <th mat-header-cell *matHeaderCellDef class="homeWork"> Домашнє завдання</th>
+        <th mat-header-cell *matHeaderCellDef class="homeWork"> Завдання</th>
         <td class="homeWork" mat-cell *matCellDef="let value"> {{value.homeWork}}</td>
       </ng-container>
 
       <!-- mark Column -->
       <ng-container matColumnDef="mark">
         <th mat-header-cell *matHeaderCellDef class="mark"> Оцінка</th>
-        <td class="mark" mat-cell *matCellDef="let value"> {{value.mark}}</td>
+        <td class="mark" mat-cell *matCellDef="let value"> {{value.mark | hideZero}}</td>
       </ng-container>
 
       <!-- note Column -->
       <ng-container matColumnDef="note">
         <th mat-header-cell *matHeaderCellDef class="note"> Примітка</th>
-        <td mat-cell class="note" *matCellDef="let value"> {{value.note}}</td>
+        <td mat-cell class="note" *matCellDef="let value"> {{value.note }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

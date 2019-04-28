@@ -8,12 +8,13 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-mo
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { registerLocaleData } from '@angular/common';
 import localeUk from '@angular/common/locales/uk';
+import { HideZeroPipe } from './student-book/hide-zero.pipe';
 
 // For localization pipe
 registerLocaleData(localeUk, 'uk-Ua');
 
 @NgModule({
-  declarations: [StudentBookComponent],
+  declarations: [StudentBookComponent, HideZeroPipe],
   imports: [
     CommonModule,
     StudentBookRoutingModule,
