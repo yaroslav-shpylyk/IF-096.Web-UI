@@ -30,7 +30,7 @@ export class NewYearComponent implements OnInit {
 
   ngOnInit() {
     this.createTransititionForm();
-    this.newYearTransitition.getAllClasesInfo().subscribe(
+    this.newYearTransitition.getClasses().subscribe(
       data => {
         this.allClasses = data;
         this.activeClasses = this.allClasses.filter(
@@ -41,7 +41,7 @@ export class NewYearComponent implements OnInit {
             this.controlIndexes.push(i);
             this.panelOpenState.push(false);
             const newInput = new FormControl(
-              {value: '', disabled: false},
+              {value: this.newTitle(schoolClass.className), disabled: false},
               [Validators.pattern('(^[1-7][(]([1-9]|1[0-2])-[А-Я]{1}[)]$)|(^([1-9]|1[0-2])-[А-Я]{1}$)'),
               this.classTitleValidator(this.allClasses, schoolClass.classYear, schoolClass.className)]);
             (this.transititionForm.controls.newClassTitle as FormArray).push(newInput);
@@ -115,11 +115,10 @@ export class NewYearComponent implements OnInit {
   }
 
   /**
-   * Return indexes of filtereted classes
+   * Return indexes of filtereted classes and reset input fields in form
    */
   get filteredindexes() {
-    const curDate = new Date();
-    const year = (curDate.getMonth() < 12 && curDate.getMonth() > 7) ? curDate.getFullYear() : curDate.getFullYear() - 1;
+    const year = this.getCurrentYear();
     const isCurrentYear = (item) => this.activeClasses[item].classYear === year;
     const isNotEmpty = (item) => this.activeClasses[item].numOfStudents > 0;
     const filterParams = [];
@@ -137,9 +136,33 @@ export class NewYearComponent implements OnInit {
           return true;
         } else {
           const input = (this.transititionForm.controls.newClassTitle as FormArray).controls[item];
-          input.reset({ value: '', disabled: true });
+          input.reset({ value: input.value, disabled: true });
         }
       }
     );
+  }
+
+  /**
+   * Return current educational year
+   */
+  getCurrentYear(): number {
+    const curDate = new Date();
+    const year = (curDate.getMonth() < 12 && curDate.getMonth() > 7) ? curDate.getFullYear() : curDate.getFullYear() - 1;
+    return year;
+  }
+
+  /**
+   * Generate new title for class based on current title
+   * @param curTitle string - current title of class
+   * @returns string - new class title for next year
+   */
+
+  newTitle(curTitle: string): string {
+    const classNameParts = curTitle.split(/[-(]/);
+    if ( classNameParts.length > 2) {
+      return (+classNameParts[1] + 1 > 11) ? '' : `${+classNameParts[0] + 1}(${+classNameParts[1] + 1}-${classNameParts[2]}`;
+    } else {
+      return (+classNameParts[0] + 1 > 11) ? '' : (+classNameParts[0] + 1) + '-' + classNameParts[1];
+    }
   }
 }

@@ -34,15 +34,6 @@ mat-card {
   @media (min-width: 768px) { padding: 15px; }
 
   .class-lock {width: 10%; }
-  .class-info {width: 35%;
-    .class-name { font-weight: 800; }
-    .class-year {
-      color: gray;
-      font-size: 0.8em;
-      font-style: italic;
-    }
-    .material-icons { color: gray; }
-  }
   .clas-transition {width: 10%; }
   .new-class-title {
     position: relative;
@@ -86,18 +77,28 @@ mat-card {
     }
   }
   .class-info {
+    width: 35%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    >div{
+    div:first-child{
       min-width: 100px;
     }
-    .material-icons{
-      font-size: 1em;
-      margin-left: -25px; 
+    .class-name { font-weight: 800; }
+    .class-year {
+      color: gray;
+      font-size: 0.8em;
+      font-style: italic;
     }
+    .material-icons { 
+      display: block;
+      padding: 2px 0;
+      font-size: 0.65em;
+      margin-left: -25px; 
+      color: gray; }
   }
+
   .class-info.empty-class{
     cursor: default;
   }

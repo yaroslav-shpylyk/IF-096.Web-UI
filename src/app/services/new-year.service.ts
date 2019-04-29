@@ -22,28 +22,6 @@ export class NewYearService {
 
   constructor( private http: HttpClient ) { }
 
- /**
-  * Method returns list of classes and their pupils
-  * @returns - list of classes
-  */
-  public getAllClasesInfo(): Observable <ClassInfo[]> {
-    return this.getClasses().pipe(
-      map(
-        classList => {
-          classList.forEach(
-            (singleClass) => {
-              if (singleClass.numOfStudents > 0) {
-                this.getPupilList(singleClass.id)
-                .subscribe(pupilList => singleClass.pupilList = pupilList);
-              }
-            }
-          );
-          return classList;
-        }
-      )
-    );
-  }
-
   /**
    * Method create new classes with new titles for the next year and bind pupils to them
    * @returns number, status code of binding request

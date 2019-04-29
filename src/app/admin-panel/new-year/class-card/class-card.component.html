@@ -19,7 +19,10 @@
         <div class="class-name">{{curClass.className}}</div>
         <div class="class-year">{{curClass.classYear}}</div>
       </div>
-      <i class="material-icons">people</i>  
+      <div>
+        <i class="material-icons" [matTooltip] = "curClass.numOfStudents < 1 ? 'клас без учнів' : 'клас з учнями'">people</i>
+        <i class="material-icons" [matTooltip] = "curClass.classYear!==2017 ? 'Цей клас не з поточного н. р.' : 'клас з учнями'">update</i>
+      </div>
     </div>
     <ng-template #emptyClass>
       <div class="class-info empty-class" *ngIf="!curClass.numOfStudents>0">
@@ -35,9 +38,9 @@
   </div>
   <div class="new-class-title" [ngClass]="isEditEnable?'locked':''">
     <ng-container>
-      <div class="class-info empty-class" [ngClass]="{'locked': newTitleField.invalid, 'hidden': isEditEnable}">
+      <div class="class-info empty-class" [ngClass]="{'locked': !newTitleField.valid, 'hidden': isEditEnable}">
         <div>
-          <div class="class-name">{{newClassTitle.value|autotitle:curClass.className}}</div>
+          <div class="class-name">{{newClassTitle.value|autotitle:curClass.className:newTitleField}}</div>
           <div class="class-year">{{curClass.classYear+1}}</div>
         </div>
       </div>
@@ -45,7 +48,6 @@
     <ng-container formArrayName="newClassTitle">
       <mat-form-field [ngClass]="!isEditEnable?'locked':''">
         <input matInput placeholder="Нова назва класу"
-          cdkFocusInitial
           [formControlName]="controlIndex"
           #newClassTitle
           class="new-class-name" 

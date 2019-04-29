@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ClassInfo } from '../../../models/class-info';
 import { MatDialog } from '@angular/material';
-import {} from '@angular/material';
 import { NewYearService } from '../../../services/new-year.service';
 import { ListPopupComponent } from './list-popup/list-popup.component';
 import { Student } from '../../../models/student';
@@ -22,9 +21,10 @@ export class ClassCardComponent implements OnInit {
   @Input() isEditEnable: boolean;
   public panelOpenState = false;
   public classList: Student[];
+
   constructor(
     private newYearService: NewYearService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog) {}
 
   openDialog(eclassId: number): void {
     this.newYearService.getPupilList(eclassId).subscribe(
@@ -44,10 +44,7 @@ export class ClassCardComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
-    this.newTitleField.reset({ value: this.newTitle, disabled: false });
-    this.newTitleField.markAsTouched();
-  }
+  ngOnInit() {}
 
   /**
    * Makes input with new class title enabled or disabled for editing
@@ -76,15 +73,4 @@ export class ClassCardComponent implements OnInit {
       input.reset({ value: newTitle, disabled: false });
     }
   }
-  get newTitle() {
-    const curClassName = this.curClass.className;
-    const classNameParts = curClassName.split(/[-(]/);
-    if ( classNameParts.length > 2) {
-      return (+classNameParts[1] + 1 > 11) ? '' : `${+classNameParts[0] + 1}(${+classNameParts[1] + 1}-${classNameParts[2]}`;
-    } else {
-      return (+classNameParts[0] + 1 > 11) ? '' : (+classNameParts[0] + 1) + '-' + classNameParts[1];
-    }
-  }
 }
-
-
