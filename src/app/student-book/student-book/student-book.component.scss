@@ -46,7 +46,15 @@ h4{
 .homeWork {
   width: 35% !important;
   padding: 0 15px !important;
+
+  .icoFile {
+    color: $dark-color;
+    height: 14px !important;
+    width: 14px !important;
+    font-size: 14px !important;
+  }
 }
+
 .mark {
   width: 13% !important;
 }
@@ -71,6 +79,10 @@ td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type, th.mat-header-cell:la
 
 td.mat-cell.mark{
   text-align: center !important;
+}
+
+td.mat-cell.homeWork{
+  vertical-align: center !important;
 }
 
 th.mat-header-cell {

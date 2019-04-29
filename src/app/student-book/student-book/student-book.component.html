@@ -37,7 +37,7 @@
       <!-- homeWork Column -->
       <ng-container matColumnDef="homeWork">
         <th mat-header-cell *matHeaderCellDef class="homeWork"> Завдання</th>
-        <td class="homeWork" mat-cell *matCellDef="let value"> {{value.homeWork}}</td>
+        <td class="homeWork" mat-cell *matCellDef="let value"><a *ngIf="value.homeworkFileId !==null" href=""><mat-icon class="icoFile"> insert_drive_file</mat-icon></a> {{value.homeWork}}</td>
       </ng-container>
 
       <!-- mark Column -->
