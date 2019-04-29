@@ -8,7 +8,6 @@ import { AdminHeaderMenuComponent } from '../admin-panel/admin-panel/header-menu
 import { AdminFooterMenuComponent } from '../admin-panel/admin-panel/footer-menu/footer-menu.component';
 import { AvatarComponent } from './avatar/avatar.component';
 
-
 @NgModule({
   declarations: [
     HeaderComponent,
