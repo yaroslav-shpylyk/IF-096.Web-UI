@@ -1,8 +1,10 @@
 @import "../../../styles.scss";
 
+/*Date selector and switcher*/
 .dateSwitcher {
   display: flex;
   justify-content: center;
+  margin-bottom: 2em;
 
   button.mat-button {
   }
@@ -12,16 +14,66 @@
   }
 }
 
-table {
-  width: 80%;
-  margin: 0 auto !important;
+.viewSwitcher {
+    color: $dark-color !important;
+  }
 
-  /* Small and medium devices (portrait tablets and large phones, 600px and up) */
+/*Schedule tables*/
+table {
+  width: 100%;
+  margin: 0 auto;
+
+  /*!* Small and medium devices (portrait tablets and large phones, 600px and up) *!
   @media (max-width: 1024px) {
     width: 100%;
   }
-  /* Extra small devices (phones, 600px and down) */
+  !* Extra small devices (phones, 600px and down) *!
   @media (max-width: 600px) {
+    width: 100% !important;
+
+    .note {
+      display: none;
+    }
+  }*/
+}
+
+#container {
+  margin: 0 auto;
+  display: grid;
+  grid: repeat(3, auto) / auto-flow 49%;
+  grid-column-gap: 1em;
+
+  @media (max-width: 999px) {
+    margin: 0 auto;
+    width: 100% !important;
+    grid: repeat(6, auto) / auto-flow 100%;
+  }
+
+  @media (max-width: 665px) {
+    margin: 0 auto;
+    width: 100% !important;
+    grid: repeat(6, auto) / auto-flow 100%;
+
+    .note {
+      display: none;
+    }
+
+    #container > #days {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+#container2 {
+  width: 70%;
+  margin: 0 auto;
+
+  @media (max-width: 999px) {
+    width: 100% !important;
+  }
+
+  @media (max-width: 665px) {
     width: 100% !important;
 
     .note {
@@ -30,19 +82,43 @@ table {
   }
 }
 
-h4{
+h4 {
   text-align: center;
   color: $dark-color;
-  padding-top: 1em;
+}
+
+th.mat-header-cell {
+  text-align: center !important;
+  font-size: 14px;
+}
+
+td.mat-cell:first-of-type, th.mat-header-cell:first-of-type {
+  padding-left: 0 !important;
+  text-align: center;
+}
+
+td.mat-cell.mark {
+  text-align: center !important;
+}
+
+th.mat-header-cell {
+  background-color: $main-color !important;
+  color: white !important;
+}
+
+td.mat-cell {
+  border-right: 1px solid gainsboro !important;
 }
 
 .lessonNumber {
   width: 10% !important;
 }
+
 .subjectName {
-  width: 22% !important;
+  width: 20% !important;
   padding: 0 15px !important;
 }
+
 .homeWork {
   width: 35% !important;
   padding: 0 15px !important;
@@ -56,44 +132,15 @@ h4{
 }
 
 .mark {
-  width: 13% !important;
+  width: 15% !important;
 }
+
 .note {
   width: 20% !important;
-  padding: 0 15px 0 15px!important;
+  padding: 0 15px 0 15px !important;
 }
 
-th.mat-header-cell {
-  text-align: center !important;
-  font-size: 14px;
-}
-
-td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
-  padding-left: 0 !important;
-  text-align: center;
-}
-
-td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type, th.mat-header-cell:last-of-type {
-  padding-right: 0 !important;
-}
-
-td.mat-cell.mark{
-  text-align: center !important;
-}
-
-td.mat-cell.homeWork{
-  vertical-align: center !important;
-}
-
-th.mat-header-cell {
-  background-color: $main-color !important;
-  color: white !important;
-}
-
-td.mat-cell {
-  border-right: 1px solid gainsboro !important;
-}
-
+/*Icon in no schedule date*/
 .iconContainer {
   width: 100%;
 }

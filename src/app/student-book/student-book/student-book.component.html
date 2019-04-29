@@ -1,24 +1,37 @@
+<div>
+  <button mat-stroked-button (click)="backDate()">
+  <mat-icon class="viewSwitcher">view_stream</mat-icon>
+</button>
+
+<button mat-stroked-button (click)="backDate()">
+  <mat-icon class="viewSwitcher">view_week</mat-icon>
+</button>
 <div class="dateSwitcher">
-<!--Previous week button-->
-<button mat-button (click)="backDate()"><mat-icon>arrow_back</mat-icon></button>
+  <!--Previous week button-->
+  <button mat-button (click)="backDate()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
 
-<!--DatePicker-->
-<mat-form-field>
-  <input matInput [matDatepicker]="picker" placeholder="Оберіть дату"
-         (dateInput)="getDatePicker($event)"
-         [(ngModel)]="dateValue">
-  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
-</mat-form-field>
+  <!--DatePicker-->
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="Оберіть дату"
+           (dateInput)="showSchedule()"
+           [(ngModel)]="dateValue">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
 
-<!--Next week button-->
-<button mat-button (click)="forwardDate()"><mat-icon>arrow_forward</mat-icon></button>
+  <!--Next week button-->
+  <button mat-button (click)="forwardDate()">
+    <mat-icon>arrow_forward</mat-icon>
+  </button>
+</div>
 </div>
 
 <!--Tables with student-book data-->
-<table>
-  <tbody *ngFor="let item of groupArr">
-  <ng-container *ngIf="showTable">
+<table id="container">
+  <tbody *ngFor="let item of groupArr" >
+  <ng-container id="days" *ngIf="showTable">
     <h4 colspan="2">{{item.date | date : 'fullDate' | uppercase}}</h4>
     <table mat-table [dataSource]="item.groupItem" class="mat-elevation-z8">
 
@@ -30,25 +43,28 @@
 
       <!-- subjectName Column -->
       <ng-container matColumnDef="lesson">
-        <th mat-header-cell *matHeaderCellDef class="subjectName"> Урок</th>
-        <td class="subjectName" mat-cell *matCellDef="let value"> {{value.subjectName}}</td>
+        <th mat-header-cell *matHeaderCellDef class="subjectName">УРОК</th>
+        <td class="subjectName" mat-cell *matCellDef="let value"> {{value.subjectName | uppercase}}</td>
       </ng-container>
 
       <!-- homeWork Column -->
       <ng-container matColumnDef="homeWork">
-        <th mat-header-cell *matHeaderCellDef class="homeWork"> Завдання</th>
-        <td class="homeWork" mat-cell *matCellDef="let value"><a *ngIf="value.homeworkFileId !==null" href=""><mat-icon class="icoFile"> insert_drive_file</mat-icon></a> {{value.homeWork}}</td>
+        <th mat-header-cell *matHeaderCellDef class="homeWork">ЗАВДАННЯ</th>
+        <td class="homeWork" mat-cell *matCellDef="let value"><a *ngIf="value.homeworkFileId !==null" href="">
+          <mat-icon class="icoFile"> insert_drive_file</mat-icon>
+        </a> {{value.homeWork}}
+        </td>
       </ng-container>
 
       <!-- mark Column -->
       <ng-container matColumnDef="mark">
-        <th mat-header-cell *matHeaderCellDef class="mark"> Оцінка</th>
-        <td class="mark" mat-cell *matCellDef="let value"> {{value.mark | hideZero}}</td>
+        <th mat-header-cell *matHeaderCellDef class="mark">ОЦІНКА</th>
+        <td class="mark" mat-cell *matCellDef="let value"> {{value.mark | hideZero}}</td>  // hideZero - custom pipe
       </ng-container>
 
       <!-- note Column -->
       <ng-container matColumnDef="note">
-        <th mat-header-cell *matHeaderCellDef class="note"> Примітка</th>
+        <th mat-header-cell *matHeaderCellDef class="note">ПРИМІТКА</th>
         <td mat-cell class="note" *matCellDef="let value"> {{value.note }}</td>
       </ng-container>
 
@@ -59,9 +75,11 @@
   </tbody>
 </table>
 
+<!--Message which showing when there aren't schedule for current date-->
 <div *ngIf="showMessage">
   <h4>На обрану вами дату розкладу немає. Спробуйте вказати іншу дату.</h4>
   <div class="iconContainer">
-  <mat-icon class="icon">sentiment_dissatisfied</mat-icon>
+    <mat-icon class="icon">sentiment_dissatisfied</mat-icon>
   </div>
 </div>
+
