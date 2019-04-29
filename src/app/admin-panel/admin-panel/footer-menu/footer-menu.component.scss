@@ -1,6 +1,6 @@
 @import "../../../../styles.scss";
 
-a {
+a { // button links
   height: 100%;
   width: 100%;
   color: white;
@@ -12,6 +12,10 @@ a {
   overflow: hidden;
 }
 
+.active { // selected section
+  background-color: #3da6db !important;
+}
+
 .mat-menu-item { // 3 dots toggle menu
   color: $dark-color;
   .mat-icon {
@@ -20,7 +24,7 @@ a {
 }
 
 .icons {
-  line-height: 30%; // icons on bottom navigation
+  line-height: 35%; // icons on bottom navigation
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,9 +32,4 @@ a {
   span {
     font-size: 0.5em; // text under icons
   }
-
-}
-
-::ng-deep mat-toolbar {
-  z-index: 999
 }
