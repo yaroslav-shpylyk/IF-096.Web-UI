@@ -5,10 +5,16 @@ import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { FormsModule } from '@angular/forms';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { RequestPasswordChangeComponent } from './request-password-change/request-password-change.component';
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+    SignInComponent,
+    ChangePasswordComponent,
+    RequestPasswordChangeComponent
   ],
   imports: [
     CommonModule,
