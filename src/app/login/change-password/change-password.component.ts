@@ -31,6 +31,9 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     this.onDestroy$.next(true);
   }
 
+  /**
+   * Method creates form for password change
+   */
   private createForm(): void {
     this.changePasswordForm = new FormGroup({
       password: new FormControl('', [
@@ -42,6 +45,9 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     }, confirmPasswordValidator);
   }
 
+  /**
+   * Methods calls on submit form
+   */
   public submitPasswordChange(): void {
     if (!this.changePasswordForm.valid) {
       return;

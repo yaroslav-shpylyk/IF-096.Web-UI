@@ -45,6 +45,9 @@ export class RequestPasswordChangeComponent implements OnInit, OnDestroy {
     this.onDestroy$.next(true);
   }
 
+  /**
+   * Method creates form
+   */
   private createForm(): void {
     this.requestPasswordChangeForm = new FormGroup({
       recoveryType: new FormControl('login', [
@@ -56,6 +59,9 @@ export class RequestPasswordChangeComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Method calls on submit form for request to change password
+   */
   public submitRequest(): void {
     if (!this.requestPasswordChangeForm.valid) {
       return;
