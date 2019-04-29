@@ -5,6 +5,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { MatBottomSheet } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { BottomSheetOverviewSheetComponent } from './bottom-sheet-overview.components';
+import { HomeworkBottomSheetOverviewSheetComponent } from './homework-bottom-sheet-overview.components';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-subject-journal',
@@ -22,6 +24,7 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
   elData: any[];
   private loadingSub: Subscription;
   isLoading = false;
+  homeworks = {};
 
   constructor(
     private journalsStorageService: JournalsStorageService,
@@ -68,10 +71,11 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
    */
   renderTable() {
     this.journalsStorageService
-      .getJournaL(this.idSubject, this.idClass)
+      .getJournalsAndHomeworks(this.idSubject, this.idClass)
       .subscribe(journal => {
+        this.homeworks = journal.homeworks;
         let studentData = new Object() as any;
-        for (const student of journal) {
+        for (const student of journal.journals) {
           studentData.studentFullName = student.studentFullName;
           this.studentIds.push(student.idStudent);
           for (const mark of student.marks) {
@@ -100,22 +104,39 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
         temp.push('star');
 
         this.displayedColumns = temp;
-        this.journal = journal;
-
+        this.journal = journal.journals;
         this.journalsStorageService.loadingStateChanged.next(false);
       });
   }
 
-  /**
-   * Method receives from the table all needed values for assigning a mark,
-   * appropriately transforms them, changes clicked cell and row color
-   * and passes to the bottom sheet component needed data.
-   * Om closing bottom sheet the table's cell and row colors are changed to the ddfault.
-   * @param idLesson - id number of the lesson;
-   * @param studentEl - object representing student;
-   * @param event - object representing a click event;
-   * @param i - index of column in a row;
-   */
+  onHeadClc(idLesson, event, i) {
+    if (!i || i === this.thRow.length) {
+      return;
+    }
+    let styleRef;
+    if (event.target.innerText === 'attach_file') {
+      styleRef = event.path[1].style;
+    } else {
+      styleRef = event.target.style;
+    }
+    styleRef.boxShadow = 'inset 0px 0px 0px 3px rgb(21, 101, 192)';
+    const bottomSheetRef = this.bottomSheet.open(
+      HomeworkBottomSheetOverviewSheetComponent,
+      {
+        data: {
+          lessonId: idLesson,
+          homeworks: this.homeworks,
+          markType: event.srcElement.innerText.split('\n')[0]
+        },
+        panelClass: 'sbj-jrnl-cmp-bottom-container'
+      }
+    );
+
+    bottomSheetRef.afterDismissed().subscribe(() => {
+      styleRef.boxShadow = '';
+    });
+  }
+
   onClc(idLesson, studentEl, event, i) {
     if (!Number.isInteger(+idLesson)) {
       return;
