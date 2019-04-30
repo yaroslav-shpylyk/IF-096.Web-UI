@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, MatTableDataSource } from '@angular/material';
-import { TeacherData } from 'src/app/models/teacher-data';
-import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
-import { ClassService } from 'src/app/services/class.service';
+import { TeacherData } from '../../models/teacher-data';
+import { TeachersStorageService } from '../../services/teachers-storage.service';
+import { ClassService } from '../../services/class.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({

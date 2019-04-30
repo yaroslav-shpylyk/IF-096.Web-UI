@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from '../../../services/auth.service';
 import { Params, Router, ActivatedRoute } from '@angular/router';
-import { JournalsStorageService } from 'src/app/services/journals-storage.service';
+import { JournalsStorageService } from '../../../services/journals-storage.service';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { Subscription } from 'rxjs';
-import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
-import { TeacherData } from 'src/app/models/teacher-data';
+import { TeachersStorageService } from '../../../services/teachers-storage.service';
+import { TeacherData } from '../../../models/teacher-data';
 
 @Component({
   selector: 'app-class-journal',

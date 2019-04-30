@@ -2,7 +2,7 @@ import { Component, Injectable, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MatSnackBarConfig } from '@angular/material';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
+import { TeachersStorageService } from '../../../../services/teachers-storage.service';
 import {
   MustMatch,
   validConfig,
@@ -11,7 +11,7 @@ import {
   validDate
 } from '../../helpers/validators';
 import { MatSnackBar } from '@angular/material';
-import { TeacherData } from 'src/app/models/teacher-data';
+import { TeacherData } from '../../../../models/teacher-data';
 
 @Component({
   selector: 'app-edit-dialog-overview',

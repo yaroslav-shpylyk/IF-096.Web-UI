@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TeacherService } from 'src/app/services/teacher.service';
+import { TeacherService } from '../../services/teacher.service';
 import {
   FormGroup,
   FormControl,
@@ -7,18 +7,18 @@ import {
   FormArray,
   FormBuilder
 } from '@angular/forms';
-import { StudentsService } from 'src/app/services/students.service';
-import { ClassService } from 'src/app/services/class.service';
+import { StudentsService } from '../../services/students.service';
+import { ClassService } from '../../services/class.service';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { from } from 'rxjs';
-import { SubjectService } from 'src/app/services/subject.service';
-import { TeachersJournalService } from 'src/app/services/teachers-journal.service';
+import { SubjectService } from '../../services/subject.service';
+import { TeachersJournalService } from '../../services/teachers-journal.service';
 import { MatStepperModule } from '@angular/material/stepper';
-import { SubjectData } from "src/app/models/subject-data";
-import { ClassData } from "src/app/models/class-data";
-import { TeacherData } from "src/app/models/teacher-data";
+import { SubjectData } from "../../models/subject-data";
+import { ClassData } from "../../models/class-data";
+import { TeacherData } from "../../models/teacher-data";
 @Component({
   selector: 'app-teacher-connection',
   templateUrl: './teacher-connection.component.html',
@@ -41,7 +41,7 @@ export class TeacherConnectionComponent implements OnInit {
   ) {}
 
   /**
-   * Method adds after selecting the current teacher 
+   * Method adds after selecting the current teacher
    * to the label before the next step
    * @param event - object that is emitted when the select value has changed
    */
@@ -52,7 +52,7 @@ export class TeacherConnectionComponent implements OnInit {
   }
 
   /**
-   * Method adds after selecting the current subject 
+   * Method adds after selecting the current subject
    * to the label before the next step
    * @param event - object that is emitted when the select value has changed
    */
@@ -61,7 +61,7 @@ export class TeacherConnectionComponent implements OnInit {
   }
 
   /**
-   * Method adds after selecting the current class 
+   * Method adds after selecting the current class
    * to the label before the next step
    * @param event - object that is emitted when the select value has changed
    */
@@ -76,7 +76,7 @@ export class TeacherConnectionComponent implements OnInit {
   });
 
    /**
-   * The method that is called after the formSubmit 
+   * The method that is called after the formSubmit
    * confirmation of the choice of values ​​to add them to the journl
    * @param data - object of the form that gives values ​​selected in the form
    */
@@ -93,7 +93,7 @@ export class TeacherConnectionComponent implements OnInit {
 
   ngOnInit() {
     /**
-     * Getting an array of teachers from the service of teachers, 
+     * Getting an array of teachers from the service of teachers,
      * for further use of specific data
      */
     this.teacherService
@@ -101,7 +101,7 @@ export class TeacherConnectionComponent implements OnInit {
       .subscribe(teachers => {this.teachers = teachers});
 
     /**
-     * Getting an array of subjects from the subject service, 
+     * Getting an array of subjects from the subject service,
      * for further use of specific data
      */
     this.subjectService
@@ -109,7 +109,7 @@ export class TeacherConnectionComponent implements OnInit {
       .subscribe(subjects => {this.subjects = subjects});
 
     /**
-     * Getting an array of classes from the class service, 
+     * Getting an array of classes from the class service,
      * for further use of specific data
      */
     this.classService

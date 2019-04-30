@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
-import { JournalsStorageService } from 'src/app/services/journals-storage.service';
-import { Journal } from 'src/app/models/journal-data';
+import { JournalsStorageService } from '../../../../services/journals-storage.service';
+import { Journal } from '../../../../models/journal-data';
 import { ActivatedRoute, Params } from '@angular/router';
 import { MatBottomSheet } from '@angular/material';
 import { Subscription } from 'rxjs';

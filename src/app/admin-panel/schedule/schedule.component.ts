@@ -64,7 +64,7 @@ export class ScheduleComponent implements OnInit {
     this.subjectsService.getSubjects().subscribe(data => {
       this.arrSubjectsList = data;
     });
-    this.adapter.setLocale('ua');
+    this.adapter.setLocale('uk');
     this.initForm();
   }
 
