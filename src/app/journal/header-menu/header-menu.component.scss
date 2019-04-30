@@ -2,6 +2,15 @@
 
 mat-nav-list { // header list
   height: 64px !important;
+
+  /* Most of the Smartphones (Portrait) */
+  @media only screen and (max-width: 600px) {
+    height: 56px !important;
+  }
+  /* Most of the Retina Display Smartphones (Portrait) */
+  @media only screen and (max-width: 600px) and (min-resolution: 2dppx) and (orientation: portrait) {
+    height: 56px !important;
+  }
 }
 
 .mat-list-item { // menu list float left
@@ -90,28 +99,36 @@ a {
 
     /*Large Tablets*/
     @media only screen and (max-width: 1020px) and (min-width: 801px) {
-      font-size: 0.55em !important;
+      font-size: 0.55em;
       width: 10em; // max allowed
       text-align: right;
     }
     /*Large Tablets with Retina Display*/
     @media only screen and (max-width: 1020px) and (min-width: 801px) and (min-resolution: 2dppx) and (orientation: portrait) {
-      font-size: 0.55em !important;
+      font-size: 0.55em;
       width: 10em; // max allowed
       text-align: right;
     }
     /*Small Tablets*/
     @media only screen and (max-width: 800px) and (min-width: 601px) {
-      font-size: 0.5em !important;
+      font-size: 0.5em;
       width: 8em; // max allowed
       text-align: right;
 
     }
     /*Small Tablets with Retina Display*/
     @media only screen and (max-width: 800px) and (min-width: 601px) and (min-resolution: 2dppx) and (orientation: portrait) {
-      font-size: 0.5em !important;
+      font-size: 0.5em;
       width: 8em; // max allowed
       text-align: right;
+    }
+    /* Most of the Smartphones (Portrait) */
+    @media only screen and (max-width: 600px) {
+      font-size: 0.5em;
+    }
+    /* Most of the Retina Display Smartphones (Portrait) */
+    @media only screen and (max-width: 600px) and (min-resolution: 2dppx) and (orientation: portrait) {
+      font-size: 0.5em;
     }
   }
 }
@@ -120,4 +137,17 @@ a {
   height: 56px !important;
   width: 56px !important;
   font-size: 0.8em;
+
+  /* Most of the Smartphones (Portrait) */
+  @media only screen and (max-width: 600px) {
+    height: 50px !important;
+    width: 50px !important;
+    font-size: 0.75em;
+  }
+  /* Most of the Retina Display Smartphones (Portrait) */
+  @media only screen and (max-width: 600px) and (min-resolution: 2dppx) and (orientation: portrait) {
+    height: 50px !important;
+    width: 50px !important;
+    font-size: 0.75em;
+  }
 }

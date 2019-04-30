@@ -20,7 +20,19 @@
   &.notransition {
     transition: none;
   }
+
+  /* Most of the Smartphones (Portrait) */
+  @media only screen and (max-width: 600px) {
+    height: 56px;
+    padding: 0 0.2em;
+  }
+  /* Most of the Retina Display Smartphones (Portrait) */
+  @media only screen and (max-width: 600px) and (min-resolution: 2dppx) and (orientation: portrait) {
+    height: 56px;
+    padding: 0 0.2em;
+  }
 }
+
 .header-menu {
   width: 100%;
 }
