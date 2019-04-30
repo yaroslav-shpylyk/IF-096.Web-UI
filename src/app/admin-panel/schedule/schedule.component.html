@@ -3,12 +3,16 @@
 </div>
 <form [formGroup] = "frmSchedule" (ngSubmit) = "onSubmit()">
   <div class="schedule-top" >
-    <mat-form-field class="datePiker" >
+    <mat-form-field class="datePiker">
       <input matInput [matDatepicker]="pickerStart"
        [placeholder]="dateTermStartMsg"
        formControlName="dateTermStart">
       <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
       <mat-datepicker #pickerStart></mat-datepicker>
+      <mat-error *ngIf="isInputInvalid('dateTermStart')">Не визначено дату початку семестру</mat-error>
+      <mat-error *ngIf="frmSchedule.get('dateTermStart').getError('invalidDate') &&  frmSchedule.get('dateTermStart').touched">
+        {{ frmSchedule.get('dateTermStart').getError('invalidDate') }}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="datePiker">
@@ -17,10 +21,13 @@
          formControlName="dateTermEnd">
         <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker #pickerEnd></mat-datepicker>
+        <mat-error *ngIf="isInputInvalid('dateTermEnd')">Не визначено дату закінчення семестру</mat-error>
+        <mat-error *ngIf="frmSchedule.get('dateTermEnd').getError('invalidDate') && frmSchedule.get('dateTermEnd').touched">
+            {{ frmSchedule.get('dateTermEnd').getError('invalidDate') }}
+        </mat-error>
     </mat-form-field>
 
     <mat-form-field>
-
       <mat-select [placeholder]="selectClassMsg"
        formControlName="selectClass"
        (selectionChange)="selectedClass($event.value.id)">
