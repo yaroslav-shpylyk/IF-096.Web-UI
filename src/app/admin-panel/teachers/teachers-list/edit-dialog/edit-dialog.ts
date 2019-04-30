@@ -228,6 +228,7 @@ export class EditDialogOverviewComponent implements OnInit {
   template: ''
 })
 export class EditDialogEntryComponent implements OnInit {
+  prevModalId = +this.route.snapshot.params.id;
   constructor(
     public dialog: MatDialog,
     private router: Router,
@@ -247,6 +248,10 @@ export class EditDialogEntryComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.teachersStorageService.editMode = params.id != null;
       this.teachersStorageService.modalsId = +params.id;
+      if (this.teachersStorageService.editMode && this.prevModalId !== +params.id) {
+        this.prevModalId = +params.id;
+        this.openDialog();
+      }
     });
   }
 
@@ -255,7 +260,7 @@ export class EditDialogEntryComponent implements OnInit {
       maxWidth: '90vw',
       panelClass: 'teacher-edit-dialog'
     });
-    dialogRef.afterClosed().subscribe(() => {
+    dialogRef.backdropClick().subscribe(() => {
       this.router.navigate(['/admin-panel', 'teachers'], {
         relativeTo: this.route,
         replaceUrl: true
