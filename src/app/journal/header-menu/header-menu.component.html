@@ -21,10 +21,13 @@
       Статистика
     </a>
   </div>
-  <!-- account photo icon -->
+  <!-- avatar and name -->
   <div class="right">
-    <span>{{fullName}}</span>
-    <div class="account-photo">
+    <!--first and last names-->
+    <span>{{firstName}} {{lastName}}</span>
+    <!-- show avatar if exists-->
+    <!-- show abbreviation if not-->
+    <div>
       <app-avatar [avatar]="avatar"
                   [firstName]="firstName"
                   [lastName]="lastName">

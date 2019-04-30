@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { HeaderService } from '../../services/header.service';
 import { Student } from '../../models/student';
+import { StudentsService } from '../../services/students.service';
 
 @Component({
   selector: 'app-student-header-menu',
@@ -9,22 +9,26 @@ import { Student } from '../../models/student';
   styleUrls: ['./header-menu.component.scss']
 })
 export class StudentHeaderMenuComponent implements OnInit {
-  public fullName;
-  public avatar;
-  public firstName;
-  public lastName;
+  public avatar: any;
+  public firstName: string;
+  public lastName: string;
 
   constructor(public auth: AuthService,
-              public headerService: HeaderService) {
+              private studentService: StudentsService) {
   }
 
-  ngOnInit() {
-    this.headerService.getStudent(this.auth.getUserId()).subscribe((student: Student) => {
-      console.log(student);
-      this.fullName = `${student.firstname} ${student.lastname}`;
+  /**
+   * Method which gets data of student by user's id
+   */
+  getStudent() {
+    this.studentService.getOneStudent(this.auth.getUserId()).subscribe((student: Student) => {
       this.avatar = student.avatar;
       this.firstName = student.firstname;
       this.lastName = student.lastname;
     });
+  }
+
+  ngOnInit() {
+    this.getStudent();
   }
 }

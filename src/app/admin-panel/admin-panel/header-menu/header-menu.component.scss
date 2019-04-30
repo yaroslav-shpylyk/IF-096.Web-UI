@@ -94,6 +94,9 @@ a {
 
 .account-photo { // account photo
   padding: 0 2%;
-  font-size: 48px;
-  width: 48px;
+  font-size: 56px;
+  width: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
