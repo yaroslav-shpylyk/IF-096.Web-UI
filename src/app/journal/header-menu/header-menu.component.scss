@@ -125,10 +125,12 @@ a {
     /* Most of the Smartphones (Portrait) */
     @media only screen and (max-width: 600px) {
       font-size: 0.5em;
+      padding-right: 0.4em;
     }
     /* Most of the Retina Display Smartphones (Portrait) */
     @media only screen and (max-width: 600px) and (min-resolution: 2dppx) and (orientation: portrait) {
       font-size: 0.5em;
+      padding-right: 0.4em;
     }
   }
 }
@@ -136,18 +138,18 @@ a {
 :host ::ng-deep .avatar { // account photo from avatar component
   height: 56px !important;
   width: 56px !important;
-  font-size: 0.8em;
+  font-size: 0.75em;
 
   /* Most of the Smartphones (Portrait) */
   @media only screen and (max-width: 600px) {
     height: 50px !important;
     width: 50px !important;
-    font-size: 0.75em;
+    font-size: 0.7em;
   }
   /* Most of the Retina Display Smartphones (Portrait) */
   @media only screen and (max-width: 600px) and (min-resolution: 2dppx) and (orientation: portrait) {
     height: 50px !important;
     width: 50px !important;
-    font-size: 0.75em;
+    font-size: 0.7em;
   }
 }
