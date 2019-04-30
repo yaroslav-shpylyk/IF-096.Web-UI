@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import { Moment } from 'moment';
+
 import { ScheduleData } from '../../models/schedule-data';
 import { ClassData } from '../../models/class-data';
 import { SubjectData } from '../../models/subject-data';
+import { LessonData } from '../../models/lesson-data';
 import { ClassService } from '../../services/class.service';
 import { SubjectService } from '../../services/subject.service';
 import { ScheduleService } from '../../services/schedule.service';
-import { LessonData } from '../../models/lesson-data';
-
-import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 @Component({
   selector: 'app-schedule',
@@ -17,7 +18,6 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
   styleUrls: ['./schedule.component.scss'],
 
   providers: [
-    {provide: MAT_DATE_LOCALE, useValue: 'ua-UA'},
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
   ],
@@ -85,7 +85,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   /**
-   * Method is a validator for the start and the end date of the period
+   * Method is a validator for the start and the end date of semester
    * @param control - the control to which it is tied
    * @returns - object of the type ValidationErrors if a validation error occurred,
    * or null if validation was successful
@@ -152,8 +152,11 @@ export class ScheduleComponent implements OnInit {
     }
     /* Handling form data */
 
-    this.scheduleData.startOfSemester = this.frmSchedule.controls.dateTermStart.value;
-    this.scheduleData.endOfSemester = this.frmSchedule.controls.dateTermEnd.value;
+    this.scheduleData.startOfSemester =
+      this.frmSchedule.controls.dateTermStart.value.format('YYYY-MM-DD');
+    this.scheduleData.endOfSemester =
+      this.frmSchedule.controls.dateTermEnd.value.format('YYYY-MM-DD');
+
     this.scheduleData.classId = this.frmSchedule.controls.selectClass.value.id;
     this.scheduleData.className = this.frmSchedule.controls.selectClass.value;
 
