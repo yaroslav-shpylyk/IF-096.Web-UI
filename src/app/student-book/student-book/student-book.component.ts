@@ -26,12 +26,15 @@ export class StudentBookComponent implements OnInit {
   public showMessage: boolean;
   public showTable: boolean;
   public dateValue = moment();
+  public checker: boolean;
+  public checker2: boolean;
 
   constructor(private studentBookService: StudentBookService) {
   }
 
   ngOnInit() {
     this.showSchedule();
+    this.gridView();
   }
 
   /**
@@ -77,5 +80,13 @@ export class StudentBookComponent implements OnInit {
         this.showTable = false;
       }
     });
+  }
+  gridView() {
+    this.checker = true;
+    this.checker2 = false;
+  }
+  listView() {
+    this.checker2 = true;
+    this.checker = false;
   }
 }

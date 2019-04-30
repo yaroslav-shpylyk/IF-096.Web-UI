@@ -1,11 +1,14 @@
-<div>
-  <button mat-stroked-button (click)="backDate()">
+<div class="headContainer">
+<div class="changeView">
+  <p class="takeView">Тип відображення</p>
+  <button mat-stroked-button (click)="listView()">
   <mat-icon class="viewSwitcher">view_stream</mat-icon>
 </button>
 
-<button mat-stroked-button (click)="backDate()">
+  <button mat-stroked-button (click)="gridView()">
   <mat-icon class="viewSwitcher">view_week</mat-icon>
-</button>
+  </button>
+  </div>
 <div class="dateSwitcher">
   <!--Previous week button-->
   <button mat-button (click)="backDate()">
@@ -29,9 +32,12 @@
 </div>
 
 <!--Tables with student-book data-->
-<table id="container">
+<table [ngClass]="{container: checker, container2: checker2}">
+
   <tbody *ngFor="let item of groupArr" >
+
   <ng-container id="days" *ngIf="showTable">
+
     <h4 colspan="2">{{item.date | date : 'fullDate' | uppercase}}</h4>
     <table mat-table [dataSource]="item.groupItem" class="mat-elevation-z8">
 

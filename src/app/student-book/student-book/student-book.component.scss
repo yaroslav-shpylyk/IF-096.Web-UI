@@ -1,43 +1,62 @@
 @import "../../../styles.scss";
 
-/*Date selector and switcher*/
-.dateSwitcher {
+/*Header container*/
+.headContainer {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
   margin-bottom: 2em;
 
-  button.mat-button {
+  /*View switcher*/
+  .changeView {
+    margin-left: 15%;
+
+    p {
+      text-align: center;
+      display: block;
+      font-size: 0.7em;
+      color: rgba(0, 0, 0, .44);
+      margin-top: 0;
+    }
+
+    .mat-stroked-button {
+      margin-right: 1px;
+    }
+
+    .viewSwitcher {
+      color: $dark-color !important;
+    }
+
+    @media (max-width: 999px) {
+      display: none;
+    }
   }
 
-  mat-form-field {
-    width: 7em;
+  /*Date selector and switcher*/
+  .dateSwitcher {
+    margin-left: auto;
+    margin-right: 15%;
+
+    button.mat-button {
+      color: $dark-color !important;
+    }
+
+    mat-form-field {
+      width: 7em;
+    }
+
+    @media (max-width: 999px) {
+      margin: 0 auto !important;
+    }
   }
 }
-
-.viewSwitcher {
-    color: $dark-color !important;
-  }
 
 /*Schedule tables*/
 table {
   width: 100%;
   margin: 0 auto;
-
-  /*!* Small and medium devices (portrait tablets and large phones, 600px and up) *!
-  @media (max-width: 1024px) {
-    width: 100%;
-  }
-  !* Extra small devices (phones, 600px and down) *!
-  @media (max-width: 600px) {
-    width: 100% !important;
-
-    .note {
-      display: none;
-    }
-  }*/
 }
 
-#container {
+.container {
   margin: 0 auto;
   display: grid;
   grid: repeat(3, auto) / auto-flow 49%;
@@ -65,7 +84,7 @@ table {
   }
 }
 
-#container2 {
+.container2 {
   width: 70%;
   margin: 0 auto;
 
@@ -80,6 +99,13 @@ table {
       display: none;
     }
   }
+}
+
+.mat-elevation-z8 {
+  border-radius: 0.5em;
+  overflow: hidden;
+
+  tr:hover {background-color:#f5f5f5;}
 }
 
 h4 {
