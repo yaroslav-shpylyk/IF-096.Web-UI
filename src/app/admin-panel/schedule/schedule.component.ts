@@ -176,19 +176,10 @@ export class ScheduleComponent implements OnInit {
       this.scheduleData[dailySubjects] = this.addDailyData(dailySubjects);
     });
 
-    if (this.hasEmptyDay) {
-      this.hasEmptyDay = false;
-      return;
+    if (!this.hasEmptyDay) {
+      this.saveSchedule(this.frmSchedule.controls.selectClass.value.id, this.scheduleData);
     }
-
-    this.scheduleService.saveSchedule(
-      this.frmSchedule.controls.selectClass.value.id, this.scheduleData).subscribe(
-        (data: ScheduleData) => {
-          this.messageClass = 'success-msg';
-          this.showMessage('Розклад успішно збережено');
-        },
-        error => { this.messageClass = 'error-msg'; this.showMessage(error); }
-    );
+    this.hasEmptyDay = false;
   }
 
   /**
@@ -234,12 +225,27 @@ export class ScheduleComponent implements OnInit {
   }
 
   /**
+   * Method saves schedule for the class by id
+   * @param classId - Id of class
+   * @param data - Array with schedule data
+   */
+  private saveSchedule(classId: number, data: ScheduleData): void {
+    this.scheduleService.saveSchedule(classId, data).subscribe(
+        (data: ScheduleData) => {
+          this.messageClass = 'success-msg';
+          this.showMessage('Розклад успішно збережено');
+        },
+        error => { this.messageClass = 'error-msg'; this.showMessage(error); }
+    );
+  }
+
+  /**
    * The method shows a message for the user about success or error
    * @param message - Message for the user
-  */
+   */
   private showMessage(message: string) {
     this.messageData = message;
     const itself: ScheduleComponent = this;
-    setTimeout(function(){ itself.messageData = ''; }, 2000);
+    setTimeout( () => { itself.messageData = ''; }, 2000);
   }
 }

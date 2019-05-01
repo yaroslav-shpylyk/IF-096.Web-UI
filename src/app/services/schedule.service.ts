@@ -18,7 +18,7 @@ export class ScheduleService {
    */
   getSchedule(classId: number): Observable<any> {
     return this.http.get(`/classes/${classId}/schedule`).pipe(map(
-      (response: {status: any, data: ScheduleData}) => { return response.data; }
+      (response: {status: any, data: ScheduleData}) => response.data
     ),
     catchError(error => {
       console.log(error);
@@ -33,11 +33,8 @@ export class ScheduleService {
    */
   getSubjects(classId: number): Observable<any> {
     return this.http.get(`/subjects?classId=${classId}`).pipe(map(
-      (response: {status: any, data: SubjectData}) => { return response.data; }
+      (response: {status: any, data: SubjectData}) => response.data
     ),
-    /*return this.http.get(`/classes/${classId}/schedule`).pipe(map(
-      (response: {status: any, data: ScheduleData}) => { return response.data; }
-    ),*/
     catchError(error => {
       console.log(error);
       return throwError('Список предметів для вибраного класу не отримано. Спробуйте ще раз');
@@ -52,7 +49,7 @@ export class ScheduleService {
    */
   saveSchedule(classId: number, data: ScheduleData): Observable<any> {
     return this.http.post(`/classes/${classId}/schedule`, data).pipe(map(
-      (response: {status: any, data: ScheduleData}) => { return response.data; }
+      (response: {status: any, data: ScheduleData}) => response.data
     ),
     catchError(error => {
         console.log(error);
