@@ -3,20 +3,22 @@ import {
   MatBottomSheetRef,
   MAT_BOTTOM_SHEET_DATA,
   MatSnackBar,
-  MatSnackBarConfig
+  MatSnackBarConfig,
+  MatDialog
 } from '@angular/material';
 import { HomeworkStorageService } from 'src/app/services/homework-storage.service.ts.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { SubjectAttachmentDialogComponent } from './subject-attachment-dialog/subject-attachment-dialog.component';
 
 @Component({
   selector: 'app-homework-bottom-sheet',
-  templateUrl: 'homework-bottom-sheet-overview.html'
+  templateUrl: 'homework-bottom-sheet-overview.html',
+  styleUrls: ['homework-bottom-sheet-overview.scss']
 })
 export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
   file: string;
   fileName: string;
   fileType: string;
-  valChanged = false;
   homeworkForm: FormGroup;
 
   constructor(
@@ -26,7 +28,8 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
     public snackBar: MatSnackBar,
     private bottomSheetRef: MatBottomSheetRef<
       HomeworkBottomSheetOverviewSheetComponent
-    >
+    >,
+    public attachmentDialog: MatDialog
   ) {}
 
   lessonId = this.data.lessonId;
@@ -49,7 +52,28 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
     });
   }
 
-  dwnl() {
+  openAttachment(event): void {
+    event.preventDefault();
+    this.homeworkStorageService.saveFile(this.lessonId).subscribe(data => {
+      const blobData = this.convertBase64ToBlobData(data);
+      const blob = new Blob([blobData], { type: data.filetype });
+      const url = window.URL.createObjectURL(blob);
+      const dialogRef = this.attachmentDialog.open(SubjectAttachmentDialogComponent, {
+        width: '700px',
+        data: {
+          info: data,
+          url
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+    });
+  }
+
+  dwnl(event) {
+    event.preventDefault();
     this.homeworkStorageService.saveFile(this.lessonId).subscribe(data => {
       const blobData = this.convertBase64ToBlobData(data);
       const blob = new Blob([blobData], { type: data.filetype });
@@ -57,6 +81,7 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
       const link = document.createElement('a');
       link.href = url;
       link.download = data.fileName;
+      console.log(link);
       link.click();
     });
   }
@@ -167,3 +192,4 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
     return blob;
   }
 }
+

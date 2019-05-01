@@ -6,7 +6,6 @@ import { MatBottomSheet } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { BottomSheetOverviewSheetComponent } from './bottom-sheet-overview.components';
 import { HomeworkBottomSheetOverviewSheetComponent } from './homework-bottom-sheet-overview.components';
-import * as _ from 'lodash';
 
 @Component({
   selector: 'app-subject-journal',
