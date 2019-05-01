@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
-import { Moment } from 'moment';
 
 import { ScheduleData } from '../../models/schedule-data';
 import { ClassData } from '../../models/class-data';
@@ -24,6 +23,9 @@ import { ScheduleService } from '../../services/schedule.service';
 })
 export class ScheduleComponent implements OnInit {
   scheduleData: ScheduleData;
+  messageData = '';
+  messageClass: string;
+  hasEmptyDay = false;
 
   frmSchedule: FormGroup;
   arrClassList: Array<ClassData>;
@@ -108,15 +110,18 @@ export class ScheduleComponent implements OnInit {
   }
 
   /**
-   * Method gets schedule for selected class
+   * Method gets subjects that are related to the selected class
    * @param classId - Id of selected class
-   * @returns - Schedule for selected class
    */
   selectedClass(classId: number) {
-    this.scheduleService.getSchedule(classId).subscribe(data => {
-      this.scheduleData = data;
-      // console.log(this.scheduleData);
-    });
+    this.scheduleService.getSubjects(classId).subscribe(
+      data => { /*this.arrSubjectsList = data;*/ console.log(data); },
+      error => { this.messageClass = 'error-msg'; this.showMessage(error); }
+    );
+    this.scheduleService.getSchedule(classId).subscribe(
+      data => { this.scheduleData = data; console.log(data); },
+      error => { this.messageClass = 'error-msg'; this.showMessage(error); }
+    );
   }
 
   /**
@@ -146,12 +151,13 @@ export class ScheduleComponent implements OnInit {
     const controls = this.frmSchedule.controls;
     /* Check the form for validity */
     if (this.frmSchedule.invalid) {
-      Object.keys(controls).forEach(controlName => controls[controlName].markAsTouched() );
+      Object.keys(controls).forEach(
+        controlName => controls[controlName].markAsTouched()
+      );
       window.scrollTo(0, 0);
       return;
     }
     /* Handling form data */
-
     this.scheduleData.startOfSemester =
       this.frmSchedule.controls.dateTermStart.value.format('YYYY-MM-DD');
     this.scheduleData.endOfSemester =
@@ -161,9 +167,28 @@ export class ScheduleComponent implements OnInit {
     this.scheduleData.className = this.frmSchedule.controls.selectClass.value;
 
     Object.keys(this.emittedDays).forEach(dailySubjects => {
+      if (!this.addDailyData(dailySubjects)) {
+        this.hasEmptyDay = true;
+        this.messageClass = 'error-msg';
+        this.showMessage('Заповніть розклад для всіх робочих днів');
+        return;
+      }
       this.scheduleData[dailySubjects] = this.addDailyData(dailySubjects);
     });
-    console.log(this.scheduleData);
+
+    if (this.hasEmptyDay) {
+      this.hasEmptyDay = false;
+      return;
+    }
+
+    this.scheduleService.saveSchedule(
+      this.frmSchedule.controls.selectClass.value.id, this.scheduleData).subscribe(
+        (data: ScheduleData) => {
+          this.messageClass = 'success-msg';
+          this.showMessage('Розклад успішно збережено');
+        },
+        error => { this.messageClass = 'error-msg'; this.showMessage(error); }
+    );
   }
 
   /**
@@ -171,7 +196,7 @@ export class ScheduleComponent implements OnInit {
    * @param dailySubjects - Daily schedule name
    * @returns - Data for the daily schedule
    */
-  private addDailyData(dailySubjects: string): LessonData[] {
+  private addDailyData(dailySubjects: string): LessonData[] | boolean {
     const dailyLesson: LessonData[] = [];
     for (let i = 0; i < (this.emittedDays[dailySubjects].value.length - 1); i++) {
       const lessonFirstGroup = {
@@ -181,7 +206,9 @@ export class ScheduleComponent implements OnInit {
         subjectDescription: ''
       };
       Object.keys(lessonFirstGroup).forEach(keyName =>
-        lessonFirstGroup[keyName] = this.emittedDays[dailySubjects].value[i].firstGroup[keyName]);
+        lessonFirstGroup[keyName] =
+          this.emittedDays[dailySubjects].value[i].firstGroup[keyName]
+      );
       lessonFirstGroup.lessonNumber = `${i + 1}`;
       dailyLesson.push(lessonFirstGroup);
 
@@ -193,11 +220,26 @@ export class ScheduleComponent implements OnInit {
           subjectDescription: ''
         };
         Object.keys(lessonSecondGroup).forEach(keyName =>
-          lessonSecondGroup[keyName] = this.emittedDays[dailySubjects].value[i].secondGroup[keyName]);
+          lessonSecondGroup[keyName] =
+            this.emittedDays[dailySubjects].value[i].secondGroup[keyName]
+        );
         lessonSecondGroup.lessonNumber = `${i + 1}`;
         dailyLesson.push(lessonSecondGroup);
       }
     }
+    if (dailyLesson.length === 0 && dailySubjects !== 'saturdaySubjects') {
+      return false;
+    }
     return dailyLesson;
+  }
+
+  /**
+   * The method shows a message for the user about success or error
+   * @param message - Message for the user
+  */
+  private showMessage(message: string) {
+    this.messageData = message;
+    const itself: ScheduleComponent = this;
+    setTimeout(function(){ itself.messageData = ''; }, 2000);
   }
 }

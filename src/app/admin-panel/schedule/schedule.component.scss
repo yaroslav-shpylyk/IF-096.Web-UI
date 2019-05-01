@@ -2,6 +2,7 @@ $title-color: rgba(210, 230, 240, 0.5);
 $invalid-color: rgb(112, 5, 5);
 $shadow-color: rgb(182, 182, 182);
 $button-color: rgb(198, 219, 233);
+$success-color: rgb(15, 105, 15);
 
 .title-schedule {
     margin: 0 0 0.5em 0;
@@ -61,6 +62,14 @@ input.ng-touched.ng-invalid{
     background-color: $button-color;
     font-size: 1em;
     box-shadow: 2px 2px 3px $shadow-color;
+}
+.success-msg {
+    color: $success-color;
+    font-style: italic;
+}
+.error-msg {
+    color: $invalid-color;
+    font-style: italic;
 }
 
 /* Screen = B/w 320px to 479px */
