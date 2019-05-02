@@ -190,32 +190,20 @@ export class ScheduleComponent implements OnInit {
   private addDailyData(dailySubjects: string): LessonData[] | boolean {
     const dailyLesson: LessonData[] = [];
     for (let i = 0; i < (this.emittedDays[dailySubjects].value.length - 1); i++) {
-      const lessonFirstGroup = {
-        lessonNumber: '',
-        subjectId: 0,
-        subjectName: '',
-        subjectDescription: ''
-      };
-      Object.keys(lessonFirstGroup).forEach(keyName =>
-        lessonFirstGroup[keyName] =
-          this.emittedDays[dailySubjects].value[i].firstGroup[keyName]
-      );
-      lessonFirstGroup.lessonNumber = `${i + 1}`;
-      dailyLesson.push(lessonFirstGroup);
+      dailyLesson.push({
+        lessonNumber: `${i + 1}`,
+        subjectId: this.emittedDays[dailySubjects].value[i].firstGroup.subjectId,
+        subjectName: this.emittedDays[dailySubjects].value[i].firstGroup.subjectName,
+        subjectDescription: this.emittedDays[dailySubjects].value[i].firstGroup.subjectDescription
+      });
 
       if ('secondGroup' in this.emittedDays[dailySubjects].value[i]) {
-        const lessonSecondGroup = {
-          lessonNumber: '',
-          subjectId: 0,
-          subjectName: '',
-          subjectDescription: ''
-        };
-        Object.keys(lessonSecondGroup).forEach(keyName =>
-          lessonSecondGroup[keyName] =
-            this.emittedDays[dailySubjects].value[i].secondGroup[keyName]
-        );
-        lessonSecondGroup.lessonNumber = `${i + 1}`;
-        dailyLesson.push(lessonSecondGroup);
+        dailyLesson.push({
+          lessonNumber: `${i + 1}`,
+          subjectId: this.emittedDays[dailySubjects].value[i].secondGroup.subjectId,
+          subjectName: this.emittedDays[dailySubjects].value[i].secondGroup.subjectName,
+          subjectDescription: this.emittedDays[dailySubjects].value[i].secondGroup.subjectDescription
+        });
       }
     }
     if (dailyLesson.length === 0 && dailySubjects !== 'saturdaySubjects') {
@@ -234,6 +222,7 @@ export class ScheduleComponent implements OnInit {
         (data: ScheduleData) => {
           this.messageClass = 'success-msg';
           this.showMessage('Розклад успішно збережено');
+          console.log(data);
         },
         error => { this.messageClass = 'error-msg'; this.showMessage(error); }
     );
