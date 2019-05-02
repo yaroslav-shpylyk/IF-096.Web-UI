@@ -72,7 +72,7 @@ export class DailyScheduleComponent implements OnInit {
       secondGroupCntrl.setValue('');
       secondGroupCntrl.disable();
     } else {
-      this.dailySchedule.removeAt(i);
+      if (this.dailySchedule.length > 1) this.dailySchedule.removeAt(i);
     }
   }
 }
