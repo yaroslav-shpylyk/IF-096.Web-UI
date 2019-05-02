@@ -1,5 +1,5 @@
 $title-color: rgba(210, 230, 240, 0.5);
-$invalid-color: rgb(112, 5, 5);
+$invalid-color: rgb(182, 14, 14);
 $shadow-color: rgb(182, 182, 182);
 $button-color: rgb(198, 219, 233);
 $success-color: rgb(15, 105, 15);
@@ -43,16 +43,13 @@ form {
     grid-area: 3/1;
 }
 .thursdaySubjects {
-    grid-area: 1/2
+    grid-area: 1/2;
 }
 .fridaySubjects {
-    grid-area: 2/2
+    grid-area: 2/2;
 }
 .saturdaySubjects {
-    grid-area: 3/2
-}
-input.ng-touched.ng-invalid{
-    border-color: $invalid-color;
+    grid-area: 3/2;
 }
 .save-button {
     width: 6em;

@@ -30,16 +30,16 @@ export class ScheduleComponent implements OnInit {
   frmSchedule: FormGroup;
   arrClassList: Array<ClassData>;
   arrSubjectsList: Array<SubjectData>;
-  selectClassMsg = 'Виберіть клас*';
-  dateTermStartMsg = 'Дата початку семестру*';
-  dateTermEndMsg = 'Дата закінчення семестру*';
+  selectClassMsg = 'Виберіть клас *';
+  dateTermStartMsg = 'Дата початку семестру *';
+  dateTermEndMsg = 'Дата закінчення семестру *';
 
   weekDayName = [
-    {legendDay: 'Понеділок', dailySubjects: 'mondaySubjects'},
-    {legendDay: 'Вівторок', dailySubjects: 'tuesdaySubjects'},
-    {legendDay: 'Середа', dailySubjects: 'wednesdaySubjects'},
-    {legendDay: 'Четвер', dailySubjects: 'thursdaySubjects'},
-    {legendDay: 'П`ятниця', dailySubjects: 'fridaySubjects'},
+    {legendDay: 'Понеділок *', dailySubjects: 'mondaySubjects'},
+    {legendDay: 'Вівторок *', dailySubjects: 'tuesdaySubjects'},
+    {legendDay: 'Середа *', dailySubjects: 'wednesdaySubjects'},
+    {legendDay: 'Четвер *', dailySubjects: 'thursdaySubjects'},
+    {legendDay: 'П`ятниця *', dailySubjects: 'fridaySubjects'},
     {legendDay: 'Субота', dailySubjects: 'saturdaySubjects'}
   ];
   emittedDays = {
@@ -167,13 +167,14 @@ export class ScheduleComponent implements OnInit {
     this.scheduleData.className = this.frmSchedule.controls.selectClass.value;
 
     Object.keys(this.emittedDays).forEach(dailySubjects => {
-      if (!this.addDailyData(dailySubjects)) {
+      const dailyData = this.addDailyData(dailySubjects);
+      if (!dailyData) {
         this.hasEmptyDay = true;
         this.messageClass = 'error-msg';
         this.showMessage('Заповніть розклад для всіх робочих днів');
         return;
       }
-      this.scheduleData[dailySubjects] = this.addDailyData(dailySubjects);
+      this.scheduleData[dailySubjects] = dailyData;
     });
 
     if (!this.hasEmptyDay) {
@@ -189,21 +190,25 @@ export class ScheduleComponent implements OnInit {
    */
   private addDailyData(dailySubjects: string): LessonData[] | boolean {
     const dailyLesson: LessonData[] = [];
-    for (let i = 0; i < (this.emittedDays[dailySubjects].value.length - 1); i++) {
-      dailyLesson.push({
-        lessonNumber: `${i + 1}`,
-        subjectId: this.emittedDays[dailySubjects].value[i].firstGroup.subjectId,
-        subjectName: this.emittedDays[dailySubjects].value[i].firstGroup.subjectName,
-        subjectDescription: this.emittedDays[dailySubjects].value[i].firstGroup.subjectDescription
-      });
-
-      if ('secondGroup' in this.emittedDays[dailySubjects].value[i]) {
+    for (let i = 0; i < (this.emittedDays[dailySubjects].value.length); i++) {
+      if (this.emittedDays[dailySubjects].value[i].firstGroup !== '') {
         dailyLesson.push({
           lessonNumber: `${i + 1}`,
-          subjectId: this.emittedDays[dailySubjects].value[i].secondGroup.subjectId,
-          subjectName: this.emittedDays[dailySubjects].value[i].secondGroup.subjectName,
-          subjectDescription: this.emittedDays[dailySubjects].value[i].secondGroup.subjectDescription
+          subjectId: this.emittedDays[dailySubjects].value[i].firstGroup.subjectId,
+          subjectName: this.emittedDays[dailySubjects].value[i].firstGroup.subjectName,
+          subjectDescription: this.emittedDays[dailySubjects].value[i].firstGroup.subjectDescription
         });
+      }
+
+      if ('secondGroup' in this.emittedDays[dailySubjects].value[i]) {
+        if (this.emittedDays[dailySubjects].value[i].secondGroup !== '') {
+          dailyLesson.push({
+            lessonNumber: `${i + 1}`,
+            subjectId: this.emittedDays[dailySubjects].value[i].secondGroup.subjectId,
+            subjectName: this.emittedDays[dailySubjects].value[i].secondGroup.subjectName,
+            subjectDescription: this.emittedDays[dailySubjects].value[i].secondGroup.subjectDescription
+          });
+        }
       }
     }
     if (dailyLesson.length === 0 && dailySubjects !== 'saturdaySubjects') {
