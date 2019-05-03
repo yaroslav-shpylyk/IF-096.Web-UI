@@ -2,7 +2,7 @@
 <mat-nav-list class="navigation-items">
   <!--static sections in header menu-->
   <div *ngFor="let i of routes">
-    <a mat-list-item routerLinkActive="active" routerLink="{{i.path}}">
+    <a mat-list-item routerLink="{{i.path}}" routerLinkActive="active">
       <mat-icon>{{i.icon}}</mat-icon>
       {{i.name}}
     </a>
@@ -39,7 +39,6 @@
         <span>Вийти</span>
       </button>
     </a>
-    <mat-divider></mat-divider>
   </mat-menu>
   <!-- account photo icon -->
   <a routerLink="/admin-panel" class="right">
@@ -49,4 +48,3 @@
     </div>
   </a>
 </mat-nav-list>
-

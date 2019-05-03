@@ -58,7 +58,7 @@ export class HeaderComponent implements OnInit {
   }
 
   /**
-   * show header when user stops scrolling with 2s delay
+   * showMessage header when user stops scrolling with 2s delay
    */
   showHeader() {
     this.scroll.pipe(
@@ -76,5 +76,23 @@ export class HeaderComponent implements OnInit {
   isAdmin() {
     const isAdmin = this.auth.getUserRole() === roles.admin;
     return isAdmin;
+  }
+
+  /**
+   * checks user's role for being student (user)
+   * @returns true if user is student (user)
+   */
+  isStudent() {
+    const isStudent = this.auth.getUserRole() === roles.students;
+    return isStudent;
+  }
+
+  /**
+   * checks user's role for being teacher
+   * @returns true if user is teacher
+   */
+  isTeacher() {
+    const isTeacher = this.auth.getUserRole() === roles.teacher;
+    return isTeacher;
   }
 }

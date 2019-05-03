@@ -14,15 +14,15 @@
 
   /* Most of the Smartphones (Portrait) */
   @media only screen and (max-width: 600px) {
-    display: block; // show
+    display: block; // showMessage
   }
   /* Most of the Retina Display Smartphones (Portrait) */
   @media only screen and (max-width: 600px) and (min-resolution: 2dppx) and (orientation: portrait) {
-    display: block; // show
+    display: block; // showMessage
   }
 }
 
-app-admin-footer-menu { // menu list
+app-admin-footer-menu, app-student-footer-menu, app-teacher-footer-menu { // menu list
   width: 100%;
   height: 50px;
   display: flex;

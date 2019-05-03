@@ -64,14 +64,12 @@ export class AdminHeaderMenuComponent implements OnInit {
   }
 
   /**
-   * change fourth section in header menu
+   * change third section in header menu
    * depending on selected routing from More menu
    * show name, icon, route depending on selected section
    * Classes is shown by default
    */
   activeRoute() {
-    [this.pathActive, this.iconActive, this.nameActive] =
-      [this.routesMore[0].path, this.routesMore[0].icon, this.routesMore[0].name]; // show Classes by default
     for (const i in this.routesMore) { // link buttons from More menu
       if (this.router.url === this.routesMore[i].path) { // show path, icon, route depending on route path
         [this.pathActive, this.iconActive, this.nameActive] =
@@ -81,7 +79,7 @@ export class AdminHeaderMenuComponent implements OnInit {
     }
     for (const i in this.routes) { // link buttons from static menu
       if (this.router.url === this.routes[i].path || this.router.url === '/admin-panel') {
-        this.active = false; // remove class for highlighting section in fourth section
+        this.active = false; // remove class for highlighting section in third section
       }
     }
   }
@@ -100,6 +98,8 @@ export class AdminHeaderMenuComponent implements OnInit {
     this.router.events.subscribe(() => {
       this.activeRoute(); // call on every routing change
     });
+    [this.pathActive, this.iconActive, this.nameActive] =
+      [this.routesMore[0].path, this.routesMore[0].icon, this.routesMore[0].name]; // show Classes by default
     this.activeRoute(); // call to check which section is selected when component is created
   }
 }

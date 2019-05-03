@@ -58,7 +58,15 @@ export class DailyScheduleComponent implements OnInit {
    * @param i - Index of the element which needs the second group
    */
   public addSecondGroup(i: number): void {
-    this.dailySchedule.at(i).get('secondGroup').enable();
+    const secondGroupCntrl = this.dailySchedule.at(i).get('secondGroup');
+    if (secondGroupCntrl.status !== 'DISABLED' && this.dailySchedule.length === i + 1) {
+      this.dailySchedule.push(this.frmBld.group({
+        firstGroup: this.frmBld.control(''),
+        secondGroup: this.frmBld.control({value: '', disabled: true})
+      }));
+    } else {
+      secondGroupCntrl.enable();
+    }
   }
 
   /**
@@ -66,13 +74,12 @@ export class DailyScheduleComponent implements OnInit {
    * @param i - index of the control which to be deleted
    */
   public removeSubjest(i: number): void {
-    if (this.dailySchedule.at(i).get('secondGroup').status !== 'DISABLED') {
-      const secondGroupCntrl: AbstractControl =
-        this.dailySchedule.at(i).get('secondGroup');
+    const secondGroupCntrl = this.dailySchedule.at(i).get('secondGroup');
+    if (secondGroupCntrl.status !== 'DISABLED') {
       secondGroupCntrl.setValue('');
       secondGroupCntrl.disable();
     } else {
-      this.dailySchedule.removeAt(i);
+      if (this.dailySchedule.length > 1) { this.dailySchedule.removeAt(i); }
     }
   }
 }
