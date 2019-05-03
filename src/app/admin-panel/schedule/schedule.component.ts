@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
-
 import { ScheduleData } from '../../models/schedule-data';
 import { ClassData } from '../../models/class-data';
 import { SubjectData } from '../../models/subject-data';
@@ -97,10 +96,11 @@ export class ScheduleComponent implements OnInit {
     let errorMsg: string;
     if (control === control.parent.get('dateTermStart')) {
       dateStart = new Date();
-      errorMsg = 'Дата початку семестру не може бути в минулому';
+      errorMsg = `Дата повинна бути більшою чим сьогоднішня:
+        ${dateStart.getDate()}/${dateStart.getMonth() + 1}/${dateStart.getFullYear()}`;
     } else {
       dateStart = new Date(control.parent.get('dateTermStart').value);
-      errorMsg = 'Дата закінчення семестру не може раніше його початку';
+      errorMsg = 'Дата закінчення повинна бути більшою за дату початку семестру';
     }
     const dateValue = new Date(control.value);
     if (dateValue.getTime() < dateStart.getTime()) {
@@ -116,11 +116,17 @@ export class ScheduleComponent implements OnInit {
   selectedClass(classId: number) {
     this.scheduleService.getSubjects(classId).subscribe(
       data => { /*this.arrSubjectsList = data;*/ console.log(data); },
-      error => { this.messageClass = 'error-msg'; this.showMessage(error); }
+      error => {
+        this.messageClass = 'error-msg';
+        this.showMessage('Список предметів для вибраного класу не отримано. Спробуйте ще раз');
+      }
     );
     this.scheduleService.getSchedule(classId).subscribe(
       data => { this.scheduleData = data; console.log(data); },
-      error => { this.messageClass = 'error-msg'; this.showMessage(error); }
+      error => {
+        this.messageClass = 'error-msg';
+        this.showMessage('Розклад для вибраного класу не отримано. Спробуйте ще раз');
+      }
     );
   }
 
@@ -229,7 +235,10 @@ export class ScheduleComponent implements OnInit {
           this.showMessage('Розклад успішно збережено');
           console.log(data);
         },
-        error => { this.messageClass = 'error-msg'; this.showMessage(error); }
+        error => {
+          this.messageClass = 'error-msg';
+          this.showMessage('Розклад не збережено. Спробуйте ще раз');
+        }
     );
   }
 

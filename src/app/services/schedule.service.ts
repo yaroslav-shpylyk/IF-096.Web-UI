@@ -22,7 +22,7 @@ export class ScheduleService {
     ),
     catchError(error => {
       console.log(error);
-      return throwError('Розклад для вибраного класу не отримано. Спробуйте ще раз');
+      return throwError(error.massage);
     }));
   }
 
@@ -37,7 +37,7 @@ export class ScheduleService {
     ),
     catchError(error => {
       console.log(error);
-      return throwError('Список предметів для вибраного класу не отримано. Спробуйте ще раз');
+      return throwError(error.message);
     }));
   }
 
@@ -53,7 +53,7 @@ export class ScheduleService {
     ),
     catchError(error => {
         console.log(error);
-        return throwError('Розклад не збережено. Спробуйте ще раз');
+        return throwError(error.message);
       })
     );
   }
