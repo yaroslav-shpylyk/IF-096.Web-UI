@@ -130,7 +130,6 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
       '\\'
     )[2];
     if (selectedFileName.length > 20) {
-      // const arr = selectedFileName.split('.');
       selectedFileName =
         selectedFileName.substr(0, 15) + '...' + selectedFileName.split('.')[1];
     }

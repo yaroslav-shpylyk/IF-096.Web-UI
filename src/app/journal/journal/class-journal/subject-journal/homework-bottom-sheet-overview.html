@@ -63,6 +63,7 @@
         type="button"
         matTooltip="Видалити домашнє завдання та повернутись до попереднього меню"
         (click)="onClear()"
+        [disabled]="!homeworks[lessonId].fileName && !homeworks[lessonId].homework"
       >
         Видалити
       </button>
