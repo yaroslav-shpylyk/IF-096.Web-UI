@@ -16,9 +16,10 @@ import { from } from 'rxjs';
 import { SubjectService } from '../../services/subject.service';
 import { TeachersJournalService } from '../../services/teachers-journal.service';
 import { MatStepperModule } from '@angular/material/stepper';
-import { SubjectData } from 'src/app/models/subject-data';
-import { ClassData } from 'src/app/models/class-data';
-import { TeacherData } from 'src/app/models/teacher-data';
+import { SubjectData } from '../../models/subject-data';
+import { ClassData } from '../../models/class-data';
+import { TeacherData } from '../../models/teacher-data';
+
 
 @Component({
   selector: 'app-teacher-connection',
