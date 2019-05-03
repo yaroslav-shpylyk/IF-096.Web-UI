@@ -40,9 +40,10 @@ export class EditDialogOverviewComponent implements OnInit {
   ngOnInit() {
     this.editMode = this.teachersStorageService.editMode;
     if (this.editMode) {
-      this.teacher = this.teachersStorageService.teacherToDisplay;
-      this.teachersStorageService.teacherToDisplay = null;
-      if (!this.teacher) {
+      if (this.teachersStorageService.teacherToDisplay) {
+        this.teacher = { ...this.teachersStorageService.teacherToDisplay };
+        this.teachersStorageService.teacherToDisplay = null;
+      } else {
         this.teachersStorageService
           .getTeacher(this.teachersStorageService.modalsId)
           .subscribe(
@@ -150,7 +151,10 @@ export class EditDialogOverviewComponent implements OnInit {
         },
         error => {
           console.log(error);
-          this.openSnackBar(`На сервері відбулась помилка`, 'snack-class-fail-teacher');
+          this.openSnackBar(
+            `На сервері відбулась помилка`,
+            'snack-class-fail-teacher'
+          );
         }
       );
     } else {
@@ -168,7 +172,10 @@ export class EditDialogOverviewComponent implements OnInit {
               id,
               obj: res
             });
-            this.openSnackBar(`Нові дані внесено`, 'snack-class-success-teacher');
+            this.openSnackBar(
+              `Нові дані внесено`,
+              'snack-class-success-teacher'
+            );
           },
           error => {
             console.log(error);
@@ -248,7 +255,10 @@ export class EditDialogEntryComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.teachersStorageService.editMode = params.id != null;
       this.teachersStorageService.modalsId = +params.id;
-      if (this.teachersStorageService.editMode && this.prevModalId !== +params.id) {
+      if (
+        this.teachersStorageService.editMode &&
+        this.prevModalId !== +params.id
+      ) {
         this.prevModalId = +params.id;
         this.openDialog();
       }

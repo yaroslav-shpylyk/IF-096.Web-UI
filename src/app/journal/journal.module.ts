@@ -7,13 +7,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClassJournalComponent } from './journal/class-journal/class-journal.component';
 import { SubjectJournalComponent } from './journal/class-journal/subject-journal/subject-journal.component';
 import { BottomSheetOverviewSheetComponent } from './journal/class-journal/subject-journal/bottom-sheet-overview.components';
+// tslint:disable-next-line:max-line-length
+import { HomeworkBottomSheetOverviewSheetComponent } from './journal/class-journal/subject-journal/homework-bottom-sheet-overview.components';
+import { MatTooltipModule } from '@angular/material';
 
 @NgModule({
   declarations: [
     JournalComponent,
     ClassJournalComponent,
     SubjectJournalComponent,
-    BottomSheetOverviewSheetComponent
+    BottomSheetOverviewSheetComponent,
+    HomeworkBottomSheetOverviewSheetComponent
   ],
   imports: [
     CommonModule,
@@ -22,6 +26,12 @@ import { BottomSheetOverviewSheetComponent } from './journal/class-journal/subje
     FormsModule,
     ReactiveFormsModule
   ],
-  entryComponents: [BottomSheetOverviewSheetComponent]
+  exports: [
+    MatTooltipModule
+  ],
+  entryComponents: [
+    BottomSheetOverviewSheetComponent,
+    HomeworkBottomSheetOverviewSheetComponent
+  ]
 })
 export class JournalModule {}
