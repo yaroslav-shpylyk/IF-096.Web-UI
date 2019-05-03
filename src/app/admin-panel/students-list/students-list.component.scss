@@ -1,37 +1,39 @@
-.select {
+mat-card-content {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-  flex-wrap: wrap;
-}
-
-.mat-elevation-z8 {
-  margin-top: 2em;
-  width: 100%;
-  table {
-    width: 100%;
-    th,
-    td {
-      width: 20%;
+  .select {
+    width: 60%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    & > * {
+      margin-left: 15%;
     }
-    .name {
-      cursor: pointer;
-      &:hover {
-        background-color: lightgray;
+  }
+  .mat-elevation-z8 {
+    margin-top: 2em;
+    width: 100%;
+    border: 1px solid rgb(143, 210, 233);
+    table {
+      width: 100%;
+      th,
+      td {
+        &:hover {
+          background-color: rgb(143, 210, 233);
+        }
       }
-      span {
-        margin-left: 0.7em;
+      .name {
+        cursor: pointer;
+        span {
+          margin-left: 0.7em;
+        }
       }
     }
   }
 }
-
-.students {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .add {
   position: fixed;
   bottom: 5em;
@@ -39,41 +41,25 @@
 }
 
 @media only screen and (max-width: 700px) {
-  .mat-elevation-z8 {
-    margin-top: 2em;
-    width: 100%;
-    table {
-      width: 100%;
-      th,
-      td {
-        width: 18%;
-      }
-      .name {
-        display: flex;
-        flex-direction: column;
+  mat-card-content {
+    .select {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .mat-elevation-z8 {
+      width: auto;
+      table {
+        .name {
+          display: flex;
+          flex-direction: column;
+        }
       }
     }
   }
-
   .add {
     position: fixed;
     bottom: 4em;
     right: 1.2em;
   }
-}
-
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-@media only screen and (min-width: 600px) {
-  table {
-    width: 65vw !important;
-  }
-}
-
-mat-form-field {
-  width: 85%;
 }

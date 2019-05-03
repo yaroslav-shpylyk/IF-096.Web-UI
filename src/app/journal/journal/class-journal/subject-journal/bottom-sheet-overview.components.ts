@@ -34,10 +34,20 @@ export class BottomSheetOverviewSheetComponent {
   journal = this.data.journal;
   valChanged = false;
 
+  /**
+   * Method creates buttons for marks toggler.
+   * @param i - index of a button to be created.
+   */
   counter(i: number) {
     return new Array(i);
   }
 
+  /**
+   * Method reacts on changing value into textarea for comment and given mark.
+   * Depending on that the local variable is set which is used as a source for
+   * desabling/enabling Save button from a template.
+   * @param mark - number representing selected mark.
+   */
   onValChange(mark?) {
     if (this.selectedVal || mark) {
       this.valChanged = true;
@@ -45,10 +55,11 @@ export class BottomSheetOverviewSheetComponent {
     }
   }
 
-  onNoteChange() {
-    this.valChanged = true;
-  }
-
+  /**
+   * Method opens and provides configuration for a snackbar.
+   * @param message - message to be used in a snackbar.
+   * @param classMessage - class to be assigned for a snackbar.
+   */
   openSnackBar(message: string, classMessage: string) {
     const config = new MatSnackBarConfig();
     config.panelClass = [classMessage];
@@ -57,6 +68,11 @@ export class BottomSheetOverviewSheetComponent {
     this.snackBar.open(message, null, config);
   }
 
+  /**
+   * Method gathers provided by user information, creates an object from
+   * that and sends it to the server by saveMark method in order to
+   * save a new mark.
+   */
   onSave() {
     this.journalsStorageService
       .saveMark({

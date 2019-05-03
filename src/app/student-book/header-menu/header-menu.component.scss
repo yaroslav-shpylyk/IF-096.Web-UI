@@ -1,0 +1,155 @@
+@import "../../../styles";
+
+mat-nav-list { // header list
+  height: 64px !important;
+
+  /* Most of the Smartphones (Portrait) */
+  @media only screen and (max-width: 600px) {
+    height: 56px !important;
+  }
+  /* Most of the Retina Display Smartphones (Portrait) */
+  @media only screen and (max-width: 600px) and (min-resolution: 2dppx) and (orientation: portrait) {
+    height: 56px !important;
+  }
+}
+
+.mat-list-item { // menu list float left
+  color: white !important;
+  cursor: pointer;
+  height: 64px !important;
+  font-size: 0.65em !important;
+
+  /* Most of the Smartphones (Portrait) */
+  @media only screen and (max-width: 600px) {
+    display: none !important; // hide
+  }
+  /* Most of the Retina Display Smartphones (Portrait) */
+  @media only screen and (max-width: 600px) and (min-resolution: 2dppx) and (orientation: portrait) {
+    display: none !important; // hide
+  }
+
+  &.active { // selected section
+    background-color: #3da6db !important;
+  }
+
+  &:hover {
+    color: lighten($main-color, 45%) !important;
+  }
+
+  .mat-icon { // icons
+    padding-right: 5px;
+  }
+
+  /*Small Tablets*/
+  @media only screen and (max-width: 800px) and (min-width: 601px) {
+    font-size: 0.5em !important; // link buttons
+  }
+  /*Small Tablets with Retina Display*/
+  @media only screen and (max-width: 800px) and (min-width: 601px) and (min-resolution: 2dppx) and (orientation: portrait) {
+    font-size: 0.5em !important; // link buttons
+  }
+  /*Large Tablets*/
+  @media only screen and (max-width: 1020px) and (min-width: 801px) {
+    font-size: 0.55em !important; // link buttons
+  }
+  /*Large Tablets with Retina Display*/
+  @media only screen and (max-width: 1020px) and (min-width: 801px) and (min-resolution: 2dppx) and (orientation: portrait) {
+    font-size: 0.55em !important; // link buttons
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+.navigation-items { // menu list
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right { // account photo with name of user float right
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+
+  /*Small Tablets*/
+  @media only screen and (max-width: 600px) {
+    width: 90%; // to hide overflow name
+  }
+  /*Small Tablets with Retina Display*/
+  @media only screen and (max-width: 600px) and (min-resolution: 2dppx) and (orientation: portrait) {
+    width: 90%; // to hide overflow name
+  }
+
+  span { // name of user
+    display: inline-block;
+    font-size: 0.65em;
+    padding-right: 0.8em;
+    margin-left: auto;
+    overflow: hidden; /* to hide anything that doesn't fit in the containing element. */
+    white-space: nowrap; /* to make sure the line doesn't break when it is longer than the containing div. */
+    text-overflow: ellipsis; /* add ... */
+
+    /*Large Tablets*/
+    @media only screen and (max-width: 1020px) and (min-width: 801px) {
+      font-size: 0.55em;
+      width: 12em; // max allowed
+      text-align: right;
+    }
+    /*Large Tablets with Retina Display*/
+    @media only screen and (max-width: 1020px) and (min-width: 801px) and (min-resolution: 2dppx) and (orientation: portrait) {
+      font-size: 0.55em;
+      width: 12em; // max allowed
+      text-align: right;
+    }
+    /*Small Tablets*/
+    @media only screen and (max-width: 800px) and (min-width: 601px) {
+      font-size: 0.5em;
+      width: 10em; // max allowed
+      text-align: right;
+
+    }
+    /*Small Tablets with Retina Display*/
+    @media only screen and (max-width: 800px) and (min-width: 601px) and (min-resolution: 2dppx) and (orientation: portrait) {
+      font-size: 0.5em;
+      width: 10em; // max allowed
+      text-align: right;
+    }
+    /* Most of the Smartphones (Portrait) */
+    @media only screen and (max-width: 600px) {
+      font-size: 0.5em;
+      padding-right: 0.4em;
+    }
+    /* Most of the Retina Display Smartphones (Portrait) */
+    @media only screen and (max-width: 600px) and (min-resolution: 2dppx) and (orientation: portrait) {
+      font-size: 0.5em;
+      padding-right: 0.4em;
+    }
+  }
+}
+
+:host ::ng-deep .avatar { // account photo from avatar component
+  height: 56px !important;
+  width: 56px !important;
+  font-size: 0.75em;
+
+  /* Most of the Smartphones (Portrait) */
+  @media only screen and (max-width: 600px) {
+    height: 50px !important;
+    width: 50px !important;
+    font-size: 0.7em;
+  }
+  /* Most of the Retina Display Smartphones (Portrait) */
+  @media only screen and (max-width: 600px) and (min-resolution: 2dppx) and (orientation: portrait) {
+    height: 50px !important;
+    width: 50px !important;
+    font-size: 0.7em;
+  }
+}

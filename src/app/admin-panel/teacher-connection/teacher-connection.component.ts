@@ -16,21 +16,16 @@ import { from } from 'rxjs';
 import { SubjectService } from '../../services/subject.service';
 import { TeachersJournalService } from '../../services/teachers-journal.service';
 import { MatStepperModule } from '@angular/material/stepper';
-import { SubjectData } from "../../models/subject-data";
-import { ClassData } from "../../models/class-data";
-import { TeacherData } from "../../models/teacher-data";
+import { SubjectData } from 'src/app/models/subject-data';
+import { ClassData } from 'src/app/models/class-data';
+import { TeacherData } from 'src/app/models/teacher-data';
+
 @Component({
   selector: 'app-teacher-connection',
   templateUrl: './teacher-connection.component.html',
   styleUrls: ['./teacher-connection.component.scss']
 })
 export class TeacherConnectionComponent implements OnInit {
-  teachers: TeacherData[];
-  subjects: SubjectData[];
-  classes: ClassData[];
-  teacherChoise = "Виберіть вчителя";
-  subjectChoise = "Виберіть предмет";
-  classesChoise = "Виберіть клас";
 
   constructor(
     private teacherService: TeacherService,
@@ -39,6 +34,18 @@ export class TeacherConnectionComponent implements OnInit {
     private fb: FormBuilder,
     private teacherjournalServise: TeachersJournalService
   ) {}
+  teachers: TeacherData[];
+  subjects: SubjectData[];
+  classes: ClassData[];
+  teacherChoise = 'Виберіть вчителя';
+  subjectChoise = 'Виберіть предмет';
+  classesChoise = 'Виберіть клас';
+
+  myForm = this.fb.group({
+    class: ['', Validators.required],
+    subject: ['', Validators.required],
+    teacher: ['', Validators.required]
+  });
 
   /**
    * Method adds after selecting the current teacher
@@ -69,12 +76,6 @@ export class TeacherConnectionComponent implements OnInit {
     this.classesChoise = `Вибрано клас: ${event.value.className}`;
   }
 
-  myForm = this.fb.group({
-    class: ["", Validators.required],
-    subject: ["", Validators.required],
-    teacher: ["", Validators.required]
-  });
-
    /**
    * The method that is called after the formSubmit
    * confirmation of the choice of values ​​to add them to the journl
@@ -98,7 +99,7 @@ export class TeacherConnectionComponent implements OnInit {
      */
     this.teacherService
       .getTeachers()
-      .subscribe(teachers => {this.teachers = teachers});
+      .subscribe(teachers => {this.teachers = teachers;});
 
     /**
      * Getting an array of subjects from the subject service,
@@ -106,7 +107,7 @@ export class TeacherConnectionComponent implements OnInit {
      */
     this.subjectService
       .getSubjects()
-      .subscribe(subjects => {this.subjects = subjects});
+      .subscribe(subjects => {this.subjects = subjects;});
 
     /**
      * Getting an array of classes from the class service,
@@ -114,6 +115,6 @@ export class TeacherConnectionComponent implements OnInit {
      */
     this.classService
       .getClasses('all')
-      .subscribe(classes => {this.classes = classes});
+      .subscribe(classes => {this.classes = classes;});
   }
 }

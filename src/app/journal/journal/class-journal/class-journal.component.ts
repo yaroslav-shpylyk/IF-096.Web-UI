@@ -99,6 +99,9 @@ export class ClassJournalComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Method turns off the spinner.
+   */
   ngOnDestroy() {
     this.loadingSub.unsubscribe();
   }
