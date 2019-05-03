@@ -140,12 +140,13 @@ th:not(.cdk-column-star):not(.cdk-column-studentFullName) {
   cursor: pointer;
 }
 
-:not(.cdk-column-star):not(.cdk-column-studentFullName):not(.cdk-column-star) > i {
-  cursor: pointer; 
+:not(.cdk-column-star):not(.cdk-column-studentFullName):not(.cdk-column-star)
+  > i {
+  cursor: pointer;
 }
 
 th:not(.cdk-column-star):not(.cdk-column-studentFullName):hover {
-  box-shadow:inset 0px 0px 0px 3px rgb(21, 101, 192);
+  box-shadow: inset 0px 0px 0px 3px rgb(21, 101, 192);
 }
 
 th:not(.cdk-column-star):not(.cdk-column-studentFullName) > i {
@@ -171,9 +172,14 @@ th:not(.cdk-column-star):not(.cdk-column-studentFullName) > i {
   text-align: center !important;
 }
 
-::ng-deep .fileUpl {
+::ng-deep .fileUplBtn {
   display: block;
   margin: auto;
+}
+
+::ng-deep .fileUpl {
+  // visibility: hidden;
+  display: none;
 }
 
 ::ng-deep .homework-divider {
