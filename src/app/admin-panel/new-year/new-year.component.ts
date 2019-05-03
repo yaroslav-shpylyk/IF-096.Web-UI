@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NewYearService } from '../../services/new-year.service';
 import { ClassInfo } from '../../models/class-info';
 import { ClassCardComponent } from './class-card/class-card.component';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 @Component({
   selector: 'app-new-year',
@@ -15,17 +16,14 @@ export class NewYearComponent implements OnInit {
   public allClasses: ClassInfo[] = [];
   public activeClasses: ClassInfo[] = [];
   public transititionForm: FormGroup;
-  public currentClassYear: number;
-  public currentClassTitle: string;
   public isNotEmpty = true;
   public isCurrentYear = true;
-  public filterHasResults = false;
   public controlIndexes: number[] = [];
-  public panelOpenState: boolean[] = [];
   public transitedCards: ClassCardComponent[] = [];
   @ViewChildren('classCard') classCards: QueryList<ClassCardComponent>;
 
   constructor(
+    private snackBar: MatSnackBar,
     private newYearTransitition: NewYearService) { }
 
   ngOnInit() {
@@ -39,7 +37,6 @@ export class NewYearComponent implements OnInit {
         this.activeClasses.forEach(
           (schoolClass, i) => {
             this.controlIndexes.push(i);
-            this.panelOpenState.push(false);
             const newInput = new FormControl(
               {value: this.newTitle(schoolClass.className), disabled: false},
               [Validators.pattern('(^[1-7][(]([1-9]|1[0-2])-[А-Я]{1}[)]$)|(^([1-9]|1[0-2])-[А-Я]{1}$)'),
@@ -68,17 +65,35 @@ export class NewYearComponent implements OnInit {
    * @param classTitle string - current class title
    * @returns - return FormControl with validation error or null
    */
-  classTitleValidator = (allClasses: ClassInfo[], classYear: number, classTitle: string ) => {
+  classTitleValidator = (allClasses: ClassInfo[], classYear: number, curClassTitle: string) => {
     return (control: FormControl) => {
-      if (classTitle === control.value) {
+      if (curClassTitle === control.value) {
         return {title_dublicate: {valid: false}};
       }
-      const error = allClasses.some(
+      const existError = allClasses.some(
          (item) => {
           return (item.classYear === classYear + 1 && item.className === control.value); }
       );
-      if (error) {
+      if (existError) {
         return { class_exist: {valid: false} };
+      }
+
+      if (control.value !== '') {
+        const curClassNameParts = curClassTitle.split(/[-(]/);
+        const classNameParts = control.value.split(/[-(]/);
+        if (classNameParts.length !== curClassNameParts.length) {
+          if (classNameParts.length <= curClassNameParts.length ) {
+            if (+classNameParts[0] <= +curClassNameParts[1]) { return {error_number: {valid: false}}; }
+          } else {
+              if (+classNameParts[1] < +curClassNameParts[0]) { return {error_number: {valid: false}}; }
+            }
+          } else {
+          if (curClassNameParts.some(
+            (item, index)  => {
+            return +item >= +classNameParts[index] && index < classNameParts.length - 1; } )) {
+            return {error_number: {valid: false} };
+          }
+        }
       }
       return null;
     };
@@ -92,7 +107,9 @@ export class NewYearComponent implements OnInit {
           {
             className: el.newTitleField.value,
             classYear: +el.curClass.classYear + 1,
-            id: el.curClass.id
+            id: el.curClass.id,
+            isActive: true,
+            numOfStudents: 0
           }
         );
         this.transitedCards.push(el);
@@ -108,17 +125,43 @@ export class NewYearComponent implements OnInit {
                 el.isCardLock = true;
               }
             );
+            this.displaySnackBar(
+              `Виконано. Переведено класів: ${formData.length}`,
+              'popup-success'
+            );
+          } else {
+            this.displaySnackBar(
+              `Помилка. Сервер відхилив запит`,
+              'popup-error'
+            );
           }
         }
       );
     }
+    this.transitedCards.forEach (
+      el => {
+        el.isClassTransited = true;
+        el.isCardLock = true;
+      }
+    );
+  }
+
+  /**
+   * Display popup message after classes transition with status
+   */
+  displaySnackBar(message: string, styleClass: string): void {
+    const config = new MatSnackBarConfig();
+    config.panelClass = [styleClass];
+    config.duration = 4000;
+    config.verticalPosition = 'bottom';
+    this.snackBar.open(message, null, config);
   }
 
   /**
    * Return indexes of filtereted classes and reset input fields in form
    */
-  get filteredindexes() {
-    const year = this.getCurrentYear();
+  get filteredindexes(): number[] {
+    const year = this.currentYear;
     const isCurrentYear = (item) => this.activeClasses[item].classYear === year;
     const isNotEmpty = (item) => this.activeClasses[item].numOfStudents > 0;
     const filterParams = [];
@@ -145,7 +188,7 @@ export class NewYearComponent implements OnInit {
   /**
    * Return current educational year
    */
-  getCurrentYear(): number {
+  get currentYear(): number {
     const curDate = new Date();
     const year = (curDate.getMonth() < 12 && curDate.getMonth() > 7) ? curDate.getFullYear() : curDate.getFullYear() - 1;
     return year;

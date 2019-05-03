@@ -64,18 +64,6 @@ mat-card {
     cursor: pointer;
   }
 
-  .doted-marks {
-    position: absolute;
-    display: flex;
-    right: 5px;
-    top: 5px;
-    div{
-      width: 5px;
-      height: 5px;
-      margin: 1px;
-      border: 1px solid black;
-    }
-  }
   .class-info {
     width: 35%;
     display: flex;
@@ -96,7 +84,7 @@ mat-card {
       padding: 2px 0;
       font-size: 0.65em;
       margin-left: -25px; 
-      color: gray; }
+      color: rgba(128, 128, 128, 0.5); }
   }
 
   .class-info.empty-class{
@@ -106,10 +94,6 @@ mat-card {
   .class-info.hidden {
     display: none;
   }
-}
-
-mat-card:hover {
-  background: blue;
 }
 
 mat-card.locked.transited, mat-card.locked:hover.transited {
@@ -154,19 +138,18 @@ mat-card:hover {
   margin: 0 auto;
   padding: 0px;
   color: red;
-  min-width: 165px;
+  min-width: 200px;
   position: absolute;
   bottom: -20px;
   height: 25px;
   overflow: hidden;
   p { font-size: 0.5em; }
   @media (max-width: 481px) { right: -25%; }
+  @media (min-width: 481px) and (max-width: 768px){ right: -30%; }
+  @media (min-width: 768px) and (max-width: 998px){ right: -10%; }
   @media (min-width: 768px) and (max-width: 1300px){ right: 5%; }
   @media (min-width: 1300px) { right: 25%; }
 }
 .new-class-title.locked{
   .validation-error {bottom: -5px;}
-} 
-
-.pupils { background-color: rgba(215, 26, 232, 0.75); }
-.year { background-color: rgba(100, 228, 68, 0.75) }
+}

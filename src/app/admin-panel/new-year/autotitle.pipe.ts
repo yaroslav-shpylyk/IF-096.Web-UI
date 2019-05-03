@@ -10,8 +10,8 @@ export class TitlePipe implements PipeTransform {
     setTimeout(() => {
       input.reset({ value: input.value, disabled: false });
     });
-    const curClassNumber = +curClassName.split('-')[0];
-
+    const classNameParts = curClassName.split(/[-(]/);
+    const curClassNumber = (classNameParts.length > 2) ? +classNameParts[1] : +classNameParts[0];
     if (value === '' && curClassNumber === 11 ) {
       return 'випуск';
     } else if (value === '') {

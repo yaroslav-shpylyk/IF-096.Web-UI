@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>{{data.className}} ({{data.classYear}} р.)</h2>
 <mat-dialog-content class="mat-typography">
-  <p>Всього учнів: {{data.numOfStudents}}</p>
+  <p>Учнів у класі: {{data.numOfStudents}}</p>
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="name">
@@ -27,5 +27,5 @@
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button mat-dialog-close>Назад</button>
 </mat-dialog-actions>

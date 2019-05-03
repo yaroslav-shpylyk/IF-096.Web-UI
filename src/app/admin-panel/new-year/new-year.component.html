@@ -11,6 +11,7 @@
       [isEditEnable]="false"
       [isClassTransited]="false"
       [isCardLock] = "false"
+      [currentYear] = "currentYear"
       #classCard>
     </app-class-card>
     </div>
@@ -18,7 +19,7 @@
   </form>
   <ng-template #emptyFilter>
     <p>Немає класів, що відповідають критеріям фільтру. Ви можете змінити налаштування фільтру кнопкою, що розміщена справа</p>
-</ng-template>
+  </ng-template>
 </div>
   <!-- Toggle menu -->
 <input type="checkbox" id="toggle-1">
@@ -31,7 +32,7 @@
     </div>
   </div>
   <div class="marks">
-    <div class="pupils" *ngIf="isNotEmpty">У</div>
-    <div class="year" *ngIf="isCurrentYear">П</div>
+    <div *ngIf="isNotEmpty"><i class="material-icons" matTooltip = 'Показати класи з учнями'>people</i></div>
+    <div *ngIf="isCurrentYear"><i class="material-icons" matTooltip = 'Показувати класи поточного н. р.'>update</i></div>
   </div>
 </div>

@@ -9,29 +9,27 @@
   }">
   <ng-container>
     <div class="class-lock" #skipClass (click)="lockClass(controlIndex, skipClass)">
-      <i *ngIf="!isCardLock" class="material-icons">lock_open</i>
-      <i *ngIf="isCardLock" class="material-icons">lock</i>
+      <i *ngIf="!isCardLock" class="material-icons" matTooltip="Заборонити перехід на н. р.">lock_open</i>
+      <i *ngIf="isCardLock" class="material-icons" matTooltip="Дозволити перехід на н. р.">lock</i>
     </div>
   </ng-container>
   <ng-container>
-    <div class="class-info" *ngIf="curClass.numOfStudents>0; else emptyClass" (click)="openDialog(curClass.id)">
+    <div class="class-info" (click)="openDialog(curClass.id)">
       <div>
         <div class="class-name">{{curClass.className}}</div>
         <div class="class-year">{{curClass.classYear}}</div>
       </div>
       <div>
-        <i class="material-icons" [matTooltip] = "curClass.numOfStudents < 1 ? 'клас без учнів' : 'клас з учнями'">people</i>
-        <i class="material-icons" [matTooltip] = "curClass.classYear!==2017 ? 'Цей клас не з поточного н. р.' : 'клас з учнями'">update</i>
+        <i class="material-icons"
+          [matTooltip] = "curClass.numOfStudents < 1 ? 'Клас без учнів' : 'Клас з учнями'"
+          [ngStyle]="{'color':curClass.numOfStudents > 0 ? '#1565c0' : null }">
+          people</i>
+        <i class="material-icons"
+          [matTooltip] = "curClass.classYear!==currentYear ? 'Цей клас не з поточного н. р.' : 'Поточний н. р.'"
+          [ngStyle]="{'color':curClass.classYear===currentYear ? '#1565c0' : null }">
+          update</i>
       </div>
     </div>
-    <ng-template #emptyClass>
-      <div class="class-info empty-class" *ngIf="!curClass.numOfStudents>0">
-        <div>
-          <div class="class-name">{{curClass.className}}</div>
-          <div class="class-year">{{curClass.classYear}}</div>
-        </div>
-      </div>
-    </ng-template>
   </ng-container>
   <div class="class-transition">
       <i class="material-icons">trending_flat</i>
@@ -50,14 +48,15 @@
         <input matInput placeholder="Нова назва класу"
           [formControlName]="controlIndex"
           #newClassTitle
-          class="new-class-name" 
+          class="new-class-name"  
           id={{curClass.id}} placeholder="нова назва"/>
       </mat-form-field>
       <div class="validation-error"
           *ngIf="newTitleField.invalid">
-        <p *ngIf="newTitleField.errors.pattern">Недопустима назва (Приклад: "8-А")</p>
+        <p *ngIf="newTitleField.errors.pattern">Недопустима назва (Пр: "8-А", "4(8-А)")</p>
         <p *ngIf="newTitleField.errors.class_exist">Клас вже існує в наступному н. р.</p>
         <p *ngIf="newTitleField.errors.title_dublicate">Назви класів співпадають</p>
+        <p *ngIf="newTitleField.errors.error_number">Номер класу некоректний</p>
       </div>
     </ng-container>
   </div>
@@ -65,15 +64,5 @@
     <label #editClassTitle (click)="editInput(newClassTitle)">
       <i class="material-icons">edit</i>
     </label>
-  </div>
-  <div class="doted-marks">
-    <div class="pupils" 
-      *ngIf="curClass.numOfStudents <= 0"
-      matTooltip="у класі немає учнів">
-    </div>
-    <div class="year" 
-      *ngIf="curClass.classYear!==2017"
-      matTooltip="Цей клас не з поточного н. р.">
-    </div>
   </div>
 </mat-card>

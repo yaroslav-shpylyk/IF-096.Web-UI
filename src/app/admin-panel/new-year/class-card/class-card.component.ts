@@ -19,15 +19,21 @@ export class ClassCardComponent implements OnInit {
   @Input() isClassTransited: boolean;
   @Input() isCardLock: boolean;
   @Input() isEditEnable: boolean;
-  public panelOpenState = false;
+  @Input() currentYear: number;
   public classList: Student[];
 
   constructor(
     private newYearService: NewYearService,
     public dialog: MatDialog) {}
 
-  openDialog(eclassId: number): void {
-    this.newYearService.getPupilList(eclassId).subscribe(
+  ngOnInit() {}
+
+  /**
+   * Display popup with list of pupils for current classs
+   * @param classId number - id of current class
+   */
+  openDialog(classId: number): void {
+    this.newYearService.getPupilList(classId).subscribe(
       data => {
         this.classList = data;
         this.dialog.open(
@@ -43,8 +49,6 @@ export class ClassCardComponent implements OnInit {
       }
     );
   }
-
-  ngOnInit() {}
 
   /**
    * Makes input with new class title enabled or disabled for editing

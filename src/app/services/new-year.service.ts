@@ -5,16 +5,6 @@ import { catchError, map } from 'rxjs/operators';
 import { ClassInfo } from '../models/class-info';
 import { Student } from '../models/student';
 
-
-export interface BindRequest {
-  oldClassId: number;
-  newClassId: number;
-}
-export interface TransitRequest {
-  transitClassesQuery: ClassInfo[];
-  bindPupilsQuery: BindRequest[];
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -30,12 +20,19 @@ export class NewYearService {
   public transitClasses(formData: ClassInfo[]): Observable<number> {
     const request = this.getTransitRequest(formData);
     const subject = new Subject<number>();
-    this.createClasses(request.transitClassesQuery).subscribe(
+    const bindReq: {oldClassId: number, newClassId: number}[] = [];
+    this.createClasses(request).subscribe(
       res => {
-        res.forEach(
-          (newClass, index) => { request.bindPupilsQuery[index].newClassId = newClass.id; }
-        );
-        this.bindPupils(request.bindPupilsQuery).subscribe(
+        let resIndex = 0;
+        formData.forEach (item => {
+          if (item.className !== '') {
+            bindReq.push({oldClassId: item.id, newClassId: res[resIndex].id});
+            resIndex++;
+          } else {
+            bindReq.push({oldClassId: item.id, newClassId: 0});
+          }
+        });
+        this.bindPupils(bindReq).subscribe(
           result => {
             subject.next(result.status.code);
           }
@@ -79,30 +76,20 @@ export class NewYearService {
   }
 
   /**
-   * Method generate requests for creating classes and pupils binding methods
-   * @returns object that contain requests
+   * Method generate requests for creating classes
+   * @returns object that contain classes info without graduated classes
    * @param   formData array of objects that contains info about current classes (with new titles)
    */
-  public getTransitRequest(formData: ClassInfo[]): TransitRequest {
+  public getTransitRequest(formData: ClassInfo[]): ClassInfo[] {
     const transitClassesQuery = [];
-    const bindPupilsQuery = [];
     formData.forEach(
       (item) => {
-        if (item) {
-          transitClassesQuery.push(
-            {
-              className: item.className,
-              classYear: item.classYear
-            }
-          );
-          bindPupilsQuery.push({oldClassId: item.id});
+        if (item.className !== '') {
+          transitClassesQuery.push(item);
         }
       }
     );
-    return {
-      transitClassesQuery,
-      bindPupilsQuery
-    };
+    return transitClassesQuery;
   }
 
   /**
@@ -127,7 +114,7 @@ export class NewYearService {
    * @returns responce that contain id's for new classes
    * @param req  objects array with id's for classes (old and new id's)
    */
-  public bindPupils(req: BindRequest[]): Observable<any> {
+  public bindPupils(req: {oldClassId: number, newClassId: number}[]): Observable<any> {
     return this.http.put(`/students/transition`, req).pipe(
       map((response: any) => {
         return response;
