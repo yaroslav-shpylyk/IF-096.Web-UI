@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
 import { Group } from '../../../../models/group-data.model';
-import { GroupsService } from 'src/app/services/groups.service';
+import { GroupsService } from '../../../../services/groups.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 @Component({

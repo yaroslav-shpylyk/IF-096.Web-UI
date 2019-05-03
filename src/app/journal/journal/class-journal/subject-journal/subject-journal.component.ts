@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
-import { JournalsStorageService } from 'src/app/services/journals-storage.service';
-import { Journal } from 'src/app/models/journal-data';
+import { JournalsStorageService } from '../../../../services/journals-storage.service';
+import { Journal } from '../../../../models/journal-data';
 import { ActivatedRoute, Params } from '@angular/router';
 import { MatBottomSheet } from '@angular/material';
 import { Subscription } from 'rxjs';
@@ -31,6 +31,10 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     private bottomSheet: MatBottomSheet
   ) {}
 
+  /**
+   * Method fetches from route params subject and class ids, 
+   * initialize table rendering and starts spinner while it's loading.
+   */
   ngOnInit() {
     this.loadingSub = this.journalsStorageService.loadingStateChanged.subscribe(
       isLoading => {
@@ -108,6 +112,16 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
       });
   }
 
+  
+ /**
+   * Method receives from the table all needed values for assigning a
+   * homework, changes clicked header cell style and passes to the
+   * homework bottom sheet component needed data.
+   * Om closing bottom sheet the table's cell style is changed backed to default.
+   * @param idLesson - id number of the lesson;
+   * @param event - object representing a click event;
+   * @param i - index of column in a row;
+   */
   onHeadClc(idLesson, event, i) {
     if (!i || i === this.thRow.length) {
       return;
@@ -136,6 +150,16 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     });
   }
 
+   /**
+   * Method receives from the table all needed values for assigning a mark,
+   * appropriately transforms them, changes clicked cell and row color
+   * and passes to the bottom sheet component needed data.
+   * Om closing bottom sheet the table's cell and row colors are changed to the ddfault.
+   * @param idLesson - id number of the lesson;
+   * @param studentEl - object representing student;
+   * @param event - object representing a click event;
+   * @param i - index of column in a row;
+   */
   onClc(idLesson, studentEl, event, i) {
     if (!Number.isInteger(+idLesson)) {
       return;
@@ -173,6 +197,9 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     this.elData = [];
   }
 
+  /**
+   * Method turns off the spinner.
+   */
   ngOnDestroy() {
     this.loadingSub.unsubscribe();
   }

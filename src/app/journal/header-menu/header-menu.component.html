@@ -1,0 +1,37 @@
+<!--header list-->
+<mat-nav-list class="navigation-items">
+  <!--logout button-->
+  <div>
+    <a mat-list-item (click)="auth.logout()"> <!-- logout function -->
+      <mat-icon>exit_to_app</mat-icon>
+      Вийти
+    </a>
+  </div>
+  <!--journals button-->
+  <div>
+    <a mat-list-item routerLinkActive="active" routerLink="/journals/my-journals">
+      <mat-icon>collections_bookmark</mat-icon>
+      Журнали
+    </a>
+  </div>
+  <!--progress button-->
+  <div>
+    <a mat-list-item routerLinkActive="active" routerLink="/progress">
+      <mat-icon>trending_up</mat-icon>
+      Статистика
+    </a>
+  </div>
+  <!-- avatar and name -->
+  <div class="right">
+    <!--first and last names-->
+    <span>{{firstName}} {{lastName}}</span>
+    <!-- show avatar if exists-->
+    <!-- show abbreviation if not-->
+    <div>
+      <app-avatar [avatar]="avatar"
+                  [firstName]="firstName"
+                  [lastName]="lastName">
+      </app-avatar>
+    </div>
+  </div>
+</mat-nav-list>

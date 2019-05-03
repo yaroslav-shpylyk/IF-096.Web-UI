@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { SubjectService } from 'src/app/services/subject.service';
-import { SubjectData } from 'src/app/models/subject-data';
+import { SubjectService } from '../../services/subject.service';
+import { SubjectData } from '../../models/subject-data';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { ModifySubjectsComponent } from './modify-subjects/modify-subjects.component';

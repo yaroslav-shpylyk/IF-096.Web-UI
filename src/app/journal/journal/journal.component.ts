@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, MatTableDataSource } from '@angular/material';
-import { TeacherData } from 'src/app/models/teacher-data';
-import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
-import { ClassService } from 'src/app/services/class.service';
+import { TeacherData } from '../../models/teacher-data';
+import { TeachersStorageService } from '../../services/teachers-storage.service';
+import { ClassService } from '../../services/class.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -15,15 +15,13 @@ export class JournalComponent implements OnInit {
   activeClasses = [];
   inactiveClasses = [];
   teachers: TeacherData[];
-  chosenClasses = 'activeClasses';
+  chosenOption = 'activeClasses';
 
-  displayedColumns: string[] = ['num', 'className', 'classYear'];
-  displayedTeachersColumns: string[] = ['num', 'lastname', 'firstname'];
+  displayedColumns: string[] = ['nums', 'className', 'classYear'];
   dataSource;
   teachersData;
 
-  @ViewChild('sortCol1') sortCol1: MatSort;
-  @ViewChild('sortCol2') sortCol2: MatSort;
+  @ViewChild('sortCol') sortCol: MatSort;
 
   constructor(
     private teachersStorageService: TeachersStorageService,
@@ -32,6 +30,10 @@ export class JournalComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
+  /**
+   * Method fetches from all class and teachers, sorts them in appropriate
+   * arrays and creates a tables depending on received values.
+   */
   ngOnInit() {
     this.classService.getClasses('all').subscribe(classes => {
       for (const clas of classes) {
@@ -42,14 +44,12 @@ export class JournalComponent implements OnInit {
         }
       }
 
-      this.dataSource = new MatTableDataSource(this[this.chosenClasses]);
-      this.dataSource.sort = this.sortCol1;
+      this.dataSource = new MatTableDataSource(this[this.chosenOption]);
+      this.dataSource.sort = this.sortCol;
     });
 
     this.teachersStorageService.getTeacherS().subscribe(teachers => {
       this.teachers = teachers;
-      this.teachersData = new MatTableDataSource(this.teachers);
-      this.teachersData.sort = this.sortCol2;
     });
   }
 
@@ -60,8 +60,12 @@ export class JournalComponent implements OnInit {
    * @param e - event object from a radio group.
    */
   handleChange(e) {
+    this.displayedColumns =
+      e.value === 'teachers'
+        ? ['nums', 'lastname', 'firstname']
+        : ['nums', 'className', 'classYear'];
     this.dataSource = new MatTableDataSource(this[e.value]);
-    this.dataSource.sort = this.sortCol1;
+    this.dataSource.sort = this.sortCol;
     this.applyFilter(this.filter);
   }
 
@@ -77,34 +81,14 @@ export class JournalComponent implements OnInit {
   }
 
   /**
-   * Method receives input data from a filter field
-   * in teacher table turns it into lower case and assigns it
-   * to the table data source.
-   * @param filterValue - string of provided value to filter by.
-   */
-  applyTeacherFilter(filterValue: string = '') {
-    this.filter = filterValue.trim().toLowerCase();
-    this.teachersData.filter = this.filter;
-  }
-
-  /**
    * Method navigates to the route with
    * selected class from appropriate row
-   * @param row - object representing a class
+   * @param row - object representing a class.
+   * @param chosenOption - string representing either class or teacher id.
    */
-  selectRow(row) {
-    this.router.navigate(['class', row.id], {
-      relativeTo: this.route
-    });
-  }
-
-  /**
-   * Method navigates to the route with
-   * selected teacher from appropriate row
-   * @param row - object representing a teacher
-   */
-  selectTeacherRow(row) {
-    this.router.navigate(['teacher', row.id], {
+  selectRow(row, chosenOption) {
+    const path = chosenOption === 'teachers' ? 'teacher' : 'class';
+    this.router.navigate([path, row.id], {
       relativeTo: this.route
     });
   }

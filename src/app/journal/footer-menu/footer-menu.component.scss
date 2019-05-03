@@ -1,0 +1,28 @@
+@import "../../../styles";
+
+a { // button links
+  height: 100%;
+  width: 100%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  line-height: 50px;
+  overflow: hidden;
+}
+
+.active { // selected section
+  background-color: #3da6db !important;
+}
+
+.icons {
+  line-height: 35%; // icons on bottom navigation
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  span {
+    font-size: 0.5em; // text under icons
+  }
+}

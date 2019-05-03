@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
-import { SubjectData } from 'src/app/models/subject-data';
+import { SubjectData } from '../../../models/subject-data';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { SubjectService } from 'src/app/services/subject.service';
+import { SubjectService } from '../../../services/subject.service';
 
 @Component({
   selector: 'app-modify-subjects',
