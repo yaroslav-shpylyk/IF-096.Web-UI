@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { JournalsStorageService } from 'src/app/services/journals-storage.service';
+import { JournalsStorageService } from '../../../../services/journals-storage.service';
 import {
   MatBottomSheetRef,
   MAT_BOTTOM_SHEET_DATA,

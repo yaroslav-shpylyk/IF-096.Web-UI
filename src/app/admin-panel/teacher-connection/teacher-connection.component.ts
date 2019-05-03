@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TeacherService } from 'src/app/services/teacher.service';
+import { TeacherService } from '../../services/teacher.service';
 import {
   FormGroup,
   FormControl,
@@ -7,18 +7,19 @@ import {
   FormArray,
   FormBuilder
 } from '@angular/forms';
-import { StudentsService } from 'src/app/services/students.service';
-import { ClassService } from 'src/app/services/class.service';
+import { StudentsService } from '../../services/students.service';
+import { ClassService } from '../../services/class.service';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { from } from 'rxjs';
-import { SubjectService } from 'src/app/services/subject.service';
-import { TeachersJournalService } from 'src/app/services/teachers-journal.service';
+import { SubjectService } from '../../services/subject.service';
+import { TeachersJournalService } from '../../services/teachers-journal.service';
 import { MatStepperModule } from '@angular/material/stepper';
 import { SubjectData } from 'src/app/models/subject-data';
 import { ClassData } from 'src/app/models/class-data';
 import { TeacherData } from 'src/app/models/teacher-data';
+
 @Component({
   selector: 'app-teacher-connection',
   templateUrl: './teacher-connection.component.html',
