@@ -1,7 +1,33 @@
 <div mat-dialog-title>{{data.info.fileName}}</div>
-<div mat-dialog-content>
-  <embed width="400px" height="500px" src="" type="">
-  <img src="">
+<div class="options">
+  <form [formGroup]="pdfOptions" *ngIf="data.info.fileType === 'application/pdf'">
+    <mat-form-field>
+      <input matInput formControlName="page">
+    </mat-form-field>
+    / {{pdfTotalPages}}
+  </form>
+  <div class="option">
+    <button mat-mini-fab (click)="rotateAttachment('rotateLeft')"><mat-icon>rotate_left</mat-icon></button>
+  </div>
+  <div class="option">
+    <button mat-mini-fab (click)="rotateAttachment('rotateRight')"><mat-icon>rotate_right</mat-icon></button>
+  </div>
+  <div class="option">
+    <button mat-mini-fab (click)="zoomAttachment('zoomIn')"><mat-icon>zoom_in</mat-icon></button>
+  </div>
+  <div class="option">
+    <button mat-mini-fab (click)="zoomAttachment('zoomOut')"><mat-icon>zoom_out</mat-icon></button>
+  </div>
+
+</div>
+<mat-divider></mat-divider>
+<div mat-dialog-content class="viewerContent" (scroll)="scrollEvent($event)">
+  <pdf-viewer *ngIf="data.info.fileType === 'application/pdf'"
+              [src]="'data:' + this.data.info.fileType + ';base64,' + this.data.info.fileData" [zoom]="attachmentZoom"
+              [rotation]="attachmentRotationDegree"
+              (after-load-complete)="pdfInfo($event)"></pdf-viewer>
+  <img [src]="'data:' + data.info.fileType + ';base64,' + data.info.fileData" alt=""
+  [ngStyle]="{ transform: 'rotate(' + attachmentRotationDegree + 'deg)' + ' scale(' + attachmentZoom + ')'}">
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="closeDialog()">Закрити</button>

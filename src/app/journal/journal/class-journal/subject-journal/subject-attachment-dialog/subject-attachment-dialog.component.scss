@@ -1,0 +1,44 @@
+@import "../../../../../../styles";
+
+.options {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1em;
+
+  form {
+    mat-form-field {
+      width: 2em;
+
+      input {
+        text-align: center;
+      }
+    }
+  }
+
+  .option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $main-color;
+    }
+
+    mat-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2em;
+    }
+  }
+}
+
+.viewerContent {
+  display: flex;
+  justify-content: center;
+  background-color: grey;
+  max-height: 400px;
+}

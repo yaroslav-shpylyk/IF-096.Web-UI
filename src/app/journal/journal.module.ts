@@ -13,6 +13,7 @@ import { MatTooltipModule } from '@angular/material';
 import {
   SubjectAttachmentDialogComponent
 } from './journal/class-journal/subject-journal/subject-attachment-dialog/subject-attachment-dialog.component';
+import {PdfViewerModule} from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {
     JournalRoutingModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PdfViewerModule
   ],
   exports: [
     MatTooltipModule
