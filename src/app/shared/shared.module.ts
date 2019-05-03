@@ -12,7 +12,6 @@ import { StudentFooterMenuComponent } from '../student-book/footer-menu/footer-m
 import { TeacherHeaderMenuComponent } from '../journal/header-menu/header-menu.component';
 import { TeacherFooterMenuComponent } from '../journal/footer-menu/footer-menu.component';
 
-
 @NgModule({
   declarations: [
     HeaderComponent,

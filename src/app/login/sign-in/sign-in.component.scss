@@ -1,0 +1,124 @@
+@import "../../../styles.scss";
+
+.form-container {
+  width: 85%;
+  margin: auto;
+  padding-bottom: 24px !important;
+  display: block;
+  background: rgb(253, 253, 253);
+
+  /*
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    width: 95%;
+    margin: auto;
+    padding-bottom: 24px !important;
+    display: block;
+    background: rgb(253, 253, 253);
+    .btn {
+      font-size: 1em;
+    }
+  }
+
+  /*
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+
+ */
+  @media (min-width: 481px) and (max-width: 767px) {
+    width: 85%;
+    margin: auto;
+    padding-bottom: 24px !important;
+    display: block;
+    background: rgb(253, 253, 253);
+    .btn {
+      font-size: 1em;
+    }
+  }
+  /*
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+
+*/
+  @media (min-width: 320px) and (max-width: 480px) {
+    width: 85%;
+    margin: auto;
+    padding-bottom: 24px !important;
+    display: block;
+    background: rgb(253, 253, 253);
+    .btn {
+      font-size: 1em;
+    }
+  }
+}
+
+/** form header **/
+.form-header {
+  padding: 24px 0;
+}
+
+.form-title {
+  text-align: center;
+  font-weight: 200;
+  font-size: 2.5em;
+}
+
+.main-icon {
+  width: 20%;
+  margin: 5px auto;
+  display: block;
+}
+
+/** form body **/
+.form-body {
+  padding: 0 24px;
+}
+
+.justifier {
+  width: 100%;
+}
+
+.form-input {
+  margin-top: 24px;
+}
+
+mat-icon {
+  color: $main-color;
+}
+
+/** form footer **/
+.form-footer {
+  padding: 24px;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 5% !important;
+  font-size: 1.5em;
+  font-weight: 200;
+  margin-top: 18px;
+}
+
+.custom-btn {
+  margin-bottom: 15px;
+  background: $main-color;
+  color: #fff;
+}
+
+#btn-color {
+  color: white;
+}
+
+.additional-link {
+  padding: 10px auto;
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  color: $main-color;
+}
