@@ -18,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TeacherService } from './services/teacher.service';
 import { MatNativeDateModule } from '@angular/material';
 import { HomeworkStorageService } from './services/homework-storage.service.ts.service';
+import { ErrorInterceptor } from './error-interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,7 +45,8 @@ import { HomeworkStorageService } from './services/homework-storage.service.ts.s
       useClass: TokenInterceptorService,
       multi: true
     },
-    {provide: MAT_DATE_LOCALE, useValue: 'ua-UA'}
+    {provide: MAT_DATE_LOCALE, useValue: 'ua-UA'},
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
