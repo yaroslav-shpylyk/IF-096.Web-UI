@@ -37,12 +37,12 @@ export class ScheduleComponent implements OnInit {
     thursdaySubjects: null,
     fridaySubjects: null,
     saturdaySubjects: null
-  }
+  };
 
   constructor(private frmBld: FormBuilder,
-    private classService: ClassService,
-    private subjectsService: SubjectService,
-    private scheduleService: ScheduleService) { }
+              private classService: ClassService,
+              private subjectsService: SubjectService,
+              private scheduleService: ScheduleService) { }
 
   ngOnInit() {
     this.classService.getClasses('active').subscribe(data => {

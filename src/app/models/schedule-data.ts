@@ -11,5 +11,5 @@ export interface ScheduleData {
     wednesdaySubjects: LessonData[];
     thursdaySubjects: LessonData[];
     fridaySubjects: LessonData[];
-    saturdaySubjects: LessonData[]
+    saturdaySubjects: LessonData[];
 }
