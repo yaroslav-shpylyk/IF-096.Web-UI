@@ -19,9 +19,10 @@ import { TeacherService } from './services/teacher.service';
 import { MatNativeDateModule } from '@angular/material';
 import { HomeworkStorageService } from './services/homework-storage.service.ts.service';
 import { ErrorInterceptor } from './error-interceptor';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ErrorComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -48,6 +49,7 @@ import { ErrorInterceptor } from './error-interceptor';
     {provide: MAT_DATE_LOCALE, useValue: 'ua-UA'},
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ErrorComponent]
 })
 export class AppModule {}
