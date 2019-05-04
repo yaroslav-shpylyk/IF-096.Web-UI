@@ -6,7 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import * as JWTDecoder from 'jwt-decode';
 import { TokenInfo } from '../models/token-info';
-
+import { ChangePasswordRequest } from '../models/change-password-request';
 
 @Injectable({
   providedIn: 'root'
@@ -78,21 +78,18 @@ export class AuthService {
    * @param query - Users login or email
    * @returns - Status of recovery process
    */
-  public requestPassReset(query: string): Observable<any> {
-    const data: object = {
-      query
-    };
-    return this.http.get(`/requestPasswordReset`, data);
+  public requestPasswordChange(query: string): Observable<any> {
+    return this.http.get(`/requestPasswordReset?query=${query}`);
   }
 
   /**
    * Method resets current password
    * @param password - Users password
+   * @param token - Token for change password
    * @returns - New password
    */
-  public resetPass(password: string): Observable<any> {
-    const token = this.getToken();
-    const data: object = {
+  public changePassword(password: string, token: string): Observable<any> {
+    const data: ChangePasswordRequest = {
       password,
       token
     };

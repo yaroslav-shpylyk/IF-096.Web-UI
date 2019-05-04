@@ -13,7 +13,7 @@ export class ShellComponent implements OnInit {
 
   ngOnInit() {
     window.dispatchEvent(new Event('resize')); // trigger resize event to know screen width once the component is created
-    this.headerComponent.showHeader(); // subscribe to subject and show header when user stop scrolling after 2 seconds
+    this.headerComponent.showHeader(); // subscribe to subject and showMessage header when user stop scrolling after 2 seconds
   }
 
 }

@@ -2,6 +2,15 @@
 
 mat-nav-list { // header list
   height: 64px !important;
+
+  /* Most of the Smartphones (Portrait) */
+  @media only screen and (max-width: 600px) {
+    height: 56px !important;
+  }
+  /* Most of the Retina Display Smartphones (Portrait) */
+  @media only screen and (max-width: 600px) and (min-resolution: 2dppx) and (orientation: portrait) {
+    height: 56px !important;
+  }
 }
 
 .mat-list-item { // menu list float left
@@ -32,11 +41,11 @@ mat-nav-list { // header list
   }
 
   /*Small Tablets*/
-  @media only screen and (max-width: 750px) and (min-width: 601px) {
+  @media only screen and (max-width: 750px) {
     font-size: 0.5em !important; // link buttons
   }
   /*Small Tablets with Retina Display*/
-  @media only screen and (max-width: 750px) and (min-width: 601px) and (min-resolution: 2dppx) and (orientation: portrait) {
+  @media only screen and (max-width: 750px) and (min-resolution: 2dppx) and (orientation: portrait) {
     font-size: 0.5em !important; // link buttons
   }
 }
@@ -85,15 +94,36 @@ a {
     @media only screen and (max-width: 750px) and (min-width: 601px) and (min-resolution: 2dppx) and (orientation: portrait) {
       font-size: 0.5em !important;
       width: 50%;
-      overflow: hidden; /* to hide anything that doesn't fit in the containing element. */
-      white-space: nowrap; /* to make sure the line doesn't break when it is longer than the containing div. */
-      text-overflow: ellipsis; /* add ... */
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    /* Most of the Smartphones (Portrait) */
+    @media only screen and (max-width: 600px) {
+      font-size: 0.5em !important;
+    }
+    /* Most of the Retina Display Smartphones (Portrait) */
+    @media only screen and (max-width: 600px) and (min-resolution: 2dppx) and (orientation: portrait) {
+      font-size: 0.5em !important;
     }
   }
 }
 
 .account-photo { // account photo
-  padding: 0 2%;
-  font-size: 48px;
-  width: 48px;
+  font-size: 56px;
+  width: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Most of the Smartphones (Portrait) */
+  @media only screen and (max-width: 600px) {
+    font-size: 50px;
+    width: 50px;
+  }
+  /* Most of the Retina Display Smartphones (Portrait) */
+  @media only screen and (max-width: 600px) and (min-resolution: 2dppx) and (orientation: portrait) {
+    font-size: 50px;
+    width: 50px;
+  }
 }

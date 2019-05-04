@@ -17,6 +17,7 @@ import { JournalsStorageService } from './services/journals-storage.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TeacherService } from './services/teacher.service';
 import { MatNativeDateModule } from '@angular/material';
+import { HomeworkStorageService } from './services/homework-storage.service.ts.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,6 +38,7 @@ import { MatNativeDateModule } from '@angular/material';
     JournalsStorageService,
     SubjectService,
     TeacherService,
+    HomeworkStorageService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

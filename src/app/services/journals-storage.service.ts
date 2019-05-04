@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { Journal } from '../models/journal-data';
+import * as _ from 'lodash';
 
 @Injectable()
 export class JournalsStorageService {
@@ -27,8 +28,8 @@ export class JournalsStorageService {
   /**
    * Method fetches from the server a single
    * journal object by provided subject ida and class id.
-   * @param idSubject - number representing subject id of requested teacher.
-   * @param idClass - number representing class id of requested teacher.
+   * @param idSubject - number representing subject id of requested journal.
+   * @param idClass - number representing class id of requested journal.
    * @returns - object representing a journal.
    */
   getJournaL(idSubject, idClass): Observable<Journal[]> {
@@ -39,6 +40,47 @@ export class JournalsStorageService {
         map((response: { status: any; data: Journal[] }) => {
           const journal = response.data;
           return journal;
+        })
+      );
+  }
+
+  /**
+   * Method fetches from the server journals and homework
+   * by provided subject id and class id.
+   * @param idSubject - number representing subject id of requested journals and homework.
+   * @param idClass - number representing class id of requested journals and homework.
+   * @returns - object representing journals and homeworks.
+   */
+  getJournalsAndHomeworks(idSubject, idClass) {
+    this.loadingStateChanged.next(true);
+    return this.getHomework(idSubject, idClass).pipe(
+      mergeMap(homeworks => {
+        const journ = new Object() as any;
+        journ.homeworks = _.mapKeys(homeworks, 'idLesson');
+        return this.getJournaL(idSubject, idClass).pipe(
+          map(journals => {
+            journ.journals = journals;
+            return journ;
+          })
+        );
+      })
+    );
+  }
+
+  /**
+   * Method fetches from the server a single homework
+   * object by provided subject ida and class id.
+   * @param idSubject - number representing subject id of requested homework.
+   * @param idClass - number representing class id of requested homework.
+   * @returns - object representing a homework.
+   */
+  getHomework(idSubject, idClass) {
+    return this.httpClient
+      .get(`/homeworks/subjects/${idSubject}/classes/${idClass}`)
+      .pipe(
+        map((response: { status: any; data: any }) => {
+          const homeworks = response.data;
+          return homeworks;
         })
       );
   }

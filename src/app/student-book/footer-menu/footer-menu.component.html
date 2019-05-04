@@ -1,0 +1,16 @@
+<!-- student book button-->
+<a  routerLink="/student-book" routerLinkActive="active">
+  <div class="icons">
+    <mat-icon>book</mat-icon>
+    <br>
+    <span>Щоденник</span>
+  </div>
+</a>
+<!--logout button-->
+<a (click)="auth.logout()"> <!-- logout function -->
+  <div class="icons">
+    <mat-icon>exit_to_app</mat-icon>
+    <br>
+    <span>Вийти</span>
+  </div>
+</a>

@@ -70,8 +70,7 @@ export class AdminFooterMenuComponent implements OnInit {
    * Classes is shown by default
    */
   activeRoute() {
-    [this.pathActive, this.iconActive, this.nameActive] =
-      [this.routesMore[0].path, this.routesMore[0].icon, this.routesMore[0].name]; // show Classes by default
+
     for (const i in this.routesMore) { // link buttons from 3 dots menu
       if (this.router.url === this.routesMore[i].path) { // show path, icon, route depending on route path
         [this.pathActive, this.iconActive, this.nameActive] =
@@ -100,6 +99,8 @@ export class AdminFooterMenuComponent implements OnInit {
     this.router.events.subscribe(() => {
       this.activeRoute();
     }); // call on every routing change
+    [this.pathActive, this.iconActive, this.nameActive] =
+      [this.routesMore[0].path, this.routesMore[0].icon, this.routesMore[0].name]; // show Classes by default
     this.activeRoute(); // call to check which section is selected when component is created
   }
 }

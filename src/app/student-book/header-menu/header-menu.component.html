@@ -1,0 +1,30 @@
+<!--header list-->
+<mat-nav-list class="navigation-items">
+  <!--logout button-->
+  <div>
+    <a mat-list-item (click)="auth.logout()"> <!-- logout function -->
+      <mat-icon>exit_to_app</mat-icon>
+      Вийти
+    </a>
+  </div>
+  <!--student book button-->
+  <div>
+    <a mat-list-item routerLinkActive="active" routerLink="/student-book">
+      <mat-icon>book</mat-icon>
+      Щоденник
+    </a>
+  </div>
+  <!-- avatar and name -->
+  <div class="right">
+    <!--first and last names-->
+    <span>{{firstName}} {{lastName}}</span>
+    <!-- show avatar if exists-->
+    <!-- show abbreviation if not-->
+    <div>
+      <app-avatar [avatar]="avatar"
+                  [firstName]="firstName"
+                  [lastName]="lastName">
+      </app-avatar>
+    </div>
+  </div>
+</mat-nav-list>

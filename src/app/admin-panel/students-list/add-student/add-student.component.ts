@@ -73,6 +73,7 @@ export class AddStudentComponent implements OnInit {
     if (typeof (data.dateOfBirth) !== 'string') {
       data.dateOfBirth = data.dateOfBirth.toLocaleDateString().split('.').reverse().join('-');
     }
+    data.avatar = this.avatar || data.avatar;
     if (this.data.paramId) {
       this.studentService.changeStudent(this.data.paramId, data).subscribe(res => {
         this.studentService.loadStudents(this.data.classId);
@@ -80,7 +81,6 @@ export class AddStudentComponent implements OnInit {
       },
         err => this.openSnackBar('Дані не змінено', err));
     } else {
-      data.avatar = this.avatar;
       this.studentService.addStudents(data).subscribe(res => {
         this.studentService.loadStudents(data.classId);
         this.openSnackBar('Студента додано', '');

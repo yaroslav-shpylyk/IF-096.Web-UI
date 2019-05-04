@@ -1,3 +1,97 @@
-<p>
-  student-book works!
-</p>
+<!--Block with datepicer and change view buttons-->
+<div class="headContainer">
+
+  <div class="changeView">
+    <button mat-stroked-button (click)="gridView()"
+            [ngClass]="{active2: gridViewSetter, active1: listViewSetter}">
+      <mat-icon class="viewSwitcher">view_module</mat-icon>
+    </button>
+
+    <button mat-stroked-button (click)="listView()"
+            [ngClass]="{active1: gridViewSetter, active2: listViewSetter}">
+      <mat-icon class="viewSwitcher">view_list</mat-icon>
+    </button>
+  </div>
+
+  <div class="dateSwitcher">
+    <!--Previous week button-->
+    <button mat-button (click)="backDate()">
+      <mat-icon>fast_rewind</mat-icon>
+    </button>
+
+    <!--DatePicker-->
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker"
+             (dateInput)="showSchedule()"
+             [(ngModel)]="dateValue">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <!--Next week button-->
+    <button mat-button (click)="forwardDate()">
+      <mat-icon>fast_forward</mat-icon>
+    </button>
+  </div>
+</div>
+
+<!--Tables with student-book data-->
+<table [ngClass]="{container: gridViewSetter, container2: listViewSetter}">
+
+  <tbody *ngFor="let item of groupArr">
+  <ng-container id="days" *ngIf="showTable">
+
+    <h4 colspan="2">{{item.date | date : 'fullDate' | uppercase}}</h4>
+    <table mat-table [dataSource]="item.groupItem" class="mat-elevation-z8">
+
+      <!-- lessonNumber Column -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef class="lessonNumber"> №</th>
+        <td mat-cell *matCellDef="let value"> {{value.lessonNumber}}</td>
+      </ng-container>
+
+      <!-- subjectName Column -->
+      <ng-container matColumnDef="lesson">
+        <th mat-header-cell *matHeaderCellDef class="subjectName">УРОК</th>
+        <td class="subjectName" mat-cell *matCellDef="let value"> {{value.subjectName | uppercase}}</td>
+      </ng-container>
+
+      <!-- homeWork Column -->
+      <ng-container matColumnDef="homeWork">
+        <th mat-header-cell *matHeaderCellDef class="homeWork">ЗАВДАННЯ</th>
+        <td class="homeWork" mat-cell *matCellDef="let value">
+          <a *ngIf="value.homeworkFileId !==null">
+            <mat-icon class="icoFile" (click)="getFile(value.lessonId)"> insert_drive_file</mat-icon>
+          </a> {{value.homeWork}}
+        </td>
+      </ng-container>
+
+      <!-- mark Column -->
+      <ng-container matColumnDef="mark">
+        <th mat-header-cell *matHeaderCellDef class="mark">ОЦІНКА</th>
+        <td class="mark" mat-cell *matCellDef="let value"> {{value.mark | hideZero}}</td>
+        // hideZero - custom pipe
+      </ng-container>
+
+      <!-- note Column -->
+      <ng-container matColumnDef="note">
+        <th mat-header-cell *matHeaderCellDef class="note">ПРИМІТКА</th>
+        <td mat-cell class="note" *matCellDef="let value"> {{value.note }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </ng-container>
+  </tbody>
+
+</table>
+
+<!--Message which showing when there aren't schedule for current date-->
+<div *ngIf="showMessage">
+  <h4>На обрану вами дату розкладу немає. Спробуйте обрати іншу дату.</h4>
+  <div class="iconContainer">
+    <mat-icon class="icon">sentiment_dissatisfied</mat-icon>
+  </div>
+</div>
+

@@ -1,95 +1,67 @@
-<div class="wrapper">
-  <div class="select">
-    <mat-form-field>
-      <mat-label>Активні класи</mat-label>
-      <mat-select (selectionChange)="onSelectionClass($event)">
-        <mat-option
-          class="option"
-          *ngFor="let active of (activeClass | async)"
-          [value]="active.id"
-        >
-          <span>{{ active.className + ' ' + active.classYear + 'рік' }}</span>
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <button
-      mat-raised-button
-      type="button"
-      (click)="showNowActive = !showNowActive"
-    >
-      Неактивні класи
-    </button>
-    <ng-container *ngIf="showNowActive">
+<mat-card>
+  <mat-card-content>
+    <p>Щоб вибрати учня спершу виберіть клас</p>
+    <div class="select">
       <mat-form-field>
-        <mat-label>Неактивні класи</mat-label>
+        <mat-label>Активні класи</mat-label>
         <mat-select (selectionChange)="onSelectionClass($event)">
-          <mat-option
-            class="option"
-            *ngFor="let notActive of (notActiveClass | async)"
-            [value]="notActive.id"
-          >
-            <span>{{ notActive.className + '' + notActive.classYear }}</span>
+          <mat-option class='option' *ngFor="let active of activeClass | async" [value]="active.id">
+            <span>{{active.className + " " + active.classYear + "рік"}}</span>
           </mat-option>
         </mat-select>
       </mat-form-field>
-    </ng-container>
-  </div>
-  <div class="students" *ngIf="dataSource">
-    <mat-form-field>
-      <input
-        matInput
-        (keyup)="applyFilter($event.target.value)"
-        placeholder="Шукати"
-      />
-    </mat-form-field>
+      <section>
+        <mat-slide-toggle color="primary" (change)="showNowActive = !showNowActive">
+          Неактивні класи
+        </mat-slide-toggle>
+      </section>
+      <ng-container *ngIf="showNowActive">
+        <mat-form-field>
+          <mat-label>Неактивні класи</mat-label>
+          <mat-select (selectionChange)="onSelectionClass($event)">
+            <mat-option class='option' *ngFor="let notActive of notActiveClass | async" [value]="notActive.id">
+              <span>{{notActive.className + "" + notActive.classYear + "рік"}}</span>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+      <mat-form-field *ngIf="dataSource">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Шукати">
+      </mat-form-field>
+    </div>
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="avatar">
           <th mat-header-cell *matHeaderCellDef>Аватар</th>
-          <td mat-cell *matCellDef="let row">
-            <img
-              *ngIf="row?.avatar; else avatar"
-              src="{{ row.avatar }}"
-              style="border-radius: 50%;max-height: 2.5em;max-width: 2.5em;"
-            />
+          <td mat-cell *matCellDef="let row" [routerLink]="['./', row.id]">
+            <app-avatar [avatar]="row.avatar" [firstName]="row.firstname" [lastName]="row.lastname"></app-avatar>
           </td>
         </ng-container>
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>ПІБ</th>
-          <td
-            mat-cell
-            *matCellDef="let row"
-            class="name"
-            [routerLink]="['./', row.id]"
-            [queryParams]="{ classId: classId }"
-          >
-            <span>{{ row.lastname }}</span>
-            <span>{{ row.firstname }}</span>
-            <span>{{ row.patronymic }}</span>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ПІБ </th>
+          <td mat-cell *matCellDef="let row" class="name" [routerLink]="['./', row.id]"
+            [queryParams]="{ classId: classId }">
+            <span>{{row.lastname}}</span>
+            <span>{{row.firstname}}</span>
+            <span>{{row.patronymic}}</span>
           </td>
         </ng-container>
         <ng-container matColumnDef="schoolClass">
           <th mat-header-cell *matHeaderCellDef>Клас</th>
-          <td mat-cell *matCellDef="let row">{{ row.classe }}</td>
+          <td mat-cell *matCellDef="let row" [routerLink]="['./', row.id]"> {{row.classe}}</td>
         </ng-container>
         <ng-container matColumnDef="dateOfBirth">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Дата народження
-          </th>
-          <td mat-cell *matCellDef="let row">{{ row.dateOfBirth }}</td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Дата народження</th>
+          <td mat-cell *matCellDef="let row" [routerLink]="['./', row.id]"> {{row.dateOfBirth}}</td>
         </ng-container>
         <ng-container matColumnDef="moreButton">
-          <th mat-header-cell *matHeaderCellDef>Ред.</th>
+          <th mat-header-cell *matHeaderCellDef> Ред. </th>
           <td mat-cell *matCellDef="let row">
             <button mat-icon-button [matMenuTriggerFor]="menu">
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-              <button
-                mat-menu-item
-                [routerLink]="['./', row.id]"
-                [queryParams]="{ classId: classId }"
-              >
+              <button mat-menu-item [routerLink]="['./', row.id]" [queryParams]="{ classId: classId }">
                 <mat-icon>edit</mat-icon>
                 <span>Редагувати</span>
               </button>
@@ -101,21 +73,22 @@
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+        </tr>
       </table>
     </div>
-  </div>
-  <button class="add" mat-fab color="primary" (click)="addStudent()">
-    <i class="material-icons">
-      person_add
+  </mat-card-content>
+</mat-card>
+<button class="add" mat-fab color="primary" (click)="addStudent()">
+  <i class="material-icons">
+    person_add
+  </i>
+</button>
+<ng-template #avatar>
+  <div>
+    <i class="material-icons" style="font-size: 2.5em;">
+      person
     </i>
-  </button>
-  <ng-template #avatar>
-    <div>
-      <i class="material-icons" style="font-size: 2.5em;">
-        person
-      </i>
-    </div>
-  </ng-template>
-</div>
+  </div>
+</ng-template>
 <router-outlet></router-outlet>

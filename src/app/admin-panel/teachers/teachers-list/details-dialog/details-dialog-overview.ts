@@ -1,9 +1,9 @@
 import { Component, Injectable, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
+import { TeachersStorageService } from '../../../../services/teachers-storage.service';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { TeacherData } from 'src/app/models/teacher-data';
+import { TeacherData } from '../../../../models/teacher-data';
 
 @Component({
   selector: 'app-dialog-overview',
