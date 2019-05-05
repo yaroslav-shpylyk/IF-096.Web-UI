@@ -5,7 +5,7 @@ import {
   MatSnackBar,
   MatSnackBarConfig
 } from '@angular/material';
-import { HomeworkStorageService } from 'src/app/services/homework-storage.service.ts.service';
+import { HomeworkStorageService } from '../../../../services/homework-storage.service.ts.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
