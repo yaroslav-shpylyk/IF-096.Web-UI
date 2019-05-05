@@ -18,6 +18,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TeacherService } from './services/teacher.service';
 import { MatNativeDateModule } from '@angular/material';
 import { HomeworkStorageService } from './services/homework-storage.service.ts.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +32,8 @@ import { HomeworkStorageService } from './services/homework-storage.service.ts.s
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     AuthService,
