@@ -2,16 +2,17 @@ table {
   width: 100%;
 }
 
-.example-button-row {
+#hide {
   position: fixed;
-  bottom: 3em;
+  bottom: 2.3em;
   right: 1em;
+  transition: bottom 0.9s;
+  color: #1565c0;
+  cursor: pointer;
 }
 
-.example-button-row button,
-.example-button-row a {
-  margin-right: 8px;
-  font-size: 1.6em;
+.btn {
+  font-size: 3em;
 }
 
 .wrapper {
