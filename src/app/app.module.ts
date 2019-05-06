@@ -20,9 +20,10 @@ import { MatNativeDateModule } from '@angular/material';
 import { HomeworkStorageService } from './services/homework-storage.service.ts.service';
 import { ErrorInterceptor } from './error-interceptor';
 import { ErrorComponent } from './error/error.component';
+import { NotFoundComponent } from './error/not-found/not-found.component';
 
 @NgModule({
-  declarations: [AppComponent, ErrorComponent],
+  declarations: [AppComponent, ErrorComponent, NotFoundComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
