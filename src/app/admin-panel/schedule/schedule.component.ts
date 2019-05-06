@@ -34,12 +34,12 @@ export class ScheduleComponent implements OnInit {
   dateTermEndMsg = 'Дата закінчення семестру *';
 
   weekDayName = [
-    {legendDay: 'Понеділок *', dailySubjects: 'mondaySubjects'},
-    {legendDay: 'Вівторок *', dailySubjects: 'tuesdaySubjects'},
-    {legendDay: 'Середа *', dailySubjects: 'wednesdaySubjects'},
-    {legendDay: 'Четвер *', dailySubjects: 'thursdaySubjects'},
-    {legendDay: 'П`ятниця *', dailySubjects: 'fridaySubjects'},
-    {legendDay: 'Субота', dailySubjects: 'saturdaySubjects'}
+    {legendDay: 'Понеділок *', dailySubjectsName: 'mondaySubjects'},
+    {legendDay: 'Вівторок *', dailySubjectsName: 'tuesdaySubjects'},
+    {legendDay: 'Середа *', dailySubjectsName: 'wednesdaySubjects'},
+    {legendDay: 'Четвер *', dailySubjectsName: 'thursdaySubjects'},
+    {legendDay: 'П`ятниця *', dailySubjectsName: 'fridaySubjects'},
+    {legendDay: 'Субота', dailySubjectsName: 'saturdaySubjects'}
   ];
   emittedDays = {
     mondaySubjects: null,
@@ -60,7 +60,15 @@ export class ScheduleComponent implements OnInit {
 
   ngOnInit() {
     this.classService.getClasses('active').subscribe(data => {
-      this.arrClassList = data;
+      this.arrClassList = data.sort((a: ClassData, b: ClassData) => {
+        const aSecondSmbl = Number(a.className.charAt(1));
+        const bSecondSmbl = Number(b.className.charAt(1));
+        if ( isNaN(aSecondSmbl) && !isNaN(bSecondSmbl) ) { return -1; }
+        if ( !isNaN(aSecondSmbl) && isNaN(bSecondSmbl) ) { return 1; }
+        if (a.className < b.className) { return -1; }
+        if (a.className > b.className) { return 1; }
+        return 0;
+      });
     });
     this.subjectsService.getSubjects().subscribe(data => {
       this.arrSubjectsList = data;
@@ -115,17 +123,23 @@ export class ScheduleComponent implements OnInit {
    */
   selectedClass(classId: number) {
     this.scheduleService.getSubjects(classId).subscribe(
-      data => { /*this.arrSubjectsList = data;*/ console.log(data); },
+      data => {
+        this.arrSubjectsList = data;
+        console.log(data); // for test
+      },
       error => {
+        console.log(error);
         this.messageClass = 'error-msg';
         this.showMessage('Список предметів для вибраного класу не отримано. Спробуйте ще раз');
       }
     );
     this.scheduleService.getSchedule(classId).subscribe(
-      data => { this.scheduleData = data; console.log(data); },
+      data => { this.scheduleData = data; console.log(data); /*for test*/ },
       error => {
+        console.log(error);
         this.messageClass = 'error-msg';
         this.showMessage('Розклад для вибраного класу не отримано. Спробуйте ще раз');
+        this.scheduleData = new ScheduleData();
       }
     );
   }
@@ -133,10 +147,10 @@ export class ScheduleComponent implements OnInit {
   /**
    * Method gets the schedule for each day from the child component
    * @param event - Data for the daily schedule
-   * @param dailySubjects - Daily schedule name
+   * @param dailySubjectsName - Daily schedule name
    */
-  onAddDailySubjects(event: FormArray, daySubjects: string): void {
-    this.emittedDays[daySubjects] = event;
+  onAddDailySubjects(event: FormArray, dailySubjectsName: string): void {
+    this.emittedDays[dailySubjectsName] = event;
   }
 
   /**
@@ -191,33 +205,33 @@ export class ScheduleComponent implements OnInit {
 
   /**
    * The method generates data for the daily schedule
-   * @param dailySubjects - Daily schedule name
+   * @param dailySubjectsName - Daily schedule name
    * @returns - Data for the daily schedule
    */
-  private addDailyData(dailySubjects: string): LessonData[] | boolean {
+  private addDailyData(dailySubjectsName: string): LessonData[] | boolean {
     const dailyLesson: LessonData[] = [];
-    for (let i = 0; i < (this.emittedDays[dailySubjects].value.length); i++) {
-      if (this.emittedDays[dailySubjects].value[i].firstGroup !== '') {
+    for (let i = 0; i < (this.emittedDays[dailySubjectsName].value.length); i++) {
+      if (this.emittedDays[dailySubjectsName].value[i].firstGroup !== '') {
         dailyLesson.push({
           lessonNumber: `${i + 1}`,
-          subjectId: this.emittedDays[dailySubjects].value[i].firstGroup.subjectId,
-          subjectName: this.emittedDays[dailySubjects].value[i].firstGroup.subjectName,
-          subjectDescription: this.emittedDays[dailySubjects].value[i].firstGroup.subjectDescription
+          subjectId: this.emittedDays[dailySubjectsName].value[i].firstGroup.subjectId,
+          subjectName: this.emittedDays[dailySubjectsName].value[i].firstGroup.subjectName,
+          subjectDescription: this.emittedDays[dailySubjectsName].value[i].firstGroup.subjectDescription
         });
       }
 
-      if ('secondGroup' in this.emittedDays[dailySubjects].value[i]) {
-        if (this.emittedDays[dailySubjects].value[i].secondGroup !== '') {
+      if ('secondGroup' in this.emittedDays[dailySubjectsName].value[i]) {
+        if (this.emittedDays[dailySubjectsName].value[i].secondGroup !== '') {
           dailyLesson.push({
             lessonNumber: `${i + 1}`,
-            subjectId: this.emittedDays[dailySubjects].value[i].secondGroup.subjectId,
-            subjectName: this.emittedDays[dailySubjects].value[i].secondGroup.subjectName,
-            subjectDescription: this.emittedDays[dailySubjects].value[i].secondGroup.subjectDescription
+            subjectId: this.emittedDays[dailySubjectsName].value[i].secondGroup.subjectId,
+            subjectName: this.emittedDays[dailySubjectsName].value[i].secondGroup.subjectName,
+            subjectDescription: this.emittedDays[dailySubjectsName].value[i].secondGroup.subjectDescription
           });
         }
       }
     }
-    if (dailyLesson.length === 0 && dailySubjects !== 'saturdaySubjects') {
+    if (dailyLesson.length === 0 && dailySubjectsName !== 'saturdaySubjects') {
       return false;
     }
     return dailyLesson;
@@ -233,9 +247,10 @@ export class ScheduleComponent implements OnInit {
         (data: ScheduleData) => {
           this.messageClass = 'success-msg';
           this.showMessage('Розклад успішно збережено');
-          console.log(data);
+          console.log(data); // for test
         },
         error => {
+          console.log(error);
           this.messageClass = 'error-msg';
           this.showMessage('Розклад не збережено. Спробуйте ще раз');
         }

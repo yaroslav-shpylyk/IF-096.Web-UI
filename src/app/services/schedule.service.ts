@@ -21,8 +21,8 @@ export class ScheduleService {
       (response: {status: any, data: ScheduleData}) => response.data
     ),
     catchError(error => {
-      console.log(error);
-      return throwError(error.massage);
+      //console.log(error);
+      return throwError(error);
     }));
   }
 
@@ -36,8 +36,8 @@ export class ScheduleService {
       (response: {status: any, data: SubjectData}) => response.data
     ),
     catchError(error => {
-      console.log(error);
-      return throwError(error.message);
+      //console.log(error);
+      return throwError(error);
     }));
   }
 
@@ -52,8 +52,8 @@ export class ScheduleService {
       (response: {status: any, data: ScheduleData}) => response.data
     ),
     catchError(error => {
-        console.log(error);
-        return throwError(error.message);
+        //console.log(error);
+        return throwError(error);
       })
     );
   }
