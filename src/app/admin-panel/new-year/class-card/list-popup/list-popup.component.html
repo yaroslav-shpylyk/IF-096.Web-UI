@@ -5,11 +5,10 @@
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> ПІБ </th>
-        <td mat-cell *matCellDef="let row" class="name" [routerLink]="['./', row.id]"
-          [queryParams]="{ classId: classId }">
+        <td mat-cell *matCellDef="let row" class="name">
           <span>{{row.lastname}}</span>
-          <span>{{row.firstname}}</span>
-          <span>{{row.patronymic}}</span>
+          <span> {{row.firstname[0]}}.</span>
+          <span> {{row.patronymic[0]}}.</span>
         </td>
       </ng-container>
       <ng-container matColumnDef="schoolClass">

@@ -2,7 +2,7 @@
   [formGroup]="form" 
   [ngClass]="{
     'locked': isCardLock,
-    'active': !isCardLocked,
+    'active': !isCardLock,
     'transited': isClassTransited,
     'normal': !newTitleField.invalid,
     'warning': newTitleField.invalid
@@ -62,7 +62,7 @@
   </div>
   <div class="class-edit-title">
     <label #editClassTitle (click)="editInput(newClassTitle)">
-      <i class="material-icons">edit</i>
+      <i class="material-icons" matTooltip="Змінити назву класу">edit</i>
     </label>
   </div>
 </mat-card>

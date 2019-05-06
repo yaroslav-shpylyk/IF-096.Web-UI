@@ -105,19 +105,21 @@ mat-card.locked.transited, mat-card.locked:hover.transited {
 mat-card.locked, mat-card.locked:hover {
   opacity: 0.6;
   background: #dad3d385;
+  .class-info, .class-edit-title, .class-transition {
+    pointer-events: none;
+  }
 }
 
 ::ng-deep mat-form-field {
    width: 100%;
   @media (min-width: 768px) {
     .mat-form-field-wrapper {
-      // width: 100px;
       margin: 0 auto;
     }
    }
 }
 
-mat-form-field.locked {
+mat-form-field.locked, mat-form-field.locked div {
   display: none;
   cursor: default;
   pointer-events: none;
@@ -126,7 +128,7 @@ mat-form-field.locked {
 }
 
 mat-card:hover {
-  background-color: #00000024;
+  background: #00000024;
 }
 
 .new-class-name {

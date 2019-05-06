@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { Student } from '../../../../models/student';

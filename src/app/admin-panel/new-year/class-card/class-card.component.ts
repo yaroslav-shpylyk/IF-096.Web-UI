@@ -18,8 +18,8 @@ export class ClassCardComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() isClassTransited: boolean;
   @Input() isCardLock: boolean;
-  @Input() isEditEnable: boolean;
   @Input() currentYear: number;
+  public isEditEnable = false;
   public classList: Student[];
 
   constructor(

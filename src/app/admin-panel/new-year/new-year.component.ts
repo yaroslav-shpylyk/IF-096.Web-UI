@@ -18,7 +18,7 @@ export class NewYearComponent implements OnInit {
   public transititionForm: FormGroup;
   public isNotEmpty = true;
   public isCurrentYear = true;
-  public controlIndexes: number[] = [];
+  public filteredClasses: { classData?: ClassInfo, control: FormControl}[] = [];
   public transitedCards: ClassCardComponent[] = [];
   @ViewChildren('classCard') classCards: QueryList<ClassCardComponent>;
 
@@ -34,16 +34,7 @@ export class NewYearComponent implements OnInit {
         this.activeClasses = this.allClasses.filter(
           curClass => curClass.isActive
         );
-        this.activeClasses.forEach(
-          (schoolClass, i) => {
-            this.controlIndexes.push(i);
-            const newInput = new FormControl(
-              {value: this.newTitle(schoolClass.className), disabled: false},
-              [Validators.pattern('(^[1-7][(]([1-9]|1[0-2])-[А-Я]{1}[)]$)|(^([1-9]|1[0-2])-[А-Я]{1}$)'),
-              this.classTitleValidator(this.allClasses, schoolClass.classYear, schoolClass.className)]);
-            (this.transititionForm.controls.newClassTitle as FormArray).push(newInput);
-          }
-        );
+        this.filterClasses();
       }
     );
   }
@@ -59,10 +50,23 @@ export class NewYearComponent implements OnInit {
   get newClassTitle() { return this.transititionForm.get('newClassTitle'); }
 
   /**
+   * Add new FormControl with validators to FormArray
+   * @param singleClass ClassInfo[] - objects with data about current class
+   */
+  addNewTitleInput(singleClass: ClassInfo): void {
+    const newInput = new FormControl(
+      {value: this.newTitle(singleClass.className), disabled: false},
+      [Validators.pattern('(^[1-7][(]([1-9]|1[0-2])-[А-Я]{1}[)]$)|(^([1-9]|1[0-2])-[А-Я]{1}$)'),
+      this.classTitleValidator(this.allClasses, singleClass.classYear, singleClass.className)]);
+    (this.transititionForm.controls.newClassTitle as FormArray).push(newInput);
+    this.filteredClasses.push( {classData: singleClass, control: newInput} );
+  }
+
+  /**
    * Title validation for new class
    * @param allClasses ClassInfo[] - Array of objects with data about classes
    * @param classYear number - current class year
-   * @param classTitle string - current class title
+   * @param curClassTitle string - current class title
    * @returns - return FormControl with validation error or null
    */
   classTitleValidator = (allClasses: ClassInfo[], classYear: number, curClassTitle: string) => {
@@ -80,17 +84,17 @@ export class NewYearComponent implements OnInit {
 
       if (control.value !== '') {
         const curClassNameParts = curClassTitle.split(/[-(]/);
-        const classNameParts = control.value.split(/[-(]/);
-        if (classNameParts.length !== curClassNameParts.length) {
-          if (classNameParts.length <= curClassNameParts.length ) {
-            if (+classNameParts[0] <= +curClassNameParts[1]) { return {error_number: {valid: false}}; }
+        const newNameParts = control.value.split(/[-(]/);
+        if (newNameParts.length !== curClassNameParts.length) {
+          if (newNameParts.length <= curClassNameParts.length ) {
+            if (+newNameParts[0] <= +curClassNameParts[1]) { return {error_number: {valid: false}}; }
           } else {
-              if (+classNameParts[1] < +curClassNameParts[0]) { return {error_number: {valid: false}}; }
+              if (+newNameParts[1] < +curClassNameParts[0]) { return {error_number: {valid: false}}; }
             }
           } else {
           if (curClassNameParts.some(
             (item, index)  => {
-            return +item >= +classNameParts[index] && index < classNameParts.length - 1; } )) {
+            return +item >= +newNameParts[index] && index < newNameParts.length - 1; })) {
             return {error_number: {valid: false} };
           }
         }
@@ -100,48 +104,41 @@ export class NewYearComponent implements OnInit {
   }
 
   formSubmit() {
-    const formData = [];
-    this.classCards.forEach( el => {
-      if (!el.isCardLock) {
+    const formData: ClassInfo[] = [];
+    this.classCards.forEach( classCard => {
+      if (!classCard.isCardLock) {
         formData.push(
           {
-            className: el.newTitleField.value,
-            classYear: +el.curClass.classYear + 1,
-            id: el.curClass.id,
+            className: classCard.newTitleField.value,
+            classYear: +classCard.curClass.classYear + 1,
+            id: classCard.curClass.id,
             isActive: true,
-            numOfStudents: 0
+            numOfStudents: 0,
+            classDescription: ''
           }
         );
-        this.transitedCards.push(el);
+        this.transitedCards.push(classCard);
       }
     } );
-    if (this.transititionForm.status === 'VALID') {
-      this.newYearTransitition.transitClasses(formData).subscribe(
-        (status) => {
-          if (status === 201) {
-            this.transitedCards.forEach (
-              el => {
-                el.isClassTransited = true;
-                el.isCardLock = true;
-              }
-            );
-            this.displaySnackBar(
-              `Виконано. Переведено класів: ${formData.length}`,
-              'popup-success'
-            );
-          } else {
-            this.displaySnackBar(
-              `Помилка. Сервер відхилив запит`,
-              'popup-error'
-            );
-          }
+    this.newYearTransitition.transitClasses(formData).subscribe(
+      (status) => {
+        if (status === 201) {
+          this.transitedCards.forEach (
+            el => {
+              el.isClassTransited = true;
+              el.isCardLock = true;
+            }
+          );
+          this.displaySnackBar(
+            `Виконано. Переведено класів: ${formData.length}`,
+            'popup-success'
+          );
+        } else {
+          this.displaySnackBar(
+            `Помилка. Сервер відхилив запит`,
+            'popup-error'
+          );
         }
-      );
-    }
-    this.transitedCards.forEach (
-      el => {
-        el.isClassTransited = true;
-        el.isCardLock = true;
       }
     );
   }
@@ -158,12 +155,12 @@ export class NewYearComponent implements OnInit {
   }
 
   /**
-   * Return indexes of filtereted classes and reset input fields in form
+   *  Filter active classses and generate according to this object with filtereted classes and array of FormControls
    */
-  get filteredindexes(): number[] {
+  filterClasses(): void {
     const year = this.currentYear;
-    const isCurrentYear = (item) => this.activeClasses[item].classYear === year;
-    const isNotEmpty = (item) => this.activeClasses[item].numOfStudents > 0;
+    const isCurrentYear = (singleClass) => singleClass.classYear === year;
+    const isNotEmpty = (singleClass) => singleClass.numOfStudents > 0;
     const filterParams = [];
 
     if (this.isNotEmpty) {
@@ -173,13 +170,19 @@ export class NewYearComponent implements OnInit {
       filterParams.push(isCurrentYear);
     }
 
-    return this.controlIndexes.filter(
-      (item) => {
-        if ( filterParams.every(func => func(item))) {
+    this.activeClasses.filter(
+      (singleClass) => {
+        const posSinglClassInFiltered = this.filteredClasses.map( filteredClass => filteredClass.classData.id ).indexOf(singleClass.id);
+        if ( filterParams.every(func => func(singleClass))) {
+          if (posSinglClassInFiltered === -1) {
+            this.addNewTitleInput(singleClass);
+          }
           return true;
         } else {
-          const input = (this.transititionForm.controls.newClassTitle as FormArray).controls[item];
-          input.reset({ value: input.value, disabled: true });
+          if (posSinglClassInFiltered !== -1) {
+            this.filteredClasses.splice(posSinglClassInFiltered, 1);
+            (this.transititionForm.controls.newClassTitle as FormArray).removeAt(posSinglClassInFiltered);
+          }
         }
       }
     );
@@ -199,7 +202,6 @@ export class NewYearComponent implements OnInit {
    * @param curTitle string - current title of class
    * @returns string - new class title for next year
    */
-
   newTitle(curTitle: string): string {
     const classNameParts = curTitle.split(/[-(]/);
     if ( classNameParts.length > 2) {
