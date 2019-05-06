@@ -20,7 +20,6 @@ import { SubjectData } from '../../models/subject-data';
 import { ClassData } from '../../models/class-data';
 import { TeacherData } from '../../models/teacher-data';
 
-
 @Component({
   selector: 'app-teacher-connection',
   templateUrl: './teacher-connection.component.html',
