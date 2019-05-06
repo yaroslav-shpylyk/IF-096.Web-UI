@@ -18,6 +18,7 @@ export class GroupsComponent implements OnInit {
   dataSourceActivClass: MatTableDataSource<Group>;
   dataSourceCloseClass: MatTableDataSource<Group>;
   prevScrollpos = window.pageYOffset;
+  panelOpenState: boolean;
 
   @HostListener('window:scroll', [])
   onScrollEvent() {
