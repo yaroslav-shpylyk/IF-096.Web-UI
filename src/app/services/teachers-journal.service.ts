@@ -6,7 +6,7 @@ import {
 } from '@angular/common/http';
 import { Observable, of, from } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
-import { TeacherConnectionComponent } from 'src/app/admin-panel/teacher-connection/teacher-connection.component';
+import { TeacherConnectionComponent } from '../admin-panel/teacher-connection/teacher-connection.component';
 
 @Injectable({
   providedIn: 'root'

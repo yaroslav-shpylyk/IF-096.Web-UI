@@ -1,0 +1,93 @@
+<div class="info">
+  <h3>Домашнє завдання</h3>
+  <h2>на {{ homeworks[lessonId].date }}</h2>
+  <h3>
+    Вид роботи: <b>{{ markType }}</b>
+  </h3>
+</div>
+
+<div class="wrapper">
+  <div class="bottom-section">
+    <mat-divider></mat-divider>
+    <form
+      [formGroup]="homeworkForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <mat-form-field>
+        <textarea
+          matInput
+          formControlName="message"
+          placeholder="Коментар"
+        ></textarea>
+      </mat-form-field>
+
+      <button
+        type="button"
+        mat-stroked-button
+        class="fileUplBtn"
+        (click)="filePicker.click()"
+      >
+        Обрати файл
+      </button>
+      <div *ngIf="selectedFileName"
+        class="file-name-wrapper"
+      >
+        Обраний файл: <span>{{selectedFileName}}</span>
+      </div>
+
+      <input
+        class="fileUpl"
+        formControlName="homeworkFile"
+        type="file"
+        #filePicker
+        (change)="onFileSelected($event)"
+      />
+
+      <mat-divider
+        *ngIf="homeworks[lessonId].fileName"
+        class="homework-divider"
+      ></mat-divider>
+
+      <a
+        class="fileDwn"
+        (click)="dwnl()"
+      >
+        {{ homeworks[lessonId].fileName }}
+      </a>
+
+      <mat-divider class="homework-divider"></mat-divider>
+
+      <button
+        mat-button
+        color="warn"
+        type="button"
+        matTooltip="Видалити домашнє завдання та повернутись до попереднього меню"
+        (click)="onClear()"
+        [disabled]="!homeworks[lessonId].fileName && !homeworks[lessonId].homework"
+      >
+        Видалити
+      </button>
+
+      <mat-divider class="homework-divider"></mat-divider>
+
+      <div class="homework-bottom-section">
+        <button
+          [disabled]="homeworkForm.pristine"
+          mat-raised-button
+          color="primary"
+          type="submit"
+        >
+          Зберегти
+        </button>
+
+        <button
+          mat-raised-button
+          type="button"
+          (click)="onBack()"
+        >
+          Назад
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

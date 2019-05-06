@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 
 import { Group } from '../../../models/group-data.model';
-import { GroupsService } from 'src/app/services/groups.service';
+import { GroupsService } from '../../../services/groups.service';
 import { AddModifyGroupComponent } from './add-modify/add-modify.component';
 import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 
@@ -18,6 +18,7 @@ export class GroupsComponent implements OnInit {
   dataSourceActivClass: MatTableDataSource<Group>;
   dataSourceCloseClass: MatTableDataSource<Group>;
   prevScrollpos = window.pageYOffset;
+  panelOpenState: boolean;
 
   @HostListener('window:scroll', [])
   onScrollEvent() {

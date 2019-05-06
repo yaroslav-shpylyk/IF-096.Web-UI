@@ -2,13 +2,17 @@
   <h5>РОЗКЛАД УРОКІВ</h5>
 </div>
 <form [formGroup] = "frmSchedule" (ngSubmit) = "onSubmit()">
-  <div class="schedule-top">
+  <div class="schedule-top" >
     <mat-form-field class="datePiker">
       <input matInput [matDatepicker]="pickerStart"
        [placeholder]="dateTermStartMsg"
        formControlName="dateTermStart">
       <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
       <mat-datepicker #pickerStart></mat-datepicker>
+      <mat-error *ngIf="isInputInvalid('dateTermStart')">Не визначено дату початку семестру</mat-error>
+      <mat-error *ngIf="frmSchedule.get('dateTermStart').getError('invalidDate') &&  frmSchedule.get('dateTermStart').touched">
+        {{ frmSchedule.get('dateTermStart').getError('invalidDate') }}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="datePiker">
@@ -17,14 +21,18 @@
          formControlName="dateTermEnd">
         <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker #pickerEnd></mat-datepicker>
+        <mat-error *ngIf="isInputInvalid('dateTermEnd')">Не визначено дату закінчення семестру</mat-error>
+        <mat-error *ngIf="frmSchedule.get('dateTermEnd').getError('invalidDate') && frmSchedule.get('dateTermEnd').touched">
+            {{ frmSchedule.get('dateTermEnd').getError('invalidDate') }}
+        </mat-error>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-select #class [placeholder]="selectClassMsg"
+      <mat-select [placeholder]="selectClassMsg"
        formControlName="selectClass"
-       (selectionChange)="selectedClass($event.value)">
-        <mat-option *ngFor="let class of arrClassList" [value]="class.id">
-          {{ class.className }} {{class.id}}
+       (selectionChange)="selectedClass($event.value.id)">
+        <mat-option *ngFor="let class of arrClassList" [value]="class">
+          {{ class.className }}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="isInputInvalid('selectClass')">Не обрано клас</mat-error>
@@ -41,5 +49,5 @@
   </div>
 
   <button mat-button type="submit" class="save-button">Зберегти</button>
-  <!--[disabled]="!frmSchedule.valid"-->
+  <span [class]="messageClass">{{ messageData }}</span>
 </form>

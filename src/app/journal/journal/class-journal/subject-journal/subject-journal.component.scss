@@ -134,3 +134,58 @@ th::first-line {
     color: white !important;
   }
 }
+
+th:not(.cdk-column-star):not(.cdk-column-studentFullName) {
+  position: relative;
+  cursor: pointer;
+}
+
+:not(.cdk-column-star):not(.cdk-column-studentFullName):not(.cdk-column-star)
+  > i {
+  cursor: pointer;
+}
+
+th:not(.cdk-column-star):not(.cdk-column-studentFullName):hover {
+  box-shadow: inset 0px 0px 0px 3px rgb(21, 101, 192);
+}
+
+th:not(.cdk-column-star):not(.cdk-column-studentFullName) > i {
+  top: 0;
+  right: -5px;
+  position: absolute;
+  background-color: rgba(250, 235, 215, 0);
+  color: grey;
+}
+
+::ng-deep .fileDwn {
+  cursor: pointer;
+  color: #007bff;
+  display: block;
+  text-align: center !important;
+}
+
+::ng-deep .fileDwn:hover {
+  cursor: pointer;
+  color: #2f00ff;
+  text-decoration: underline;
+  display: block;
+  text-align: center !important;
+}
+
+::ng-deep .fileUplBtn {
+  display: block;
+  margin: auto;
+}
+
+::ng-deep .fileUpl {
+  display: none;
+}
+
+::ng-deep .homework-divider {
+  margin-top: 1em !important;
+  margin-bottom: 1em !important;
+}
+
+::ng-deep .homework-bottom-section {
+  display: flex;
+}

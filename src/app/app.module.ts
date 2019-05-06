@@ -17,9 +17,13 @@ import { JournalsStorageService } from './services/journals-storage.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TeacherService } from './services/teacher.service';
 import { MatNativeDateModule } from '@angular/material';
+import { HomeworkStorageService } from './services/homework-storage.service';
+import { ErrorInterceptor } from './error-interceptor';
+import { ErrorComponent } from './error/error.component';
+import { NotFoundComponent } from './error/not-found/not-found.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ErrorComponent, NotFoundComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -37,13 +41,16 @@ import { MatNativeDateModule } from '@angular/material';
     JournalsStorageService,
     SubjectService,
     TeacherService,
+    HomeworkStorageService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true
     },
-    {provide: MAT_DATE_LOCALE, useValue: 'ua-UA'}
+    {provide: MAT_DATE_LOCALE, useValue: 'ua-UA'},
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ErrorComponent]
 })
 export class AppModule {}

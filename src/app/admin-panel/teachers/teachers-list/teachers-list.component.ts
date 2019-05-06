@@ -7,7 +7,7 @@ import {
   ElementRef
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { TeachersStorageService } from 'src/app/services/teachers-storage.service';
+import { TeachersStorageService } from '../../../services/teachers-storage.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
   MatDialog,

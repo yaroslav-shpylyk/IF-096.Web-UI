@@ -1,19 +1,11 @@
-mat-accordion {
-  width: 100%;
-}
-
 #wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.wrapper {
-  margin: 1em;
-}
-
-.mat-expansion-panel {
-  margin: 1em auto !important;
+mat-accordion {
+  width: 100%;
 }
 
 mat-form-field,
@@ -25,15 +17,8 @@ mat-radio-group {
   justify-content: space-evenly;
 }
 
-.cdk-column-num,
-.cdk-column-academicYear,
 mat-radio-group {
   color: #6b6767;
-}
-
-.cdk-column-className,
-.cdk-column-lastname {
-  font-size: 1.2em;
 }
 
 .mat-row:hover {
@@ -43,10 +28,6 @@ mat-radio-group {
 
 table {
   width: 100%;
-}
-
-mat-expansion-panel {
-  margin: 1em;
 }
 
 ::ng-deep .journal-comp-exp-pnl {
@@ -68,4 +49,20 @@ mat-expansion-panel {
   mat-accordion {
     width: 65vw !important;
   }
+}
+@media only screen and (max-width: 850px)  {
+  mat-radio-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  mat-radio-button {
+    display: block;
+  }
+}
+
+mat-radio-button {
+  margin-left: 0.3em;
+  margin-right: 0.3em;
 }
