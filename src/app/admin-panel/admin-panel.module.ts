@@ -45,14 +45,15 @@ import { SubjectsComponent } from './subjects/subjects.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSortModule } from '@angular/material';
-import { MatCardModule, MatExpansionModule, MatCheckboxModule, MatSlideToggleModule} from '@angular/material';
+import { MatCardModule, MatExpansionModule, MatCheckboxModule, MatSlideToggleModule } from '@angular/material';
 import { NewYearComponent } from './new-year/new-year.component';
 import { TitlePipe } from './new-year/autotitle.pipe';
 import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subjects.component';
 import { TeacherConnectionComponent } from './teacher-connection/teacher-connection.component';
 import { SharedModule } from '../shared/shared.module';
-import {MatStepperModule} from '@angular/material/stepper';
+import { MatStepperModule } from '@angular/material/stepper';
 import { ClassCardComponent } from './new-year/class-card/class-card.component';
+import { TeachersComponent } from './teachers/teachers.component';
 
 
 @NgModule({
@@ -80,7 +81,8 @@ import { ClassCardComponent } from './new-year/class-card/class-card.component';
     ModifySubjectsComponent,
     TeacherConnectionComponent,
     ConfirmationDialogComponent,
-    ClassCardComponent
+    ClassCardComponent,
+    TeachersComponent
   ],
   imports: [
     CommonModule,
@@ -130,4 +132,4 @@ import { ClassCardComponent } from './new-year/class-card/class-card.component';
   ],
   providers: []
 })
-export class AdminPanelModule {}
+export class AdminPanelModule { }

@@ -18,7 +18,7 @@ export class SubjectsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(public subjectService: SubjectService,
-              public dialog: MatDialog) { }
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     this.showList();
@@ -49,7 +49,7 @@ export class SubjectsComponent implements OnInit {
    * update list of subjects
    * @param subject - data which sends to the dialog window
    */
-  openDialog(subject: any): void {
+  openDialog(subject?: any): void {
     const dialogRef = this.dialog.open(ModifySubjectsComponent, {
       data: (subject) ? { ...subject } : {}
     });

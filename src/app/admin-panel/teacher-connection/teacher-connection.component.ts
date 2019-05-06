@@ -33,13 +33,18 @@ export class TeacherConnectionComponent implements OnInit {
     private subjectService: SubjectService,
     private fb: FormBuilder,
     private teacherjournalServise: TeachersJournalService
-  ) {}
+  ) { }
   teachers: TeacherData[];
   subjects: SubjectData[];
   classes: ClassData[];
   teacherChoise = 'Виберіть вчителя';
   subjectChoise = 'Виберіть предмет';
   classesChoise = 'Виберіть клас';
+  isLinear: boolean;
+  teacher: boolean;
+  subject: boolean;
+  class: boolean;
+
 
   myForm = this.fb.group({
     class: ['', Validators.required],
@@ -55,7 +60,7 @@ export class TeacherConnectionComponent implements OnInit {
   addTeacherChoice(event) {
     this.teacherChoise = `Вибрано вчителя: ${event.value.firstname} ${
       event.value.lastname
-    }`;
+      }`;
   }
 
   /**
@@ -76,11 +81,11 @@ export class TeacherConnectionComponent implements OnInit {
     this.classesChoise = `Вибрано клас: ${event.value.className}`;
   }
 
-   /**
-   * The method that is called after the formSubmit
-   * confirmation of the choice of values ​​to add them to the journl
-   * @param data - object of the form that gives values ​​selected in the form
-   */
+  /**
+  * The method that is called after the formSubmit
+  * confirmation of the choice of values ​​to add them to the journl
+  * @param data - object of the form that gives values ​​selected in the form
+  */
   onSubmit(data) {
     this.teacherjournalServise
       .sentDataToJournal(
@@ -99,7 +104,7 @@ export class TeacherConnectionComponent implements OnInit {
      */
     this.teacherService
       .getTeachers()
-      .subscribe(teachers => {this.teachers = teachers;});
+      .subscribe(teachers => { this.teachers = teachers; });
 
     /**
      * Getting an array of subjects from the subject service,
@@ -107,7 +112,7 @@ export class TeacherConnectionComponent implements OnInit {
      */
     this.subjectService
       .getSubjects()
-      .subscribe(subjects => {this.subjects = subjects;});
+      .subscribe(subjects => { this.subjects = subjects; });
 
     /**
      * Getting an array of classes from the class service,
@@ -115,6 +120,6 @@ export class TeacherConnectionComponent implements OnInit {
      */
     this.classService
       .getClasses('all')
-      .subscribe(classes => {this.classes = classes;});
+      .subscribe(classes => { this.classes = classes; });
   }
 }

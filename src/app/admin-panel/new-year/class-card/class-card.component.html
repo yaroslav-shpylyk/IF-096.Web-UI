@@ -1,8 +1,8 @@
 <mat-card
   [formGroup]="form" 
-  [ngClass]="{'locked': isCardLock, 'active': !isCardLocked, 'transited': isClassTransited}">
+  [ngClass]="{'locked': isCardLock, 'active': !isCardLock, 'transited': isClassTransited}">
   <ng-container>
-    <label #skipClass (click)="lockClass(controlIndex, skipClass)">
+    <label #skipClass (click)="lockClass()">
       <i *ngIf="!isCardLock" class="material-icons">lock_open</i>
       <i *ngIf="isCardLock" class="material-icons">lock</i>
     </label>

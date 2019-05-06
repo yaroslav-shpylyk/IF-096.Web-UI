@@ -18,6 +18,7 @@ export class GroupsComponent implements OnInit {
   dataSourceActivClass: MatTableDataSource<Group>;
   dataSourceCloseClass: MatTableDataSource<Group>;
   prevScrollpos = window.pageYOffset;
+  panelOpenState: boolean;
 
   @HostListener('window:scroll', [])
   onScrollEvent() {
@@ -57,7 +58,7 @@ export class GroupsComponent implements OnInit {
    * Method open popups sheet, send data to the popups sheet,
    *  updates list of class after closing popups sheet
    */
-  openPopupsSheet(element: any): void {
+  openPopupsSheet(element?: any): void {
     const sheet = this.dialog.open(AddModifyGroupComponent, {
       data: (element) ? { ...element } : {}
     });
@@ -106,6 +107,6 @@ export class GroupsComponent implements OnInit {
    * Method sorts classes
    */
   sorting() {
-    this.groups.sort( (a, b) => parseInt(a.className, 10) - parseInt(b.className, 10));
+    this.groups.sort((a, b) => parseInt(a.className, 10) - parseInt(b.className, 10));
   }
 }
