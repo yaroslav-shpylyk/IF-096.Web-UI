@@ -33,7 +33,7 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
   ) {}
 
   /**
-   * Method fetches from route params subject and class ids, 
+   * Method fetches from route params subject and class ids,
    * initialize table rendering and starts spinner while it's loading.
    */
   ngOnInit() {
@@ -113,8 +113,7 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
       });
   }
 
-  
- /**
+  /**
    * Method receives from the table all needed values for assigning a
    * homework, changes clicked header cell style and passes to the
    * homework bottom sheet component needed data.
@@ -151,7 +150,7 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     });
   }
 
-   /**
+  /**
    * Method receives from the table all needed values for assigning a mark,
    * appropriately transforms them, changes clicked cell and row color
    * and passes to the bottom sheet component needed data.

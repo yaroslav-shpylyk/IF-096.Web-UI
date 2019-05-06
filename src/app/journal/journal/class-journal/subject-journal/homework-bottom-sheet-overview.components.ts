@@ -5,12 +5,14 @@ import {
   MatSnackBar,
   MatSnackBarConfig
 } from '@angular/material';
-import { HomeworkStorageService } from 'src/app/services/homework-storage.service.ts.service';
+import { HomeworkStorageService } from '../../../../services/homework-storage.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
+
 
 @Component({
   selector: 'app-homework-bottom-sheet',
-  templateUrl: 'homework-bottom-sheet-overview.html'
+  templateUrl: 'homework-bottom-sheet-overview.html',
+  styleUrls: ['./homework-bottom-sheet-overview.scss']
 })
 export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
   file: string;
@@ -18,6 +20,7 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
   fileType: string;
   valChanged = false;
   homeworkForm: FormGroup;
+  selectedFileName: string;
 
   constructor(
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
@@ -124,6 +127,14 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
    */
   onFileSelected(event) {
     const file = event.target.files[0];
+    let selectedFileName = (event.target as HTMLInputElement).value.split(
+      '\\'
+    )[2];
+    if (selectedFileName.length > 20) {
+      selectedFileName =
+        selectedFileName.substr(0, 15) + '...' + selectedFileName.split('.')[1];
+    }
+    this.selectedFileName = selectedFileName;
     const reader = new FileReader();
     reader.onload = this._handleReaderLoaded.bind(this);
     reader.readAsDataURL(file);
@@ -143,7 +154,7 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
 
   /**
    * Method gathers provided by user information, creates an object from
-   * that and sends it to the server by saveHomework method in order to 
+   * that and sends it to the server by saveHomework method in order to
    * save a new homework.
    */
   onSubmit() {
@@ -180,7 +191,7 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
   /**
    * Method receives object with data in base64-encoded string,
    * atob function decodes it into a new string with a character for
-   * each byte of the binary data. Then it creates an array of byte values 
+   * each byte of the binary data. Then it creates an array of byte values
    * using the .charCodeAt method for each character in the string and converts
    * this array of byte values into a real typed byte array by passing it to the
    * Uint8Array constructor. This in turn is converted to a Blob by wrapping
