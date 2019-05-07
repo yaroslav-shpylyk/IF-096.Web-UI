@@ -25,6 +25,7 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
   private loadingSub: Subscription;
   isLoading = false;
   homeworks = {};
+  lessonsIds = [];
 
   constructor(
     private journalsStorageService: JournalsStorageService,
@@ -77,7 +78,14 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     this.journalsStorageService
       .getJournalsAndHomeworks(this.idSubject, this.idClass)
       .subscribe(journal => {
+        console.log('--->: journal', journal);
         this.homeworks = journal.homeworks;
+        for (const lesson of journal.journals[0].marks) {
+          this.lessonsIds.push(lesson.idLesson + '');
+        }
+        this.lessonsIds.unshift('studentFullName');
+        this.lessonsIds.push('star');
+        console.log('--->:this.lessonsIds', this.lessonsIds);
         let studentData = new Object() as any;
         for (const student of journal.journals) {
           studentData.studentFullName = student.studentFullName;
@@ -104,10 +112,12 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
         }
         this.dataSource = this.elData;
         const temp = Object.keys(this.elData[0]);
+        console.log('--->:temp', temp);
         temp.unshift(...temp.splice(temp.length - 1, 1));
         temp.push('star');
 
-        this.displayedColumns = temp;
+        // this.displayedColumns = temp;
+        this.displayedColumns = this.lessonsIds;
         this.journal = journal.journals;
         this.journalsStorageService.loadingStateChanged.next(false);
       });
@@ -161,6 +171,7 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
    * @param i - index of column in a row;
    */
   onClc(idLesson, studentEl, event, i) {
+    console.log('--->:', idLesson);
     if (!Number.isInteger(+idLesson)) {
       return;
     }

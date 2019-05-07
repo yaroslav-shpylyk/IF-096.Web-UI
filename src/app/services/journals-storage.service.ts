@@ -39,6 +39,18 @@ export class JournalsStorageService {
       .pipe(
         map((response: { status: any; data: Journal[] }) => {
           const journal = response.data;
+          for (const journ of journal) {
+            journ.marks = journ.marks.sort((a, b) => {
+              if (a.dateMark > b.dateMark) {
+                return 1;
+              }
+              if (a.dateMark < b.dateMark) {
+                return -1;
+              }
+            });
+          }
+          console.log('--->: journal', journal);
+          // _.orderBy(journals, 'date');
           return journal;
         })
       );
@@ -60,6 +72,7 @@ export class JournalsStorageService {
         return this.getJournaL(idSubject, idClass).pipe(
           map(journals => {
             journ.journals = journals;
+            console.log('--->: jour', journ);
             return journ;
           })
         );
