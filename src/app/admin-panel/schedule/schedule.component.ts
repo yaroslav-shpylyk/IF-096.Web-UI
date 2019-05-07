@@ -123,24 +123,10 @@ export class ScheduleComponent implements OnInit {
    */
   selectedClass(classId: number) {
     this.scheduleService.getSubjects(classId).subscribe(
-      data => {
-        this.arrSubjectsList = data;
-        console.log(data); // for test
-      },
-      error => {
-        console.log(error);
-        this.messageClass = 'error-msg';
-        this.showMessage('Список предметів для вибраного класу не отримано. Спробуйте ще раз');
-      }
+      data => { this.arrSubjectsList = data; }
     );
     this.scheduleService.getSchedule(classId).subscribe(
-      data => { this.scheduleData = data; console.log(data); /*for test*/ },
-      error => {
-        console.log(error);
-        this.messageClass = 'error-msg';
-        this.showMessage('Розклад для вибраного класу не отримано. Спробуйте ще раз');
-        this.scheduleData = new ScheduleData();
-      }
+      data => { this.scheduleData = data; }
     );
   }
 
@@ -248,11 +234,6 @@ export class ScheduleComponent implements OnInit {
           this.messageClass = 'success-msg';
           this.showMessage('Розклад успішно збережено');
           console.log(data); // for test
-        },
-        error => {
-          console.log(error);
-          this.messageClass = 'error-msg';
-          this.showMessage('Розклад не збережено. Спробуйте ще раз');
         }
     );
   }
