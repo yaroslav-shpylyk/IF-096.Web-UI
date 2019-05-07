@@ -172,15 +172,15 @@ export class ScheduleComponent implements OnInit {
     this.scheduleData.classId = this.frmSchedule.controls.selectClass.value.id;
     this.scheduleData.className = this.frmSchedule.controls.selectClass.value;
 
-    Object.keys(this.emittedDays).forEach(dailySubjects => {
-      const dailyData = this.addDailyData(dailySubjects);
+    Object.keys(this.emittedDays).forEach(dailySubjectsName => {
+      const dailyData = this.addDailyData(dailySubjectsName);
       if (!dailyData) {
         this.hasEmptyDay = true;
         this.messageClass = 'error-msg';
         this.showMessage('Заповніть розклад для всіх робочих днів');
         return;
       }
-      this.scheduleData[dailySubjects] = dailyData;
+      this.scheduleData[dailySubjectsName] = dailyData;
     });
 
     if (!this.hasEmptyDay) {
