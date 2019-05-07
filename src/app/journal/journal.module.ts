@@ -12,8 +12,8 @@ import { HomeworkBottomSheetOverviewSheetComponent } from './journal/class-journ
 import { MatTooltipModule } from '@angular/material';
 import {
   SubjectAttachmentDialogComponent
-} from './journal/class-journal/subject-journal/subject-attachment-dialog/subject-attachment-dialog.component';
-import {PdfViewerModule} from 'ng2-pdf-viewer';
+} from './journal/subject-attachment-dialog/subject-attachment-dialog.component';
+import { PdfViewerModule } from 'borm-ng2-pdf';
 
 @NgModule({
   declarations: [

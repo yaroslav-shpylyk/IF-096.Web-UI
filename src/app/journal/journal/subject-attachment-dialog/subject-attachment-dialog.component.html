@@ -1,0 +1,46 @@
+<div mat-dialog-title>{{data.fileName}}</div>
+<div class="options">
+  <form [formGroup]="pdfOptions" *ngIf="isPdf()">
+    <mat-form-field>
+      <input matInput formControlName="page">
+    </mat-form-field>
+    / {{pdfTotalPages}}
+  </form>
+  <div class="transformOptions">
+    <div class="option">
+      <button mat-mini-fab (click)="rotateAttachment('rotateLeft')"><mat-icon>rotate_left</mat-icon></button>
+    </div>
+    <div class="option">
+      <button mat-mini-fab (click)="rotateAttachment('rotateRight')"><mat-icon>rotate_right</mat-icon></button>
+    </div>
+    <div class="option">
+      <button mat-mini-fab (click)="zoomAttachment('zoomIn')"><mat-icon>zoom_in</mat-icon></button>
+    </div>
+    <div class="option">
+      <button mat-mini-fab (click)="zoomAttachment('zoomOut')"><mat-icon>zoom_out</mat-icon></button>
+    </div>
+    <div class="option">
+      <button mat-mini-fab (click)="zoomAttachment('zoomExit')"><mat-icon>fullscreen_exit</mat-icon></button>
+    </div>
+  </div>
+</div>
+<mat-divider></mat-divider>
+<div mat-dialog-content class="viewerContent">
+  <pdf-viewer *ngIf="isPdf()" [src]="attachmentUrl"
+              [show-all]="true"
+              [(page)]="pdfCurrentPage"
+              [zoom]="attachmentZoom"
+              [rotation]="attachmentRotationDegree"
+              (after-load-complete)="pdfLoaded($event)"></pdf-viewer>
+  <div class="imgViewer">
+    <div class="viewerWrapper">
+      <img *ngIf="isImage()"  [src]="attachmentUrl" alt=""
+           [ngStyle]="{ transform: 'rotate(' + attachmentRotationDegree + 'deg) scale(' + attachmentZoom + ')' }">
+    </div>
+  </div>
+  <div *ngIf="isUnknownType()">Даний тип файлу не можна переглянути</div>
+</div>
+<mat-divider></mat-divider>
+<div mat-dialog-actions>
+  <button mat-button (click)="closeDialog()"></button>
+</div>

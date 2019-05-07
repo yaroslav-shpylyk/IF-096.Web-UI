@@ -8,7 +8,7 @@ import {
 } from '@angular/material';
 import { HomeworkStorageService } from '../../../../services/homework-storage.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { SubjectAttachmentDialogComponent } from './subject-attachment-dialog/subject-attachment-dialog.component';
+import { SubjectAttachmentDialogComponent } from '../../subject-attachment-dialog/subject-attachment-dialog.component';
 
 @Component({
   selector: 'app-homework-bottom-sheet',
@@ -215,17 +215,10 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
   openAttachment(event): void {
     event.preventDefault();
     this.homeworkStorageService.saveFile(this.lessonId).subscribe(data => {
-      const blobData = this.convertBase64ToBlobData(data);
-      const blob = new Blob([blobData], { type: data.filetype });
-      const url = window.URL.createObjectURL(blob);
       const dialogRef = this.attachmentDialog.open(SubjectAttachmentDialogComponent, {
-        width: '700px',
-        data: {
-          info: data,
-          url
-        }
+        width: '99%',
+        data
       });
-
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
       });

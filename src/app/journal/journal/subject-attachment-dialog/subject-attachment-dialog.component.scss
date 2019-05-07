@@ -1,9 +1,10 @@
-@import "../../../../../../styles";
+@import "../../../../styles";
 
 .options {
   display: flex;
   justify-content: space-around;
   margin-bottom: 1em;
+  flex-wrap: wrap;
 
   form {
     mat-form-field {
@@ -13,6 +14,13 @@
         text-align: center;
       }
     }
+  }
+
+  .transformOptions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 70%;
   }
 
   .option {
@@ -34,11 +42,21 @@
       font-size: 2em;
     }
   }
+
+  @media (max-width: 640px) {
+    .transformOptions {
+      width: 100%;
+    }
+  }
 }
 
 .viewerContent {
   display: flex;
-  justify-content: center;
   background-color: grey;
-  max-height: 400px;
+  max-height: 500px;
+
+  .imgViewer {
+    width: 100%;
+    overflow: auto;
+  }
 }
