@@ -3,10 +3,12 @@ import { JournalsStorageService } from '../../../../services/journals-storage.se
 import { Journal } from '../../../../models/journal-data';
 import { ActivatedRoute, Params } from '@angular/router';
 import { MatBottomSheet } from '@angular/material';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { BottomSheetOverviewSheetComponent } from './bottom-sheet-overview.components';
 import { HomeworkBottomSheetOverviewSheetComponent } from './homework-bottom-sheet-overview.components';
 import * as _ from 'lodash';
+import { ClassService } from '../../../../services/class.service';
+import { ClassData } from '../../../../models/class-data';
 
 @Component({
   selector: 'app-subject-journal',
@@ -24,13 +26,15 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
   elData: any[];
   private loadingSub: Subscription;
   isLoading = false;
-  homeworks: {[k: string]: any} = {};
+  homeworks: { [k: string]: any } = {};
   lessonsIds: string[] = [];
+  currentClass$: Observable<ClassData>;
 
   constructor(
     private journalsStorageService: JournalsStorageService,
     private route: ActivatedRoute,
-    private bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet,
+    private classService: ClassService
   ) {}
 
   /**
@@ -48,7 +52,7 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
       this.idSubject = +params.subId;
       this.idClass = +params.classId;
       this.initialiseState();
-
+      this.currentClass$ = this.classService.getClass(this.idClass);
       this.renderTable();
     });
   }
@@ -62,6 +66,10 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     this.journalsStorageService
       .getJournalsAndHomeworks(this.idSubject, this.idClass)
       .subscribe(journal => {
+        if (!journal.journals.length) {
+          this.journalsStorageService.loadingStateChanged.next(false);
+          return;
+        }
         this.homeworks = journal.homeworks;
         for (const lesson of journal.journals[0].marks) {
           this.lessonsIds.push(lesson.idLesson + '');
@@ -88,10 +96,10 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
           this.elData.push(studentData);
           studentData = {};
         }
-        if (!this.elData.length) {
-          this.journalsStorageService.loadingStateChanged.next(false);
-          return;
-        }
+        // if (!this.elData.length) {
+        //   this.journalsStorageService.loadingStateChanged.next(false);
+        //   return;
+        // }
         this.dataSource = this.elData;
         this.displayedColumns = this.lessonsIds;
         this.journal = journal.journals;
@@ -213,6 +221,7 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     this.displayedColumns = [];
     this.studentIds = [];
     this.elData = [];
+    this.dataSource = null;
   }
 
   /**

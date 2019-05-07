@@ -1,5 +1,10 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<h1 *ngIf="!isLoading && !dataSource">Журнал ще не створений</h1>
+<h1 *ngIf="!isLoading && !dataSource; else info">Журнал ще не створений</h1>
+<!-- <h1 *ngIf="!isLoading && !dataSource">Журнал ще не створений</h1> -->
+<ng-template #info>
+  <h1>Журнал {{(currentClass$ | async)?.className}} класу</h1>
+  <h2>з дисципліни {{(currentClass$ | async)?.classDescription}}</h2>
+</ng-template>
 <div
   *ngIf="dataSource"
   class="wrapper"
