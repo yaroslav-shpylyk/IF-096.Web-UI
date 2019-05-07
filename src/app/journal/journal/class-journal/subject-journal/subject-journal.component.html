@@ -1,14 +1,21 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<h1 *ngIf="!isLoading && !dataSource; else info">Журнал ще не створений</h1>
-<!-- <h1 *ngIf="!isLoading && !dataSource">Журнал ще не створений</h1> -->
-<ng-template #info>
+<!-- <h1 *ngIf="!isLoading && !dataSource; else info">Журнал ще не створений</h1> -->
+<h1 *ngIf="!isLoading && !dataSource">Журнал ще не створений</h1>
+<!-- <ng-template #info>
   <h1>Журнал {{(currentClass$ | async)?.className}} класу</h1>
-  <h2>з дисципліни {{(currentClass$ | async)?.classDescription}}</h2>
-</ng-template>
+  <h3>з дисципліни {{(currentSubject$ | async)?.subjectName}}</h3>
+</ng-template> -->
+<div class="global-wrapper"
+*ngIf="dataSource"
+>
+  <h1>Журнал {{(currentClass$ | async)?.className}} класу</h1>
+  <h3>з дисципліни {{(currentSubject$ | async)?.subjectName}}</h3>
+
 <div
   *ngIf="dataSource"
-  class="wrapper"
+  class="table-wrapper"
 >
+
   <table
     *ngIf="dataSource"
     mat-table
@@ -71,4 +78,5 @@
       *matRowDef="let row; columns: displayedColumns"
     ></tr>
   </table>
+</div>
 </div>

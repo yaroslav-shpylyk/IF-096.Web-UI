@@ -9,6 +9,8 @@ import { HomeworkBottomSheetOverviewSheetComponent } from './homework-bottom-she
 import * as _ from 'lodash';
 import { ClassService } from '../../../../services/class.service';
 import { ClassData } from '../../../../models/class-data';
+import { SubjectData } from '../../../../models/subject-data';
+import { SubjectService } from '../../../../services/subject.service';
 
 @Component({
   selector: 'app-subject-journal',
@@ -29,12 +31,14 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
   homeworks: { [k: string]: any } = {};
   lessonsIds: string[] = [];
   currentClass$: Observable<ClassData>;
+  currentSubject$: Observable<SubjectData>;
 
   constructor(
     private journalsStorageService: JournalsStorageService,
     private route: ActivatedRoute,
     private bottomSheet: MatBottomSheet,
-    private classService: ClassService
+    private classService: ClassService,
+    private subjectService: SubjectService
   ) {}
 
   /**
@@ -53,6 +57,7 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
       this.idClass = +params.classId;
       this.initialiseState();
       this.currentClass$ = this.classService.getClass(this.idClass);
+      this.currentSubject$ = this.subjectService.getSubject(this.idSubject);
       this.renderTable();
     });
   }

@@ -86,10 +86,14 @@ export class ClassService {
     return streams[Math.floor(Math.random() * streams.length)];
   }
 
+  /**
+   * Method fetches a single class by provided id.
+   * @param classId - number representing id.
+   * @returns - object representing a class.
+   */
   public getClass(classId: number): Observable<ClassData> {
     return this.http.get(`/classes/${classId}`).pipe(
       map((response: { status: any; data: ClassData }) => {
-        console.log(response);
         return response.data;
       })
     );
