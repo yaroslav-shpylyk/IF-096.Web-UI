@@ -1,16 +1,20 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Pipe({
   name: 'autotitle'
 })
 export class TitlePipe implements PipeTransform {
 
-  transform(value: any, curTitle: string, input: any): any {
-    const classNameData = curTitle.split('-');
-    const newTitle = (+classNameData[0] + 1 > 11) ? '' : (+classNameData[0] + 1) + '-' + classNameData[1];
-    setTimeout(() => {
-      input.reset({ value: newTitle, disabled: false });
-    });
-    return value;
+  transform(value: any, curClassName: string, input: FormControl): string {
+    const classNameParts = curClassName.split(/[-(]/);
+    const curClassNumber = (classNameParts.length > 2) ? +classNameParts[1] : +classNameParts[0];
+    if (value === '' && curClassNumber === 11 ) {
+      return 'випуск';
+    } else if (value === '') {
+      return 'розформ.';
+    } else {
+      return value;
+    }
   }
 }
