@@ -52,7 +52,9 @@ import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subje
 import { TeacherConnectionComponent } from './teacher-connection/teacher-connection.component';
 import { SharedModule } from '../shared/shared.module';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import { ClassCardComponent } from './new-year/class-card/class-card.component';
+import { ListPopupComponent } from './new-year/class-card/list-popup/list-popup.component';
 
 
 @NgModule({
@@ -80,7 +82,8 @@ import { ClassCardComponent } from './new-year/class-card/class-card.component';
     ModifySubjectsComponent,
     TeacherConnectionComponent,
     ConfirmationDialogComponent,
-    ClassCardComponent
+    ClassCardComponent,
+    ListPopupComponent
   ],
   imports: [
     CommonModule,
@@ -115,7 +118,8 @@ import { ClassCardComponent } from './new-year/class-card/class-card.component';
     MatNativeDateModule,
     MatSelectModule,
     SharedModule,
-    MatStepperModule
+    MatStepperModule,
+    MatTooltipModule,
   ],
   entryComponents: [
     AddModifyGroupComponent,
@@ -126,7 +130,9 @@ import { ClassCardComponent } from './new-year/class-card/class-card.component';
     StudentDetailModalComponent,
     AddStudentComponent,
     ModifySubjectsComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    ClassCardComponent,
+    ListPopupComponent
   ],
   providers: []
 })

@@ -1,6 +1,3 @@
-<div class="title-schedule">
-  <h5>РОЗКЛАД УРОКІВ</h5>
-</div>
 <form [formGroup] = "frmSchedule" (ngSubmit) = "onSubmit()">
   <div class="schedule-top" >
     <mat-form-field class="datePiker">
@@ -43,8 +40,8 @@
     <app-daily-schedule *ngFor="let day of weekDayName; let i=index"
       [arrSubjectsList]="arrSubjectsList"
       [legendDay]="day.legendDay"
-      [class]="day.dailySubjects"
-      (addDailySubjects)="onAddDailySubjects($event, day.dailySubjects)">
+      [class]="day.dailySubjectsName"
+      (addDailySubjects)="onAddDailySubjects($event, day.dailySubjectsName)">
     </app-daily-schedule>
   </div>
 
