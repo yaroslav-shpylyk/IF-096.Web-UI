@@ -138,17 +138,6 @@ export class TeachersListComponent implements OnInit, OnDestroy {
       this.dataSource = new MatTableDataSource(teachers);
       this.dataSource.sort = this.sort;
     });
-
-    let prevScrollpos = window.pageYOffset;
-    window.onscroll = () => {
-      const currentScrollPos = window.pageYOffset;
-      if (prevScrollpos > currentScrollPos) {
-        document.getElementById('mine').style.bottom = '4.5em';
-      } else {
-        document.getElementById('mine').style.bottom = '-75px';
-      }
-      prevScrollpos = currentScrollPos;
-    };
   }
 
   onNewTeacher() {
@@ -197,6 +186,5 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     this.addSubscription.unsubscribe();
     this.editSubscription.unsubscribe();
     this.deleteSubscription.unsubscribe();
-    window.onscroll = null;
   }
 }
