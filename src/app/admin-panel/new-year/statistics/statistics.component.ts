@@ -1,6 +1,6 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import {MAT_DIALOG_DATA, MatTabChangeEvent} from '@angular/material';
-import { ChartDataSets } from 'chart.js';
+import { ChartDataSets, ChartType, ChartOptions } from 'chart.js';
 import { ClassData } from '../../../models/class-data';
 
 export interface YearTotalCount {
@@ -9,12 +9,12 @@ export interface YearTotalCount {
   trend: number;
 }
 
-export interface TransitionData {
+export interface TransitionStatisticData {
   year?: {
     enroll: number,
     graduated: number
     total: number,
-    trend: number
+    trend?: number
   };
 }
 
@@ -27,20 +27,14 @@ export class StatisticsComponent implements OnInit {
 
   constructor( @Inject(MAT_DIALOG_DATA) public data: any ) { }
 
-  public transititionStatistic: any; //
-  public activeTabIndex = 0;
-  public displayedColumns: string[] = ['name', 'weight', 'trend']; //
+  public transititionStatistic: TransitionStatisticData;
+  public displayedColumns: string[] = ['year', 'total', 'trend'];
   public tableData: YearTotalCount[] = [];
-
+  public chartData: ChartDataSets[] = [];
+  public chartLabels: string[] = [];
+  public chartType: ChartType = 'bar';
   public maxYNumber = 0;
   public minYNumber = 0;
-  public lineChartData: ChartDataSets[] = [];
-  public chartLabels: Array<string> = [];
-  public lineChartType = 'bar';
-
-  @ViewChild('content') content: ElementRef;
-  @ViewChild('chart') chart: ElementRef;
-  @ViewChild('totalCountTable') totalCountTable: ElementRef;
 
   public deltaChartOpt = {
     data: [],
@@ -64,8 +58,9 @@ export class StatisticsComponent implements OnInit {
     backgroundColor: 'rgba(255, 0, 0, 0.8)'
   };
 
-  public lineChartOptions: any = {
+  public chartOptions: ChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     scales : {
       yAxes: [{
         ticks: { max : this.maxYNumber, min : this.minYNumber }
@@ -84,16 +79,16 @@ export class StatisticsComponent implements OnInit {
 
   ngOnInit() {
     this.transititionStatistic = this.getStatistic(this.data.allClasses);
-    console.log(this.transititionStatistic);
     this.agregateStatisticData(this.transititionStatistic);
   }
 
-  onTabClick(event: MatTabChangeEvent) {
-    this.activeTabIndex = event.index;
-  }
-
-  getStatistic(allClasses: ClassData[]): TransitionData {
-    const statistic: TransitionData = {};
+  /**
+   * Method return statistc data of pupils count grouped by the years
+   * @param allClasses ClassData[] - Array of objects with data about classes
+   * @returns TransitionStatisticData - object that contains data grouped by the years (enroll, graduated, total counts and trend)
+   */
+  getStatistic(allClasses: ClassData[]): TransitionStatisticData {
+    const statistic: TransitionStatisticData = {};
     const curDate = new Date();
     const curYear = (curDate.getMonth() < 12 && curDate.getMonth() > 7) ? curDate.getFullYear() : curDate.getFullYear() - 1;
     allClasses.forEach(
@@ -110,8 +105,6 @@ export class StatisticsComponent implements OnInit {
           statistic[curClassYear].total += curClass.numOfStudents;
           if ( (curClassYear - 1) in statistic ) {
             statistic[curClassYear].trend = statistic[curClassYear].total - statistic[curClassYear - 1].total;
-          } else {
-            statistic[curClassYear].trend = statistic[curClassYear].total;
           }
           if ( (curClassYear + 1) in statistic ) {
             statistic[curClassYear + 1].trend = statistic[curClassYear + 1].total - statistic[curClassYear].total;
@@ -122,21 +115,25 @@ export class StatisticsComponent implements OnInit {
     return statistic;
   }
 
-  agregateStatisticData(transititionStatistic: TransitionData): void {
+  /**
+   * Method agregate statistic data into charts data and summary table data
+   * @param transititionStatistic - object that contains data grouped by the years (enroll, graduated, total counts and trend)
+   */
+  agregateStatisticData(transititionStatistic: TransitionStatisticData): void {
     const enrollData = [];
     const graduatedData = [];
     const deltaData = [];
 
-    for (const key in transititionStatistic) {
-      if (transititionStatistic.hasOwnProperty(key)) {
-        this.chartLabels.push(key);
-        this.maxYNumber = Math.max (this.maxYNumber, transititionStatistic[key].enroll, transititionStatistic[key].graduated);
-        this.minYNumber = Math.min (this.minYNumber, transititionStatistic[key].enroll - transititionStatistic[key].graduated);
-        enrollData.push(transititionStatistic[key].enroll);
-        graduatedData.push(transititionStatistic[key].graduated);
-        deltaData.push(transititionStatistic[key].enroll - transititionStatistic[key].graduated);
-        const curYearStats = transititionStatistic[key];
-        this.tableData.push({year: +key, total: curYearStats.total, trend: curYearStats.trend});
+    for (const year in transititionStatistic) {
+      if (transititionStatistic.hasOwnProperty(year)) {
+        this.chartLabels.push(year);
+        this.maxYNumber = Math.max (this.maxYNumber, transititionStatistic[year].enroll, transititionStatistic[year].graduated);
+        this.minYNumber = Math.min (this.minYNumber, transititionStatistic[year].enroll - transititionStatistic[year].graduated);
+        enrollData.push(transititionStatistic[year].enroll);
+        graduatedData.push(transititionStatistic[year].graduated);
+        deltaData.push(transititionStatistic[year].enroll - transititionStatistic[year].graduated);
+        const curYearStats = transititionStatistic[year];
+        this.tableData.push({year: +year, total: curYearStats.total, trend: curYearStats.trend});
       }
     }
 
@@ -144,12 +141,12 @@ export class StatisticsComponent implements OnInit {
     this.enrollChartOpt.data = enrollData;
     this.graduatedChartOpt.data = graduatedData;
 
-    this.lineChartOptions.scales.yAxes[0].ticks.max = this.maxYNumber + 1;
-    this.lineChartOptions.scales.yAxes[0].ticks.min = this.minYNumber - 1;
+    this.chartOptions.scales.yAxes[0].ticks.max = this.maxYNumber + 1;
+    this.chartOptions.scales.yAxes[0].ticks.min = this.minYNumber - 1;
 
-    this.lineChartData.push(this.deltaChartOpt);
-    this.lineChartData.push(this.enrollChartOpt);
-    this.lineChartData.push(this.graduatedChartOpt);
+    this.chartData.push(this.deltaChartOpt);
+    this.chartData.push(this.enrollChartOpt);
+    this.chartData.push(this.graduatedChartOpt);
   }
 
 }
