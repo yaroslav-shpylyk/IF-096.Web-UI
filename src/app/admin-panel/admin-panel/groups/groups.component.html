@@ -1,9 +1,13 @@
 <div class="wrapper">
-  <ng-container *ngIf="buttonVisibility">
-    <span class="material-icons buttonAdd"  #buttonAdd (click)="openPopupsSheet()">
+
+    <span
+      class="material-icons buttonAdd"
+      [ngClass]="buttonVisibility ? 'buttonAddUp' : 'buttonAddDown'"
+      (click)="openPopupsSheet()"
+    >
       add_circle
     </span>
-  </ng-container>
+
 
 
   <div class="filterBlok">
