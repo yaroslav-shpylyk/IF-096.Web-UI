@@ -2,7 +2,7 @@ table {
   width: 100%;
 }
 
-#hide {
+#scrollTop {
   position: fixed;
   bottom: 2.3em;
   right: 1em;
@@ -13,6 +13,14 @@ table {
 
 .btn {
   font-size: 3em;
+}
+
+#scrollBottom {
+  position: fixed;
+  bottom: -3.3em;
+  right: 1em;
+  transition: 0.9s;
+  color: #1565c0;
 }
 
 .wrapper {

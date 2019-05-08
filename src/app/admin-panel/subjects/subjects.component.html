@@ -30,7 +30,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <div (click)="openDialog()" id="hide" #hide>
-    <i class="material-icons btn">add_circle</i>
+  <div [id]="scroll">
+    <i (click)="openDialog()" class="material-icons btn">add_circle</i>
   </div>
 </div>
