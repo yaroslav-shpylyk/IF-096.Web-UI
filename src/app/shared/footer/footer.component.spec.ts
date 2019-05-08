@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from '../../services/auth.service';
 import { FooterComponent } from './footer.component';
 
-describe('FooterComponent', () => {
+fdescribe('FooterComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -16,24 +16,23 @@ describe('FooterComponent', () => {
       ]
     });
   });
-
-  it('check user role for being admin', () => {
-    let authService = TestBed.get(AuthService);
-    let footerComponent = new FooterComponent(authService);
+  fit('should return true if user is admin', () => {
+    const authService = TestBed.get(AuthService);
+    const footerComponent = new FooterComponent(authService);
     spyOn(authService, 'getUserRole').and.returnValue('ROLE_ADMIN');
     expect(footerComponent.isAdmin()).toBeTruthy();
   });
 
-  it('check user role for being teacher', () => {
-    let authService = TestBed.get(AuthService);
-    let footerComponent = new FooterComponent(authService);
+  fit('should return true if user is teacher', () => {
+    const authService = TestBed.get(AuthService);
+    const footerComponent = new FooterComponent(authService);
     spyOn(authService, 'getUserRole').and.returnValue('ROLE_TEACHER');
     expect(footerComponent.isTeacher()).toBeTruthy();
   });
 
-  it('check user role for being student', () => {
-    let authService = TestBed.get(AuthService);
-    let footerComponent = new FooterComponent(authService);
+  fit('should return true if user is student', () => {
+    const authService = TestBed.get(AuthService);
+    const footerComponent = new FooterComponent(authService);
     spyOn(authService, 'getUserRole').and.returnValue('ROLE_USER');
     expect(footerComponent.isStudent()).toBeTruthy();
   });
