@@ -52,8 +52,10 @@ import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subje
 import { TeacherConnectionComponent } from './teacher-connection/teacher-connection.component';
 import { SharedModule } from '../shared/shared.module';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import { ClassCardComponent } from './new-year/class-card/class-card.component';
 import { StickyButtonComponent } from './sticky-button/sticky-button.component';
+import { ListPopupComponent } from './new-year/class-card/list-popup/list-popup.component';
 
 
 @NgModule({
@@ -82,7 +84,8 @@ import { StickyButtonComponent } from './sticky-button/sticky-button.component';
     TeacherConnectionComponent,
     ConfirmationDialogComponent,
     ClassCardComponent,
-    StickyButtonComponent
+    StickyButtonComponent,
+    ListPopupComponent
   ],
   imports: [
     CommonModule,
@@ -117,7 +120,8 @@ import { StickyButtonComponent } from './sticky-button/sticky-button.component';
     MatNativeDateModule,
     MatSelectModule,
     SharedModule,
-    MatStepperModule
+    MatStepperModule,
+    MatTooltipModule,
   ],
   entryComponents: [
     AddModifyGroupComponent,
@@ -128,7 +132,9 @@ import { StickyButtonComponent } from './sticky-button/sticky-button.component';
     StudentDetailModalComponent,
     AddStudentComponent,
     ModifySubjectsComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    ClassCardComponent,
+    ListPopupComponent
   ],
   providers: []
 })

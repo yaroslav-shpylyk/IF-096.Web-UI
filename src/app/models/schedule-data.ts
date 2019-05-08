@@ -1,7 +1,7 @@
 import { ClassData } from './class-data';
 import { LessonData } from './lesson-data';
 
-export interface ScheduleData {
+export class ScheduleData {
     startOfSemester: string;
     endOfSemester: string;
     classId: number;
