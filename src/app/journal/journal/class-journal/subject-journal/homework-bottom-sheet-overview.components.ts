@@ -134,7 +134,6 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
    */
   dwnl() {
     this.homeworkStorageService.saveFile(this.lessonId).subscribe(data => {
-      console.log(data);
       const blobData = this.convertBase64ToBlobData(data);
       const blob = new Blob([blobData], { type: data.fileType });
       const url = window.URL.createObjectURL(blob);
