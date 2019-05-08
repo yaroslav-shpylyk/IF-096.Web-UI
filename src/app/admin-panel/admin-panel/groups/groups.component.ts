@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, HostListener, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 
 import { Group } from '../../../models/group-data.model';
 import { GroupsService } from '../../../services/groups.service';
@@ -13,21 +13,21 @@ import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 
 export class GroupsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('buttonAdd') buttonAdd: ElementRef;
   groups: Group[];
   displayedColumns: string[] = ['className', 'classYear', 'isActive', 'id'];
   dataSourceActivClass: MatTableDataSource<Group>;
   dataSourceCloseClass: MatTableDataSource<Group>;
   prevScrollpos = window.pageYOffset;
   panelOpenState: boolean;
+  buttonVisibility = true;
 
   @HostListener('window:scroll', [])
   onScrollEvent() {
     const currentScrollPos = window.pageYOffset;
     if (this.prevScrollpos > currentScrollPos) {
-      this.buttonAdd.nativeElement.style.bottom = '0.9em';
+      this.buttonVisibility = true;
     } else {
-      this.buttonAdd.nativeElement.style.bottom = '-2.3em';
+      this.buttonVisibility = false;
     }
     this.prevScrollpos = currentScrollPos;
   }
