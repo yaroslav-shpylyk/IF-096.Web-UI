@@ -114,7 +114,7 @@ export class JournalsStorageService {
     return this.httpClient.post<{ status: any; data: SaveMark }>(`/marks`, obj);
   }
 
-  // not used so far;
+  // not used yet;
   /**
    * Method for fetching from the server list of all journals
    * for requested class.
@@ -130,7 +130,7 @@ export class JournalsStorageService {
     );
   }
 
-  // not used so far;
+  // not used yet;
   /**
    * Method fetches journal by given id, groups subjects by classes
    * and returns the result.
@@ -147,7 +147,7 @@ export class JournalsStorageService {
   }
 
   // helper function;
-  // not used so far;
+  // not used yet;
   distinctJournals(journals) {
     const result = [];
     const mapped = new Map();
@@ -164,7 +164,7 @@ export class JournalsStorageService {
     return result;
   }
 
-  // not used so far;
+  // not used yet;
   /**
    * Method fetches from the server all journals
    * @returns - object representing a journal.
