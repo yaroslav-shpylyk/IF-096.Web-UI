@@ -3,7 +3,8 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NewYearService } from '../../services/new-year.service';
 import { ClassInfo } from '../../models/class-info';
 import { ClassCardComponent } from './class-card/class-card.component';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { MatSnackBar, MatSnackBarConfig, MatDialog, MatDialogConfig } from '@angular/material';
+import { StatisticsComponent } from '../../admin-panel/new-year/statistics/statistics.component';
 
 @Component({
   selector: 'app-new-year',
@@ -23,6 +24,7 @@ export class NewYearComponent implements OnInit {
   @ViewChildren('classCard') classCards: QueryList<ClassCardComponent>;
 
   constructor(
+    public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private newYearTransitition: NewYearService) { }
 
@@ -209,5 +211,25 @@ export class NewYearComponent implements OnInit {
     } else {
       return (+classNameParts[0] + 1 > 11) ? '' : (+classNameParts[0] + 1) + '-' + classNameParts[1];
     }
+  }
+
+  /**
+   * Generate new title for class based on current title
+   * @param curTitle string - current title of class
+   */
+  showStatistic(): void {
+    const config = new MatDialogConfig();
+    config.panelClass = ['full-screen-modal'];
+    config.data = {
+      position: {
+        top: '10px',
+        right: '10px'
+      },
+      allClasses: this.allClasses
+    };
+    this.dialog.open(
+      StatisticsComponent,
+      config
+    );
   }
 }
