@@ -1,16 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { StudentBookComponent } from './student-book.component';
+import { MaterialModule } from '../../material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HideZeroPipe } from './hide-zero.pipe';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('StudentBookComponent', () => {
+fdescribe('StudentBookComponent', () => {
   let component: StudentBookComponent;
   let fixture: ComponentFixture<StudentBookComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StudentBookComponent ]
+      imports: [MaterialModule, ReactiveFormsModule, FormsModule,
+        HttpClientTestingModule, BrowserAnimationsModule],
+      declarations: [ StudentBookComponent, HideZeroPipe ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +25,7 @@ describe('StudentBookComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  fit('should create', () => {
     expect(component).toBeTruthy();
   });
 });
