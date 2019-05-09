@@ -37,7 +37,7 @@ export class AdminPanelGuard implements CanLoad, CanActivate {
    * Function that checks user's role -
    * @returns true if user's role == ROLE_ADMIN
    */
-  private isAdmin(): boolean {
+  isAdmin(): boolean {
     const decodedToken: TokenInfo = JWTDecoder(this.authService.getToken());
     const role: string = decodedToken.Roles.authority;
     if (role === 'ROLE_ADMIN') {
