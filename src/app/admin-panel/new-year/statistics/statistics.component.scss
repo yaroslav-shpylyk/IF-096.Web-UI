@@ -1,10 +1,23 @@
 mat-dialog-content {
 	.chart-container {
 		position: relative;
-		margin: auto;
+		margin: 0 auto;
 		height: 40vh;
 		width: 65vw;
 	}
+	@media (max-width: 600px) { 
+		.chart-container {
+			height: 35vh;
+			width: 65vw;
+		}
+	 }
+  @media (min-width: 1200px){ 
+		.chart-container {
+			height: 50vh;
+			width: 55vw;
+		}
+	 }
+	
 	position: relative;
 	h2 {
 		max-width: 80%;
