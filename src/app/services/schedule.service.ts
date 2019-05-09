@@ -19,11 +19,7 @@ export class ScheduleService {
   getSchedule(classId: number): Observable<any> {
     return this.http.get(`/classes/${classId}/schedule`).pipe(map(
       (response: {status: any, data: ScheduleData}) => response.data
-    ),
-    catchError(error => {
-      console.log(error);
-      return throwError(error.massage);
-    }));
+    ))
   }
 
   /**
@@ -34,11 +30,7 @@ export class ScheduleService {
   getSubjects(classId: number): Observable<any> {
     return this.http.get(`/subjects?classId=${classId}`).pipe(map(
       (response: {status: any, data: SubjectData}) => response.data
-    ),
-    catchError(error => {
-      console.log(error);
-      return throwError(error.message);
-    }));
+    ))
   }
 
   /**
@@ -50,11 +42,6 @@ export class ScheduleService {
   saveSchedule(classId: number, data: ScheduleData): Observable<any> {
     return this.http.post(`/classes/${classId}/schedule`, data).pipe(map(
       (response: {status: any, data: ScheduleData}) => response.data
-    ),
-    catchError(error => {
-        console.log(error);
-        return throwError(error.message);
-      })
-    );
+    ))
   }
 }
