@@ -126,7 +126,11 @@ export class ScheduleComponent implements OnInit {
       data => { this.arrSubjectsList = data; }
     );
     this.scheduleService.getSchedule(classId).subscribe(
-      data => { this.scheduleData = data; }
+      data => { this.scheduleData = data; },
+      error => {
+        this.scheduleData = new ScheduleData();
+      }
+
     );
   }
 
@@ -228,8 +232,8 @@ export class ScheduleComponent implements OnInit {
    * @param classId - Id of class
    * @param data - Array with schedule data
    */
-  private saveSchedule(classId: number, data: ScheduleData): void {
-    this.scheduleService.saveSchedule(classId, data).subscribe(
+  private saveSchedule(classId: number, scheduleData: ScheduleData): void {
+    this.scheduleService.saveSchedule(classId, scheduleData).subscribe(
         (data: ScheduleData) => {
           this.messageClass = 'success-msg';
           this.showMessage('Розклад успішно збережено');

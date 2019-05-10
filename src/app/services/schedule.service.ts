@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ScheduleData } from '../models/schedule-data';
 import { SubjectData } from '../models/subject-data';
 
@@ -19,7 +19,7 @@ export class ScheduleService {
   getSchedule(classId: number): Observable<any> {
     return this.http.get(`/classes/${classId}/schedule`).pipe(map(
       (response: {status: any, data: ScheduleData}) => response.data
-    ))
+    ));
   }
 
   /**
@@ -30,7 +30,7 @@ export class ScheduleService {
   getSubjects(classId: number): Observable<any> {
     return this.http.get(`/subjects?classId=${classId}`).pipe(map(
       (response: {status: any, data: SubjectData}) => response.data
-    ))
+    ));
   }
 
   /**
@@ -42,6 +42,6 @@ export class ScheduleService {
   saveSchedule(classId: number, data: ScheduleData): Observable<any> {
     return this.http.post(`/classes/${classId}/schedule`, data).pipe(map(
       (response: {status: any, data: ScheduleData}) => response.data
-    ))
+    ));
   }
 }
