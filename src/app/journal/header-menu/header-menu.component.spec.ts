@@ -7,7 +7,7 @@ import { AvatarComponent } from '../../shared/avatar/avatar.component';
 import { TeachersStorageService } from '../../services/teachers-storage.service';
 import { AuthService } from '../../services/auth.service';
 
-fdescribe('TeacherHeaderMenuComponent', () => {
+describe('TeacherHeaderMenuComponent', () => {
   let component: TeacherHeaderMenuComponent;
   let fixture: ComponentFixture<TeacherHeaderMenuComponent>;
   let teacherService: TeachersStorageService;

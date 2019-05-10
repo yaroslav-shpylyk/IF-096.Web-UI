@@ -9,7 +9,7 @@ import { TeacherFooterMenuComponent } from '../../journal/footer-menu/footer-men
 import { StudentFooterMenuComponent } from '../../student-book/footer-menu/footer-menu.component';
 import { AvatarComponent } from '../avatar/avatar.component';
 
-fdescribe('FooterComponent', () => {
+describe('FooterComponent', () => {
   let component: FooterComponent;
   let fixture: ComponentFixture<FooterComponent>;
   let authService: AuthService;
@@ -42,15 +42,15 @@ fdescribe('FooterComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-  fit('should return true if user is admin', () => {
+  it('should return true if user is admin', () => {
     spyOn(authService, 'getUserRole').and.returnValue('ROLE_ADMIN');
     expect(component.isAdmin()).toBe(true);
   });
-  fit('should return true if user is teacher', () => {
+  it('should return true if user is teacher', () => {
     spyOn(authService, 'getUserRole').and.returnValue('ROLE_TEACHER');
     expect(component.isTeacher()).toBeTruthy(true);
   });
-  fit('should return true if user is student', () => {
+  it('should return true if user is student', () => {
     spyOn(authService, 'getUserRole').and.returnValue('ROLE_USER');
     expect(component.isStudent()).toBe(true);
   });

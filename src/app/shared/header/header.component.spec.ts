@@ -9,7 +9,7 @@ import { AdminHeaderMenuComponent } from '../../admin-panel/admin-panel/header-m
 import { MatToolbarModule, MatIconModule, MatMenuModule, MatListModule, MatDividerModule } from '@angular/material';
 import { AvatarComponent } from '../avatar/avatar.component';
 
-fdescribe('HeaderComponent', () => {
+describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
   let authService: AuthService;
@@ -44,15 +44,15 @@ fdescribe('HeaderComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-  fit('should return true if user is admin', () => {
+  it('should return true if user is admin', () => {
     spyOn(authService, 'getUserRole').and.returnValue('ROLE_ADMIN');
     expect(component.isAdmin()).toBe(true);
   });
-  fit('should return true if user is teacher', () => {
+  it('should return true if user is teacher', () => {
     spyOn(authService, 'getUserRole').and.returnValue('ROLE_TEACHER');
     expect(component.isTeacher()).toBe(true);
   });
-  fit('should return true if user is student', () => {
+  it('should return true if user is student', () => {
     spyOn(authService, 'getUserRole').and.returnValue('ROLE_USER');
     expect(component.isStudent()).toBe(true);
   });

@@ -5,7 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthService } from '../../../services/auth.service';
 
-fdescribe('AdminFooterMenuComponent', () => {
+describe('AdminFooterMenuComponent', () => {
   let component: AdminFooterMenuComponent;
   let fixture: ComponentFixture<AdminFooterMenuComponent>;
 
@@ -32,10 +32,10 @@ fdescribe('AdminFooterMenuComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-  fit('should truncate name if longer than 2nd parameter and add …', () => {
+  it('should truncate name if longer than 2nd parameter and add …', () => {
     expect(component.truncateName('Khrystyna', 5)).toBe('Khrys…');
   });
-  fit('should not truncate name if it is shorter than 2nd parameter', () => {
+  it('should not truncate name if it is shorter than 2nd parameter', () => {
     expect(component.truncateName('Khrystyna', 10)).toBe('Khrystyna');
   });
 });

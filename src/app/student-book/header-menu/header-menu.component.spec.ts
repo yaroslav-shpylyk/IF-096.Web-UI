@@ -7,7 +7,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StudentsService } from '../../services/students.service';
 
-fdescribe('StudentHeaderMenuComponent', () => {
+describe('StudentHeaderMenuComponent', () => {
   let component: StudentHeaderMenuComponent;
   let fixture: ComponentFixture<StudentHeaderMenuComponent>;
 

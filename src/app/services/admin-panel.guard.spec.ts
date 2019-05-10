@@ -4,7 +4,7 @@ import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AdminPanelGuard } from './admin-panel.guard';
 
-fdescribe('Guard for admin panel', () => {
+describe('Guard for admin panel', () => {
   let adminGuard: AdminPanelGuard;
   let routerSnapshot: any = jasmine.createSpyObj<RouterStateSnapshot>('RouterStateSnapshot', ['toString']);
 
@@ -24,19 +24,19 @@ fdescribe('Guard for admin panel', () => {
   beforeEach(() => {
     adminGuard = TestBed.get(AdminPanelGuard);
   });
-  fit('canActivate should allow access', () => {
+  it('canActivate should allow access', () => {
     spyOn(adminGuard, 'isAdmin').and.returnValue(true);
     expect(adminGuard.canActivate(new ActivatedRouteSnapshot(), routerSnapshot)).toBe(true);
   });
-  fit('canActivate should deny access', () => {
+  it('canActivate should deny access', () => {
     spyOn(adminGuard, 'isAdmin').and.returnValue(false);
     expect(adminGuard.canActivate(new ActivatedRouteSnapshot(), routerSnapshot)).toBe(false);
   });
-  fit('canLoad should allow access', () => {
+  it('canLoad should allow access', () => {
     spyOn(adminGuard, 'isAdmin').and.returnValue(true);
     expect(adminGuard.canLoad()).toBe(true);
   });
-  fit('canLoad should deny access', () => {
+  it('canLoad should deny access', () => {
     spyOn(adminGuard, 'isAdmin').and.returnValue(false);
     expect(adminGuard.canLoad()).toBe(false);
   });
