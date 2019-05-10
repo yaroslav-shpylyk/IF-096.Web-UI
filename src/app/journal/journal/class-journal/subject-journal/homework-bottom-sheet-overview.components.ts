@@ -5,13 +5,14 @@ import {
   MatSnackBar,
   MatSnackBarConfig
 } from '@angular/material';
-import { HomeworkStorageService } from '../../../../services/homework-storage.service.ts.service';
+import { HomeworkStorageService } from '../../../../services/homework-storage.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 
 @Component({
   selector: 'app-homework-bottom-sheet',
-  templateUrl: 'homework-bottom-sheet-overview.html'
+  templateUrl: 'homework-bottom-sheet-overview.html',
+  styleUrls: ['./homework-bottom-sheet-overview.scss']
 })
 export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
   file: string;
@@ -19,6 +20,7 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
   fileType: string;
   valChanged = false;
   homeworkForm: FormGroup;
+  selectedFileName: string;
 
   constructor(
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
@@ -125,6 +127,14 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
    */
   onFileSelected(event) {
     const file = event.target.files[0];
+    let selectedFileName = (event.target as HTMLInputElement).value.split(
+      '\\'
+    )[2];
+    if (selectedFileName.length > 20) {
+      selectedFileName =
+        selectedFileName.substr(0, 15) + '...' + selectedFileName.split('.')[1];
+    }
+    this.selectedFileName = selectedFileName;
     const reader = new FileReader();
     reader.onload = this._handleReaderLoaded.bind(this);
     reader.readAsDataURL(file);

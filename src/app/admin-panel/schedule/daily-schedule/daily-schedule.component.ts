@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, AbstractControl } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { SubjectData } from '../../../models/subject-data';
 
 @Component({
@@ -7,7 +7,7 @@ import { SubjectData } from '../../../models/subject-data';
   templateUrl: './daily-schedule.component.html',
   styleUrls: ['./daily-schedule.component.scss']
 })
-export class DailyScheduleComponent implements OnInit {
+export class DailyScheduleComponent implements OnInit, OnChanges {
   frmDailySchedule: FormGroup;
   selectSubjectMsg = 'Виберіть предмет';
 
@@ -21,6 +21,14 @@ export class DailyScheduleComponent implements OnInit {
   ngOnInit() {
     this.buildDailySchedul();
     this.addDailySubjects.emit(this.dailySchedule);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes.arrSubjectsList.firstChange) {
+      while (this.dailySchedule.length > 1) {
+        this.dailySchedule.removeAt(0);
+      }
+    }
   }
 
   /** Method initializes the initial state of the component's template */
