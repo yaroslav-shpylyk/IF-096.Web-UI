@@ -1,4 +1,4 @@
-import {HideZeroPipe} from './hide-zero.pipe';
+import { HideZeroPipe } from './hide-zero.pipe';
 
 describe('HideZeroPipe', () => {
   let pipe: HideZeroPipe;
