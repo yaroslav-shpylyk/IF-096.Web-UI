@@ -7,19 +7,23 @@ import { AdminPanelGuard } from './admin-panel.guard';
 fdescribe('Guard for admin panel', () => {
   let adminGuard: AdminPanelGuard;
   let routerSnapshot: any = jasmine.createSpyObj<RouterStateSnapshot>('RouterStateSnapshot', ['toString']);
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule],
-      providers: [AdminPanelGuard,
-        { provide: RouterStateSnapshot, useValue: routerSnapshot }]
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule
+      ],
+      providers: [
+        AdminPanelGuard,
+        { provide: RouterStateSnapshot, useValue: routerSnapshot }
+      ]
     })
       .compileComponents();
   }));
-
   beforeEach(() => {
     adminGuard = TestBed.get(AdminPanelGuard);
   });
-
   fit('canActivate should allow access', () => {
     spyOn(adminGuard, 'isAdmin').and.returnValue(true);
     expect(adminGuard.canActivate(new ActivatedRouteSnapshot(), routerSnapshot)).toBe(true);

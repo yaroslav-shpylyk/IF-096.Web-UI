@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { TeacherFooterMenuComponent } from './footer-menu.component';
 import { MatIconModule, MatMenuModule, MatDividerModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -19,19 +18,18 @@ describe('TeacherFooterMenuComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule
       ],
-      providers: [ AuthService ],
-      declarations: [ TeacherFooterMenuComponent ]
+      providers: [
+        AuthService
+      ],
+      declarations: [
+        TeacherFooterMenuComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
-
   beforeEach(() => {
     fixture = TestBed.createComponent(TeacherFooterMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
   });
 });

@@ -24,15 +24,17 @@ fdescribe('FooterComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule
       ],
-      providers: [ AuthService ],
-      declarations: [ 
+      providers: [
+        AuthService
+      ],
+      declarations: [
         FooterComponent,
         AdminFooterMenuComponent,
         TeacherFooterMenuComponent,
         StudentFooterMenuComponent,
         AvatarComponent
-       ]
-    }) .compileComponents();
+      ]
+    }).compileComponents();
   });
   beforeEach(() => {
     fixture = TestBed.createComponent(FooterComponent);
@@ -42,16 +44,14 @@ fdescribe('FooterComponent', () => {
   });
   fit('should return true if user is admin', () => {
     spyOn(authService, 'getUserRole').and.returnValue('ROLE_ADMIN');
-    expect(component.isAdmin()).toBeTruthy();
+    expect(component.isAdmin()).toBe(true);
   });
-
   fit('should return true if user is teacher', () => {
     spyOn(authService, 'getUserRole').and.returnValue('ROLE_TEACHER');
-    expect(component.isTeacher()).toBeTruthy();
+    expect(component.isTeacher()).toBeTruthy(true);
   });
-
   fit('should return true if user is student', () => {
     spyOn(authService, 'getUserRole').and.returnValue('ROLE_USER');
-    expect(component.isStudent()).toBeTruthy();
+    expect(component.isStudent()).toBe(true);
   });
 });

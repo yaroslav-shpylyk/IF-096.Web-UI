@@ -4,7 +4,7 @@ import { MatMenuModule, MatDividerModule, MatIconModule, MatListModule } from '@
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-fdescribe('HeaderMenuComponent', () => {
+fdescribe('AdminHeaderMenuComponent', () => {
   let component: AdminHeaderMenuComponent;
   let fixture: ComponentFixture<AdminHeaderMenuComponent>;
 
@@ -18,26 +18,21 @@ fdescribe('HeaderMenuComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule
       ],
-      declarations: [ AdminHeaderMenuComponent ]
+      declarations: [
+        AdminHeaderMenuComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
-
   beforeEach(() => {
     fixture = TestBed.createComponent(AdminHeaderMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
   fit('should truncate name if longer than 2nd parameter and add …', () => {
     expect(component.truncateName('Khrystyna', 5)).toBe('Khrys…');
   });
-
   fit('should not truncate name if it is shorter than 2nd parameter', () => {
     expect(component.truncateName('Khrystyna', 10)).toBe('Khrystyna');
-  });
-
-  fit('should create', () => {
-    expect(component).toBeTruthy();
   });
 });

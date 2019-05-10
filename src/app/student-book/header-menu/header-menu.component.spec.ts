@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { StudentHeaderMenuComponent } from './header-menu.component';
 import { MatListModule, MatIconModule } from '@angular/material';
 import { AvatarComponent } from '../../shared/avatar/avatar.component';
@@ -20,25 +19,20 @@ fdescribe('StudentHeaderMenuComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule
       ],
-      declarations: [ 
+      declarations: [
         StudentHeaderMenuComponent,
-        AvatarComponent 
+        AvatarComponent
       ],
       providers: [
         AuthService,
         StudentsService
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
-
   beforeEach(() => {
     fixture = TestBed.createComponent(StudentHeaderMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-  // fit('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
 });

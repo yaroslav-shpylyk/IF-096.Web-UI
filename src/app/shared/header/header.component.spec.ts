@@ -1,5 +1,5 @@
 import { TestBed, ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientTestingModule, TestRequest } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from '../../services/auth.service';
 import { HeaderComponent } from './header.component';
@@ -25,16 +25,18 @@ fdescribe('HeaderComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule
       ],
-      providers: [ AuthService ],
-      declarations: [ 
+      providers: [
+        AuthService
+      ],
+      declarations: [
         HeaderComponent,
         AdminHeaderMenuComponent,
         TeacherHeaderMenuComponent,
         StudentHeaderMenuComponent,
         AvatarComponent
-       ]
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
   beforeEach(() => {
     fixture = TestBed.createComponent(HeaderComponent);
@@ -44,16 +46,14 @@ fdescribe('HeaderComponent', () => {
   });
   fit('should return true if user is admin', () => {
     spyOn(authService, 'getUserRole').and.returnValue('ROLE_ADMIN');
-    expect(component.isAdmin()).toBeTruthy();
+    expect(component.isAdmin()).toBe(true);
   });
-
   fit('should return true if user is teacher', () => {
     spyOn(authService, 'getUserRole').and.returnValue('ROLE_TEACHER');
-    expect(component.isTeacher()).toBeTruthy();
+    expect(component.isTeacher()).toBe(true);
   });
-
   fit('should return true if user is student', () => {
     spyOn(authService, 'getUserRole').and.returnValue('ROLE_USER');
-    expect(component.isStudent()).toBeTruthy();
+    expect(component.isStudent()).toBe(true);
   });
 });
