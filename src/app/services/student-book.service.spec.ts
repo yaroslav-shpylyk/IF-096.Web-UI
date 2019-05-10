@@ -1,42 +1,27 @@
-import {async, TestBed} from '@angular/core/testing';
-
+import { async, TestBed } from '@angular/core/testing';
 import { StudentBookService } from './student-book.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { StudentBookData } from '../models/student-book-data';
-import { pipe } from 'rxjs';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-
-fdescribe('StudentBookService', () => {
+describe('StudentBookService', () => {
+  let httpTestingController: HttpTestingController;
   let studentService: StudentBookService;
-  let studentBookData: StudentBookData[];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ],
-      providers: [ StudentBookService ],
+      imports: [HttpClientTestingModule],
+      providers: [StudentBookService],
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
+    httpTestingController = TestBed.get(HttpTestingController);
     studentService = TestBed.get(StudentBookService);
   });
-
-  // beforeEach(inject([TeachersStorageService], service => {
-  //   teacherService = service;
-  // }));
-
-  fit('service should be defined', async(() => {
+  afterEach(() => {
+    httpTestingController.verify();
+  });
+  it('service should be defined', async(() => {
     expect(studentService).toBeDefined();
   }));
-
-  // fit('should get teacher data from service', async(() => {
-  //   studentService.inputDate = '2019-05-13';
-  //   studentService.getStudentBook().subscribe(data => {
-  //     studentBookData = data;
-  //   });
-  //   expect(studentBookData[0].lessonId).toBeDefined();
-  // }));
 });

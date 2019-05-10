@@ -6,7 +6,7 @@ import { HideZeroPipe } from './hide-zero.pipe';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-fdescribe('StudentBookComponent', () => {
+describe('StudentBookComponent', () => {
   let component: StudentBookComponent;
   let fixture: ComponentFixture<StudentBookComponent>;
 
@@ -25,7 +25,7 @@ fdescribe('StudentBookComponent', () => {
     fixture.detectChanges();
   });
 
-  fit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
