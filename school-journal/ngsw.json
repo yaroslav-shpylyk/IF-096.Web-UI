@@ -1,0 +1,121 @@
+{
+  "configVersion": 1,
+  "timestamp": 1557496288866,
+  "index": "https://github.com/DenGodovanets/schoolTest/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "https://github.com/DenGodovanets/schoolTest/10.ccf8843800496c526272.js",
+        "https://github.com/DenGodovanets/schoolTest/11.e96089e073da3dc148b8.js",
+        "https://github.com/DenGodovanets/schoolTest/12.aae9c1512cc2c0ce209b.js",
+        "https://github.com/DenGodovanets/schoolTest/13.5f38d964a5322d4d181a.js",
+        "https://github.com/DenGodovanets/schoolTest/14.3a12af04d8f51718846b.js",
+        "https://github.com/DenGodovanets/schoolTest/15.5bbf3fb8803096326c02.js",
+        "https://github.com/DenGodovanets/schoolTest/2.625837f902cc42f98c87.js",
+        "https://github.com/DenGodovanets/schoolTest/3.ba9cbbe6aefa967db0b8.js",
+        "https://github.com/DenGodovanets/schoolTest/4.58af4ad6183705f343fa.js",
+        "https://github.com/DenGodovanets/schoolTest/5.553d603195f96be8feff.js",
+        "https://github.com/DenGodovanets/schoolTest/common.aa8b8a3a1a4673e2a00c.js",
+        "https://github.com/DenGodovanets/schoolTest/es2015-polyfills.133900a683405bf6f5da.js",
+        "https://github.com/DenGodovanets/schoolTest/favicon.ico",
+        "https://github.com/DenGodovanets/schoolTest/index.html",
+        "https://github.com/DenGodovanets/schoolTest/main.b27e3627fe61ec930a69.js",
+        "https://github.com/DenGodovanets/schoolTest/manifest.json",
+        "https://github.com/DenGodovanets/schoolTest/polyfills.e3b20328d8f0d64ee980.js",
+        "https://github.com/DenGodovanets/schoolTest/runtime.1cbd7c8e0f3f283dea81.js",
+        "https://github.com/DenGodovanets/schoolTest/styles.04405f9cada53bf0326d.css"
+      ],
+      "patterns": [
+        "https:\\/\\/fonts\\.googleapis\\.com\\/icon\\?family=Material\\+Icons",
+        "https:\\/\\/fonts\\.googleapis\\.com\\/css\\?family=Roboto"
+      ]
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "https://github.com/DenGodovanets/schoolTest/assets/background-login.jpg",
+        "https://github.com/DenGodovanets/schoolTest/assets/catholic-school-logo.png",
+        "https://github.com/DenGodovanets/schoolTest/assets/default-avatar.svg",
+        "https://github.com/DenGodovanets/schoolTest/assets/icons/icon-128x128.png",
+        "https://github.com/DenGodovanets/schoolTest/assets/icons/icon-144x144.png",
+        "https://github.com/DenGodovanets/schoolTest/assets/icons/icon-152x152.png",
+        "https://github.com/DenGodovanets/schoolTest/assets/icons/icon-192x192.png",
+        "https://github.com/DenGodovanets/schoolTest/assets/icons/icon-384x384.png",
+        "https://github.com/DenGodovanets/schoolTest/assets/icons/icon-512x512.png",
+        "https://github.com/DenGodovanets/schoolTest/assets/icons/icon-72x72.png",
+        "https://github.com/DenGodovanets/schoolTest/assets/icons/icon-96x96.png",
+        "https://github.com/DenGodovanets/schoolTest/background-login.0501411d12736c91016b.jpg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "schoolData",
+      "patterns": [
+        "http:\\/\\/35\\.228\\.220\\.5:8080\\/[^/]*"
+      ],
+      "strategy": "freshness",
+      "maxSize": 100,
+      "maxAge": 21600000,
+      "timeoutMs": 10000,
+      "version": 1
+    }
+  ],
+  "hashTable": {
+    "https://github.com/DenGodovanets/schoolTest/10.ccf8843800496c526272.js": "976e02a5ba29f9ba3bddc4a8fd25c955d622d0dd",
+    "https://github.com/DenGodovanets/schoolTest/11.e96089e073da3dc148b8.js": "b9c53cfff44fce4d9a4c838f4ff48e58930e2d43",
+    "https://github.com/DenGodovanets/schoolTest/12.aae9c1512cc2c0ce209b.js": "ff044b3525ab5777ac6d9ffc817ceb2e6500ea99",
+    "https://github.com/DenGodovanets/schoolTest/13.5f38d964a5322d4d181a.js": "ba9709d0e190da3db83c849591ce50bfab7a7c31",
+    "https://github.com/DenGodovanets/schoolTest/14.3a12af04d8f51718846b.js": "15aaa91f022ec89181820c2f6576746cf95aaec8",
+    "https://github.com/DenGodovanets/schoolTest/15.5bbf3fb8803096326c02.js": "cfa7ca0a598cf0b8baeafe5c56d91b7343803e27",
+    "https://github.com/DenGodovanets/schoolTest/2.625837f902cc42f98c87.js": "33495585923e658e3a1f7029f9f4ea27b989a932",
+    "https://github.com/DenGodovanets/schoolTest/3.ba9cbbe6aefa967db0b8.js": "a40bbb9759ef61f1b0f187a35a895be94a11c6b4",
+    "https://github.com/DenGodovanets/schoolTest/4.58af4ad6183705f343fa.js": "c2ee11f018c944dc428cf23551f2e5c2d36b4e86",
+    "https://github.com/DenGodovanets/schoolTest/5.553d603195f96be8feff.js": "cb4a3b3b495157ea36665142f9e877311f53fddc",
+    "https://github.com/DenGodovanets/schoolTest/assets/background-login.jpg": "92b84572f8cb5f094e237e3e6e88e5ed969a92ea",
+    "https://github.com/DenGodovanets/schoolTest/assets/catholic-school-logo.png": "6b8534ec5e56ece4afa6cc3f324fbcdf16ce637b",
+    "https://github.com/DenGodovanets/schoolTest/assets/default-avatar.svg": "63d6cea045838b7c37bc973b00dca4f7563942df",
+    "https://github.com/DenGodovanets/schoolTest/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
+    "https://github.com/DenGodovanets/schoolTest/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "https://github.com/DenGodovanets/schoolTest/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "https://github.com/DenGodovanets/schoolTest/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "https://github.com/DenGodovanets/schoolTest/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
+    "https://github.com/DenGodovanets/schoolTest/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
+    "https://github.com/DenGodovanets/schoolTest/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "https://github.com/DenGodovanets/schoolTest/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "https://github.com/DenGodovanets/schoolTest/background-login.0501411d12736c91016b.jpg": "92b84572f8cb5f094e237e3e6e88e5ed969a92ea",
+    "https://github.com/DenGodovanets/schoolTest/common.aa8b8a3a1a4673e2a00c.js": "a872359987106219bdcc689c3f22178f3bfe1471",
+    "https://github.com/DenGodovanets/schoolTest/es2015-polyfills.133900a683405bf6f5da.js": "20c4dc235ce87e1d013c0c479b495027cae8b74f",
+    "https://github.com/DenGodovanets/schoolTest/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
+    "https://github.com/DenGodovanets/schoolTest/index.html": "86d292190cab1ca256fe3f7cbad26718dfb95376",
+    "https://github.com/DenGodovanets/schoolTest/main.b27e3627fe61ec930a69.js": "3a5b480bedba7dfda59ef500bac5b822e5cafe9e",
+    "https://github.com/DenGodovanets/schoolTest/manifest.json": "77d5af46b9102fb439f919703b55e1b9568211b9",
+    "https://github.com/DenGodovanets/schoolTest/polyfills.e3b20328d8f0d64ee980.js": "a6a950f3f5066a86abec2056246e177e11f82309",
+    "https://github.com/DenGodovanets/schoolTest/runtime.1cbd7c8e0f3f283dea81.js": "8b90beb60b5b32ebfe1efa07345c62e60f5e6af1",
+    "https://github.com/DenGodovanets/schoolTest/styles.04405f9cada53bf0326d.css": "c6efa735df707c63e0e6c142571386b6c6f4fbad"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}
