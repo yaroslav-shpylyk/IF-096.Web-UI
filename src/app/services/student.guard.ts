@@ -39,7 +39,7 @@ export class StudentGuard implements CanActivate, CanLoad {
    * Function that checks user's role -
    * @returns true if user's role == ROLE_USER
    */
-  private isStudent(): boolean {
+  isStudent(): boolean {
     const decodedToken: TokenInfo = JWTDecoder(this.authService.getToken());
     const role: string = decodedToken.Roles.authority;
     if (role === 'ROLE_USER') {
