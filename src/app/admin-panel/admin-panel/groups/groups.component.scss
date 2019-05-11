@@ -2,14 +2,21 @@ table {
   width: 100%;
 }
 
-#buttonAdd {
+.buttonAdd {
   position: fixed;
-  bottom: 0.8em;
   right: 0.15em;
   font-size: 3.1em;
-  transition: bottom 0.9s;
+  transition: bottom 0.8s;
   color: #1565c0;
   cursor: pointer;
+}
+
+.buttonAddUp {
+  bottom: 0.8em;
+}
+
+.buttonAddDown {
+  bottom: -1.8em;
 }
 
 th.mat-sort-header-sorted {
@@ -17,7 +24,7 @@ th.mat-sort-header-sorted {
 }
 
 .edit {
-  font-size: 1.8em;
+  float: right;
 }
 
 .mat-form-field {

@@ -1,24 +1,24 @@
 <div class="container">
   <h2>Перехід на новий навчальний рік</h2>
-  <form *ngIf="filteredindexes.length>0; else emptyFilter" [formGroup]="transititionForm" class="component" (ngSubmit)="formSubmit()">
+  <form *ngIf="filteredClasses.length>0; else emptyFilter" [formGroup]="transititionForm" class="component" (ngSubmit)="formSubmit()">
     <div>
       <app-class-card
-      *ngFor="let index of filteredindexes"
-      [controlIndex]="index"
-      [form]="transititionForm"
-      [curClass]="activeClasses[index]"
-      [newTitleField]="newClassTitle.controls[index]"
-      [isEditEnable]="false"
-      [isClassTransited]="false"
-      [isCardLock] = "false"
-      #classCard>
-    </app-class-card>
+        *ngFor="let curClass of filteredClasses; let i=index"
+        [controlIndex]="i"
+        [form]="transititionForm"
+        [curClass]="curClass.classData"
+        [newTitleField]="newClassTitle.controls[i]"
+        [isClassTransited]="false"
+        [isCardLock] = "false"
+        [currentYear] = "currentYear"
+        #classCard>
+      </app-class-card>
     </div>
     <button mat-raised-button class="submit" type="submit" [disabled]="!transititionForm.valid" > Перевести учнів </button>
   </form>
   <ng-template #emptyFilter>
     <p>Немає класів, що відповідають критеріям фільтру. Ви можете змінити налаштування фільтру кнопкою, що розміщена справа</p>
-</ng-template>
+  </ng-template>
 </div>
   <!-- Toggle menu -->
 <input type="checkbox" id="toggle-1">
@@ -26,12 +26,12 @@
   <div class="wrap">
     <label for="toggle-1"><i class="material-icons">filter_list</i></label>
     <div class="checkbox-group">
-      <mat-checkbox [(ngModel)]="isNotEmpty" >З учнями</mat-checkbox>
-      <mat-checkbox [(ngModel)]="isCurrentYear" >Поточний рік</mat-checkbox>
+      <mat-checkbox [(ngModel)]="isNotEmpty" (change)="filterClasses()">З учнями</mat-checkbox>
+      <mat-checkbox [(ngModel)]="isCurrentYear" (change)="filterClasses()">Поточний рік</mat-checkbox>
     </div>
   </div>
   <div class="marks">
-    <div class="pupils" *ngIf="isNotEmpty">У</div>
-    <div class="year" *ngIf="isCurrentYear">П</div>
+    <div *ngIf="isNotEmpty"><i class="material-icons" matTooltip = 'Показати класи з учнями'>people</i></div>
+    <div *ngIf="isCurrentYear"><i class="material-icons" matTooltip = 'Показувати класи поточного н. р.'>update</i></div>
   </div>
 </div>

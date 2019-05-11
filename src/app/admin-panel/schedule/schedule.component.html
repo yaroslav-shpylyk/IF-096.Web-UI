@@ -1,12 +1,9 @@
-<div class="title-schedule">
-  <h5>РОЗКЛАД УРОКІВ</h5>
-</div>
 <form [formGroup] = "frmSchedule" (ngSubmit) = "onSubmit()">
   <div class="schedule-top" >
     <mat-form-field class="datePiker">
       <input matInput [matDatepicker]="pickerStart"
        [placeholder]="dateTermStartMsg"
-       formControlName="dateTermStart">
+       [formControl]="frmSchedule.controls.dateTermStart">
       <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
       <mat-datepicker #pickerStart></mat-datepicker>
       <mat-error *ngIf="isInputInvalid('dateTermStart')">Не визначено дату початку семестру</mat-error>
@@ -18,7 +15,7 @@
     <mat-form-field class="datePiker">
         <input matInput [matDatepicker]="pickerEnd"
          [placeholder]="dateTermEndMsg"
-         formControlName="dateTermEnd">
+         [formControl]="frmSchedule.controls.dateTermEnd">
         <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker #pickerEnd></mat-datepicker>
         <mat-error *ngIf="isInputInvalid('dateTermEnd')">Не визначено дату закінчення семестру</mat-error>
@@ -29,7 +26,7 @@
 
     <mat-form-field>
       <mat-select [placeholder]="selectClassMsg"
-       formControlName="selectClass"
+       [formControl]="frmSchedule.controls.selectClass"
        (selectionChange)="selectedClass($event.value.id)">
         <mat-option *ngFor="let class of arrClassList" [value]="class">
           {{ class.className }}
@@ -43,8 +40,8 @@
     <app-daily-schedule *ngFor="let day of weekDayName; let i=index"
       [arrSubjectsList]="arrSubjectsList"
       [legendDay]="day.legendDay"
-      [class]="day.dailySubjects"
-      (addDailySubjects)="onAddDailySubjects($event, day.dailySubjects)">
+      [class]="day.dailySubjectsName"
+      (addDailySubjects)="onAddDailySubjects($event, day.dailySubjectsName)">
     </app-daily-schedule>
   </div>
 

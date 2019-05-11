@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ScheduleData } from '../models/schedule-data';
 import { SubjectData } from '../models/subject-data';
 
@@ -16,14 +16,10 @@ export class ScheduleService {
    * @param classId - Id of class
    * @returns - Array with schedule data or error if that happens
    */
-  getSchedule(classId: number): Observable<any> {
+  getSchedule(classId: number): Observable<ScheduleData> {
     return this.http.get(`/classes/${classId}/schedule`).pipe(map(
       (response: {status: any, data: ScheduleData}) => response.data
-    ),
-    catchError(error => {
-      console.log(error);
-      return throwError(error.massage);
-    }));
+    ));
   }
 
   /**
@@ -31,14 +27,10 @@ export class ScheduleService {
    * @param classId - Id of class
    * @returns - Array with subjects data or error if that happens
    */
-  getSubjects(classId: number): Observable<any> {
+  getSubjects(classId: number): Observable<SubjectData[]> {
     return this.http.get(`/subjects?classId=${classId}`).pipe(map(
-      (response: {status: any, data: SubjectData}) => response.data
-    ),
-    catchError(error => {
-      console.log(error);
-      return throwError(error.message);
-    }));
+      (response: {status: any, data: SubjectData[]}) => response.data
+    ));
   }
 
   /**
@@ -47,14 +39,9 @@ export class ScheduleService {
    * @param data - Array with schedule data
    * @returns - Array with schedule data or error if that happens
    */
-  saveSchedule(classId: number, data: ScheduleData): Observable<any> {
+  saveSchedule(classId: number, data: ScheduleData): Observable<ScheduleData> {
     return this.http.post(`/classes/${classId}/schedule`, data).pipe(map(
       (response: {status: any, data: ScheduleData}) => response.data
-    ),
-    catchError(error => {
-        console.log(error);
-        return throwError(error.message);
-      })
-    );
+    ));
   }
 }

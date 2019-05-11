@@ -1,6 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ClassInfo } from '../../../models/class-info';
+import { MatDialog } from '@angular/material';
+import { NewYearService } from '../../../services/new-year.service';
+import { ListPopupComponent } from './list-popup/list-popup.component';
+import { Student } from '../../../models/student';
 
 @Component({
   selector: 'app-class-card',
@@ -14,12 +18,37 @@ export class ClassCardComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() isClassTransited: boolean;
   @Input() isCardLock: boolean;
-  @Input() isEditEnable: boolean;
-  public panelOpenState = false;
+  @Input() currentYear: number;
+  public isEditEnable = false;
+  public classList: Student[];
 
-  constructor() { }
+  constructor(
+    private newYearService: NewYearService,
+    public dialog: MatDialog) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
+
+  /**
+   * Display popup with list of pupils for current classs
+   * @param classId number - id of current class
+   */
+  openDialog(classId: number): void {
+    this.newYearService.getPupilList(classId).subscribe(
+      data => {
+        this.classList = data;
+        this.dialog.open(
+          ListPopupComponent,
+          {data: {
+            classList: this.classList,
+            className: this.curClass.className,
+            classYear: this.curClass.classYear,
+            numOfStudents: this.curClass.numOfStudents
+            }
+          }
+        );
+      }
+    );
+  }
 
   /**
    * Makes input with new class title enabled or disabled for editing

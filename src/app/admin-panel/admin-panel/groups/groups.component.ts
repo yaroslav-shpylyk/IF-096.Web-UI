@@ -18,14 +18,16 @@ export class GroupsComponent implements OnInit {
   dataSourceActivClass: MatTableDataSource<Group>;
   dataSourceCloseClass: MatTableDataSource<Group>;
   prevScrollpos = window.pageYOffset;
+  panelOpenState: boolean;
+  buttonVisibility = true;
 
   @HostListener('window:scroll', [])
   onScrollEvent() {
     const currentScrollPos = window.pageYOffset;
     if (this.prevScrollpos > currentScrollPos) {
-      document.getElementById('buttonAdd').style.bottom = '0.9em';
+      this.buttonVisibility = true;
     } else {
-      document.getElementById('buttonAdd').style.bottom = '-2.3em';
+      this.buttonVisibility = false;
     }
     this.prevScrollpos = currentScrollPos;
   }

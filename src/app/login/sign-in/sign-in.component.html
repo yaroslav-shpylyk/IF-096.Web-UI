@@ -1,26 +1,29 @@
-<mat-card class="form-container">
-  <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
-    <div class="form-header">
-      <img src="../../../assets/catholic-school-logo.png" class="main-icon" alt="">
-    </div>
-    <div class="form-body">
-      <mat-form-field class="justifier">
-        <mat-icon matSuffix>account_box</mat-icon>
-        <input matInput placeholder="Ім'я користувача" type="text" class="form-input" formControlName="username">
-      </mat-form-field>
-      <mat-form-field class="justifier">
-        <mat-icon matSuffix>lock</mat-icon>
-        <input matInput placeholder="Пароль" type="password" class="form-input" formControlName="password">
-      </mat-form-field>
-    </div>
-    <div class="form-footer">
-      <button mat-raised-button class="btn custom-btn" type="submit" [disabled]="!loginForm.valid">
-        <mat-icon id="btn-color">input</mat-icon>
-        Увійти
-      </button>
-    </div>
-    <div class="additional-link">
-      <a routerLink="/login/request-password-change">Забули пароль?</a>
-    </div>
-  </form>
-</mat-card>
+<mat-spinner *ngIf="showSpiner"></mat-spinner>
+<ng-container *ngIf="!showSpiner">
+  <mat-card class="form-container">
+    <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+      <div class="form-header">
+        <img src="../../../assets/catholic-school-logo.png" class="main-icon" alt="">
+      </div>
+      <div class="form-body">
+        <mat-form-field class="justifier">
+          <mat-icon matSuffix>account_box</mat-icon>
+          <input matInput placeholder="Ім'я користувача" type="text" class="form-input" formControlName="username">
+        </mat-form-field>
+        <mat-form-field class="justifier">
+          <mat-icon matSuffix>lock</mat-icon>
+          <input matInput placeholder="Пароль" type="password" class="form-input" formControlName="password">
+        </mat-form-field>
+      </div>
+      <div class="form-footer">
+        <button mat-raised-button class="btn custom-btn" type="submit" [disabled]="!loginForm.valid">
+          <mat-icon id="btn-color">input</mat-icon>
+          Увійти
+        </button>
+      </div>
+      <div class="additional-link">
+        <a routerLink="/login/request-password-change">Забули пароль?</a>
+      </div>
+    </form>
+  </mat-card>
+</ng-container>
