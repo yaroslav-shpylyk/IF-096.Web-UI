@@ -8,6 +8,7 @@
   z-index: 999;
   background: $main-color;
   color: white;
+  border-top: solid $light-color 1px;
   height: 50px;
   padding: 0;
   display: none; // hide on medium and large screens

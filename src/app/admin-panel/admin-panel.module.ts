@@ -54,6 +54,7 @@ import { SharedModule } from '../shared/shared.module';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { ClassCardComponent } from './new-year/class-card/class-card.component';
+import { StickyButtonComponent } from './sticky-button/sticky-button.component';
 import { ListPopupComponent } from './new-year/class-card/list-popup/list-popup.component';
 
 
@@ -83,6 +84,7 @@ import { ListPopupComponent } from './new-year/class-card/list-popup/list-popup.
     TeacherConnectionComponent,
     ConfirmationDialogComponent,
     ClassCardComponent,
+    StickyButtonComponent,
     ListPopupComponent
   ],
   imports: [

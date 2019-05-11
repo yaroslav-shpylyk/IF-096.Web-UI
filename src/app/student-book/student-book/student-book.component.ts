@@ -43,7 +43,6 @@ export class StudentBookComponent implements OnInit {
    */
   backDate() {
     this.dateValue = moment(this.dateValue.subtract(7, 'd').format('YYYY-MM-DD'));
-    console.log(this.dateValue);
     this.showSchedule();
   }
 
@@ -52,7 +51,6 @@ export class StudentBookComponent implements OnInit {
    */
   forwardDate() {
     this.dateValue = moment(this.dateValue.add(7, 'd').format('YYYY-MM-DD'));
-    console.log(this.dateValue);
     this.showSchedule();
   }
 
@@ -61,11 +59,9 @@ export class StudentBookComponent implements OnInit {
    */
   showSchedule() {
     this.pickerDate = moment(this.dateValue.format('YYYY-MM-DD')); // dateValue from datePicker
-    console.log('pickerDate in showSchedule:' + this.pickerDate.format('YYYY-MM-DD'));
     this.studentBookService.getInputDate(this.pickerDate.format('YYYY-MM-DD')); // send date from datePicker to server
     this.studentBookService.getStudentBook().subscribe(result => {
       this.serverData = result; // data from server
-      console.log(this.serverData);
       if (this.serverData.length) {
         this.showMessage = false;
         this.showTable = true;
