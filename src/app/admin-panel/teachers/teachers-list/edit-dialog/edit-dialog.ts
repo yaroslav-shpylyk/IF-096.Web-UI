@@ -142,7 +142,7 @@ export class EditDialogOverviewComponent implements OnInit {
     };
     if (!this.editMode) {
       this.teachersStorageService.addTeacher(newValues).subscribe(
-        res => {
+        () => {
           this.teachersStorageService.getTeachers();
           this.openSnackBar(
             `Викладач ${newValues.lastname} ${newValues.lastname} створений`,
@@ -200,14 +200,14 @@ export class EditDialogOverviewComponent implements OnInit {
     });
   }
 
-  onFileSelected(event) {
+  onFileSelected(event: { target: { files: any[]; }; }) {
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.onload = this._handleReaderLoaded.bind(this);
     reader.readAsDataURL(file);
   }
 
-  _handleReaderLoaded(e) {
+  _handleReaderLoaded(e: { target: any; }) {
     const reader = e.target;
     if (this.editMode) {
       this.teacher.avatar = reader.result;

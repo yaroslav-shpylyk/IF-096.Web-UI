@@ -1,7 +1,8 @@
-export interface HomeworkData {
-  fileName: string;
-  fileData: string;
-  fileType: string;
-  homework?: string;
-  idLesson?: number;
+export interface Homework {
+  idLesson: number;
+  date?: string;
+  homework: string | null;
+  fileName: string| null;
+  fileData?: string;
+  fileType?: string;
 }

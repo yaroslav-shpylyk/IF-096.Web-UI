@@ -1,18 +1,8 @@
-$title-color: rgba(210, 230, 240, 0.5);
 $invalid-color: rgb(182, 14, 14);
 $shadow-color: rgb(182, 182, 182);
 $button-color: rgb(198, 219, 233);
 $success-color: rgb(15, 105, 15);
 
-.title-schedule {
-    margin: 0 0 0.5em 0;
-    box-shadow: 1px 1px 5px $shadow-color;
-}
-.title-schedule h5 {
-    margin: 0;
-    padding: 0.3em;
-    text-align: center;
-}
 form {
     font-size: 0.8em;
 }
@@ -29,7 +19,7 @@ form {
     display: grid;
     grid-template-columns: 49% 49%;
     grid-column-gap: 0.8em;
-    grid-row-gap: 0.8em;
+    grid-row-gap: 0.3em;
     padding: 0.7em;
     box-shadow: 0px 0px 15px $shadow-color;
 }

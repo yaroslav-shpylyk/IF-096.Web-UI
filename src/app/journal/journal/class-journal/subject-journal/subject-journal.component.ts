@@ -1,11 +1,16 @@
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { JournalsStorageService } from '../../../../services/journals-storage.service';
 import { Journal } from '../../../../models/journal-data';
 import { ActivatedRoute, Params } from '@angular/router';
 import { MatBottomSheet } from '@angular/material';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { BottomSheetOverviewSheetComponent } from './bottom-sheet-overview.components';
 import { HomeworkBottomSheetOverviewSheetComponent } from './homework-bottom-sheet-overview.components';
+import * as _ from 'lodash';
+import { ClassService } from '../../../../services/class.service';
+import { ClassData } from '../../../../models/class-data';
+import { SubjectData } from '../../../../models/subject-data';
+import { SubjectService } from '../../../../services/subject.service';
 
 @Component({
   selector: 'app-subject-journal',
@@ -23,16 +28,21 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
   elData: any[];
   private loadingSub: Subscription;
   isLoading = false;
-  homeworks = {};
+  homeworks: { [k: string]: any } = {};
+  lessonsIds: string[] = [];
+  currentClass$: Observable<ClassData>;
+  currentSubject$: Observable<SubjectData>;
 
   constructor(
     private journalsStorageService: JournalsStorageService,
     private route: ActivatedRoute,
-    private bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet,
+    private classService: ClassService,
+    private subjectService: SubjectService
   ) {}
 
   /**
-   * Method fetches from route params subject and class ids, 
+   * Method fetches from route params subject and class ids,
    * initialize table rendering and starts spinner while it's loading.
    */
   ngOnInit() {
@@ -46,25 +56,10 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
       this.idSubject = +params.subId;
       this.idClass = +params.classId;
       this.initialiseState();
-
+      this.currentClass$ = this.classService.getClass(this.idClass);
+      this.currentSubject$ = this.subjectService.getSubject(this.idSubject);
       this.renderTable();
     });
-  }
-
-  /**
-   * Method receives an array of all student marks and calculates the avarage.
-   * @returns - avarage mark;
-   */
-  average(marks: number[]) {
-    let res = 0;
-    let counter = 0;
-    for (const key in marks) {
-      if (Number.isInteger(marks[key])) {
-        res += marks[key];
-        counter++;
-      }
-    }
-    return res ? Math.round((res / counter) * 10) / 10 : '';
   }
 
   /**
@@ -76,7 +71,16 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     this.journalsStorageService
       .getJournalsAndHomeworks(this.idSubject, this.idClass)
       .subscribe(journal => {
+        if (!journal.journals.length) {
+          this.journalsStorageService.loadingStateChanged.next(false);
+          return;
+        }
         this.homeworks = journal.homeworks;
+        for (const lesson of journal.journals[0].marks) {
+          this.lessonsIds.push(lesson.idLesson + '');
+        }
+        this.lessonsIds.unshift('studentFullName');
+        this.lessonsIds.push('star');
         let studentData = new Object() as any;
         for (const student of journal.journals) {
           studentData.studentFullName = student.studentFullName;
@@ -97,23 +101,14 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
           this.elData.push(studentData);
           studentData = {};
         }
-        if (!this.elData.length) {
-          this.journalsStorageService.loadingStateChanged.next(false);
-          return;
-        }
         this.dataSource = this.elData;
-        const temp = Object.keys(this.elData[0]);
-        temp.unshift(...temp.splice(temp.length - 1, 1));
-        temp.push('star');
-
-        this.displayedColumns = temp;
+        this.displayedColumns = this.lessonsIds;
         this.journal = journal.journals;
         this.journalsStorageService.loadingStateChanged.next(false);
       });
   }
 
-  
- /**
+  /**
    * Method receives from the table all needed values for assigning a
    * homework, changes clicked header cell style and passes to the
    * homework bottom sheet component needed data.
@@ -122,11 +117,19 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
    * @param event - object representing a click event;
    * @param i - index of column in a row;
    */
-  onHeadClc(idLesson, event, i) {
+  onHeadClc(
+    idLesson: number,
+    event: {
+      target: { innerText: string; style: any };
+      path: { style: any }[];
+      srcElement: { innerText: { split: (arg0: string) => any[] } };
+    },
+    i: number
+  ) {
     if (!i || i === this.thRow.length) {
       return;
     }
-    let styleRef;
+    let styleRef: { boxShadow: string };
     if (event.target.innerText === 'attach_file') {
       styleRef = event.path[1].style;
     } else {
@@ -150,7 +153,7 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     });
   }
 
-   /**
+  /**
    * Method receives from the table all needed values for assigning a mark,
    * appropriately transforms them, changes clicked cell and row color
    * and passes to the bottom sheet component needed data.
@@ -160,7 +163,15 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
    * @param event - object representing a click event;
    * @param i - index of column in a row;
    */
-  onClc(idLesson, studentEl, event, i) {
+  onClc(
+    idLesson: string | number,
+    studentEl: any,
+    event: {
+      target: { style: { backgroundColor: string } };
+      path: { style: { backgroundColor: string } }[];
+    },
+    i: any
+  ) {
     if (!Number.isInteger(+idLesson)) {
       return;
     }
@@ -170,7 +181,7 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
       BottomSheetOverviewSheetComponent,
       {
         data: {
-          lessonId: idLesson,
+          lessonId: +idLesson,
           student: studentEl,
           elData: this.elData,
           id: i,
@@ -187,6 +198,22 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Method receives an array of all student marks and calculates the avarage.
+   * @returns - avarage mark;
+   */
+  average(marks: number[]) {
+    let res = 0;
+    let counter = 0;
+    for (const key in marks) {
+      if (Number.isInteger(marks[key])) {
+        res += marks[key];
+        counter++;
+      }
+    }
+    return res ? Math.round((res / counter) * 10) / 10 : '';
+  }
+
+  /**
    * Method initialize default values for table
    * data source beforethe journal can be created.
    */
@@ -195,6 +222,7 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     this.displayedColumns = [];
     this.studentIds = [];
     this.elData = [];
+    this.dataSource = null;
   }
 
   /**

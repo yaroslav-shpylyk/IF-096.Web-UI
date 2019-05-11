@@ -11,6 +11,7 @@ import { StudentHeaderMenuComponent } from '../student-book/header-menu/header-m
 import { StudentFooterMenuComponent } from '../student-book/footer-menu/footer-menu.component';
 import { TeacherHeaderMenuComponent } from '../journal/header-menu/header-menu.component';
 import { TeacherFooterMenuComponent } from '../journal/footer-menu/footer-menu.component';
+import { SubjectAttachmentDialogComponent } from './subject-attachment-dialog/subject-attachment-dialog.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { TeacherFooterMenuComponent } from '../journal/footer-menu/footer-menu.c
     StudentHeaderMenuComponent,
     StudentFooterMenuComponent,
     TeacherHeaderMenuComponent,
-    TeacherFooterMenuComponent
+    TeacherFooterMenuComponent,
+    SubjectAttachmentDialogComponent
   ],
   imports: [
     CommonModule,

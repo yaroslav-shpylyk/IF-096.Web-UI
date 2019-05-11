@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NewYearService } from '../../services/new-year.service';
 import { ClassInfo } from '../../models/class-info';
 import { ClassCardComponent } from './class-card/class-card.component';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 @Component({
   selector: 'app-new-year',
@@ -15,38 +16,25 @@ export class NewYearComponent implements OnInit {
   public allClasses: ClassInfo[] = [];
   public activeClasses: ClassInfo[] = [];
   public transititionForm: FormGroup;
-  public currentClassYear: number;
-  public currentClassTitle: string;
   public isNotEmpty = true;
   public isCurrentYear = true;
-  public filterHasResults = false;
-  public controlIndexes: number[] = [];
-  public panelOpenState: boolean[] = [];
+  public filteredClasses: { classData?: ClassInfo, control: FormControl}[] = [];
   public transitedCards: ClassCardComponent[] = [];
   @ViewChildren('classCard') classCards: QueryList<ClassCardComponent>;
 
   constructor(
+    private snackBar: MatSnackBar,
     private newYearTransitition: NewYearService) { }
 
   ngOnInit() {
     this.createTransititionForm();
-    this.newYearTransitition.getAllClasesInfo().subscribe(
+    this.newYearTransitition.getClasses().subscribe(
       data => {
         this.allClasses = data;
         this.activeClasses = this.allClasses.filter(
           curClass => curClass.isActive
         );
-        this.activeClasses.forEach(
-          (schoolClass, i) => {
-            this.controlIndexes.push(i);
-            this.panelOpenState.push(false);
-            const newInput = new FormControl(
-              {value: '', disabled: false},
-              [Validators.pattern('^([1-9]|1[0-2])-[А-Я]{1}$'),
-              this.classTitleValidator(this.allClasses, schoolClass.classYear, schoolClass.className)]);
-            (this.transititionForm.controls.newClassTitle as FormArray).push(newInput);
-          }
-        );
+        this.filterClasses();
       }
     );
   }
@@ -62,66 +50,117 @@ export class NewYearComponent implements OnInit {
   get newClassTitle() { return this.transititionForm.get('newClassTitle'); }
 
   /**
+   * Add new FormControl with validators to FormArray
+   * @param singleClass ClassInfo[] - objects with data about current class
+   */
+  addNewTitleInput(singleClass: ClassInfo): void {
+    const newInput = new FormControl(
+      {value: this.newTitle(singleClass.className), disabled: false},
+      [Validators.pattern('(^[1-7][(]([1-9]|1[0-2])-[А-Я]{1}[)]$)|(^([1-9]|1[0-2])-[А-Я]{1}$)'),
+      this.classTitleValidator(this.allClasses, singleClass.classYear, singleClass.className)]);
+    (this.transititionForm.controls.newClassTitle as FormArray).push(newInput);
+    this.filteredClasses.push( {classData: singleClass, control: newInput} );
+  }
+
+  /**
    * Title validation for new class
    * @param allClasses ClassInfo[] - Array of objects with data about classes
    * @param classYear number - current class year
-   * @param classTitle string - current class title
+   * @param curClassTitle string - current class title
    * @returns - return FormControl with validation error or null
    */
-  classTitleValidator = (allClasses: ClassInfo[], classYear: number, classTitle: string ) => {
+  classTitleValidator = (allClasses: ClassInfo[], classYear: number, curClassTitle: string) => {
     return (control: FormControl) => {
-      if (classTitle === control.value) {
+      if (curClassTitle === control.value) {
         return {title_dublicate: {valid: false}};
       }
-      const error = allClasses.some(
+      const existError = allClasses.some(
          (item) => {
           return (item.classYear === classYear + 1 && item.className === control.value); }
       );
-      if (error) {
+      if (existError) {
         return { class_exist: {valid: false} };
+      }
+
+      if (control.value !== '') {
+        const curClassNameParts = curClassTitle.split(/[-(]/);
+        const newNameParts = control.value.split(/[-(]/);
+        if (newNameParts.length !== curClassNameParts.length) {
+          if (newNameParts.length <= curClassNameParts.length ) {
+            if (+newNameParts[0] <= +curClassNameParts[1]) { return {error_number: {valid: false}}; }
+          } else {
+              if (+newNameParts[1] < +curClassNameParts[0]) { return {error_number: {valid: false}}; }
+            }
+          } else {
+          if (curClassNameParts.some(
+            (item, index)  => {
+            return +item >= +newNameParts[index] && index < newNameParts.length - 1; })) {
+            return {error_number: {valid: false} };
+          }
+        }
       }
       return null;
     };
   }
 
   formSubmit() {
-    const formData = [];
-    this.classCards.forEach( el => {
-      if (!el.isCardLock) {
+    const formData: ClassInfo[] = [];
+    this.classCards.forEach( classCard => {
+      if (!classCard.isCardLock) {
         formData.push(
           {
-            className: el.newTitleField.value,
-            classYear: +el.curClass.classYear + 1,
-            id: el.curClass.id
+            className: classCard.newTitleField.value,
+            classYear: +classCard.curClass.classYear + 1,
+            id: classCard.curClass.id,
+            isActive: true,
+            numOfStudents: 0,
+            classDescription: ''
           }
         );
-        this.transitedCards.push(el);
+        this.transitedCards.push(classCard);
       }
     } );
-    if (this.transititionForm.status === 'VALID') {
-      this.newYearTransitition.transitClasses(formData).subscribe(
-        (status) => {
-          if (status === 201) {
-            this.transitedCards.forEach (
-              el => {
-                el.isClassTransited = true;
-                el.isCardLock = true;
-              }
-            );
-          }
+    this.newYearTransitition.transitClasses(formData).subscribe(
+      (status) => {
+        if (status === 201) {
+          this.transitedCards.forEach (
+            el => {
+              el.isClassTransited = true;
+              el.isCardLock = true;
+            }
+          );
+          this.displaySnackBar(
+            `Виконано. Переведено класів: ${formData.length}`,
+            'popup-success'
+          );
+        } else {
+          this.displaySnackBar(
+            `Помилка. Сервер відхилив запит`,
+            'popup-error'
+          );
         }
-      );
-    }
+      }
+    );
   }
 
   /**
-   * Return indexes of filtereted classes
+   * Display popup message after classes transition with status
    */
-  get filteredindexes() {
-    const curDate = new Date();
-    const year = (curDate.getMonth() < 12 && curDate.getMonth() > 7) ? curDate.getFullYear() : curDate.getFullYear() - 1;
-    const isCurrentYear = (item) => this.activeClasses[item].classYear === year;
-    const isNotEmpty = (item) => this.activeClasses[item].numOfStudents > 0;
+  displaySnackBar(message: string, styleClass: string): void {
+    const config = new MatSnackBarConfig();
+    config.panelClass = [styleClass];
+    config.duration = 4000;
+    config.verticalPosition = 'bottom';
+    this.snackBar.open(message, null, config);
+  }
+
+  /**
+   *  Filter active classses and generate according to this object with filtereted classes and array of FormControls
+   */
+  filterClasses(): void {
+    const year = this.currentYear;
+    const isCurrentYear = (singleClass) => singleClass.classYear === year;
+    const isNotEmpty = (singleClass) => singleClass.numOfStudents > 0;
     const filterParams = [];
 
     if (this.isNotEmpty) {
@@ -131,15 +170,44 @@ export class NewYearComponent implements OnInit {
       filterParams.push(isCurrentYear);
     }
 
-    return this.controlIndexes.filter(
-      (item) => {
-        if ( filterParams.every(func => func(item))) {
+    this.activeClasses.filter(
+      (singleClass) => {
+        const posSinglClassInFiltered = this.filteredClasses.map( filteredClass => filteredClass.classData.id ).indexOf(singleClass.id);
+        if ( filterParams.every(func => func(singleClass))) {
+          if (posSinglClassInFiltered === -1) {
+            this.addNewTitleInput(singleClass);
+          }
           return true;
         } else {
-          const input = (this.transititionForm.controls.newClassTitle as FormArray).controls[item];
-          input.reset({ value: '', disabled: true });
+          if (posSinglClassInFiltered !== -1) {
+            this.filteredClasses.splice(posSinglClassInFiltered, 1);
+            (this.transititionForm.controls.newClassTitle as FormArray).removeAt(posSinglClassInFiltered);
+          }
         }
       }
     );
+  }
+
+  /**
+   * Return current educational year
+   */
+  get currentYear(): number {
+    const curDate = new Date();
+    const year = (curDate.getMonth() < 12 && curDate.getMonth() > 7) ? curDate.getFullYear() : curDate.getFullYear() - 1;
+    return year;
+  }
+
+  /**
+   * Generate new title for class based on current title
+   * @param curTitle string - current title of class
+   * @returns string - new class title for next year
+   */
+  newTitle(curTitle: string): string {
+    const classNameParts = curTitle.split(/[-(]/);
+    if ( classNameParts.length > 2) {
+      return (+classNameParts[1] + 1 > 11) ? '' : `${+classNameParts[0] + 1}(${+classNameParts[1] + 1}-${classNameParts[2]}`;
+    } else {
+      return (+classNameParts[0] + 1 > 11) ? '' : (+classNameParts[0] + 1) + '-' + classNameParts[1];
+    }
   }
 }

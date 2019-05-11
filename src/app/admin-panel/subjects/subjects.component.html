@@ -15,11 +15,14 @@
     </ng-container>
 
     <ng-container matColumnDef="edit">
-      <th mat-header-cell *matHeaderCellDef> Ред. </th>
-      <td class="editDot" mat-cell *matCellDef="let subject"><a class="threeDots" [matMenuTriggerFor]="menu">⋮</a>
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let subject">
+        <button class="elipsis" mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="openDialog(subject)"><mat-icon>edit</mat-icon>Редагувати</button>
-          <button mat-menu-item><mat-icon style="color:red">delete</mat-icon>Видалити</button>
+          <button mat-menu-item><mat-icon>backspace</mat-icon>Назад</button>
         </mat-menu>
       </td>
     </ng-container>
@@ -27,7 +30,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <div class="example-button-row">
-    <button mat-fab color="primary"  mat-raised-button (click)="openDialog()">+</button>
+  <div [id]="scroll">
+    <i (click)="openDialog()" class="material-icons btn">add_circle</i>
   </div>
 </div>

@@ -1,15 +1,41 @@
-import { TestBed, async, inject } from '@angular/core/testing';
-
+import { TestBed, async } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { StudentGuard } from './student.guard';
 
-describe('StudentGuard', () => {
-  beforeEach(() => {
+describe('Guard for student', () => {
+  let studentGuard: StudentGuard;
+  let router: RouterTestingModule;
+  const routerSnapshot: any = jasmine.createSpyObj<RouterStateSnapshot>('RouterStateSnapshot', ['toString']);
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
-      providers: [StudentGuard]
-    });
+      imports: [RouterTestingModule, HttpClientTestingModule],
+      providers: [StudentGuard,
+        {provide: RouterStateSnapshot, useValue: routerSnapshot}]
+    })
+      .compileComponents();
+  }));
+
+  beforeEach(() => {
+    studentGuard = TestBed.get(StudentGuard);
+    router = TestBed.get(RouterTestingModule);
   });
 
-  it('should ...', inject([StudentGuard], (guard: StudentGuard) => {
-    expect(guard).toBeTruthy();
-  }));
+  it('canActivate should allow access', () => {
+    spyOn(studentGuard, 'isStudent').and.returnValue(true);
+    expect(studentGuard.canActivate(new ActivatedRouteSnapshot(), routerSnapshot)).toBe(true);
+  });
+  it('canActivate should deny access', () => {
+    spyOn(studentGuard, 'isStudent').and.returnValue(false);
+    expect(studentGuard.canActivate(new ActivatedRouteSnapshot(), routerSnapshot)).toBe(false);
+  });
+  it('canLoad should allow access', () => {
+    spyOn(studentGuard, 'isStudent').and.returnValue(true);
+    expect(studentGuard.canLoad(router)).toBe(true);
+  });
+  it('canLoad should deny access', () => {
+    spyOn(studentGuard, 'isStudent').and.returnValue(false);
+    expect(studentGuard.canLoad(router)).toBe(false);
+  });
 });

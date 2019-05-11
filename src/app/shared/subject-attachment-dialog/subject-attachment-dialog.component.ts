@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Subject} from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { HomeworkData } from '../../models/homework-data';
+import { Homework } from '../../models/homework-data';
 
 @Component({
   selector: 'app-subject-attachment-dialog',
@@ -21,7 +21,7 @@ export class SubjectAttachmentDialogComponent implements OnInit, AfterViewInit, 
   public attachmentRotationDegree = 0;
   constructor(
     public dialogRef: MatDialogRef<any>,
-    @Inject(MAT_DIALOG_DATA) public data: HomeworkData
+    @Inject(MAT_DIALOG_DATA) public data: Homework
   ) { }
   ngOnInit() {
     this.pdfOptions = new FormGroup({
