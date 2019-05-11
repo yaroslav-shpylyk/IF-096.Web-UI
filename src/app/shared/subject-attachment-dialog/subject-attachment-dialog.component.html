@@ -1,4 +1,3 @@
-<div mat-dialog-title>{{data.fileName}}</div>
 <div class="options">
   <form [formGroup]="pdfOptions" *ngIf="isPdf()">
     <mat-form-field>
@@ -22,25 +21,28 @@
     <div class="option">
       <button mat-mini-fab (click)="zoomAttachment('zoomExit')"><mat-icon>fullscreen_exit</mat-icon></button>
     </div>
-  </div>
-</div>
-<mat-divider></mat-divider>
-<div mat-dialog-content class="viewerContent">
-  <pdf-viewer *ngIf="isPdf()" [src]="attachmentUrl"
-              [show-all]="true"
-              [(page)]="pdfCurrentPage"
-              [zoom]="attachmentZoom"
-              [rotation]="attachmentRotationDegree"
-              (after-load-complete)="pdfLoaded($event)"></pdf-viewer>
-  <div class="imgViewer">
-    <div class="viewerWrapper">
-      <img *ngIf="isImage()"  [src]="attachmentUrl" alt=""
-           [ngStyle]="{ transform: 'rotate(' + attachmentRotationDegree + 'deg) scale(' + attachmentZoom + ')' }">
+    <div class="option" (click)="downloadFile()"><button mat-mini-fab><mat-icon>get_app</mat-icon></button>
     </div>
   </div>
-  <div *ngIf="isUnknownType()">Даний тип файлу не можна переглянути</div>
 </div>
 <mat-divider></mat-divider>
-<div mat-dialog-actions>
-  <button mat-button (click)="closeDialog()"></button>
-</div>
+<mat-dialog-content class="viewerContent" #viewerContentElem>
+  <pdf-viewer *ngIf="isPdf()" [src]="attachmentUrl"
+                [show-all]="true"
+                [(page)]="pdfCurrentPage"
+                [zoom]="attachmentZoom"
+                [rotation]="attachmentRotationDegree"
+                (after-load-complete)="pdfLoaded($event)"></pdf-viewer>
+  <div class="imgViewer" cdkDrag>
+    <img *ngIf="isImage()" [src]="attachmentUrl" alt=""
+         [ngStyle]="{
+         transform: 'rotate(' + this.attachmentRotationDegree + 'deg)' + ' scale(' + this.attachmentZoom + ')',
+         transition: '0.5s'
+         }">
+  </div>
+  <div *ngIf="isUnknownType()">Даний тип файлу не можна переглянути</div>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-actions>
+  <button mat-raised-button (click)="closeDialog()">Закрити</button>
+</mat-dialog-actions>

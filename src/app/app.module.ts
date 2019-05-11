@@ -18,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TeacherService } from './services/teacher.service';
 import { MatNativeDateModule } from '@angular/material';
 import { HomeworkStorageService } from './services/homework-storage.service';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +31,8 @@ import { HomeworkStorageService } from './services/homework-storage.service';
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    DragDropModule
   ],
   providers: [
     AuthService,

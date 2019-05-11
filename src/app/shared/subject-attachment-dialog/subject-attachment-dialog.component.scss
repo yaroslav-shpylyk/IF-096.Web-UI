@@ -1,9 +1,8 @@
-@import "../../../../styles";
+@import "../../../styles";
 
 .options {
   display: flex;
   justify-content: space-around;
-  margin-bottom: 1em;
   flex-wrap: wrap;
 
   form {
@@ -21,18 +20,24 @@
     flex-direction: row;
     justify-content: space-around;
     width: 70%;
+    flex-wrap: wrap;
   }
 
   .option {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 1em;
 
     button {
       display: flex;
       justify-content: center;
       align-items: center;
       background-color: $main-color;
+
+      &:hover {
+        background-color: $main-hover-color;
+      }
     }
 
     mat-icon {
@@ -44,8 +49,14 @@
   }
 
   @media (max-width: 640px) {
+    padding-bottom: 1em;
+
     .transformOptions {
       width: 100%;
+    }
+
+    .option {
+      margin: 0.5em 1em 0 1em;
     }
   }
 }
@@ -53,10 +64,30 @@
 .viewerContent {
   display: flex;
   background-color: grey;
-  max-height: 500px;
+  height: 70vh;
 
   .imgViewer {
-    width: 100%;
-    overflow: auto;
+    cursor: grab;
   }
+}
+
+mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  height: 1em;
+
+  button:hover {
+    background-color: #ebebeb;
+  }
+}
+
+::ng-deep .mat-dialog-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }

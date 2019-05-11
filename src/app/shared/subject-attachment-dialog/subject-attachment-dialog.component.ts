@@ -1,19 +1,20 @@
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Subject } from 'rxjs';
+import { Subject} from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { HomeworkData } from '../../../models/homework-data';
+import { HomeworkData } from '../../models/homework-data';
 
 @Component({
   selector: 'app-subject-attachment-dialog',
   templateUrl: './subject-attachment-dialog.component.html',
   styleUrls: ['./subject-attachment-dialog.component.scss']
 })
-export class SubjectAttachmentDialogComponent implements OnInit, OnDestroy {
+export class SubjectAttachmentDialogComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('viewerContentElem') viewerContentElem;
   private page = 1;
   private onDestroy$ = new Subject<void>();
-  public attachmentUrl: string;
+  public attachmentUrl: any;
   public pdfOptions: FormGroup;
   public attachmentZoom = 1;
   public pdfTotalPages: number;
@@ -23,7 +24,6 @@ export class SubjectAttachmentDialogComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: HomeworkData
   ) { }
   ngOnInit() {
-    console.log(this.data);
     this.pdfOptions = new FormGroup({
       page: new FormControl(1)
     });
@@ -34,10 +34,20 @@ export class SubjectAttachmentDialogComponent implements OnInit, OnDestroy {
         takeUntil(this.onDestroy$)
       )
       .subscribe(result => {
-      this.pdfCurrentPage = result;
+        if (result && result > 0) {
+          this.pdfCurrentPage = result;
+        }
     });
   }
-
+  ngAfterViewInit(): void {
+    if (this.isPdf()) {
+      this.viewerContentElem.nativeElement.style.overflow = 'auto';
+    } else {
+      this.viewerContentElem.nativeElement.style.overflow = 'hidden';
+      this.viewerContentElem.nativeElement.style['justify-content'] = 'center';
+      this.viewerContentElem.nativeElement.style['align-items'] = 'center';
+    }
+  }
   ngOnDestroy(): void {
     this.onDestroy$.next();
     this.onDestroy$.complete();
@@ -62,22 +72,20 @@ export class SubjectAttachmentDialogComponent implements OnInit, OnDestroy {
       if (this.attachmentZoom >= 2) {
         return;
       }
-      this.attachmentZoom += 0.1;
+      this.attachmentZoom += 0.2;
     } else if (type === 'zoomOut') {
-      if (this.attachmentZoom <= 0.2) {
+      if (this.attachmentZoom <= 0.4) {
         return;
       }
-      this.attachmentZoom -= 0.1;
+      this.attachmentZoom -= 0.2;
     } else if (type === 'zoomExit') {
       this.attachmentZoom = 1;
     }
    }
   public rotateAttachment(type: string): void {
     if (type === 'rotateLeft') {
-      this.attachmentRotationDegree = this.attachmentRotationDegree === 0 ? 360 : this.attachmentRotationDegree;
       this.attachmentRotationDegree -= 90;
     } else if (type === 'rotateRight') {
-      this.attachmentRotationDegree = this.attachmentRotationDegree === 360 ? 0 : this.attachmentRotationDegree;
       this.attachmentRotationDegree += 90;
     }
   }
@@ -92,6 +100,12 @@ export class SubjectAttachmentDialogComponent implements OnInit, OnDestroy {
   }
   public isUnknownType(): boolean {
     return !this.isImage() && !this.isPdf();
+  }
+  public downloadFile(): void {
+    const link = document.createElement('a');
+    link.href = this.attachmentUrl;
+    link.download = this.data.fileName;
+    link.click();
   }
 }
 
