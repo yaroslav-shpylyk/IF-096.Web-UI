@@ -12,6 +12,9 @@ import { StudentFooterMenuComponent } from '../student-book/footer-menu/footer-m
 import { TeacherHeaderMenuComponent } from '../journal/header-menu/header-menu.component';
 import { TeacherFooterMenuComponent } from '../journal/footer-menu/footer-menu.component';
 import { SubjectAttachmentDialogComponent } from './subject-attachment-dialog/subject-attachment-dialog.component';
+import { PdfViewerModule } from 'borm-ng2-pdf';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -29,12 +32,16 @@ import { SubjectAttachmentDialogComponent } from './subject-attachment-dialog/su
   imports: [
     CommonModule,
     MaterialModule,
-    RouterModule
+    RouterModule,
+    PdfViewerModule,
+    ReactiveFormsModule,
+    DragDropModule
   ],
   exports: [
     HeaderComponent,
     FooterComponent,
     AvatarComponent
-  ]
+  ],
+  entryComponents: [SubjectAttachmentDialogComponent]
 })
 export class SharedModule { }

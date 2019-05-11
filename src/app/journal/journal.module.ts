@@ -10,11 +10,6 @@ import { BottomSheetOverviewSheetComponent } from './journal/class-journal/subje
 // tslint:disable-next-line:max-line-length
 import { HomeworkBottomSheetOverviewSheetComponent } from './journal/class-journal/subject-journal/homework-bottom-sheet-overview.components';
 import { MatTooltipModule } from '@angular/material';
-import {
-  SubjectAttachmentDialogComponent
-} from '../shared/subject-attachment-dialog/subject-attachment-dialog.component';
-import { PdfViewerModule } from 'borm-ng2-pdf';
-import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -23,7 +18,6 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     SubjectJournalComponent,
     BottomSheetOverviewSheetComponent,
     HomeworkBottomSheetOverviewSheetComponent,
-    SubjectAttachmentDialogComponent
   ],
   imports: [
     CommonModule,
@@ -31,16 +25,13 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    PdfViewerModule,
-    DragDropModule
   ],
   exports: [
     MatTooltipModule
   ],
   entryComponents: [
     BottomSheetOverviewSheetComponent,
-    HomeworkBottomSheetOverviewSheetComponent,
-    SubjectAttachmentDialogComponent
+    HomeworkBottomSheetOverviewSheetComponent
   ]
 })
 export class JournalModule {}
