@@ -34,7 +34,7 @@
       </div>
       <div class="useOptionsWrapper">
         <div class="useOptions" *ngIf="homeworks[lessonId].fileName">
-          <button mat-button (click)="dwnl($event)" matTooltip="Скачати">
+          <button mat-button (click)="dwnl()" matTooltip="Скачати">
             <mat-icon>cloud_download</mat-icon>
           </button>
           <button mat-button (click)="openAttachment($event)" matTooltip="Переглянути">

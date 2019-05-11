@@ -12,8 +12,9 @@ import { HomeworkBottomSheetOverviewSheetComponent } from './journal/class-journ
 import { MatTooltipModule } from '@angular/material';
 import {
   SubjectAttachmentDialogComponent
-} from './journal/subject-attachment-dialog/subject-attachment-dialog.component';
+} from '../shared/subject-attachment-dialog/subject-attachment-dialog.component';
 import { PdfViewerModule } from 'borm-ng2-pdf';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { PdfViewerModule } from 'borm-ng2-pdf';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    PdfViewerModule
+    PdfViewerModule,
+    DragDropModule
   ],
   exports: [
     MatTooltipModule
