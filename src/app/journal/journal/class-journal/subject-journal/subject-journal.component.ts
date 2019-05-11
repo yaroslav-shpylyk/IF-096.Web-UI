@@ -101,10 +101,6 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
           this.elData.push(studentData);
           studentData = {};
         }
-        // if (!this.elData.length) {
-        //   this.journalsStorageService.loadingStateChanged.next(false);
-        //   return;
-        // }
         this.dataSource = this.elData;
         this.displayedColumns = this.lessonsIds;
         this.journal = journal.journals;
