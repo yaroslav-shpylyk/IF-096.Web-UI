@@ -16,7 +16,7 @@ export class ScheduleService {
    * @param classId - Id of class
    * @returns - Array with schedule data or error if that happens
    */
-  getSchedule(classId: number): Observable<any> {
+  getSchedule(classId: number): Observable<ScheduleData> {
     return this.http.get(`/classes/${classId}/schedule`).pipe(map(
       (response: {status: any, data: ScheduleData}) => response.data
     ));
@@ -27,9 +27,9 @@ export class ScheduleService {
    * @param classId - Id of class
    * @returns - Array with subjects data or error if that happens
    */
-  getSubjects(classId: number): Observable<any> {
+  getSubjects(classId: number): Observable<SubjectData[]> {
     return this.http.get(`/subjects?classId=${classId}`).pipe(map(
-      (response: {status: any, data: SubjectData}) => response.data
+      (response: {status: any, data: SubjectData[]}) => response.data
     ));
   }
 
@@ -39,7 +39,7 @@ export class ScheduleService {
    * @param data - Array with schedule data
    * @returns - Array with schedule data or error if that happens
    */
-  saveSchedule(classId: number, data: ScheduleData): Observable<any> {
+  saveSchedule(classId: number, data: ScheduleData): Observable<ScheduleData> {
     return this.http.post(`/classes/${classId}/schedule`, data).pipe(map(
       (response: {status: any, data: ScheduleData}) => response.data
     ));

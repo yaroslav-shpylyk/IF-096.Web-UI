@@ -80,9 +80,9 @@ export class ScheduleComponent implements OnInit {
   /** Method initializes the initial state of the form */
   initForm() {
     this.frmSchedule = this.frmBld.group({
-      dateTermStart: [''],
-      dateTermEnd: [''],
-      selectClass: ['', Validators.required]
+      dateTermStart: this.frmBld.control(''),
+      dateTermEnd: this.frmBld.control(''),
+      selectClass: this.frmBld.control('', Validators.required)
     });
 
     const dateValidators: ValidatorFn[] = [
