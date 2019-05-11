@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, mergeMap } from 'rxjs/operators';
 import { Subject, Observable, forkJoin } from 'rxjs';
 import { TeacherData } from '../models/teacher-data';
+import { TeacherWithClassData } from '../models/teacher-with-class-data';
 
 @Injectable()
 export class TeachersStorageService {
@@ -10,9 +11,9 @@ export class TeachersStorageService {
   public modalsId: number;
   public editMode: boolean;
   public defaultAvatar = 'assets/default-avatar.svg';
-  teacherAdded = new Subject();
-  teacherEdited = new Subject();
-  teacherDeleted = new Subject();
+  teacherAdded: Subject<TeacherData> = new Subject();
+  teacherEdited: Subject<{ id: number; obj: TeacherData }> = new Subject();
+  teacherDeleted: Subject<number> = new Subject();
 
   constructor(private httpClient: HttpClient) {}
 
@@ -51,9 +52,11 @@ export class TeachersStorageService {
    * @returns - array of teachers.
    */
   getTeacherS(): Observable<TeacherData[]> {
-    return this.httpClient.get('/teachers').pipe(
-      map((response: { status: any; data: TeacherData[] }) => response.data)
-    );
+    return this.httpClient
+      .get('/teachers')
+      .pipe(
+        map((response: { status: any; data: TeacherData[] }) => response.data)
+      );
   }
 
   /**
@@ -63,7 +66,7 @@ export class TeachersStorageService {
    * returns result being an array of teachers with all related data.
    * @returns - array of teachers.
    */
-  getTeachersWithClasses() {
+  getTeachersWithClasses(): Observable<TeacherWithClassData[]> {
     return this.getTeacherS().pipe(
       mergeMap(teachers => {
         const data = [];
@@ -80,12 +83,49 @@ export class TeachersStorageService {
   }
 
   /**
+   * Method takes an object of teacher, makes request to the server by provided teacher's
+   * id in order to get additional data such as teacher's classes and subjects
+   * supplies initial object with those data (if any) being sorted by classes and subjects.
+   * @param teacher - object representing teacher.
+   * @returns - object representing teacher.
+   */
+  getTeacherSubjectsClasses(teacher: TeacherData): Observable<any> {
+    return this.httpClient.get(`/journals/teachers/${teacher.id}`).pipe(
+      map((response: { status: any; data: any }) => {
+        const mappedTeacher: any = { ...teacher };
+        mappedTeacher.subjects = [];
+        mappedTeacher.classes = [];
+        const journalData = {};
+        for (const item of response.data) {
+          if (journalData[item.idClass]) {
+            journalData[item.idClass].subjectName.push(item.subjectName);
+            continue;
+          }
+          journalData[item.idClass] = {
+            className: item.className,
+            subjectName: [item.subjectName],
+            academicYear: item.academicYear
+          };
+          if (!mappedTeacher.subjects.includes(item.subjectName)) {
+            mappedTeacher.subjects.push(item.subjectName);
+          }
+          if (!mappedTeacher.classes.includes(item.className)) {
+            mappedTeacher.classes.push(item.className);
+          }
+        }
+        mappedTeacher.journalData = Object.values(journalData);
+        return mappedTeacher;
+      })
+    );
+  }
+
+  /**
    * Method fetches from the server a single
    * teacher object by provided id.
    * @param id - number representing id of requested teacher.
    * @returns - object representing teacher.
    */
-  getTeacher(id): Observable<TeacherData> {
+  getTeacher(id: number): Observable<TeacherData> {
     return this.httpClient.get(`/teachers/${id}`).pipe(
       map((response: { status: any; data: TeacherData }) => {
         const teacher = response.data;
@@ -106,7 +146,7 @@ export class TeachersStorageService {
    * @param id - number representing id of the teacher.
    * @returns - object representing teacher.
    */
-  getTeacherAndJournal(id) {
+  getTeacherAndJournal(id: number) {
     return this.getTeacher(id).pipe(
       mergeMap(teacher => {
         return this.getTeacherJournal(id).pipe(
@@ -126,10 +166,12 @@ export class TeachersStorageService {
    * @param teacher - object with new values.
    * @returns - object representing teacher.
    */
-  updateTeacher(id, updTeacher): Observable<TeacherData> {
-    return this.httpClient.put(`/admin/teachers/${id}`, updTeacher).pipe(
-      map((response: { status: any; data: TeacherData }) => response.data)
-    );
+  updateTeacher(id: number, updTeacher: TeacherData): Observable<TeacherData> {
+    return this.httpClient
+      .put(`/admin/teachers/${id}`, updTeacher)
+      .pipe(
+        map((response: { status: any; data: TeacherData }) => response.data)
+      );
   }
 
   /**
@@ -138,7 +180,7 @@ export class TeachersStorageService {
    * @param id - number representing id of the teacher.
    * @returns - object representing deleted teacher.
    */
-  deleteTeacher(id): Observable<TeacherData> {
+  deleteTeacher(id: number): Observable<TeacherData> {
     return this.httpClient.patch<any>(`/users/${id}`, { observe: 'response' });
   }
 
@@ -148,7 +190,7 @@ export class TeachersStorageService {
    * @param newTeacher - object with new values.
    * @returns - object representing newly created teacher.
    */
-  addTeacher(newTeacher): Observable<any> {
+  addTeacher(newTeacher: TeacherData): Observable<any> {
     return this.httpClient.post(`/teachers`, newTeacher, {
       observe: 'response'
     });
@@ -160,7 +202,7 @@ export class TeachersStorageService {
    * @param teacherId - number representing id of the journal.
    * @returns - an array of objects with subjects grouped by classes.
    */
-  getTeacherJournal(teacherId): Observable<any> {
+  getTeacherJournal(teacherId: number): Observable<any> {
     return this.httpClient.get(`/journals/teachers/${teacherId}`).pipe(
       map((response: { status: any; data: any }) => {
         const journalData = {};
@@ -176,42 +218,6 @@ export class TeachersStorageService {
           };
         }
         return Object.values(journalData);
-      })
-    );
-  }
-
-  /**
-   * Method takes an object of teacher, makes request to the server by provided teacher's
-   * id in order to get additional data such as teacher's classes and subjects
-   * supplies initial object with those data (if any) being sorted by classes and subjects.
-   * @param teacher - object representing teacher.
-   * @returns - object representing teacher.
-   */
-  getTeacherSubjectsClasses(teacher): Observable<any> {
-    return this.httpClient.get(`/journals/teachers/${teacher.id}`).pipe(
-      map((response: { status: any; data: any }) => {
-        teacher.subjects = [];
-        teacher.classes = [];
-        const journalData = {};
-        for (const item of response.data) {
-          if (journalData[item.idClass]) {
-            journalData[item.idClass].subjectName.push(item.subjectName);
-            continue;
-          }
-          journalData[item.idClass] = {
-            className: item.className,
-            subjectName: [item.subjectName],
-            academicYear: item.academicYear
-          };
-          if (!teacher.subjects.includes(item.subjectName)) {
-            teacher.subjects.push(item.subjectName);
-          }
-          if (!teacher.classes.includes(item.className)) {
-            teacher.classes.push(item.className);
-          }
-        }
-        teacher.journalData = Object.values(journalData);
-        return teacher;
       })
     );
   }

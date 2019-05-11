@@ -24,7 +24,7 @@ export class ClassJournalComponent implements OnInit, OnDestroy {
   data: string;
 
   displayedColumns: string[] = ['num', 'subjectName', 'academicYear'];
-  journalData;
+  journalData: MatTableDataSource<{}>;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -87,7 +87,7 @@ export class ClassJournalComponent implements OnInit, OnDestroy {
    * which route user should navigate further.
    * @param row - object representing a discipline.
    */
-  selectRow(row) {
+  selectRow(row: { idClass: number; idSubject: number; }) {
     if (this.idTeacher) {
       this.router.navigate([
         `/journals/class/${row.idClass}/subject/${row.idSubject}`
