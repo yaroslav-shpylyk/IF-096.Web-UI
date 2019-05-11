@@ -36,7 +36,7 @@ import { environment } from '../environments/environment';
     FormsModule,
     ReactiveFormsModule,
     MatNativeDateModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, scope: '/' })
   ],
   providers: [
     AuthService,
