@@ -20,5 +20,11 @@ body {
   width: 95vw;
   height: 65vh;
 }
+.full-screen-modal.hidden {
+  visibility: hidden;
+  *{
+    visibility: hidden;
+  }
+}
 
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';

@@ -1,8 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import {MAT_DIALOG_DATA, MatTabChangeEvent} from '@angular/material';
+import { Component, OnInit, Inject, ElementRef, ViewChild, Renderer2  } from '@angular/core';
+import {MAT_DIALOG_DATA, MatTabChangeEvent, MatDialogRef} from '@angular/material';
 import { ChartDataSets, ChartType, ChartOptions } from 'chart.js';
 import { ClassData } from '../../../models/class-data';
-
+import {PdfGeneratorService} from '../../../services/pdf-generator.service';
 export interface YearTotalCount {
   year: number;
   total: number;
@@ -25,7 +25,12 @@ export interface TransitionStatisticData {
 })
 export class StatisticsComponent implements OnInit {
 
-  constructor( @Inject(MAT_DIALOG_DATA) public data: any ) { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialogRef: MatDialogRef<StatisticsComponent>,
+    private pdfGenerator: PdfGeneratorService,
+    private renderer: Renderer2
+  ) { }
 
   public transititionStatistic: TransitionStatisticData;
   public displayedColumns: string[] = ['year', 'total', 'trend'];
@@ -35,6 +40,12 @@ export class StatisticsComponent implements OnInit {
   public chartType: ChartType = 'bar';
   public maxYNumber = 0;
   public minYNumber = 0;
+  public activeTab = 0;
+  public showPdfTip = false;
+  @ViewChild('chartWrap') chartWrap: ElementRef;
+  @ViewChild('chart') chart: ElementRef;
+  @ViewChild('tableWrap', {read: ElementRef}) tableWrap: ElementRef;
+  @ViewChild('totalCountTable', {read: ElementRef}) totalCountTable: ElementRef;
 
   public deltaChartOpt = {
     data: [],
@@ -74,8 +85,6 @@ export class StatisticsComponent implements OnInit {
       ],
     },
   };
-
-
 
   ngOnInit() {
     this.transititionStatistic = this.getStatistic(this.data.allClasses);
@@ -149,4 +158,57 @@ export class StatisticsComponent implements OnInit {
     this.chartData.push(this.graduatedChartOpt);
   }
 
+  onTabClick(event: MatTabChangeEvent) {
+    this.activeTab = event.index;
+  }
+
+  public downloadPDF() {
+    let htmlWrap: ElementRef;
+    let htmlContent: ElementRef;
+    let title: string;
+    if (this.activeTab === 0) {
+      htmlContent = this.chart;
+      htmlWrap = this.chartWrap;
+      title = 'Рух учнів за минулі 5 років';
+    } else {
+      htmlContent = this.totalCountTable;
+      htmlWrap = this.totalCountTable;
+      title = 'Наповнюваність за минулі 5 років';
+    }
+    const width = htmlWrap.nativeElement.offsetWidth;
+    const height = htmlWrap.nativeElement.offsetHeight;
+    this.reziseWrap(htmlWrap, 'l', width, height);
+    this.showPreloader();
+    this.generatePdf(htmlContent, htmlWrap, 'l', width, height, title);
+  }
+
+  public reziseWrap(contentWrap: ElementRef, orientation: 'p'|'l', width, height): void {
+    switch (orientation) {
+      case 'l':
+        this.renderer.setStyle(contentWrap.nativeElement, 'width', `${width * 1.5}px`);
+        this.renderer.setStyle(contentWrap.nativeElement, 'height', `${height * 1.5}px`);
+        break;
+      case 'p':
+      default:
+        this.renderer.setStyle(contentWrap.nativeElement, 'width', '800px');
+        this.renderer.setStyle(contentWrap.nativeElement, 'height', '1200px');
+        break;
+    }
+  }
+
+  public showPreloader(): void {
+    this.dialogRef.addPanelClass('hidden');
+    this.showPdfTip = true;
+  }
+
+  public generatePdf(contentElem: ElementRef, wrap: ElementRef, orientation: 'p'|'l', width: number, height: number, title: string): void {
+    setTimeout(() => {
+      this.pdfGenerator.generateImagePdf(contentElem, orientation, title, width, height);
+      wrap.nativeElement.style.width = `${width}px`;
+      wrap.nativeElement.style.height = `${height}px`;
+      wrap.nativeElement.style = '';
+      this.showPdfTip = false;
+      this.dialogRef.removePanelClass('hidden');
+    }, 3000);
+  }
 }
