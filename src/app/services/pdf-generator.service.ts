@@ -14,6 +14,14 @@ export class PdfGeneratorService {
   public pageWidth: number;
   public pageHeight: number;
 
+  /**
+   * Generated pdf document that contain image created from html content
+   * @params htmlContent - content, that will be contained into documnent
+   * @params orientation - orientation of the document (landscape or portrait)
+   * @params docTitle - title of the document
+   * @params imgWidth - width of html content (px)
+   * @params imgHeight - height of html content (px)
+   */
   generateImagePdf(htmlContent: ElementRef, orientation: 'p'|'l', docTitle?: string, imgWidth?: number, imgHeight?: number) {
     const content = htmlContent.nativeElement;
     const contentWidth = imgWidth || htmlContent.nativeElement.width;
@@ -53,12 +61,23 @@ export class PdfGeneratorService {
     });
   }
 
+  /**
+   * Method that sets title in the top of document
+   * @params pdfDocument - pdf document, jsPDF object
+   * @params pdfTitle - title of document
+   * @params paddings - size of paddings in document
+   */
   setTitle(pdfDocument: jsPDF, pdfTitle: string, paddings: number): void {
     pdfDocument.setFontSize(18);
     const xOffset = (this.pageWidth / 2) - (pdfDocument.getStringUnitWidth(pdfTitle) * pdfDocument.internal.getFontSize() / 2);
     pdfDocument.text(pdfTitle.toUpperCase(), xOffset, paddings);
   }
 
+  /**
+   * Method that sets header and footer text into document
+   * @params pdfDocument - pdf document, jsPDF object
+   * @params paddings - size of paddings in document
+   */
   setHeaderFooter(pdfDocument: jsPDF, paddings: number): void {
     pdfDocument.setFontSize(10);
     pdfDocument.setTextColor(100);
@@ -67,10 +86,19 @@ export class PdfGeneratorService {
     pdfDocument.text(this.todayDate, xOffset, this.pageHeight - paddings / 2);
   }
 
+  /**
+   * Method that start process of saving pdf document
+   * @params pdfDocument - pdf document, jsPDF object
+   * @params title - filename of genarated document
+   */
   savePdf(pdfDocument: jsPDF, title: string): void {
     pdfDocument.save(title);
   }
 
+  /**
+   * Method return current data
+   * @returns - current date (dd/mm/yyyy)
+   */
   get todayDate(): string {
     const curDate = new Date();
     const dd = String(curDate.getDate()).padStart(2, '0');
@@ -80,4 +108,3 @@ export class PdfGeneratorService {
     return todayDate;
   }
 }
-
