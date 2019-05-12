@@ -56,6 +56,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { ClassCardComponent } from './new-year/class-card/class-card.component';
 import { StickyButtonComponent } from './sticky-button/sticky-button.component';
 import { ListPopupComponent } from './new-year/class-card/list-popup/list-popup.component';
+import { StatisticsComponent } from './new-year/statistics/statistics.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 @NgModule({
@@ -84,6 +86,8 @@ import { ListPopupComponent } from './new-year/class-card/list-popup/list-popup.
     TeacherConnectionComponent,
     ConfirmationDialogComponent,
     ClassCardComponent,
+    ListPopupComponent,
+    StatisticsComponent,
     StickyButtonComponent,
     ListPopupComponent
   ],
@@ -122,6 +126,7 @@ import { ListPopupComponent } from './new-year/class-card/list-popup/list-popup.
     SharedModule,
     MatStepperModule,
     MatTooltipModule,
+    MatTabsModule
   ],
   entryComponents: [
     AddModifyGroupComponent,
@@ -134,7 +139,8 @@ import { ListPopupComponent } from './new-year/class-card/list-popup/list-popup.
     ModifySubjectsComponent,
     ConfirmationDialogComponent,
     ClassCardComponent,
-    ListPopupComponent
+    ListPopupComponent,
+    StatisticsComponent
   ],
   providers: []
 })
