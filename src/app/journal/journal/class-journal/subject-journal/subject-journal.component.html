@@ -1,7 +1,22 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 <h1 *ngIf="!isLoading && !dataSource">Журнал ще не створений</h1>
-<div *ngIf="dataSource" class="wrapper">
-  <table *ngIf="dataSource" mat-table [dataSource]="dataSource">
+
+<div class="global-wrapper"
+*ngIf="dataSource"
+>
+  <h1>Журнал {{(currentClass$ | async)?.className}} класу</h1>
+  <h3>з дисципліни {{(currentSubject$ | async)?.subjectName}}</h3>
+
+<div
+  *ngIf="dataSource"
+  class="table-wrapper"
+>
+
+  <table
+    *ngIf="dataSource"
+    mat-table
+    [dataSource]="dataSource"
+  >
     <ng-container
       *ngFor="let column of displayedColumns; let i = index"
       [matColumnDef]="column"
@@ -21,8 +36,8 @@
         {{ column !== 'star' ? thRow[i] : '' }}
         <i
           *ngIf="
-            (homeworks[column]?.homework !== '' ||
-              homeworks[column]?.fileName !== '') &&
+            (homeworks[column]?.homework||
+              homeworks[column]?.fileName) &&
             column !== 'star' &&
             column !== 'studentFullName'
           "
@@ -30,7 +45,10 @@
         >
           attach_file
         </i>
-        <i *ngIf="column == 'star'" class="material-icons">
+        <i
+          *ngIf="column == 'star'"
+          class="material-icons"
+        >
           trending_up
         </i>
       </th>
@@ -47,7 +65,14 @@
       </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr
+      mat-header-row
+      *matHeaderRowDef="displayedColumns"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+    ></tr>
   </table>
+</div>
 </div>
