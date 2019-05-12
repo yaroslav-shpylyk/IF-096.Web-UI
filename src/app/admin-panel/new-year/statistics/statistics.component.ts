@@ -162,7 +162,10 @@ export class StatisticsComponent implements OnInit {
     this.activeTab = event.index;
   }
 
-  public downloadPDF() {
+  /**
+   * Method that start pdf creating procces based on content of active tab
+   */
+  public downloadPDF(): void {
     let htmlWrap: ElementRef;
     let htmlContent: ElementRef;
     let title: string;
@@ -182,6 +185,13 @@ export class StatisticsComponent implements OnInit {
     this.generatePdf(htmlContent, htmlWrap, 'l', width, height, title);
   }
 
+  /**
+   * Method resizes container with html content for increasing quality of image in pdf
+   * @param contentWrap - element that contain html, that will be included to pdf
+   * @param orientation - page orientation
+   * @param width - current width of contentWrap
+   * @param height - current height of contentWrap
+   */
   public reziseWrap(contentWrap: ElementRef, orientation: 'p'|'l', width, height): void {
     switch (orientation) {
       case 'l':
@@ -196,11 +206,23 @@ export class StatisticsComponent implements OnInit {
     }
   }
 
+  /**
+   * Shows overlay window during wrapper resizing
+   */
   public showPreloader(): void {
     this.dialogRef.addPanelClass('hidden');
     this.showPdfTip = true;
   }
 
+  /**
+   * Start generating pdf document and hide overlay window
+   * @param contentElem - element that contain html, that will be included to pdf
+   * @param wrap - container thaht wrap contentElem
+   * @param orientation - page orientation
+   * @param width - current width of contentWrap
+   * @param height - current height of contentWrap
+   * @param title - title of document
+   */
   public generatePdf(contentElem: ElementRef, wrap: ElementRef, orientation: 'p'|'l', width: number, height: number, title: string): void {
     setTimeout(() => {
       this.pdfGenerator.generateImagePdf(contentElem, orientation, title, width, height);
@@ -209,6 +231,6 @@ export class StatisticsComponent implements OnInit {
       wrap.nativeElement.style = '';
       this.showPdfTip = false;
       this.dialogRef.removePanelClass('hidden');
-    }, 3000);
+    }, 1000);
   }
 }
