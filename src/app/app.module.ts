@@ -36,7 +36,7 @@ import { environment } from '../environments/environment';
     FormsModule,
     ReactiveFormsModule,
     MatNativeDateModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, scope: '/' })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     AuthService,
@@ -50,10 +50,10 @@ import { environment } from '../environments/environment';
       useClass: TokenInterceptorService,
       multi: true
     },
-    {provide: MAT_DATE_LOCALE, useValue: 'ua-UA'},
+    { provide: MAT_DATE_LOCALE, useValue: 'ua-UA' },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
   entryComponents: [ErrorComponent]
 })
-export class AppModule {}
+export class AppModule { }
