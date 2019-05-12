@@ -2,29 +2,25 @@ table {
   width: 100%;
 }
 
-.editDot {
-  font-size: 1.5em;
-  padding-left: 7px;
-}
-
-mat-form-field {
-  width: 95%;
-}
-
-.threeDots {
+#scrollTop {
+  position: fixed;
+  bottom: 2.3em;
+  right: 1em;
+  transition: bottom 0.9s;
+  color: #1565c0;
   cursor: pointer;
 }
 
-.example-button-row {
-  position: fixed;
-  bottom: 3em;
-  right: 1em;
+.btn {
+  font-size: 3em;
 }
 
-.example-button-row button,
-.example-button-row a {
-  margin-right: 8px;
-  font-size: 1.6em;
+#scrollBottom {
+  position: fixed;
+  bottom: -3.3em;
+  right: 1em;
+  transition: 0.9s;
+  color: #1565c0;
 }
 
 .wrapper {
@@ -46,3 +42,8 @@ mat-form-field {
   background-color: #dcdcdc;
   cursor: pointer;
 }
+
+.elipsis {
+  margin-left: 50%;
+}
+

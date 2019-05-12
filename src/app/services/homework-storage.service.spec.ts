@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { HomeworkStorageService } from './homework-storage.service.ts.service';
+import { HomeworkStorageService } from './homework-storage.service';
 
 describe('HomeworkStorage.Service.TsService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
