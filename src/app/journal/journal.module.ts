@@ -10,9 +10,6 @@ import { BottomSheetOverviewSheetComponent } from './journal/class-journal/subje
 // tslint:disable-next-line:max-line-length
 import { HomeworkBottomSheetOverviewSheetComponent } from './journal/class-journal/subject-journal/homework-bottom-sheet-overview.components';
 import { MatTooltipModule } from '@angular/material';
-import {
-  SubjectAttachmentDialogComponent
-} from './journal/class-journal/subject-journal/subject-attachment-dialog/subject-attachment-dialog.component';
 
 @NgModule({
   declarations: [
@@ -21,22 +18,20 @@ import {
     SubjectJournalComponent,
     BottomSheetOverviewSheetComponent,
     HomeworkBottomSheetOverviewSheetComponent,
-    SubjectAttachmentDialogComponent
   ],
   imports: [
     CommonModule,
     JournalRoutingModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [
     MatTooltipModule
   ],
   entryComponents: [
     BottomSheetOverviewSheetComponent,
-    HomeworkBottomSheetOverviewSheetComponent,
-    SubjectAttachmentDialogComponent
+    HomeworkBottomSheetOverviewSheetComponent
   ]
 })
 export class JournalModule {}
