@@ -15,7 +15,7 @@ import { takeUntil } from 'rxjs/operators';
 export class ChartComponent implements OnInit, OnDestroy {
   public chartWidth: string;
   private windowWidth: number;
-  private onDestroy = new Subject();
+  private onDestroy$ = new Subject();
   public chartLabels: Label[] = [''];
   public chartType: ChartType = 'bar';
   public chartLegend = true;
@@ -38,14 +38,15 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.progressService.getSubjectChartData()
-      .pipe(takeUntil(this.onDestroy))
+      .pipe(takeUntil(this.onDestroy$))
       .subscribe(result => this.createSubjectChart(result));
     this.progressService.getStudentChartData()
-      .pipe(takeUntil(this.onDestroy))
+      .pipe(takeUntil(this.onDestroy$))
       .subscribe(result => this.createStudentChart(result));
   }
   ngOnDestroy() {
-    this.onDestroy.next();
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
   }
 
   /**
