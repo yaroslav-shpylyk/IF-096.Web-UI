@@ -65,5 +65,9 @@ mat-dialog-content {
 	    align-items: center;
 			justify-content: center;
 			flex-direction: column;
+			.pdf-icon {
+				width: 128px;
+				height: 128px;
+			}
 		}
 }

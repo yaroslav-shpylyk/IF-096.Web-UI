@@ -180,7 +180,7 @@ export class StatisticsComponent implements OnInit {
     }
     const width = htmlWrap.nativeElement.offsetWidth;
     const height = htmlWrap.nativeElement.offsetHeight;
-    this.reziseWrap(htmlWrap, 'l', width, height);
+    this.reziseWrap(htmlWrap, 'l');
     this.showPreloader();
     this.generatePdf(htmlContent, htmlWrap, 'l', width, height, title);
   }
@@ -189,19 +189,17 @@ export class StatisticsComponent implements OnInit {
    * Method resizes container with html content for increasing quality of image in pdf
    * @param contentWrap - element that contain html, that will be included to pdf
    * @param orientation - page orientation
-   * @param width - current width of contentWrap
-   * @param height - current height of contentWrap
    */
-  public reziseWrap(contentWrap: ElementRef, orientation: 'p'|'l', width, height): void {
+  public reziseWrap(contentWrap: ElementRef, orientation: 'p'|'l'): void {
     switch (orientation) {
       case 'l':
-        this.renderer.setStyle(contentWrap.nativeElement, 'width', `${width * 1.5}px`);
-        this.renderer.setStyle(contentWrap.nativeElement, 'height', `${height * 1.5}px`);
+        this.renderer.setStyle(contentWrap.nativeElement, 'width', `800px`);
+        this.renderer.setStyle(contentWrap.nativeElement, 'height', `500px`);
         break;
       case 'p':
       default:
-        this.renderer.setStyle(contentWrap.nativeElement, 'width', '800px');
-        this.renderer.setStyle(contentWrap.nativeElement, 'height', '1200px');
+        this.renderer.setStyle(contentWrap.nativeElement, 'width', '500px');
+        this.renderer.setStyle(contentWrap.nativeElement, 'height', '800px');
         break;
     }
   }
@@ -224,8 +222,17 @@ export class StatisticsComponent implements OnInit {
    * @param title - title of document
    */
   public generatePdf(contentElem: ElementRef, wrap: ElementRef, orientation: 'p'|'l', width: number, height: number, title: string): void {
+    let newWidth: number;
+    let newHeight: number;
+    if (orientation === 'l') {
+      newWidth = 800;
+      newHeight = 500;
+    } else {
+      newWidth = 500;
+      newHeight = 800;
+    }
     setTimeout(() => {
-      this.pdfGenerator.generateImagePdf(contentElem, orientation, title, width, height);
+      this.pdfGenerator.generateImagePdf(contentElem, orientation, title, newWidth, newHeight);
       wrap.nativeElement.style.width = `${width}px`;
       wrap.nativeElement.style.height = `${height}px`;
       wrap.nativeElement.style = '';
