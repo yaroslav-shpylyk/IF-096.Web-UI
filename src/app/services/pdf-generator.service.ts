@@ -41,17 +41,9 @@ export class PdfGeneratorService {
       const paddings = 50;
       const titleHeight = 20;
 
-      if ( contentWidth < this.pageWidth ) {
-        imgWidth = contentWidth;
-      } else {
-        imgWidth = contentWidth * ((this.pageWidth - 2 * paddings) / contentWidth);
-      }
+      imgWidth = contentWidth * ((this.pageWidth - 2 * paddings) / contentWidth);
+      imgHeight = contentHeight * ((this.pageHeight - 2 * paddings) / contentHeight) * (contentHeight / contentWidth) ;
 
-      if ( contentHeight < this.pageHeight ) {
-        imgHeight = contentHeight;
-      } else {
-        imgHeight = imgWidth / (contentWidth / contentHeight);
-      }
       const positionX = this.pageWidth / 2 - imgWidth / 2;
       const positionY = titleHeight + paddings;
       this.setTitle(pdfDocument, title, paddings);
