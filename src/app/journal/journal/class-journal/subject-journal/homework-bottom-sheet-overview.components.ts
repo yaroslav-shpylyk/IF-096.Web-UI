@@ -3,10 +3,12 @@ import {
   MatBottomSheetRef,
   MAT_BOTTOM_SHEET_DATA,
   MatSnackBar,
-  MatSnackBarConfig
+  MatSnackBarConfig,
+  MatDialog
 } from '@angular/material';
 import { HomeworkStorageService } from '../../../../services/homework-storage.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { SubjectAttachmentDialogComponent } from '../../../../shared/subject-attachment-dialog/subject-attachment-dialog.component';
 
 @Component({
   selector: 'app-homework-bottom-sheet',
@@ -17,7 +19,6 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
   file: string;
   fileName: string;
   fileType: string;
-  valChanged = false;
   homeworkForm: FormGroup;
   selectedFileName: string;
   lessonId = this.data.lessonId;
@@ -31,7 +32,8 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
     public snackBar: MatSnackBar,
     private bottomSheetRef: MatBottomSheetRef<
       HomeworkBottomSheetOverviewSheetComponent
-    >
+    >,
+    public attachmentDialog: MatDialog
   ) {}
 
   /**
@@ -52,7 +54,6 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
       ]
     });
   }
-
   /**
    * Method gathers provided by user information, creates an object from
    * that and sends it to the server by saveHomework method in order to
@@ -217,5 +218,22 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
     config.duration = 2000;
     config.verticalPosition = 'top';
     this.snackBar.open(message, null, config);
+  }
+
+  /**
+   * Method opens dialog for attachment view
+   * @param event - Event object
+   */
+  public openAttachment(event): void {
+    event.preventDefault();
+    this.homeworkStorageService.saveFile(this.lessonId).subscribe(data => {
+      this.attachmentDialog.open(SubjectAttachmentDialogComponent, {
+        width: '97vw',
+        height: '93vh',
+        maxWidth: '97vw',
+        maxHeight: '90vh',
+        data
+      });
+    });
   }
 }

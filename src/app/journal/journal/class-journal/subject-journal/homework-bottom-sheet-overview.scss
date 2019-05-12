@@ -6,3 +6,29 @@ span {
 .file-name-wrapper {
   text-align: center;
 }
+
+.fileName {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.useOptionsWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .useOptions {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 40%;
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: grey;
+    }
+  }
+}
