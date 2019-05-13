@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy, ViewChild, AfterViewInit, Renderer2 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Subject} from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -12,6 +12,8 @@ import { Homework } from '../../models/homework-data';
 })
 export class SubjectAttachmentDialogComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('viewerContentElem') viewerContentElem;
+  @ViewChild('imgViewer') imgViewer;
+  @ViewChild('img') img;
   private page = 1;
   private onDestroy$ = new Subject<void>();
   public attachmentUrl: any;
@@ -21,7 +23,8 @@ export class SubjectAttachmentDialogComponent implements OnInit, AfterViewInit, 
   public attachmentRotationDegree = 0;
   constructor(
     public dialogRef: MatDialogRef<any>,
-    @Inject(MAT_DIALOG_DATA) public data: Homework
+    @Inject(MAT_DIALOG_DATA) public data: Homework,
+    private renderer: Renderer2
   ) { }
   ngOnInit() {
     this.pdfOptions = new FormGroup({
@@ -81,6 +84,7 @@ export class SubjectAttachmentDialogComponent implements OnInit, AfterViewInit, 
     } else if (type === 'zoomExit') {
       this.attachmentZoom = 1;
     }
+    this.updateTransform();
    }
   public rotateAttachment(type: string): void {
     if (type === 'rotateLeft') {
@@ -88,6 +92,7 @@ export class SubjectAttachmentDialogComponent implements OnInit, AfterViewInit, 
     } else if (type === 'rotateRight') {
       this.attachmentRotationDegree += 90;
     }
+    this.updateTransform();
   }
   public pdfLoaded(event): void {
     this.pdfTotalPages = event._pdfInfo.numPages;
@@ -106,6 +111,15 @@ export class SubjectAttachmentDialogComponent implements OnInit, AfterViewInit, 
     link.href = this.attachmentUrl;
     link.download = this.data.fileName;
     link.click();
+  }
+  private updateTransform(): void {
+    if (this.isImage()) {
+      this.renderer.setStyle(
+        this.img.nativeElement,
+        'transform',
+        `rotate(${this.attachmentRotationDegree}deg) scale(${this.attachmentZoom})`
+      );
+    }
   }
 }
 
