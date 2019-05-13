@@ -6,7 +6,7 @@ import { AdminPanelGuard } from './admin-panel.guard';
 
 describe('Guard for admin panel', () => {
   let adminGuard: AdminPanelGuard;
-  let routerSnapshot: any = jasmine.createSpyObj<RouterStateSnapshot>('RouterStateSnapshot', ['toString']);
+  const routerSnapshot: any = jasmine.createSpyObj<RouterStateSnapshot>('RouterStateSnapshot', ['toString']);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

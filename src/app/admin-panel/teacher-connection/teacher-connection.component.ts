@@ -81,10 +81,10 @@ export class TeacherConnectionComponent implements OnInit {
   }
 
   /**
-  * The method that is called after the formSubmit
-  * confirmation of the choice of values ​​to add them to the journl
-  * @param data - object of the form that gives values ​​selected in the form
-  */
+   * The method that is called after the formSubmit
+   * confirmation of the choice of values ​​to add them to the journl
+   * @param data - object of the form that gives values ​​selected in the form
+   */
   onSubmit(data) {
     this.teacherjournalServise
       .sentDataToJournal(

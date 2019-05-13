@@ -56,7 +56,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ClassCardComponent } from './new-year/class-card/class-card.component';
 import { StickyButtonComponent } from './sticky-button/sticky-button.component';
 import { ListPopupComponent } from './new-year/class-card/list-popup/list-popup.component';
-import { TeachersComponent } from './teachers/teachers.component';
 import { StatisticsComponent } from './new-year/statistics/statistics.component';
 import { MatTabsModule } from '@angular/material/tabs';
 
@@ -88,7 +87,6 @@ import { MatTabsModule } from '@angular/material/tabs';
     ConfirmationDialogComponent,
     ClassCardComponent,
     ListPopupComponent,
-    TeachersComponent,
     StatisticsComponent,
     StickyButtonComponent,
     ListPopupComponent
