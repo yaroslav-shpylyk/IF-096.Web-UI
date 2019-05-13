@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "node server.js",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -22,7 +22,9 @@
     "@angular/material-moment-adapter": "^7.3.7",
     "@angular/platform-browser": "~7.2.0",
     "@angular/platform-browser-dynamic": "~7.2.0",
+    "@angular/pwa": "0.12",
     "@angular/router": "~7.2.0",
+    "@angular/service-worker": "~7.2.0",
     "@egjs/hammerjs": "^2.0.15",
     "chart.js": "^2.8.0",
     "core-js": "^2.5.4",
@@ -37,6 +39,8 @@
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26",
+    "express": "4.16.4",
+    "path": "0.12.7",
     "borm-ng2-pdf": "^5.2.9"
   },
   "devDependencies": {
