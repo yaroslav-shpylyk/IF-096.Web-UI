@@ -1,4 +1,10 @@
 .chart {
   margin-top: 1em;
   overflow-x: auto;
+
+  .chartContainer {
+    canvas {
+      min-height: 350px;
+    }
+  }
 }

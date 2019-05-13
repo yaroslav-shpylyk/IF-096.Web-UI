@@ -17,14 +17,14 @@ import { MatTooltipModule } from '@angular/material';
     ClassJournalComponent,
     SubjectJournalComponent,
     BottomSheetOverviewSheetComponent,
-    HomeworkBottomSheetOverviewSheetComponent
+    HomeworkBottomSheetOverviewSheetComponent,
   ],
   imports: [
     CommonModule,
     JournalRoutingModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [
     MatTooltipModule
