@@ -38,4 +38,17 @@ export class SubjectService {
   editSubject(id: number, subj: SubjectData): Observable<SubjectData> {
     return this.http.put<SubjectData>(`/subjects/${id}`, subj);
   }
+
+  /**
+   * Method fetches a single subject by provided id.
+   * @param subjectId - number representing id.
+   * @returns - object representing a subject.
+   */
+  public getSubject(subjectId: number): Observable<SubjectData> {
+    return this.http.get(`/subjects/${subjectId}`).pipe(
+      map((response: { status: any; data: SubjectData }) => {
+        return response.data;
+      })
+    );
+  }
 }

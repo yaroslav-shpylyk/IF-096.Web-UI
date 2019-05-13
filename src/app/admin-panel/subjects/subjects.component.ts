@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { SubjectService } from '../../services/subject.service';
 import { SubjectData } from '../../models/subject-data';
 import { MatTableDataSource, MatSort } from '@angular/material';
@@ -16,6 +16,19 @@ export class SubjectsComponent implements OnInit {
   public displayedColumns: string[] = ['subjectName', 'subjectDescription', 'edit'];
   public dataSource: MatTableDataSource<SubjectData>;
   @ViewChild(MatSort) sort: MatSort;
+  prevScrollpos = window.pageYOffset;
+  scroll = 'scrollTop';
+
+  @HostListener('window:scroll', [])
+  onScrollEvent() {
+    const currentScrollPos = window.pageYOffset;
+    if (this.prevScrollpos > currentScrollPos) {
+      this.scroll = 'scrollTop';
+    } else {
+      this.scroll = 'scrollBottom';
+    }
+    this.prevScrollpos = currentScrollPos;
+  }
 
   constructor(public subjectService: SubjectService,
               public dialog: MatDialog) { }

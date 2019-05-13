@@ -69,7 +69,7 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   addSubscription: Subscription;
   editSubscription: Subscription;
   deleteSubscription: Subscription;
-  dataSource;
+  dataSource: MatTableDataSource<{}> | MatTableDataSource<any>;
   mappedTeachers = new Object() as any;
 
   displayedColumns: string[] = [
@@ -94,7 +94,7 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.addSubscription = this.teachersStorageService.teacherAdded.subscribe(
       resp => {
-        const newTeacher: any = resp;
+        const newTeacher = resp;
         this.mappedTeachers[newTeacher.id] = newTeacher;
         this.dataSource = new MatTableDataSource(
           Object.values(this.mappedTeachers)
@@ -105,7 +105,7 @@ export class TeachersListComponent implements OnInit, OnDestroy {
 
     this.editSubscription = this.teachersStorageService.teacherEdited.subscribe(
       resp => {
-        const newTeacher: any = resp;
+        const newTeacher = resp;
         Object.assign(this.mappedTeachers[newTeacher.id], newTeacher.obj);
         this.dataSource = new MatTableDataSource(
           Object.values(this.mappedTeachers)
@@ -116,7 +116,7 @@ export class TeachersListComponent implements OnInit, OnDestroy {
 
     this.deleteSubscription = this.teachersStorageService.teacherDeleted.subscribe(
       resp => {
-        const toDelete: any = resp;
+        const toDelete = resp;
         delete this.mappedTeachers[toDelete];
         this.dataSource = new MatTableDataSource(
           Object.values(this.mappedTeachers)
@@ -127,7 +127,7 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     );
 
     /**
-     * Right after getting an array of teachers ts is transformed them into
+     * Right after getting an array of teachers it is transformed into
      * mapped type object with teachers ids being as keys.
      * So that one may manipulate further on
      * and react to adding/editing/deleting teachers.
@@ -139,17 +139,6 @@ export class TeachersListComponent implements OnInit, OnDestroy {
       this.dataSource = new MatTableDataSource(teachers);
       this.dataSource.sort = this.sort;
     });
-
-    let prevScrollpos = window.pageYOffset;
-    window.onscroll = () => {
-      const currentScrollPos = window.pageYOffset;
-      if (prevScrollpos > currentScrollPos) {
-        document.getElementById('mine').style.bottom = '4.5em';
-      } else {
-        document.getElementById('mine').style.bottom = '-75px';
-      }
-      prevScrollpos = currentScrollPos;
-    };
   }
 
   onNewTeacher() {
@@ -159,23 +148,23 @@ export class TeachersListComponent implements OnInit, OnDestroy {
   /**
    * Once the teacher is cliked its object is passed
    * to the service so that it may be fetched from there
-   * and use as source of data for appropriate component.
+   * and used as source of data for appropriate component.
    */
-  onTeacherDetails(id) {
+  onTeacherDetails(id: number) {
     this.teachersStorageService.teacherToDisplay = this.mappedTeachers[id];
     this.router.navigate([id], {
       relativeTo: this.route
     });
   }
 
-  onEdit(id) {
+  onEdit(id: number) {
     this.teachersStorageService.teacherToDisplay = this.mappedTeachers[id];
     this.router.navigate([id, 'edit'], {
       relativeTo: this.route
     });
   }
 
-  onDelete(teacher): void {
+  onDelete(teacher: { id: number; firstname: string; lastname: string }): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '20em',
       height: '12em',
@@ -198,6 +187,5 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     this.addSubscription.unsubscribe();
     this.editSubscription.unsubscribe();
     this.deleteSubscription.unsubscribe();
-    window.onscroll = null;
   }
 }

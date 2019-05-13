@@ -18,6 +18,7 @@ import { FormGroupDirective } from '@angular/forms';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  showSpinner = true;
   @ViewChild(FormGroupDirective) chartOptions;
   public streamClasses: FormGroup;
   public data = {
@@ -93,6 +94,7 @@ export class DashboardComponent implements OnInit {
     this.classService.getClasses('active').subscribe((result: ClassData[]) => this.data.classes = result.length);
     this.classService.getClassesByStream().subscribe((result: ClassesFromStream) => {
       this.updateChart(result);
+      this.showSpinner = false;
     });
   }
 

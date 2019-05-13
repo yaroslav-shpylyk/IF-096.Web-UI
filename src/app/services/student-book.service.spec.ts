@@ -1,12 +1,27 @@
-import { TestBed } from '@angular/core/testing';
-
+import { async, TestBed } from '@angular/core/testing';
 import { StudentBookService } from './student-book.service';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 describe('StudentBookService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let httpTestingController: HttpTestingController;
+  let studentService: StudentBookService;
 
-  it('should be created', () => {
-    const service: StudentBookService = TestBed.get(StudentBookService);
-    expect(service).toBeTruthy();
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [StudentBookService],
+    })
+      .compileComponents();
+  }));
+
+  beforeEach(() => {
+    httpTestingController = TestBed.get(HttpTestingController);
+    studentService = TestBed.get(StudentBookService);
   });
+  afterEach(() => {
+    httpTestingController.verify();
+  });
+  it('service should be defined', async(() => {
+    expect(studentService).toBeDefined();
+  }));
 });

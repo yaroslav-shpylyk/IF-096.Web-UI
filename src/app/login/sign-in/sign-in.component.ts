@@ -10,6 +10,7 @@ import { roles } from '../../enum/roles.enum';
   styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent implements OnInit {
+  showSpiner = false;
   public loginForm: FormGroup;
 
   constructor(private auth: AuthService,
@@ -36,6 +37,7 @@ export class SignInComponent implements OnInit {
    * @param data - Username and password
    */
   login(data): void {
+    this.showSpiner = true;
     this.auth.login(data).subscribe(() => {
       if (this.auth.getUserRole() === roles.admin) {
         this.router.navigate(['/admin-panel/']);
@@ -44,6 +46,9 @@ export class SignInComponent implements OnInit {
       } else if (this.auth.getUserRole() === roles.students) {
         this.router.navigate(['/student-book/']);
       }
+    }, (error) => {
+      this.showSpiner = false;
+      console.error(error);
     });
   }
 

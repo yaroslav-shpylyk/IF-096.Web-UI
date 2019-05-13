@@ -20,7 +20,7 @@ export class BottomSheetOverviewSheetComponent {
   ) {}
 
   studentFullName = this.data.student.studentFullName;
-  mark = this.data.student.marks.find(el => {
+  mark = this.data.student.marks.find((el: { idLesson: number }) => {
     return el.idLesson === +this.data.lessonId;
   });
 
@@ -48,7 +48,7 @@ export class BottomSheetOverviewSheetComponent {
    * desabling/enabling Save button from a template.
    * @param mark - number representing selected mark.
    */
-  onValChange(mark?) {
+  onValChange(mark?: number) {
     if (this.selectedVal || mark) {
       this.valChanged = true;
       this.selectedVal = mark ? mark : this.selectedVal;
@@ -83,13 +83,11 @@ export class BottomSheetOverviewSheetComponent {
       })
       .subscribe(
         resp => {
-          this.elData[this.id][this.lessonId] = resp.body.data.mark;
+          this.elData[this.id][this.lessonId] = resp.data.mark;
           this.bottomSheetRef.dismiss();
           this.openSnackBar(`Нові дані внесено`, 'snack-class-success-journal');
-          this.journal[this.id].marks[this.journalIndx].mark =
-            resp.body.data.mark;
-          this.journal[this.id].marks[this.journalIndx].note =
-            resp.body.data.note;
+          this.journal[this.id].marks[this.journalIndx].mark = resp.data.mark;
+          this.journal[this.id].marks[this.journalIndx].note = resp.data.note;
         },
         error => {
           console.log(error);
