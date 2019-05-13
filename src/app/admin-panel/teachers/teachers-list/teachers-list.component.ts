@@ -33,7 +33,8 @@ export class ConfirmationDialogComponent {
     public data: any
   ) {}
 
-  onDeleteClick() {
+  onDeleteClick(el?) {
+    console.log(el);
     this.teachersStorageService
       .deleteTeacher(this.data.id)
       .subscribe(response => {
