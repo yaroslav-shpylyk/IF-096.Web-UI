@@ -195,3 +195,7 @@ th:not(.cdk-column-star):not(.cdk-column-studentFullName) > i {
   background-color: rgba(250, 235, 215, 0);
   color: grey;
 }
+
+td {
+  touch-action: auto !important;
+}
