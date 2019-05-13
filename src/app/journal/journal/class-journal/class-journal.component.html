@@ -1,7 +1,7 @@
 <div id="class-journal-wrapper">
   <h1 *ngIf="!isLoading && !journal?.length">Не закріплено жодного журналу</h1>
   <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <mat-accordion [ngClass]="{ display: journal?.length ? block : none }">
+  <mat-accordion [ngClass]="{ display: journal?.length ? 'block' : 'none' }">
     <h2 *ngIf="idTeacher">
       {{
         teacher

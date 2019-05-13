@@ -4,11 +4,9 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { DialogEntryComponent } from './teachers/teachers-list/details-dialog/details-dialog-overview';
 import { TeachersListComponent } from './teachers/teachers-list/teachers-list.component';
 import { ScheduleComponent } from './schedule/schedule.component';
-
 import { StudentsListComponent } from './students-list/students-list.component';
 import { GroupsComponent } from './admin-panel/groups/groups.component';
 import { StudentDatailsComponent } from './students-list/student-detail-modal/student-detail-modal.component';
-import { AddStudentComponent } from './students-list/add-student/add-student.component';
 import { AddStudentModalComponent } from './students-list/add-student/add-student.component';
 import { FullscreenOverlayContainer } from '@angular/cdk/overlay';
 import { DashboardComponent } from './dashboard/dashboard.component';
