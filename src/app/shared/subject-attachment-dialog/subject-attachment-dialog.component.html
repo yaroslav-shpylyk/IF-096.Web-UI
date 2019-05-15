@@ -33,12 +33,9 @@
                 [zoom]="attachmentZoom"
                 [rotation]="attachmentRotationDegree"
                 (after-load-complete)="pdfLoaded($event)"></pdf-viewer>
-  <div class="imgViewer" cdkDrag>
+  <div class="imgViewer" cdkDrag #imgViewer>
     <img *ngIf="isImage()" [src]="attachmentUrl" alt=""
-         [ngStyle]="{
-         transform: 'rotate(' + this.attachmentRotationDegree + 'deg)' + ' scale(' + this.attachmentZoom + ')',
-         transition: '0.5s'
-         }">
+         [ngStyle]="{ transition: '0.5s' }" #img>
   </div>
   <div *ngIf="isUnknownType()">Даний тип файлу не можна переглянути</div>
 </mat-dialog-content>
