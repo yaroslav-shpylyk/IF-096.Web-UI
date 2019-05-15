@@ -192,6 +192,9 @@ export class EditDialogOverviewComponent implements OnInit {
     });
   }
 
+  /**
+   * Method closes editing dialog without applying any changes.
+   */
   onCancel(): void {
     this.dialogRef.close();
     this.router.navigate(['admin-panel', 'teachers'], {
@@ -200,14 +203,23 @@ export class EditDialogOverviewComponent implements OnInit {
     });
   }
 
-  onFileSelected(event: { target: { files: any[]; }; }) {
+  /**
+   * Method handle upload mechanism from component
+   * @param event - event object containing uploaded file.
+   */
+  onFileSelected(event: { target: { files: any[] } }) {
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.onload = this._handleReaderLoaded.bind(this);
     reader.readAsDataURL(file);
   }
 
-  _handleReaderLoaded(e: { target: any; }) {
+  /**
+   * Method takes uploaded object file, derives from there file data
+   * and assigns it to the local variable
+   * @param e - event object containing uploaded file.
+   */
+  _handleReaderLoaded(e: { target: any }) {
     const reader = e.target;
     if (this.editMode) {
       this.teacher.avatar = reader.result;
@@ -216,6 +228,11 @@ export class EditDialogOverviewComponent implements OnInit {
     }
   }
 
+  /**
+   * Method opens the snack-bar with a message
+   * @param message - message which must be displayed
+   * @param classMessage - Extra CSS classes to be added to the snack bar container.
+   */
   openSnackBar(message: string, classMessage: string) {
     const config = new MatSnackBarConfig();
     config.panelClass = [classMessage];
@@ -265,6 +282,10 @@ export class EditDialogEntryComponent implements OnInit {
     });
   }
 
+  /**
+   * Method opening a modal window and subscribing to back button click
+   * in order to navigate back to to the previous screen on closing.
+   */
   openDialog(): void {
     const dialogRef = this.dialog.open(EditDialogOverviewComponent, {
       maxWidth: '90vw',
