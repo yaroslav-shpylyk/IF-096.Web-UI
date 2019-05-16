@@ -2,7 +2,12 @@ import { Injectable, ElementRef } from '@angular/core';
 import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { robotoFont } from '../../fonts/roboto.font';
+import 'jspdf-autotable';
+import { UserOptions } from 'jspdf-autotable';
 
+interface JsPdfWithAutotable extends jsPDF {
+  autotable: (options: UserOptions) => jsPDF;
+}
 
 @Injectable({
   providedIn: 'root'
