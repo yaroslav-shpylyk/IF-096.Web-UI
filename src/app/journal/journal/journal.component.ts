@@ -18,8 +18,7 @@ export class JournalComponent implements OnInit {
   chosenOption = 'activeClasses';
 
   displayedColumns: string[] = ['nums', 'className', 'classYear'];
-  dataSource;
-  teachersData;
+  dataSource: MatTableDataSource<{}>;
 
   @ViewChild('sortCol') sortCol: MatSort;
 
@@ -59,7 +58,7 @@ export class JournalComponent implements OnInit {
    * On each radio toggling the filter is applied.
    * @param e - event object from a radio group.
    */
-  handleChange(e) {
+  handleChange(e: { value: string; }) {
     this.displayedColumns =
       e.value === 'teachers'
         ? ['nums', 'lastname', 'firstname']
@@ -86,7 +85,7 @@ export class JournalComponent implements OnInit {
    * @param row - object representing a class.
    * @param chosenOption - string representing either class or teacher id.
    */
-  selectRow(row, chosenOption) {
+  selectRow(row: { id: any; }, chosenOption: string) {
     const path = chosenOption === 'teachers' ? 'teacher' : 'class';
     this.router.navigate([path, row.id], {
       relativeTo: this.route

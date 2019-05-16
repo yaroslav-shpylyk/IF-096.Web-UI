@@ -29,7 +29,7 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
   private loadingSub: Subscription;
   isLoading = false;
   homeworks: { [k: string]: any } = {};
-  lessonsIds: string[] = [];
+  lessonsIds: string[];
   currentClass$: Observable<ClassData>;
   currentSubject$: Observable<SubjectData>;
 
@@ -222,7 +222,8 @@ export class SubjectJournalComponent implements OnInit, OnDestroy {
     this.displayedColumns = [];
     this.studentIds = [];
     this.elData = [];
-    this.dataSource = null;
+    this.dataSource = [];
+    this.lessonsIds = [];
   }
 
   /**
