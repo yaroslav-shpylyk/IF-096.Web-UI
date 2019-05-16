@@ -32,6 +32,7 @@ export class AvatarComponent implements OnInit, OnChanges {
   @Input() avatar: string;
   @Input() firstName: string;
   @Input() lastName: string;
+  private backgroundColor: string;
   @ViewChild('avatarComponent') avatarComponent: ElementRef;
   public abbreviation = '';
   constructor() { }
@@ -44,7 +45,7 @@ export class AvatarComponent implements OnInit, OnChanges {
     changesKeys.forEach(variable => {
       this[variable] = changes[variable].currentValue;
     });
-    this.createAvatar();
+    this.updateAvatar();
   }
 
   /**
@@ -57,15 +58,28 @@ export class AvatarComponent implements OnInit, OnChanges {
       this.avatarComponent.nativeElement.style.backgroundImage = `url(${this.avatar})`;
     } else if (this.checkValue(this.firstName) && this.checkValue(this.lastName)) {
       this.abbreviation = this.generateAbbreviation();
-      this.avatarComponent.nativeElement.style.backgroundColor = this.getRandomColor(4);
+      this.backgroundColor = this.getRandomColor(4);
     } else {
-      this.avatarComponent.nativeElement.style.backgroundColor = this.getRandomColor(4);
+      this.backgroundColor = this.getRandomColor(4);
     }
+    this.avatarComponent.nativeElement.style.backgroundColor = this.backgroundColor;
   }
 
   /**
+   * Method updates existed avatar
+   */
+  private updateAvatar(): void {
+    this.abbreviation = '';
+    if (this.checkValue(this.avatar)) {
+      this.avatarComponent.nativeElement.style.backgroundColor = 'white';
+      this.avatarComponent.nativeElement.style.backgroundImage = `url(${this.avatar})`;
+    } else if (this.checkValue(this.firstName) && this.checkValue(this.lastName)) {
+      this.abbreviation = this.generateAbbreviation();
+    }
+  }
+  /**
    * Method generates abbreviation from name
-   * @returns - Two uppercase first letters of firstName and lastName or two first letters of one word
+   * @returns - Two uppercase first letters of firstName and lastName
    */
   private generateAbbreviation(): string {
     const words = [this.firstName, this.lastName];

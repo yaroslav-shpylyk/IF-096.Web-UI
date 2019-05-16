@@ -18,9 +18,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TeacherService } from './services/teacher.service';
 import { MatNativeDateModule } from '@angular/material';
 import { HomeworkStorageService } from './services/homework-storage.service';
+
 import { ErrorInterceptor } from './error-interceptor';
 import { ErrorComponent } from './error/error.component';
 import { NotFoundComponent } from './error/not-found/not-found.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent, ErrorComponent, NotFoundComponent],
@@ -33,7 +36,8 @@ import { NotFoundComponent } from './error/not-found/not-found.component';
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     AuthService,
@@ -47,10 +51,10 @@ import { NotFoundComponent } from './error/not-found/not-found.component';
       useClass: TokenInterceptorService,
       multi: true
     },
-    {provide: MAT_DATE_LOCALE, useValue: 'ua-UA'},
+    { provide: MAT_DATE_LOCALE, useValue: 'ua-UA' },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
   entryComponents: [ErrorComponent]
 })
-export class AppModule {}
+export class AppModule { }

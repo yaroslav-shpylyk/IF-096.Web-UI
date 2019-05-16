@@ -8,7 +8,7 @@
     'warning': newTitleField.invalid
   }">
   <ng-container>
-    <div class="class-lock" #skipClass (click)="lockClass(controlIndex, skipClass)">
+    <div class="class-lock" #skipClass (click)="lockClass()">
       <i *ngIf="!isCardLock" class="material-icons" matTooltip="Заборонити перехід на н. р.">lock_open</i>
       <i *ngIf="isCardLock" class="material-icons" matTooltip="Дозволити перехід на н. р.">lock</i>
     </div>

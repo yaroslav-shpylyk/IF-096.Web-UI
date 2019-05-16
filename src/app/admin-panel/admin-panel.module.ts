@@ -45,17 +45,19 @@ import { SubjectsComponent } from './subjects/subjects.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSortModule } from '@angular/material';
-import { MatCardModule, MatExpansionModule, MatCheckboxModule, MatSlideToggleModule} from '@angular/material';
+import { MatCardModule, MatExpansionModule, MatCheckboxModule, MatSlideToggleModule } from '@angular/material';
 import { NewYearComponent } from './new-year/new-year.component';
 import { TitlePipe } from './new-year/autotitle.pipe';
 import { ModifySubjectsComponent } from './subjects/modify-subjects/modify-subjects.component';
 import { TeacherConnectionComponent } from './teacher-connection/teacher-connection.component';
 import { SharedModule } from '../shared/shared.module';
-import {MatStepperModule} from '@angular/material/stepper';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ClassCardComponent } from './new-year/class-card/class-card.component';
 import { StickyButtonComponent } from './sticky-button/sticky-button.component';
 import { ListPopupComponent } from './new-year/class-card/list-popup/list-popup.component';
+import { StatisticsComponent } from './new-year/statistics/statistics.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 @NgModule({
@@ -84,6 +86,8 @@ import { ListPopupComponent } from './new-year/class-card/list-popup/list-popup.
     TeacherConnectionComponent,
     ConfirmationDialogComponent,
     ClassCardComponent,
+    ListPopupComponent,
+    StatisticsComponent,
     StickyButtonComponent,
     ListPopupComponent
   ],
@@ -121,6 +125,7 @@ import { ListPopupComponent } from './new-year/class-card/list-popup/list-popup.
     SharedModule,
     MatStepperModule,
     MatTooltipModule,
+    MatTabsModule
   ],
   entryComponents: [
     AddModifyGroupComponent,
@@ -133,8 +138,9 @@ import { ListPopupComponent } from './new-year/class-card/list-popup/list-popup.
     ModifySubjectsComponent,
     ConfirmationDialogComponent,
     ClassCardComponent,
-    ListPopupComponent
+    ListPopupComponent,
+    StatisticsComponent
   ],
   providers: []
 })
-export class AdminPanelModule {}
+export class AdminPanelModule { }

@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NewYearService } from '../../services/new-year.service';
-import { ClassInfo } from '../../models/class-info';
+import { ClassData } from '../../models/class-data';
 import { ClassCardComponent } from './class-card/class-card.component';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { MatSnackBar, MatSnackBarConfig, MatDialog, MatDialogConfig } from '@angular/material';
+import { StatisticsComponent } from '../../admin-panel/new-year/statistics/statistics.component';
 
 @Component({
   selector: 'app-new-year',
@@ -13,16 +14,17 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 export class NewYearComponent implements OnInit {
 
-  public allClasses: ClassInfo[] = [];
-  public activeClasses: ClassInfo[] = [];
+  public allClasses: ClassData[] = [];
+  public activeClasses: ClassData[] = [];
   public transititionForm: FormGroup;
   public isNotEmpty = true;
   public isCurrentYear = true;
-  public filteredClasses: { classData?: ClassInfo, control: FormControl}[] = [];
+  public filteredClasses: { classData?: ClassData, control: FormControl}[] = [];
   public transitedCards: ClassCardComponent[] = [];
   @ViewChildren('classCard') classCards: QueryList<ClassCardComponent>;
 
   constructor(
+    public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private newYearTransitition: NewYearService) { }
 
@@ -51,9 +53,9 @@ export class NewYearComponent implements OnInit {
 
   /**
    * Add new FormControl with validators to FormArray
-   * @param singleClass ClassInfo[] - objects with data about current class
+   * @param singleClass ClassData[] - objects with data about current class
    */
-  addNewTitleInput(singleClass: ClassInfo): void {
+  addNewTitleInput(singleClass: ClassData): void {
     const newInput = new FormControl(
       {value: this.newTitle(singleClass.className), disabled: false},
       [Validators.pattern('(^[1-7][(]([1-9]|1[0-2])-[А-Я]{1}[)]$)|(^([1-9]|1[0-2])-[А-Я]{1}$)'),
@@ -64,12 +66,12 @@ export class NewYearComponent implements OnInit {
 
   /**
    * Title validation for new class
-   * @param allClasses ClassInfo[] - Array of objects with data about classes
+   * @param allClasses ClassData[] - Array of objects with data about classes
    * @param classYear number - current class year
    * @param curClassTitle string - current class title
    * @returns - return FormControl with validation error or null
    */
-  classTitleValidator = (allClasses: ClassInfo[], classYear: number, curClassTitle: string) => {
+  classTitleValidator = (allClasses: ClassData[], classYear: number, curClassTitle: string) => {
     return (control: FormControl) => {
       if (curClassTitle === control.value) {
         return {title_dublicate: {valid: false}};
@@ -104,7 +106,7 @@ export class NewYearComponent implements OnInit {
   }
 
   formSubmit() {
-    const formData: ClassInfo[] = [];
+    const formData: ClassData[] = [];
     this.classCards.forEach( classCard => {
       if (!classCard.isCardLock) {
         formData.push(
@@ -209,5 +211,21 @@ export class NewYearComponent implements OnInit {
     } else {
       return (+classNameParts[0] + 1 > 11) ? '' : (+classNameParts[0] + 1) + '-' + classNameParts[1];
     }
+  }
+
+  /**
+   * Generate new title for class based on current title
+   * @param curTitle string - current title of class
+   */
+  showStatistic(): void {
+    const config = new MatDialogConfig();
+    config.panelClass = ['full-screen-modal'];
+    config.data = {
+      allClasses: this.allClasses
+    };
+    this.dialog.open(
+      StatisticsComponent,
+      config
+    );
   }
 }

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { ClassInfo } from '../models/class-info';
+import { map } from 'rxjs/operators';
+import { ClassData } from '../models/class-data';
 import { Student } from '../models/student';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class NewYearService {
    * @returns number, status code of binding request
    * @param   formData array of objects that contains info about current classes (with new titles)
    */
-  public transitClasses(formData: ClassInfo[]): Observable<number> {
+  public transitClasses(formData: ClassData[]): Observable<number> {
     const request = this.getTransitRequest(formData);
     const subject = new Subject<number>();
     const bindReq: {oldClassId: number, newClassId: number}[] = [];
@@ -46,14 +46,11 @@ export class NewYearService {
    * Method return list of classes
    * @returns list of all classes
    */
-  public getClasses(): Observable<ClassInfo[]> {
+  public getClasses(): Observable<ClassData[]> {
     return this.http.get(`/classes`)
     .pipe(
       map((response: any) => {
         return response.data;
-      }),
-      catchError((error: any) => {
-        return error;
       })
     );
   }
@@ -68,9 +65,6 @@ export class NewYearService {
     .pipe(
       map((response: { status: any, data: any}) => {
         return response.data;
-      }),
-      catchError((error: any) => {
-        return error;
       })
     );
   }
@@ -80,7 +74,7 @@ export class NewYearService {
    * @returns object that contain classes info without graduated classes
    * @param   formData array of objects that contains info about current classes (with new titles)
    */
-  public getTransitRequest(formData: ClassInfo[]): ClassInfo[] {
+  public getTransitRequest(formData: ClassData[]): ClassData[] {
     const transitClassesQuery = [];
     formData.forEach(
       (item) => {
@@ -97,14 +91,11 @@ export class NewYearService {
    * @returns responce that contain id's for new classes
    * @param req  objects array with classes info (new class title and new year)
    */
-  public createClasses(req: ClassInfo[] ): Observable <ClassInfo[]> {
+  public createClasses(req: ClassData[] ): Observable <ClassData[]> {
     return this.http.post(`/students/transition`, req)
     .pipe(
       map((response: { status: any, data: any }) => {
         return response.data;
-      }),
-      catchError((error: any) => {
-        return error;
       })
     );
   }

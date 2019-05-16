@@ -110,8 +110,9 @@ mat-card.locked, mat-card.locked:hover {
   }
 }
 
-::ng-deep mat-form-field {
+.new-class-title mat-form-field {
    width: 100%;
+   text-align: center;
   @media (min-width: 768px) {
     .mat-form-field-wrapper {
       margin: 0 auto;

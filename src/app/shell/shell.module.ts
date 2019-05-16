@@ -13,7 +13,7 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     ShellRoutingModule,
     MaterialModule,
-    SharedModule
+    SharedModule,
   ]
 })
 export class ShellModule { }

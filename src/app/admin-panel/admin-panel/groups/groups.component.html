@@ -1,7 +1,14 @@
 <div class="wrapper">
-  <i class="material-icons" id="buttonAdd" (click)="openPopupsSheet()">
-    add_circle
-  </i>
+
+    <span
+      class="material-icons buttonAdd"
+      [ngClass]="buttonVisibility ? 'buttonAddUp' : 'buttonAddDown'"
+      (click)="openPopupsSheet()"
+    >
+      add_circle
+    </span>
+
+
 
   <div class="filterBlok">
     <mat-form-field>
