@@ -133,7 +133,8 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
    * all the transformation logic is done it creates temporary link in order
    * to let user save the file itself
    */
-  dwnl() {
+  dwnl(event: Event) {
+    event.preventDefault();
     this.homeworkStorageService.saveFile(this.lessonId).subscribe(data => {
       const blobData = this.convertBase64ToBlobData(data);
       const blob = new Blob([blobData], { type: data.fileType });
