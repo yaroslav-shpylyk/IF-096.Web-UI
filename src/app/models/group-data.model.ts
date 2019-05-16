@@ -1,8 +1,8 @@
 export interface Group {
-  id: number;
+  id?: number;
   classYear: number;
   className: string;
-  classDescription: string;
+  classDescription?: string;
   isActive: boolean;
-  numOfStudents: number;
+  numOfStudents?: number;
 }
