@@ -52,7 +52,7 @@ export class DailyScheduleComponent implements OnInit, OnChanges {
    * if the click was on the last element
    * @param i - Index of the element on which the click occurred
    */
-  public addSubjest(i: number): void {
+  public addSubject(i: number): void {
     if (i === (this.dailySchedule.length - 1)) {
       this.dailySchedule.push(this.frmBld.group({
         firstGroup: this.frmBld.control(''),
@@ -81,7 +81,7 @@ export class DailyScheduleComponent implements OnInit, OnChanges {
    * Method removes the subject from the daily schedule
    * @param i - index of the control which to be deleted
    */
-  public removeSubjest(i: number): void {
+  public removeSubject(i: number): void {
     const secondGroupCntrl = this.dailySchedule.at(i).get('secondGroup');
     if (secondGroupCntrl.status !== 'DISABLED') {
       secondGroupCntrl.setValue('');

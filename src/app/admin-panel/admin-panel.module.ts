@@ -107,7 +107,6 @@ import { ListPopupComponent } from './new-year/class-card/list-popup/list-popup.
     ChartsModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    MatInputModule,
     MatRadioModule,
     MaterialModule,
     MatSortModule,

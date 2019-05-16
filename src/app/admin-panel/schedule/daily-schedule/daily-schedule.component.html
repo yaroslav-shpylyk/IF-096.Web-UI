@@ -8,7 +8,7 @@
       <mat-form-field class="select-subject">
         <mat-select [formControl]="lesson.controls.firstGroup"
          [placeholder]="selectSubjectMsg"
-         (selectionChange)="addSubjest(lessonNumber)">
+         (selectionChange)="addSubject(lessonNumber)">
           <mat-option *ngFor="let subj of arrSubjectsList" [value]="subj">
             {{ subj.subjectName }}
           </mat-option>
@@ -30,7 +30,7 @@
           <mat-icon>add_box</mat-icon>
         </button>
 
-        <button mat-icon-button type="button" (click)="removeSubjest(lessonNumber)">
+        <button mat-icon-button type="button" (click)="removeSubject(lessonNumber)">
             <mat-icon>delete</mat-icon>
         </button>
       </div>

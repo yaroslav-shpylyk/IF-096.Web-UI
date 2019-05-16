@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-
 import { ScheduleService } from './schedule.service';
 import { ScheduleData } from '../models/schedule-data';
 
@@ -39,9 +38,10 @@ describe('ScheduleService', () => {
       expect(data).toEqual(expectData.data);
     });
 
-    const req = backend.expectOne('/classes/1/schedule');
-    expect(req.request.method).toEqual('GET');
-    req.flush(expectData);
+    backend.expectOne({
+      method: 'GET',
+      url: '/classes/1/schedule'
+    }).flush(expectData);
   });
 
   it('should made request to save data to expected URL', () => {
@@ -49,9 +49,9 @@ describe('ScheduleService', () => {
       expect(data).toEqual(expectData.data);
     });
 
-    const req = backend.expectOne('/classes/1/schedule');
-    expect(req.request.method).toEqual('POST');
-    req.flush(expectData);
+    backend.expectOne({
+      method: 'POST',
+      url: '/classes/1/schedule'
+    }).flush(expectData);
   });
-
 });
