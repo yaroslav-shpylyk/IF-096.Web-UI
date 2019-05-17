@@ -39,3 +39,7 @@ export const teacherShevchenko = {
   phone: '9022421666',
   subjects: ['Literature']
 };
+
+export const dummyMethod = {
+  close: () => {}
+};

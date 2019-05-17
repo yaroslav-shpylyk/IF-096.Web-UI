@@ -5,13 +5,17 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { TeachersListComponent } from './teachers-list.component';
+import {
+  TeachersListComponent,
+  ConfirmationDialogComponent
+} from './teachers-list.component';
 import { MaterialModule } from '../../../material.module';
 import { AvatarComponent } from '../../../shared/avatar/avatar.component';
 import { StickyButtonComponent } from '../../sticky-button/sticky-button.component';
 import { TeachersStorageService } from '../../../services/teachers-storage.service';
-import { of, from } from 'rxjs';
+import { of } from 'rxjs';
 import * as testData from '../helpers/test-data';
+import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 
 fdescribe('TeacherListComponent', () => {
   beforeEach(() => {
@@ -19,7 +23,8 @@ fdescribe('TeacherListComponent', () => {
       declarations: [
         TeachersListComponent,
         AvatarComponent,
-        StickyButtonComponent
+        StickyButtonComponent,
+        ConfirmationDialogComponent
       ],
       imports: [
         RouterTestingModule,
@@ -30,7 +35,14 @@ fdescribe('TeacherListComponent', () => {
         MatSlideToggleModule,
         RouterTestingModule
       ],
-      providers: [TeachersStorageService]
+      providers: [
+        TeachersStorageService,
+        {
+          provide: MatDialogRef,
+          useValue: testData.dummyMethod
+        },
+        { provide: MAT_DIALOG_DATA, useValue: [] }
+      ]
     });
   });
 
@@ -40,18 +52,20 @@ fdescribe('TeacherListComponent', () => {
     expect(teacherList).toBeTruthy();
   }));
 
-  fit('should build teachers based on received data', async(() => {
+  it('should build teachers based on received data', async(() => {
     const fixture = TestBed.createComponent(TeachersListComponent);
     const teacherList = fixture.debugElement.componentInstance;
     const teachersStorageService = fixture.debugElement.injector.get(
       TeachersStorageService
     );
-    const testTeachersList = [testData.teacherShevchenko, testData.teacherPushkin];
+    const testTeachersList = [
+      testData.teacherShevchenko,
+      testData.teacherPushkin
+    ];
 
-    spyOn(
-      teachersStorageService,
-      'getTeachersWithClasses'
-    ).and.returnValue(of(testTeachersList));
+    spyOn(teachersStorageService, 'getTeachersWithClasses').and.returnValue(
+      of(testTeachersList)
+    );
     fixture.detectChanges();
 
     expect(
@@ -60,6 +74,44 @@ fdescribe('TeacherListComponent', () => {
     expect(
       teacherList.mappedTeachers[testData.teacherPushkin.id].dateOfBirth
     ).toEqual(testData.teacherPushkin.dateOfBirth);
-    expect(Object.keys(teacherList.mappedTeachers).length).toEqual(testTeachersList.length);
+    expect(Object.keys(teacherList.mappedTeachers).length).toEqual(
+      testTeachersList.length
+    );
+  }));
+
+  fit('should delete teacher', async(() => {
+    const fixtureList = TestBed.createComponent(TeachersListComponent);
+    const fixtureConfirmDialog = TestBed.createComponent(
+      ConfirmationDialogComponent
+    );
+    const teacherList = fixtureList.debugElement.componentInstance;
+    const confirmDialog = fixtureConfirmDialog.debugElement.componentInstance;
+    const teachersStorageService = fixtureList.debugElement.injector.get(
+      TeachersStorageService
+    );
+    const fromConfirmDialog = fixtureConfirmDialog.debugElement.injector.get(
+      TeachersStorageService
+    );
+
+    const testTeachersList = [
+      testData.teacherShevchenko,
+      testData.teacherPushkin
+    ];
+
+    spyOn(teachersStorageService, 'getTeachersWithClasses').and.returnValue(
+      of(testTeachersList)
+    );
+    fixtureList.detectChanges();
+
+    spyOn(fromConfirmDialog, 'deleteTeacher').and.returnValue(
+      of({ lastname: '', firstname: '' })
+    );
+    confirmDialog.data.id = testData.teacherShevchenko.id;
+    confirmDialog.onDeleteClick();
+    fixtureConfirmDialog.detectChanges();
+
+    expect(Object.keys(teacherList.mappedTeachers).length).toEqual(
+      testTeachersList.length - 1
+    );
   }));
 });

@@ -41,7 +41,7 @@ export class DetailsDialogOverviewComponent implements OnInit {
   }
 
   /**
-   * Method closes infirmation dialog.
+   * Method closes information dialog.
    */
   onBackClick(): void {
     this.dialogRef.close();
