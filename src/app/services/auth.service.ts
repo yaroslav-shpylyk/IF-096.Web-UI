@@ -14,6 +14,7 @@ import { ChangePasswordRequest } from '../models/change-password-request';
 
 export class AuthService {
   private tokenRefreshTimer: any;
+  private changePasswordToken: string;
   constructor(private http: HttpClient, private router: Router) { }
 
   /**
@@ -140,5 +141,11 @@ export class AuthService {
   public getUserId(): number  {
     const decodedToken: TokenInfo = JWTDecoder(this.getToken());
     return decodedToken.jti;
+  }
+  public getChangePasswordToken(): string {
+    return this.changePasswordToken;
+  }
+  public setChangePasswordToken(token: string): void {
+    this.changePasswordToken = token;
   }
 }

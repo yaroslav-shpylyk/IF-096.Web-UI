@@ -1,8 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
-import { delay, takeUntil } from 'rxjs/operators';
+import { delay } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
 import { confirmPasswordValidator } from '../validators/confirm-password.validator';
 
@@ -11,26 +10,18 @@ import { confirmPasswordValidator } from '../validators/confirm-password.validat
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.scss']
 })
-export class ChangePasswordComponent implements OnInit, OnDestroy {
+export class ChangePasswordComponent implements OnInit {
   public status: string;
   public response: string;
   public changePasswordForm: FormGroup;
-  private onDestroy$ = new Subject();
   private token: string;
   constructor(private route: ActivatedRoute, private authService: AuthService) { }
 
   ngOnInit() {
     this.status = 'gettingData';
     this.createForm();
-    this.route.queryParams
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe(params => this.token = params.token);
+    this.token = this.authService.getChangePasswordToken();
   }
-
-  ngOnDestroy(): void {
-    this.onDestroy$.next(true);
-  }
-
   /**
    * Method creates form for password change
    */
