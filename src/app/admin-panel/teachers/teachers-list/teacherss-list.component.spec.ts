@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -10,7 +10,8 @@ import { MaterialModule } from '../../../material.module';
 import { AvatarComponent } from '../../../shared/avatar/avatar.component';
 import { StickyButtonComponent } from '../../sticky-button/sticky-button.component';
 import { TeachersStorageService } from '../../../services/teachers-storage.service';
-import { of } from 'rxjs';
+import { of, from } from 'rxjs';
+import * as testData from '../helpers/test-data';
 
 fdescribe('TeacherListComponent', () => {
   beforeEach(() => {
@@ -39,5 +40,26 @@ fdescribe('TeacherListComponent', () => {
     expect(teacherList).toBeTruthy();
   }));
 
-  
+  fit('should build teachers based on received data', async(() => {
+    const fixture = TestBed.createComponent(TeachersListComponent);
+    const teacherList = fixture.debugElement.componentInstance;
+    const teachersStorageService = fixture.debugElement.injector.get(
+      TeachersStorageService
+    );
+    const testTeachersList = [testData.teacherShevchenko, testData.teacherPushkin];
+
+    spyOn(
+      teachersStorageService,
+      'getTeachersWithClasses'
+    ).and.returnValue(of(testTeachersList));
+    fixture.detectChanges();
+
+    expect(
+      teacherList.mappedTeachers[testData.teacherShevchenko.id].email
+    ).toEqual(testData.teacherShevchenko.email);
+    expect(
+      teacherList.mappedTeachers[testData.teacherPushkin.id].dateOfBirth
+    ).toEqual(testData.teacherPushkin.dateOfBirth);
+    expect(Object.keys(teacherList.mappedTeachers).length).toEqual(testTeachersList.length);
+  }));
 });
