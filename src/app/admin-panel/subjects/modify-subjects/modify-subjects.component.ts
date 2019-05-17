@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { SubjectData } from '../../../models/subject-data';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { SubjectService } from '../../../services/subject.service';
 
 @Component({
@@ -12,6 +12,7 @@ export class ModifySubjectsComponent {
 
   constructor(public dialogRef: MatDialogRef<ModifySubjectsComponent>,
               public subjectService: SubjectService,
+              private snackBar: MatSnackBar,
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   onNoClick(): void {
@@ -19,17 +20,27 @@ export class ModifySubjectsComponent {
   }
 
   /**
-   * Method save a new o modify subject
+   * Method save a new or modify subject
    */
   saveNewSubject() {
     const subj = new SubjectData(this.data);
     if (subj.subjectId > 0) {
       this.subjectService.editSubject(subj.subjectId, subj).subscribe((res) => {
         this.dialogRef.close(res);
+        this.snackBar.open('Зміни успішно збережено', null, {
+          duration: 3000,
+          verticalPosition: 'top',
+          panelClass: 'green-snackbar'
+        });
       });
     } else {
       this.subjectService.addSubject(subj).subscribe((res) => {
         this.dialogRef.close(res);
+        this.snackBar.open('Предмет успішно створено', null, {
+          duration: 3000,
+          verticalPosition: 'top',
+          panelClass: 'green-snackbar'
+        });
       });
     }
   }
