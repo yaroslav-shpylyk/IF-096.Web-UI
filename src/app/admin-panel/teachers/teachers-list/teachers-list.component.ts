@@ -33,8 +33,12 @@ export class ConfirmationDialogComponent {
     public data: any
   ) {}
 
-  onDeleteClick(el?) {
-    console.log(el);
+  /**
+   * Method deletes previosly selected teacher by making
+   * a request via deleteTeacher method from teachersStorageService,
+   * then closes the current modal dialog and inform result in a snackbar.
+   */
+  onDeleteClick() {
     this.teachersStorageService
       .deleteTeacher(this.data.id)
       .subscribe(response => {
@@ -47,10 +51,18 @@ export class ConfirmationDialogComponent {
       });
   }
 
+  /**
+   * Method closes confirmation dialog without doing any action.
+   */
   onNoClick(): void {
     this.dialogRef.close();
   }
 
+  /**
+   * Method opens the snack-bar with a message
+   * @param message - message which must be displayed
+   * @param classMessage - Extra CSS classes to be added to the snack bar container.
+   */
   openSnackBar(message: string, classMessage: string) {
     const config = new MatSnackBarConfig();
     config.panelClass = [classMessage];
@@ -141,6 +153,10 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Method navigates to the new rout which is
+   * dedicated for a component creating a new teacher.
+   */
   onNewTeacher() {
     this.router.navigate(['new'], { relativeTo: this.route, replaceUrl: true });
   }
@@ -149,6 +165,7 @@ export class TeachersListComponent implements OnInit, OnDestroy {
    * Once the teacher is cliked its object is passed
    * to the service so that it may be fetched from there
    * and used as source of data for appropriate component.
+   * @param id - id number of a tecaher to be shown.
    */
   onTeacherDetails(id: number) {
     this.teachersStorageService.teacherToDisplay = this.mappedTeachers[id];
@@ -157,6 +174,11 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Method navigates to the new rout which is
+   * dedicated for a component editing selected teacher.
+   * @param id - id number of a tecaher to be edited.
+   */
   onEdit(id: number) {
     this.teachersStorageService.teacherToDisplay = this.mappedTeachers[id];
     this.router.navigate([id, 'edit'], {
@@ -164,6 +186,11 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Method takes teacher object and opens a deleting
+   * modal dialog passing there teacher information.
+   * @param teacher - object representing a tecaher to be deleted.
+   */
   onDelete(teacher: { id: number; firstname: string; lastname: string }): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '20em',
@@ -179,6 +206,12 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(() => {});
   }
 
+  /**
+   * Method receives input data from a filter field,
+   * turns it into lower case and assigns it
+   * to the table data source.
+   * @param filterValue - string of provided value to filter by.
+   */
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }

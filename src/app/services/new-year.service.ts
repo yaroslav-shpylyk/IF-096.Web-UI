@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ClassData } from '../models/class-data';
 import { Student } from '../models/student';
 
@@ -51,9 +51,6 @@ export class NewYearService {
     .pipe(
       map((response: any) => {
         return response.data;
-      }),
-      catchError((error: any) => {
-        return error;
       })
     );
   }
@@ -68,9 +65,6 @@ export class NewYearService {
     .pipe(
       map((response: { status: any, data: any}) => {
         return response.data;
-      }),
-      catchError((error: any) => {
-        return error;
       })
     );
   }
@@ -102,9 +96,6 @@ export class NewYearService {
     .pipe(
       map((response: { status: any, data: any }) => {
         return response.data;
-      }),
-      catchError((error: any) => {
-        return error;
       })
     );
   }
