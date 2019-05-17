@@ -1,11 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ModifySubjectsComponent } from './modify-subjects.component';
+
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../../../material.module';
-import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { FormsModule } from '@angular/forms';
+
 
 describe('ModifySubjectsComponent', () => {
   let component: ModifySubjectsComponent;
@@ -14,7 +15,7 @@ describe('ModifySubjectsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule, BrowserAnimationsModule,
-        FormsModule, MaterialModule],
+        FormsModule, MaterialModule ],
       declarations: [ ModifySubjectsComponent ],
       providers: [
         MatDialog, {provide: MatDialogRef, useValue: {}},

@@ -7,3 +7,12 @@
 .example-full-width{
   width: 100%;
 }
+
+::ng-deep {
+  & .green-snackbar {
+    background-color: rgb(24, 168, 72);
+    display: flex !important;
+    justify-content: center !important;
+    color: white !important;
+  }
+}
