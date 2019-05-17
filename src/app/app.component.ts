@@ -11,12 +11,9 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
   ngOnInit(): void {
     if (window.location.href.includes('resetPassword')) {
-      const tokenIndex = window.location.href.indexOf('token');
-      const token = tokenIndex === -1 ?
-        '' :
-        window.location.href
-          .slice(tokenIndex)
-          .replace('token=', '');
+      const url = new URL(window.location.href);
+      const urlParams = new URLSearchParams(url.search);
+      const token = urlParams.has('token') ? urlParams.get('token') : '';
       this.router.navigate(['login/change-password']);
       this.authService.setChangePasswordToken(token);
     }

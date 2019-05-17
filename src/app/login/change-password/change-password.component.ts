@@ -49,6 +49,7 @@ export class ChangePasswordComponent implements OnInit {
       .subscribe(result => {
         this.response = result.data;
         this.status = 'response';
+        this.authService.setChangePasswordToken('');
       });
   }
 }
