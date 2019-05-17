@@ -74,7 +74,6 @@ export class GroupsComponent implements OnInit {
         }
       });
       if (addOrEdit) {
-        console.log(data)
         this.groups = [...this.groups, data];
       }
       this.sorting();
