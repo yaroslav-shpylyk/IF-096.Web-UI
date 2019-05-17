@@ -122,7 +122,7 @@ export class ScheduleComponent implements OnInit {
    * @param classId - Id of selected class
    */
   selectedClass(classId: number) {
-    this.scheduleService.getSubjects(classId).subscribe(
+    this.subjectsService.getSubjects(String(classId)).subscribe(
       data => { this.arrSubjectsList = data; }
     );
     this.scheduleService.getSchedule(classId).subscribe(
@@ -130,7 +130,6 @@ export class ScheduleComponent implements OnInit {
       error => {
         this.scheduleData = new ScheduleData();
       }
-
     );
   }
 

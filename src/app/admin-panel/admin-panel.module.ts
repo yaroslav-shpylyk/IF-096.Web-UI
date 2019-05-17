@@ -111,7 +111,6 @@ import { MatTabsModule } from '@angular/material/tabs';
     ChartsModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    MatInputModule,
     MatRadioModule,
     MaterialModule,
     MatSortModule,
