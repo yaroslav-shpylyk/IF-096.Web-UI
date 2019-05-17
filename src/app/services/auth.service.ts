@@ -138,6 +138,10 @@ export class AuthService {
     }
   }
 
+  /**
+   * Method gets user id from decoded token
+   * @returns - user id
+   */
   public getUserId(): number  {
     const decodedToken: TokenInfo = JWTDecoder(this.getToken());
     return decodedToken.jti;
