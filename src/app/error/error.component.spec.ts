@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ErrorComponent } from './error.component';
+import { MaterialModule } from '../material.module';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 
 describe('ErrorComponent', () => {
   let component: ErrorComponent;
@@ -8,7 +10,10 @@ describe('ErrorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ErrorComponent ]
+      declarations: [ ErrorComponent ],
+      providers: [
+        MatDialog, {provide: MAT_DIALOG_DATA, useValue: {}}
+     ]
     })
     .compileComponents();
   }));
