@@ -59,8 +59,8 @@ form {
     font-style: italic;
 }
 
-/* Screen = B/w 320px to 479px */
-@media (min-width: 320px) and (max-width: 480px) {
+/* Screen = B/w 320px to 600px */
+@media (min-width: 320px) and (max-width: 700px) {
     .schedule-top {
         flex-direction: column;
     }

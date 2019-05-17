@@ -11,10 +11,18 @@ fieldset {
 .daily-schedule {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+}
+.lesson-subject {
+    display: flex;
+    width: 75%;
 }
 .select-subject {
     margin: 0 0.5em;
-    width: 35%;
+    width: 45%;
+}
+.lesson-button {
+    align-self: center;
 }
 mat-icon {
     color: $icon-color;
@@ -23,12 +31,32 @@ mat-icon {
     display: none;
 }
 
-/* Screen = B/w 320px to 479px */
-@media (min-width: 320px) and (max-width: 480px) {
-    .daily-schedule {
+/* Screen = 800px */
+@media (min-width: 700px) and (max-width: 920px) {
+    .lesson-subject {
+        display: flex;
         flex-direction: column;
+        width: 70%;
+    }
+    .select-subject {
+        margin: 0 0.5em;
+        width: 80%;
+    }
+}
+
+/* Screen = B/w 320px to 600px */
+@media (min-width: 320px) and (max-width: 700px) {
+    .daily-schedule {
+        flex-wrap: nowrap;
+    }
+    .lesson-subject {
+        flex-direction: column;
+        width: 80%;
     }
     .select-subject {
         width: 80%;
+    }
+    .lesson-button {
+        display: flex;
     }
 }

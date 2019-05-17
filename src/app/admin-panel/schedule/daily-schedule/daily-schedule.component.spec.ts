@@ -29,6 +29,8 @@ describe('DailyScheduleComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DailyScheduleComponent);
     component = fixture.componentInstance;
+    component.ngOnInit();
+    fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -59,8 +61,6 @@ describe('DailyScheduleComponent', () => {
   });
 
   it('#removeSubject is called when delete button is clicked', () => {
-    component.ngOnInit();
-    fixture.detectChanges();
     spyOn(component, 'removeSubject').and.callThrough();
     debugElements = fixture.debugElement.queryAll(By.css('button'));
     debugElement = debugElements.find((element, i, arr) => {
@@ -73,8 +73,6 @@ describe('DailyScheduleComponent', () => {
   });
 
   it('#addSecondGroup is called when add button is clicked', () => {
-    component.ngOnInit();
-    fixture.detectChanges();
     spyOn(component, 'addSecondGroup').and.callThrough();
     debugElements = fixture.debugElement.queryAll(By.css('button'));
     debugElement = debugElements.find((element, i, arr) => {
