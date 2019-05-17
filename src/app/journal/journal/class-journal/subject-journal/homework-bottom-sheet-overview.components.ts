@@ -225,7 +225,7 @@ export class HomeworkBottomSheetOverviewSheetComponent implements OnInit {
    * Method opens dialog for attachment view
    * @param event - Event object
    */
-  public openAttachment(event): void {
+  public openAttachment(event: { preventDefault: () => void; }): void {
     event.preventDefault();
     this.homeworkStorageService.saveFile(this.lessonId).subscribe(data => {
       this.attachmentDialog.open(SubjectAttachmentDialogComponent, {

@@ -99,4 +99,11 @@ export class BottomSheetOverviewSheetComponent {
         }
       );
   }
+
+  /**
+   * Method closes bottom sheet dialog.
+   */
+  onBack() {
+    this.bottomSheetRef.dismiss();
+  }
 }

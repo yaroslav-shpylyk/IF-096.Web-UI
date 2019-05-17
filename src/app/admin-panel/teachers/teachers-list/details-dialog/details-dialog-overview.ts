@@ -40,10 +40,17 @@ export class DetailsDialogOverviewComponent implements OnInit {
     }
   }
 
+  /**
+   * Method closes infirmation dialog.
+   */
   onBackClick(): void {
     this.dialogRef.close();
   }
 
+  /**
+   * Method navigates to the new rout which is
+   * dedicated for a component editing selected teacher.
+   */
   onEditClick(): void {
     this.teachersStorageService.teacherToDisplay = this.teacher;
     this.dialogRef.close();
@@ -90,6 +97,10 @@ export class DialogEntryComponent implements OnInit {
     });
   }
 
+  /**
+   * Method opening a modal window and subscribing to back button click
+   * in order to navigate back to to the previous screen on closing.
+   */
   openDialog(): void {
     const dialogRef = this.dialog.open(DetailsDialogOverviewComponent, {
       width: '400px',
