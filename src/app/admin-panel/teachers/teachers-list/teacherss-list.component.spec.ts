@@ -20,6 +20,10 @@ import { Router } from '@angular/router';
 import 'hammerjs';
 
 fdescribe('TeacherListComponent', () => {
+  let router: Router;
+  let fixtureList: any;
+  let teacherList: any;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -48,20 +52,24 @@ fdescribe('TeacherListComponent', () => {
         { provide: MAT_DIALOG_DATA, useValue: [] }
       ]
     });
-    const router = TestBed.get(Router);
+    fixtureList = TestBed.createComponent(TeachersListComponent);
+    teacherList = fixtureList.debugElement.componentInstance;
+
+    router = TestBed.get(Router);
     spyOn(router, 'navigate');
   });
 
+  afterEach(() => {
+    teacherList.ngOnDestroy();
+  });
+
   it('should create teacher list component', () => {
-    const fixture = TestBed.createComponent(TeachersListComponent);
-    const teacherList = fixture.debugElement.componentInstance;
+    fixtureList.detectChanges();
     expect(teacherList).toBeTruthy();
   });
 
-  it('should build teachers based on received data', async(() => {
-    const fixture = TestBed.createComponent(TeachersListComponent);
-    const teacherList = fixture.debugElement.componentInstance;
-    const teachersStorageService = fixture.debugElement.injector.get(
+  it('should build teachers based on received data', () => {
+    const teachersStorageService = fixtureList.debugElement.injector.get(
       TeachersStorageService
     );
     const testTeachersList = [
@@ -72,7 +80,7 @@ fdescribe('TeacherListComponent', () => {
     spyOn(teachersStorageService, 'getTeachersWithClasses').and.returnValue(
       of(testTeachersList)
     );
-    fixture.detectChanges();
+    fixtureList.detectChanges();
 
     expect(
       teacherList.mappedTeachers[testData.teacherShevchenko.id].email
@@ -83,14 +91,12 @@ fdescribe('TeacherListComponent', () => {
     expect(Object.keys(teacherList.mappedTeachers).length).toEqual(
       testTeachersList.length
     );
-  }));
+  });
 
   it('should delete teacher', () => {
-    const fixtureList = TestBed.createComponent(TeachersListComponent);
     const fixtureConfirmDialog = TestBed.createComponent(
       ConfirmationDialogComponent
     );
-    const teacherList = fixtureList.debugElement.componentInstance;
     const confirmDialog = fixtureConfirmDialog.debugElement.componentInstance;
     const teachersStorageService = fixtureList.debugElement.injector.get(
       TeachersStorageService
@@ -122,11 +128,9 @@ fdescribe('TeacherListComponent', () => {
   });
 
   it('should add teacher', () => {
-    const fixtureList = TestBed.createComponent(TeachersListComponent);
     const fixtureEditDialog = TestBed.createComponent(
       EditDialogOverviewComponent
     );
-    const teacherList = fixtureList.debugElement.componentInstance;
     const editDialog = fixtureEditDialog.debugElement.componentInstance;
     const fromList = fixtureList.debugElement.injector.get(
       TeachersStorageService
@@ -181,11 +185,9 @@ fdescribe('TeacherListComponent', () => {
   });
 
   it('should add a new teacher', () => {
-    const fixtureList = TestBed.createComponent(TeachersListComponent);
     const fixtureEditDialog = TestBed.createComponent(
       EditDialogOverviewComponent
     );
-    const teacherList = fixtureList.debugElement.componentInstance;
     const editDialog = fixtureEditDialog.debugElement.componentInstance;
     const fromList = fixtureList.debugElement.injector.get(
       TeachersStorageService
@@ -201,7 +203,6 @@ fdescribe('TeacherListComponent', () => {
 
     fromEditDialog.editMode = false;
 
-    // spyOn(router, 'navigate');
     spyOn(fromList, 'getTeachersWithClasses').and.returnValue(
       of([...testTeachersList, newTeacher])
     );
