@@ -1,4 +1,4 @@
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,7 +19,7 @@ import { EditDialogOverviewComponent } from './edit-dialog/edit-dialog';
 import { Router } from '@angular/router';
 import 'hammerjs';
 
-fdescribe('TeacherListComponent', () => {
+describe('TeacherListComponent', () => {
   let router: Router;
   let fixtureList: any;
   let teacherList: any;

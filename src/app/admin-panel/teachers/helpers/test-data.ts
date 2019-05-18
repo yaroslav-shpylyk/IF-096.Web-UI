@@ -61,39 +61,6 @@ export const teacherGates = {
   subjects: ['Angular']
 };
 
-export const teacherBulgakov = {
-  avatar: '',
-  dateOfBirth: '15.05.1891',
-  email: 'mi.bu@urk.net',
-  firstname: 'Михайло',
-  lastname: 'Булгаков',
-  patronymic: 'Афанасієвич',
-  phone: '9028421666',
-  id: 1
-};
-
-export const teacherChehov = {
-  avatar: '',
-  dateOfBirth: '29.01.1860',
-  email: 'mi.bu@urk.net',
-  firstname: 'Антон ',
-  lastname: 'Чехов',
-  patronymic: 'Павлович',
-  phone: '22421666',
-  id: 2
-};
-
-export const teacherGogol = {
-  avatar: '',
-  dateOfBirth: '20.03.1809',
-  email: 'ni.go@urk.net',
-  firstname: 'Микола',
-  lastname: 'Гоголь',
-  patronymic: 'Васильович',
-  phone: '902421666',
-  id: 3
-};
-
 export const mockClose = {
   close: () => {}
 };
