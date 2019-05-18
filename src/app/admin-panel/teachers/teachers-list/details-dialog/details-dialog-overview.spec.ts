@@ -8,15 +8,15 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import * as testData from '../../helpers/test-data';
 
 import { AvatarComponent } from '../../../../shared/avatar/avatar.component';
-import { EditDialogOverviewComponent } from './edit-dialog';
 import { MaterialModule } from '../../../../material.module';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { TeachersStorageService } from '../../../../services/teachers-storage.service';
+import { DetailsDialogOverviewComponent } from './details-dialog-overview';
 
 describe('TeacherListComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AvatarComponent, EditDialogOverviewComponent],
+      declarations: [AvatarComponent, DetailsDialogOverviewComponent],
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
@@ -38,8 +38,8 @@ describe('TeacherListComponent', () => {
     });
   });
 
-  it('should create EditDialogOverviewComponent', () => {
-    const fixture = TestBed.createComponent(EditDialogOverviewComponent);
+  it('should create DetailsDialogOverviewComponent', () => {
+    const fixture = TestBed.createComponent(DetailsDialogOverviewComponent);
     const component = fixture.debugElement.componentInstance;
     expect(component).toBeTruthy();
   });
