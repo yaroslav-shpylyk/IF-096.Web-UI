@@ -148,7 +148,7 @@ export class TeachersListComponent implements OnInit, OnDestroy {
       for (const el of teachers) {
         this.mappedTeachers[el.id] = el;
       }
-      console.log(this.mappedTeachers);
+
       this.dataSource = new MatTableDataSource(teachers);
       this.dataSource.sort = this.sort;
     });

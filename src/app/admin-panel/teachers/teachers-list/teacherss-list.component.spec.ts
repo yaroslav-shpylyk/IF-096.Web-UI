@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {
   TeachersListComponent,
@@ -15,7 +15,9 @@ import { StickyButtonComponent } from '../../sticky-button/sticky-button.compone
 import { TeachersStorageService } from '../../../services/teachers-storage.service';
 import { of } from 'rxjs';
 import * as testData from '../helpers/test-data';
-import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { EditDialogOverviewComponent } from './edit-dialog/edit-dialog';
+import { By } from '@angular/platform-browser';
 
 fdescribe('TeacherListComponent', () => {
   beforeEach(() => {
@@ -24,19 +26,22 @@ fdescribe('TeacherListComponent', () => {
         TeachersListComponent,
         AvatarComponent,
         StickyButtonComponent,
-        ConfirmationDialogComponent
+        ConfirmationDialogComponent,
+        EditDialogOverviewComponent
       ],
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
         BrowserAnimationsModule,
         FormsModule,
+        ReactiveFormsModule,
         MaterialModule,
         MatSlideToggleModule,
         RouterTestingModule
       ],
       providers: [
         TeachersStorageService,
+        FormBuilder,
         {
           provide: MatDialogRef,
           useValue: testData.dummyMethod
@@ -46,11 +51,11 @@ fdescribe('TeacherListComponent', () => {
     });
   });
 
-  it('should create teacher list component', async(() => {
+  it('should create teacher list component', () => {
     const fixture = TestBed.createComponent(TeachersListComponent);
     const teacherList = fixture.debugElement.componentInstance;
     expect(teacherList).toBeTruthy();
-  }));
+  });
 
   it('should build teachers based on received data', async(() => {
     const fixture = TestBed.createComponent(TeachersListComponent);
@@ -79,7 +84,7 @@ fdescribe('TeacherListComponent', () => {
     );
   }));
 
-  fit('should delete teacher', async(() => {
+  it('should delete teacher', () => {
     const fixtureList = TestBed.createComponent(TeachersListComponent);
     const fixtureConfirmDialog = TestBed.createComponent(
       ConfirmationDialogComponent
@@ -113,5 +118,64 @@ fdescribe('TeacherListComponent', () => {
     expect(Object.keys(teacherList.mappedTeachers).length).toEqual(
       testTeachersList.length - 1
     );
-  }));
+  });
+
+  it('should add teacher', () => {
+    const fixtureList = TestBed.createComponent(TeachersListComponent);
+    const fixtureEditDialog = TestBed.createComponent(
+      EditDialogOverviewComponent
+    );
+    const teacherList = fixtureList.debugElement.componentInstance;
+    const editDialog = fixtureEditDialog.debugElement.componentInstance;
+    const fromList = fixtureList.debugElement.injector.get(
+      TeachersStorageService
+    );
+    const fromEditDialog = fixtureEditDialog.debugElement.injector.get(
+      TeachersStorageService
+    );
+    const testTeachersList = [
+      testData.teacherShevchenko,
+      testData.teacherPushkin
+    ];
+
+    fromEditDialog.editMode = true;
+    fromEditDialog.teacherToDisplay = testData.teacherPushkin;
+    fromEditDialog.modalsId = testData.teacherPushkin.id;
+
+    spyOn(fromList, 'getTeachersWithClasses').and.returnValue(
+      of(testTeachersList)
+    );
+    fixtureList.detectChanges();
+    fixtureEditDialog.detectChanges();
+    const updatedTeacher = {
+      ...testData.teacherPushkin,
+      firstname: 'Тест',
+      lastname: 'Тест',
+      dateOfBirth: '11.11.1976'
+    };
+
+    editDialog.teacherForm.controls.teacherLastname.setValue(
+      updatedTeacher.lastname
+    );
+    editDialog.teacherForm.controls.teacherDateOfBirth.setValue(
+      updatedTeacher.dateOfBirth
+    );
+
+    spyOn(fromEditDialog, 'updateTeacher').and.returnValue(of(updatedTeacher));
+
+    editDialog.onSubmit();
+    fixtureEditDialog.detectChanges();
+    fixtureList.detectChanges();
+    fixtureList.whenStable().then(() => {
+      expect(teacherList.mappedTeachers[updatedTeacher.id].lastname).toEqual(
+        updatedTeacher.lastname
+      );
+      expect(teacherList.mappedTeachers[updatedTeacher.id].dateOfBirth).toEqual(
+        updatedTeacher.dateOfBirth
+      );
+      expect(Object.keys(teacherList.mappedTeachers).length).toEqual(
+        testTeachersList.length
+      );
+    });
+  });
 });
