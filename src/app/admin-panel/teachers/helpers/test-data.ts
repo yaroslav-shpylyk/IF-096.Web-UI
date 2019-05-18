@@ -1,4 +1,3 @@
-
 export const teacherPushkin = {
   avatar: null,
   classes: ['9-А'],
@@ -41,6 +40,27 @@ export const teacherShevchenko = {
   subjects: ['Literature']
 };
 
+export const teacherGates = {
+  avatar: null,
+  classes: ['4-О'],
+  dateOfBirth: '28.10.1955',
+  email: 'bill@urk.net',
+  firstname: 'Bill',
+  id: 398,
+  journalData: [
+    {
+      academicYear: 1985,
+      className: '9-Л',
+      subjectName: ['Programming']
+    }
+  ],
+  lastname: 'Gates',
+  login: 'bill.ga',
+  patronymic: 'Henry',
+  phone: '1112421666',
+  subjects: ['Angular']
+};
+
 export const teacherBulgakov = {
   avatar: '',
   dateOfBirth: '15.05.1891',
@@ -74,6 +94,6 @@ export const teacherGogol = {
   id: 3
 };
 
-export const dummyMethod = {
+export const mockClose = {
   close: () => {}
 };

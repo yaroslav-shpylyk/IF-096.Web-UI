@@ -1,6 +1,5 @@
 import { async, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
@@ -17,7 +16,8 @@ import { of } from 'rxjs';
 import * as testData from '../helpers/test-data';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { EditDialogOverviewComponent } from './edit-dialog/edit-dialog';
-import { By } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import 'hammerjs';
 
 fdescribe('TeacherListComponent', () => {
   beforeEach(() => {
@@ -30,25 +30,26 @@ fdescribe('TeacherListComponent', () => {
         EditDialogOverviewComponent
       ],
       imports: [
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([]),
         HttpClientTestingModule,
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
-        MatSlideToggleModule,
-        RouterTestingModule
+        MatSlideToggleModule
       ],
       providers: [
         TeachersStorageService,
         FormBuilder,
         {
           provide: MatDialogRef,
-          useValue: testData.dummyMethod
+          useValue: testData.mockClose
         },
         { provide: MAT_DIALOG_DATA, useValue: [] }
       ]
     });
+    const router = TestBed.get(Router);
+    spyOn(router, 'navigate');
   });
 
   it('should create teacher list component', () => {
@@ -175,6 +176,61 @@ fdescribe('TeacherListComponent', () => {
       );
       expect(Object.keys(teacherList.mappedTeachers).length).toEqual(
         testTeachersList.length
+      );
+    });
+  });
+
+  it('should add a new teacher', () => {
+    const fixtureList = TestBed.createComponent(TeachersListComponent);
+    const fixtureEditDialog = TestBed.createComponent(
+      EditDialogOverviewComponent
+    );
+    const teacherList = fixtureList.debugElement.componentInstance;
+    const editDialog = fixtureEditDialog.debugElement.componentInstance;
+    const fromList = fixtureList.debugElement.injector.get(
+      TeachersStorageService
+    );
+    const fromEditDialog = fixtureEditDialog.debugElement.injector.get(
+      TeachersStorageService
+    );
+    const testTeachersList = [
+      testData.teacherShevchenko,
+      testData.teacherPushkin
+    ];
+    const newTeacher = testData.teacherGates;
+
+    fromEditDialog.editMode = false;
+
+    // spyOn(router, 'navigate');
+    spyOn(fromList, 'getTeachersWithClasses').and.returnValue(
+      of([...testTeachersList, newTeacher])
+    );
+    fixtureList.detectChanges();
+    fixtureEditDialog.detectChanges();
+    const newTeacherInputs = editDialog.teacherForm.controls;
+
+    newTeacherInputs.teacherFirstname.setValue(newTeacher.firstname);
+    newTeacherInputs.teacherLastname.setValue(newTeacher.lastname);
+    newTeacherInputs.teacherPatronymic.setValue(newTeacher.patronymic);
+    newTeacherInputs.teacherDateOfBirth.setValue(newTeacher.dateOfBirth);
+    newTeacherInputs.teacherEmail.setValue(newTeacher.email);
+    newTeacherInputs.teacherLogin.setValue(newTeacher.login);
+
+    spyOn(fromEditDialog, 'addTeacher').and.returnValue(of(newTeacher));
+    spyOn(fromEditDialog, 'getTeachers').and.returnValue(of(newTeacher));
+
+    editDialog.onSubmit();
+    fixtureEditDialog.detectChanges();
+    fixtureList.detectChanges();
+    fixtureList.whenStable().then(() => {
+      expect(teacherList.mappedTeachers[newTeacher.id].lastname).toEqual(
+        newTeacher.lastname
+      );
+      expect(teacherList.mappedTeachers[newTeacher.id].dateOfBirth).toEqual(
+        newTeacher.dateOfBirth
+      );
+      expect(Object.keys(teacherList.mappedTeachers).length).toEqual(
+        testTeachersList.length + 1
       );
     });
   });
