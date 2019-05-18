@@ -127,7 +127,7 @@ describe('TeacherListComponent', () => {
     );
   });
 
-  it('should add teacher', () => {
+  it('should edit existing teacher', () => {
     const fixtureEditDialog = TestBed.createComponent(
       EditDialogOverviewComponent
     );
