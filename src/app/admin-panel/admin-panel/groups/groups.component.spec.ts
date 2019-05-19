@@ -57,19 +57,11 @@ describe('GroupsComponent', () => {
   });
 
   it('should display groups', () => {
-    expect(page.className[0].textContent).toEqual(
-      ` ${mockGroups[0].className} `
-    );
-    expect(page.classYear[0].textContent).toEqual(
-      ` ${mockGroups[0].classYear.toString()} `
-    );
+    expect(page.className[0].textContent).toEqual(` ${mockGroups[0].className} `);
+    expect(page.classYear[0].textContent).toEqual(` ${mockGroups[0].classYear.toString()} `);
     expect(page.isActive[0].textContent).toEqual(' Відкритий ');
-    expect(page.className[1].textContent).toEqual(
-      ` ${mockGroups[1].className} `
-    );
-    expect(page.classYear[1].textContent).toEqual(
-      ` ${mockGroups[1].classYear.toString()} `
-    );
+    expect(page.className[1].textContent).toEqual(` ${mockGroups[1].className} `);
+    expect(page.classYear[1].textContent).toEqual(` ${mockGroups[1].classYear.toString()} `);
     expect(page.isActive[1].textContent).toEqual('Закритий');
   });
 
@@ -111,14 +103,8 @@ class Page {
   classDescription: HTMLElement[];
   isActive: HTMLElement[];
   constructor() {
-    this.className = Array.from(
-      fixture.nativeElement.querySelectorAll('td.cdk-column-className')
-    );
-    this.classYear = Array.from(
-      fixture.nativeElement.querySelectorAll('td.cdk-column-classYear')
-    );
-    this.isActive = Array.from(
-      fixture.nativeElement.querySelectorAll('td.cdk-column-isActive')
-    );
+    this.className = Array.from(fixture.nativeElement.querySelectorAll('td.cdk-column-className'));
+    this.classYear = Array.from(fixture.nativeElement.querySelectorAll('td.cdk-column-classYear'));
+    this.isActive = Array.from(fixture.nativeElement.querySelectorAll('td.cdk-column-isActive'));
   }
 }
