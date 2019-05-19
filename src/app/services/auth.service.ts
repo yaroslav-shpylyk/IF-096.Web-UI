@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, timer, Subject } from 'rxjs';
 import { LoginData } from '../models/login-data';
 import { catchError, switchMap, takeUntil, tap } from 'rxjs/operators';
@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import * as JWTDecoder from 'jwt-decode';
 import { TokenInfo } from '../models/token-info';
 import { ChangePasswordRequest } from '../models/change-password-request';
+import { ChangePasswordResponse } from '../models/change-password-response';
 
 @Injectable({
   providedIn: 'root'
@@ -44,8 +45,8 @@ export class AuthService implements OnDestroy {
    * @param data - This is object with user's username and password
    * @returns - New token
    */
-  public login(data: LoginData): Observable<any> {
-    return this.http.post<any>(`/signin`, data, { observe: 'response' })
+  public login(data: LoginData): Observable<HttpResponse<object|null>> {
+    return this.http.post<HttpResponse<object|null>>(`/signin`, data, { observe: 'response' })
       .pipe(
         tap(response => {
           const token: string = response.headers.get('Authorization');
@@ -62,13 +63,13 @@ export class AuthService implements OnDestroy {
    * @returns - New token
    */
   public refreshToken(): Observable<any> {
-    return this.http.get<any>(`/refresh`, { observe: 'response' })
+    return this.http.get<HttpResponse<object|null>>(`/refresh`, { observe: 'response' })
       .pipe(
         tap(response => {
           const newToken = response.headers.get('Authorization');
           localStorage.setItem('token', newToken);
         }),
-        catchError((error: any) => {
+        catchError(error => {
           if (error.status.code === 401) {
             this.logout();
           }
@@ -82,8 +83,8 @@ export class AuthService implements OnDestroy {
    * @param query - Users login or email
    * @returns - Status of recovery process
    */
-  public requestPasswordChange(query: string): Observable<any> {
-    return this.http.get<any>(`/requestPasswordReset?query=${query}`);
+  public requestPasswordChange(query: string): Observable<ChangePasswordResponse> {
+    return this.http.get<ChangePasswordResponse>(`/requestPasswordReset?query=${query}`);
   }
 
   /**
@@ -92,18 +93,18 @@ export class AuthService implements OnDestroy {
    * @param token - Token for change password
    * @returns - New password
    */
-  public changePassword(password: string, token: string): Observable<any> {
+  public changePassword(password: string, token: string): Observable<ChangePasswordResponse> {
     const data: ChangePasswordRequest = {
       password,
       token
     };
-    return this.http.put(`/resetPassword`, data);
+    return this.http.put<ChangePasswordResponse>(`/resetPassword`, data);
   }
 
   /**
    * Method creates recursive timeout which refreshes token after delay
    */
-  private refreshTokenTimer(): Observable<any> {
+  private refreshTokenTimer(): Observable<HttpResponse<object|null>> {
     const delay = 300000;
     return timer(0, delay)
       .pipe(
