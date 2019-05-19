@@ -47,14 +47,19 @@
         *ngIf="homeworks[lessonId].fileName"
         class="homework-divider"
       ></mat-divider>
-
-      <a
-        class="fileDwn"
-        (click)="dwnl()"
-      >
+      <div class="fileName" *ngIf="homeworks[lessonId].fileName">
         {{ homeworks[lessonId].fileName }}
-      </a>
-
+      </div>
+      <div class="useOptionsWrapper">
+        <div class="useOptions" *ngIf="homeworks[lessonId].fileName">
+          <button mat-button (click)="dwnl($event)" matTooltip="Скачати">
+            <mat-icon>cloud_download</mat-icon>
+          </button>
+          <button mat-button (click)="openAttachment($event)" matTooltip="Переглянути">
+            <mat-icon>devices</mat-icon>
+          </button>
+        </div>
+      </div>
       <mat-divider class="homework-divider"></mat-divider>
 
       <button

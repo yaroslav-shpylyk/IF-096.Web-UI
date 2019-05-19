@@ -71,6 +71,7 @@ export class ClassJournalComponent implements OnInit, OnDestroy {
         });
     });
   }
+
   /**
    * Method receives input data from a filter field
    * in teacher table turns it into lower case and assigns it

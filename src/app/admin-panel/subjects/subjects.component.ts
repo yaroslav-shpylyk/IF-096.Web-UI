@@ -62,7 +62,7 @@ export class SubjectsComponent implements OnInit {
    * update list of subjects
    * @param subject - data which sends to the dialog window
    */
-  openDialog(subject: any): void {
+  openDialog(subject?: any): void {
     const dialogRef = this.dialog.open(ModifySubjectsComponent, {
       data: (subject) ? { ...subject } : {}
     });
