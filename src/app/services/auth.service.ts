@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, timer, Subject } from 'rxjs';
 import { LoginData } from '../models/login-data';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import * as JWTDecoder from 'jwt-decode';
 import { TokenInfo } from '../models/token-info';
@@ -12,18 +12,24 @@ import { ChangePasswordRequest } from '../models/change-password-request';
   providedIn: 'root'
 })
 
-export class AuthService {
-  private tokenRefreshTimer: any;
+export class AuthService implements OnDestroy {
+  private onDestroy$ = new Subject();
   private changePasswordToken = '';
   constructor(private http: HttpClient, private router: Router) { }
+
+  ngOnDestroy(): void {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+  }
 
   /**
    * Method logout's user
    */
   public logout(): void {
     localStorage.setItem('token', '');
-    clearTimeout(this.tokenRefreshTimer);
     this.router.navigate(['/login']);
+    console.log('works');
+    this.onDestroy$.next();
   }
 
   /**
@@ -40,15 +46,15 @@ export class AuthService {
    * @returns - New token
    */
   public login(data: LoginData): Observable<any> {
-    return this.http.post(`/signin`, data, { observe: 'response' })
+    return this.http.post<any>(`/signin`, data, { observe: 'response' })
       .pipe(
-        map((response: any) => {
+        tap(response => {
           const token: string = response.headers.get('Authorization');
           localStorage.setItem('token', token);
           this.refreshTokenTimer();
           this.router.navigate(['']);
-          return response;
-        })
+        }),
+        switchMap(() => this.refreshTokenTimer())
       );
   }
 
@@ -57,13 +63,11 @@ export class AuthService {
    * @returns - New token
    */
   public refreshToken(): Observable<any> {
-    return this.http.get(`/refresh`, { observe: 'response' })
+    return this.http.get<any>(`/refresh`, { observe: 'response' })
       .pipe(
-        map((response: any) => {
+        tap(response => {
           const newToken = response.headers.get('Authorization');
           localStorage.setItem('token', newToken);
-          this.refreshTokenTimer();
-          return response;
         }),
         catchError((error: any) => {
           if (error.status.code === 401) {
@@ -80,7 +84,7 @@ export class AuthService {
    * @returns - Status of recovery process
    */
   public requestPasswordChange(query: string): Observable<any> {
-    return this.http.get(`/requestPasswordReset?query=${query}`);
+    return this.http.get<any>(`/requestPasswordReset?query=${query}`);
   }
 
   /**
@@ -100,26 +104,26 @@ export class AuthService {
   /**
    * Method creates recursive timeout which refreshes token after delay
    */
-  public refreshTokenTimer(): void {
-    clearTimeout(this.tokenRefreshTimer);
-    const serviceRef: AuthService = this;
+  private refreshTokenTimer(): Observable<any> {
     const delay = 300000;
-    this.tokenRefreshTimer = setTimeout(function refresh() {
-      serviceRef.refreshToken().subscribe();
-      serviceRef.tokenRefreshTimer = setTimeout(refresh, delay);
-    }, delay);
+    return timer(0, delay)
+      .pipe(
+        switchMap(() => this.refreshToken()),
+        takeUntil(this.onDestroy$)
+      );
   }
 
   /**
    * Method checks if current token is valid and refreshes it to continue current session
    * @returns - New token or nothing
    */
-  public checkTokenValidity(): Subscription | void {
+  public checkTokenValidity(): boolean | void {
     if (this.getToken()) {
       const decodedToken: TokenInfo = JWTDecoder(this.getToken());
       const expTime: number = decodedToken.exp;
       if (expTime * 1000 > Date.now()) {
-        return this.refreshToken().subscribe();
+        this.refreshTokenTimer().subscribe();
+        return;
       }
     }
     this.logout();
