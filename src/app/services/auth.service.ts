@@ -28,7 +28,6 @@ export class AuthService implements OnDestroy {
   public logout(): void {
     localStorage.setItem('token', '');
     this.router.navigate(['/login']);
-    console.log('works');
     this.onDestroy$.next();
   }
 
