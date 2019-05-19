@@ -28,13 +28,10 @@ export class PdfGeneratorService {
     const content = htmlContent.nativeElement;
     const contentWidth = imgWidth || htmlContent.nativeElement.width;
     const contentHeight = imgHeight || htmlContent.nativeElement.height;
-    const orient = orientation || 'l';
     const title = docTitle || document.title;
     html2canvas(content, {logging: false}).then(canvas => {
       const contentDataURL = canvas.toDataURL('image/png');
-
       this.initPdfDocument(orientation, docTitle || document.title);
-
       this.pageWidth = this.pdfDocument.internal.pageSize.getWidth();
       this.pageHeight = this.pdfDocument.internal.pageSize.getHeight();
       const paddings = 50;
@@ -46,7 +43,7 @@ export class PdfGeneratorService {
       const positionX = this.pageWidth / 2 - imgWidth / 2;
       const positionY = titleHeight + paddings;
       this.pdfDocument.addImage(contentDataURL, 'PNG', positionX, positionY + titleHeight / 2, imgWidth, imgHeight);
-      this.pdfDocument.save('test.pdf');
+      this.pdfDocument.save(this.setFilename(title));
     });
   }
 
@@ -70,6 +67,7 @@ export class PdfGeneratorService {
       startY: this.paddings + 30,
       margin: {top: 25, bottom: 15},
       styles: {
+        halign: 'center',
         font: 'Roboto-Regular',
         overflow: 'linebreak',
         fontSize: `${fSize}`},

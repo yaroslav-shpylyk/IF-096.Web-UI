@@ -166,23 +166,27 @@ export class StatisticsComponent implements OnInit {
    * Method that start pdf creating procces based on content of active tab
    */
   public downloadPDF(): void {
+    const pdfTableData = [];
+    this.tableData.forEach( row => {
+      const rowData = [];
+      for (const key in row) {
+        if (row.hasOwnProperty(key)) {
+          rowData.push(row[key]);
+        }
+      }
+      pdfTableData.push(rowData);
+    });
     let htmlWrap: ElementRef;
     let htmlContent: ElementRef;
-    let title: string;
+    this.showPreloader();
     if (this.activeTab === 0) {
       htmlContent = this.chart;
       htmlWrap = this.chartWrap;
-      title = 'Рух учнів за минулі 5 років';
+      this.reziseWrap(htmlWrap, 'l');
+      this.generatePdf(htmlContent, htmlWrap, 'l', 'Рух учнів');
     } else {
-      htmlContent = this.totalCountTable;
-      htmlWrap = this.totalCountTable;
-      title = 'Наповнюваність за минулі 5 років';
+      this.pdfGenerator.pdfFromTable(['Рік', 'Кількість', 'Тенденція'], pdfTableData, 'p', 'Наповнюваність', 20);
     }
-    const width = htmlWrap.nativeElement.offsetWidth;
-    const height = htmlWrap.nativeElement.offsetHeight;
-    this.reziseWrap(htmlWrap, 'l');
-    this.showPreloader();
-    this.generatePdf(htmlContent, htmlWrap, 'l', width, height, title);
   }
 
   /**
@@ -210,6 +214,10 @@ export class StatisticsComponent implements OnInit {
   public showPreloader(): void {
     this.dialogRef.addPanelClass('hidden');
     this.showPdfTip = true;
+    setTimeout( () => {
+      this.showPdfTip = false;
+      this.dialogRef.removePanelClass('hidden');
+    }, 1000);
   }
 
   /**
@@ -221,7 +229,9 @@ export class StatisticsComponent implements OnInit {
    * @param height - current height of contentWrap
    * @param title - title of document
    */
-  public generatePdf(contentElem: ElementRef, wrap: ElementRef, orientation: 'p'|'l', width: number, height: number, title: string): void {
+  public generatePdf(contentElem: ElementRef, wrap: ElementRef, orientation: 'p'|'l', title: string): void {
+    const normalWidth = contentElem.nativeElement.offsetWidth;
+    const normalHeight = wrap.nativeElement.offsetHeight;
     let newWidth: number;
     let newHeight: number;
     if (orientation === 'l') {
@@ -232,12 +242,9 @@ export class StatisticsComponent implements OnInit {
       newHeight = 800;
     }
     setTimeout(() => {
-      this.pdfGenerator.generateImagePdf(contentElem, orientation, title, newWidth, newHeight);
-      wrap.nativeElement.style.width = `${width}px`;
-      wrap.nativeElement.style.height = `${height}px`;
-      wrap.nativeElement.style = '';
-      this.showPdfTip = false;
-      this.dialogRef.removePanelClass('hidden');
+      this.pdfGenerator.pdfFromCanvas(contentElem, orientation, title, newWidth, newHeight);
+      wrap.nativeElement.style.width = `${normalWidth}px`;
+      wrap.nativeElement.style.height = `${normalHeight}px`;
     }, 1000);
   }
 }
