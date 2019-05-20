@@ -101,8 +101,8 @@ export class AdminHeaderMenuComponent implements OnInit {
 
   ngOnInit() {
     this.router.events.subscribe(() => {
-      this.activeRoute(); // call on every routing change
-    });
+      this.activeRoute();
+    }); // call on every routing change
     [this.pathActive, this.iconActive, this.nameActive] =
       [this.routesMore[0].path, this.routesMore[0].icon, this.routesMore[0].name]; // show Classes by default
     this.activeRoute(); // call to check which section is selected when component is created

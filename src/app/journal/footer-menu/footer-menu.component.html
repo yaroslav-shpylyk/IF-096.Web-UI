@@ -1,5 +1,5 @@
 <!-- journals button-->
-<a  routerLink="/journals/my-journals" [ngClass]="{active: active}">
+<a routerLink="/journals/my-journals" [ngClass]="{active: active}">
   <div class="icons">
     <mat-icon>collections_bookmark</mat-icon>
     <br>
@@ -7,7 +7,7 @@
   </div>
 </a>
 <!-- progress button-->
-<a  routerLink="/progress" routerLinkActive="active">
+<a routerLink="/progress" routerLinkActive="active">
   <div class="icons">
     <mat-icon>trending_up</mat-icon>
     <br>
@@ -15,7 +15,8 @@
   </div>
 </a>
 <!--logout button-->
-<a (click)="auth.logout()"> <!-- logout function -->
+<a (click)="auth.logout()">
+  <!-- logout function -->
   <div class="icons">
     <mat-icon>exit_to_app</mat-icon>
     <br>

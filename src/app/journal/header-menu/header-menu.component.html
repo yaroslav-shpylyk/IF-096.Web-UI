@@ -2,7 +2,8 @@
 <mat-nav-list class="navigation-items">
   <!--logout button-->
   <div>
-    <a mat-list-item (click)="auth.logout()"> <!-- logout function -->
+    <a mat-list-item (click)="auth.logout()">
+      <!-- logout function -->
       <mat-icon>exit_to_app</mat-icon>
       Вийти
     </a>
@@ -28,9 +29,7 @@
     <!-- show avatar if exists-->
     <!-- show abbreviation if not-->
     <div>
-      <app-avatar [avatar]="avatar"
-                  [firstName]="firstName"
-                  [lastName]="lastName">
+      <app-avatar [avatar]="avatar" [firstName]="firstName" [lastName]="lastName">
       </app-avatar>
     </div>
   </div>

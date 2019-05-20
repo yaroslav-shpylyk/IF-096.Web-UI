@@ -4,7 +4,7 @@ import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ShellRedirectGuard } from './shell-redirect.guard';
 
-fdescribe('Guard for Shell component which should redirect', () => {
+describe('Guard for Shell component which should redirect', () => {
   let shellRedirectGuard: ShellRedirectGuard;
   const routerSnapshot: any = jasmine.createSpyObj<RouterStateSnapshot>('RouterStateSnapshot', ['toString']);
 
@@ -24,7 +24,7 @@ fdescribe('Guard for Shell component which should redirect', () => {
   beforeEach(() => {
     shellRedirectGuard = TestBed.get(ShellRedirectGuard);
   });
-  fit('canActivate should always return false', () => {
+  it('canActivate should always return false', () => {
     expect(shellRedirectGuard.canActivate(new ActivatedRouteSnapshot(), routerSnapshot)).toBe(false);
   });
 });
