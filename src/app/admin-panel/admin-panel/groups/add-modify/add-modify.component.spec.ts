@@ -85,6 +85,15 @@ describe('AddModifyComponent', () => {
   });
 });
 
+class Page {
+  formInput: HTMLInputElement[];
+  constructor() {
+    this.formInput = Array.from(
+      fixture.nativeElement.querySelectorAll('input.mat-input-element')
+    );
+  }
+}
+
 function createComponent() {
   fixture = TestBed.createComponent(AddModifyGroupComponent);
   component = fixture.componentInstance;
@@ -94,13 +103,4 @@ function createComponent() {
     fixture.detectChanges();
     page = new Page();
   });
-}
-
-class Page {
-  formInput: HTMLInputElement[];
-  constructor() {
-    this.formInput = Array.from(
-      fixture.nativeElement.querySelectorAll('input.mat-input-element')
-    );
-  }
 }

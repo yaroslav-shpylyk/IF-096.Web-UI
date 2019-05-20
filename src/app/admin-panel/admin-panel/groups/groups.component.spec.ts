@@ -85,18 +85,6 @@ describe('GroupsComponent', () => {
   });
 });
 
-function createComponent() {
-  fixture = TestBed.createComponent(GroupsComponent);
-  comp = fixture.componentInstance;
-  service = fixture.debugElement.injector.get(GroupsService);
-  spyOn(service, 'getGroups').and.returnValue(of(mockGroups));
-  fixture.detectChanges();
-  return fixture.whenStable().then(() => {
-    fixture.detectChanges();
-    page = new Page();
-  });
-}
-
 class Page {
   className: HTMLElement[];
   classYear: HTMLElement[];
@@ -107,4 +95,16 @@ class Page {
     this.classYear = Array.from(fixture.nativeElement.querySelectorAll('td.cdk-column-classYear'));
     this.isActive = Array.from(fixture.nativeElement.querySelectorAll('td.cdk-column-isActive'));
   }
+}
+
+function createComponent() {
+  fixture = TestBed.createComponent(GroupsComponent);
+  comp = fixture.componentInstance;
+  service = fixture.debugElement.injector.get(GroupsService);
+  spyOn(service, 'getGroups').and.returnValue(of(mockGroups));
+  fixture.detectChanges();
+  return fixture.whenStable().then(() => {
+    fixture.detectChanges();
+    page = new Page();
+  });
 }
