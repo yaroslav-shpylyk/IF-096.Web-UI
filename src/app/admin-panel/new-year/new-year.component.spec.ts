@@ -37,5 +37,16 @@ describe('NewYearComponent', () => {
     const mockDateJanuary = new Date(2019, 1, 11);
     expect(component.currentYear).toBe(2018);
   });
+
+  it('should generate new class title', () => {
+    const mockStandartTitle = '5-А';
+    expect(component.newTitle(mockStandartTitle)).toBe('6-А');
+    const mockHimnaziumTitle = '2(5-А)';
+    expect(component.newTitle(mockHimnaziumTitle)).toBe('3(6-А)');
+    const mockGraduatedStandartTitle = '11-Б';
+    expect(component.newTitle(mockGraduatedStandartTitle)).toBe('');
+    const mockGraduatedHymnasiumTitle = '11-Б';
+    expect(component.newTitle(mockGraduatedHymnasiumTitle)).toBe('');
+  });
 });
 
