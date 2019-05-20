@@ -82,6 +82,7 @@ export class ProgressComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.onDestroy$.next();
+    this.onDestroy$.complete();
   }
 
   /**

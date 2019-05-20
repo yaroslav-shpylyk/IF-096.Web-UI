@@ -61,7 +61,7 @@ export class StickyButtonComponent implements AfterViewInit {
   }
 
   @Output() btnClick = new EventEmitter<any>();
-  stickyBtnClick(increased: any) {
+  stickyBtnClick(increased?: any) {
     this.btnClick.emit(increased);
   }
 
