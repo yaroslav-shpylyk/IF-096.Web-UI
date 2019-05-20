@@ -76,9 +76,14 @@ export class AdminHeaderMenuComponent implements OnInit {
           [this.routesMore[i].path, this.routesMore[i].icon, this.truncateName(this.routesMore[i].name, 8)];
         this.active = true; // highlight section
       }
+      if (this.router.url.slice(0, 15) === '/journals/class') { // show Journals for separate journal
+        this.active = true; // highlight section
+      }
     }
     for (const i in this.routes) { // link buttons from static menu
       if (this.router.url === this.routes[i].path || this.router.url === '/admin-panel') {
+        [this.pathActive, this.iconActive, this.nameActive] =
+          [this.routesMore[2].path, this.routesMore[2].icon, this.routesMore[2].name]; // show Classes by default
         this.active = false; // remove class for highlighting section in third section
       }
     }

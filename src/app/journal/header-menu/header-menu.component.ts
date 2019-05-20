@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { TeacherData } from '../../models/teacher-data';
 import { TeachersStorageService } from '../../services/teachers-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-teacher-header-menu',
@@ -12,9 +13,11 @@ export class TeacherHeaderMenuComponent implements OnInit {
   public avatar: any;
   public firstName: string;
   public lastName: string;
+  public active: boolean;
 
   constructor(public auth: AuthService,
-              private teachersService: TeachersStorageService) {
+              private teachersService: TeachersStorageService,
+              private router: Router) {
   }
 
   /**
@@ -29,6 +32,24 @@ export class TeacherHeaderMenuComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.activeRoute();
     this.getTeacher();
+    this.router.events.subscribe(() => {
+      this.activeRoute();
+    }); // call on every routing change
+  }
+
+  /**
+   * Function that checks active URL
+   * add 'active' class to Journal section
+   * if journals or separate journal are active URL
+   */
+  activeRoute() {
+    if (this.router.url === '/journals/my-journals' || this.router.url.slice(0, 15) === '/journals/class') {
+      this.active = true; // highlight section
+    }
+    else {
+      this.active = false;
+    }
   }
 }

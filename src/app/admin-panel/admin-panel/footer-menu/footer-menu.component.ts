@@ -77,6 +77,9 @@ export class AdminFooterMenuComponent implements OnInit {
           [this.routesMore[i].path, this.routesMore[i].icon, this.truncateName(this.routesMore[i].name, 10)];
         this.active = true; // highlight section
       }
+      if (this.router.url.slice(0, 15) === '/journals/class') { // show Journals for separate journal
+        this.active = true; // highlight section
+      }
     }
     for (const i in this.routes) { // link buttons from static menu
       if (this.router.url === this.routes[i].path || this.router.url === '/admin-panel') {

@@ -9,7 +9,7 @@
   </div>
   <!--journals button-->
   <div>
-    <a mat-list-item routerLinkActive="active" routerLink="/journals/my-journals">
+    <a mat-list-item [ngClass]="{active: active}" routerLink="/journals/my-journals">
       <mat-icon>collections_bookmark</mat-icon>
       Журнали
     </a>
