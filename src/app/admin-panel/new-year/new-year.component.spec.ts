@@ -30,5 +30,12 @@ describe('NewYearComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should return educational year', () => {
+    const mockDateSeptember = new Date(2018, 9, 11);
+    expect(component.currentYear).toBe(2018);
+    const mockDateJanuary = new Date(2019, 1, 11);
+    expect(component.currentYear).toBe(2018);
+  });
 });
 
