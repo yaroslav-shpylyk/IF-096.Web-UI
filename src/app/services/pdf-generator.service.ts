@@ -35,10 +35,9 @@ export class PdfGeneratorService {
       this.pageWidth = this.pdfDocument.internal.pageSize.getWidth();
       this.pageHeight = this.pdfDocument.internal.pageSize.getHeight();
       const paddings = 50;
-      const titleHeight = 20;
-
-      imgWidth = contentWidth * ((this.pageWidth - 2 * paddings) / contentWidth);
-      imgHeight = contentHeight * ((this.pageHeight - 2 * paddings) / contentHeight) * (contentHeight / contentWidth) ;
+      const titleHeight = 10;
+      imgHeight = this.pageHeight - 2 * paddings - titleHeight - 10;
+      imgWidth = this.pageWidth - 2 * paddings - 10;
 
       const positionX = this.pageWidth / 2 - imgWidth / 2;
       const positionY = titleHeight + paddings;
@@ -82,7 +81,7 @@ export class PdfGeneratorService {
    * @param docTitle - title of pdf document
    */
   initPdfDocument(orientation: 'p'|'l', docTitle: string): void {
-    this.pdfDocument = new jsPDF(orientation, 'pt', 'a4', { filters: ['ASCIIHexEncode'] });
+    this.pdfDocument = new jsPDF(orientation, 'px', 'a4', { filters: ['ASCIIHexEncode'] });
     this.pageWidth = this.pdfDocument.internal.pageSize.getWidth();
     this.pageHeight = this.pdfDocument.internal.pageSize.getHeight();
     this.paddings = 50;

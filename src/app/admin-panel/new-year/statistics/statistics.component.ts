@@ -187,6 +187,7 @@ export class StatisticsComponent implements OnInit {
     } else {
       this.pdfGenerator.pdfFromTable(['Рік', 'Кількість', 'Тенденція'], pdfTableData, 'p', 'Наповнюваність', 20);
     }
+    this.hidePreloader();
   }
 
   /**
@@ -197,12 +198,12 @@ export class StatisticsComponent implements OnInit {
   public reziseWrap(contentWrap: ElementRef, orientation: 'p'|'l'): void {
     switch (orientation) {
       case 'l':
-        this.renderer.setStyle(contentWrap.nativeElement, 'width', `800px`);
-        this.renderer.setStyle(contentWrap.nativeElement, 'height', `500px`);
+        this.renderer.setStyle(contentWrap.nativeElement, 'width', `${800 * Math.sqrt(2)}px`);
+        this.renderer.setStyle(contentWrap.nativeElement, 'height', '800px');
         break;
       case 'p':
       default:
-        this.renderer.setStyle(contentWrap.nativeElement, 'width', '500px');
+        this.renderer.setStyle(contentWrap.nativeElement, 'width', `${800 * Math.sqrt(2)}px`);
         this.renderer.setStyle(contentWrap.nativeElement, 'height', '800px');
         break;
     }
@@ -214,10 +215,13 @@ export class StatisticsComponent implements OnInit {
   public showPreloader(): void {
     this.dialogRef.addPanelClass('hidden');
     this.showPdfTip = true;
+  }
+
+  public hidePreloader(): void {
     setTimeout( () => {
       this.showPdfTip = false;
       this.dialogRef.removePanelClass('hidden');
-    }, 1000);
+    }, 1500);
   }
 
   /**
@@ -235,16 +239,18 @@ export class StatisticsComponent implements OnInit {
     let newWidth: number;
     let newHeight: number;
     if (orientation === 'l') {
-      newWidth = 800;
-      newHeight = 500;
+      newHeight = 800;
+      newWidth = newHeight * Math.sqrt(2);
     } else {
-      newWidth = 500;
+      newWidth = newWidth * Math.sqrt(2);
       newHeight = 800;
     }
     setTimeout(() => {
       this.pdfGenerator.pdfFromCanvas(contentElem, orientation, title, newWidth, newHeight);
       wrap.nativeElement.style.width = `${normalWidth}px`;
       wrap.nativeElement.style.height = `${normalHeight}px`;
-    }, 1000);
+      wrap.nativeElement.style = '';
+      this.dialogRef.removePanelClass('hidden');
+      }, 1500);
   }
 }
