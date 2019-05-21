@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AvatarComponent } from './avatar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from '../../material.module';
 
 describe('AvatarComponent', () => {
   let component: AvatarComponent;
@@ -8,6 +10,7 @@ describe('AvatarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ BrowserAnimationsModule, MaterialModule ],
       declarations: [ AvatarComponent ]
     })
     .compileComponents();
