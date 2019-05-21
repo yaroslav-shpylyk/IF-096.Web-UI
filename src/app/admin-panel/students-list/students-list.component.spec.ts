@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { StudentsListComponent } from './students-list.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,9 +14,18 @@ describe('StudentsListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ HttpClientTestingModule, BrowserAnimationsModule,
-        FormsModule, MaterialModule, MatSlideToggleModule, RouterTestingModule ],
-      declarations: [ StudentsListComponent, AvatarComponent ]
+      imports: [
+        HttpClientTestingModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        MaterialModule,
+        MatSlideToggleModule,
+        RouterTestingModule
+      ],
+      declarations: [
+        StudentsListComponent,
+        AvatarComponent
+      ]
     })
     .compileComponents();
   }));
