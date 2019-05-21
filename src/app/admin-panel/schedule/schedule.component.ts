@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import { MatDialog } from '@angular/material';
 import { ScheduleData } from '../../models/schedule-data';
 import { ClassData } from '../../models/class-data';
 import { SubjectData } from '../../models/subject-data';
@@ -9,6 +10,22 @@ import { LessonData } from '../../models/lesson-data';
 import { ClassService } from '../../services/class.service';
 import { SubjectService } from '../../services/subject.service';
 import { ScheduleService } from '../../services/schedule.service';
+import { PdfPreviewComponent } from './pdf-preview/pdf-preview.component';
+
+export interface DialogData {
+  selectedClass: string,
+  dateStart: string,
+  dateEnd: string,
+  dataSchedule: {
+    mondaySubjects: null,
+    tuesdaySubjects: null,
+    wednesdaySubjects: null,
+    thursdaySubjects: null,
+    fridaySubjects: null,
+    saturdaySubjects: null
+  },
+  weekDayName: null
+}
 
 @Component({
   selector: 'app-schedule',
@@ -50,12 +67,14 @@ export class ScheduleComponent implements OnInit {
     saturdaySubjects: null
   };
 
+
   constructor(
     private frmBld: FormBuilder,
     private classService: ClassService,
     private subjectsService: SubjectService,
     private scheduleService: ScheduleService,
     private adapter: DateAdapter<any>,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -249,5 +268,23 @@ export class ScheduleComponent implements OnInit {
     this.messageData = message;
     const itself: ScheduleComponent = this;
     setTimeout( () => { itself.messageData = ''; }, 2000);
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(PdfPreviewComponent, {
+      width: '800px',
+      data: {
+        selectedClass: this.frmSchedule.controls.selectClass.value.className,
+        dateStart: this.frmSchedule.controls.dateTermStart.value.format('Do MMMM YYYY'),
+        dateEnd: this.frmSchedule.controls.dateTermEnd.value.format('Do MMMM YYYY'),
+        dataSchedule: this.emittedDays,
+        weekDayName: this.weekDayName
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      //this.animal = result;
+    });
   }
 }
