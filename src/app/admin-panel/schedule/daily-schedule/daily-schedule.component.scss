@@ -8,6 +8,11 @@ fieldset {
     box-shadow: 1px 1px 2px $shadow-color;
     border-style: none;
 }
+legend {
+    color: $icon-color;
+    font-style: italic;
+    text-shadow: 1px 1px 2px $shadow-color;
+}
 .daily-schedule {
     display: flex;
     flex-wrap: wrap;

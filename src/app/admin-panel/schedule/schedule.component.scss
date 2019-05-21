@@ -1,6 +1,5 @@
 $invalid-color: rgb(182, 14, 14);
 $shadow-color: rgb(182, 182, 182);
-$button-color: rgb(198, 219, 233);
 $success-color: rgb(15, 105, 15);
 
 form {
@@ -42,13 +41,7 @@ form {
     grid-area: 3/2;
 }
 .save-button {
-    width: 6em;
-    height: 2.5em;
     margin: 1em;
-    padding: 0.2em;
-    background-color: $button-color;
-    font-size: 1em;
-    box-shadow: 2px 2px 3px $shadow-color;
 }
 .success-msg {
     color: $success-color;
