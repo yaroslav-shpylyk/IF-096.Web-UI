@@ -272,7 +272,7 @@ export class ScheduleComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(PdfPreviewComponent, {
-      width: '800px',
+      width: '800pt',
       data: {
         selectedClass: this.frmSchedule.controls.selectClass.value.className,
         dateStart: this.frmSchedule.controls.dateTermStart.value.format('Do MMMM YYYY'),

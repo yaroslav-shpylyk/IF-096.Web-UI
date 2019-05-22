@@ -1,7 +1,8 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import * as jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import * as html2canvas from 'html2canvas';
+//var html2canvas: Html2CanvasStatic;
 import { DialogData } from '../schedule.component';
 
 @Component({
@@ -36,16 +37,20 @@ export class PdfPreviewComponent implements OnInit {
   }
 
   onDownload() {
-    console.log('onDownload()');
     console.log(this.pdfcontent.nativeElement);
+    console.log(this.pdfcontent.nativeElement.width, this.pdfcontent.nativeElement.height);
 
     html2canvas(this.pdfcontent.nativeElement).then((canvas) => {
       const imgContent = canvas.toDataURL('image/png');
+      console.log(this.pdfcontent.nativeElement, this.pdfcontent.nativeElement.width);
       //temp.remove();
-      const doc = new jsPDF('p', 'mm');
-      doc.addImage(imgContent, 'PNG', 10, 10, 300, 100);
+      const doc = new jsPDF('l', 'pt', {filters: 'ASCIIHexEncode'} );
+      console.log(doc.internal.pageSize.width, doc.internal.pageSize.height);
+
+      doc.addImage(imgContent, 'PNG', 10, 10, 840, 500);
       //this.setHeaderFooter(pdfDocument, paddings);
-      doc.save('table.pdf');
+      const fileName = `schedule${this.data.selectedClass}.pdf`
+      doc.save(fileName);
       //document.body.appendChild(canvas);
     });
 

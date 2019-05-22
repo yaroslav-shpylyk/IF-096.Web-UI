@@ -192,9 +192,10 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/flex-layout@angular/flex-layout-builds":
-  version "7.0.0-beta.24-b2e2064"
-  resolved "https://codeload.github.com/angular/flex-layout-builds/tar.gz/f9650797599a4c3aeb6b9ad1bd7b2c3d91403516"
+"@angular/flex-layout@7.0.0-beta.24":
+  version "7.0.0-beta.24"
+  resolved "https://registry.yarnpkg.com/@angular/flex-layout/-/flex-layout-7.0.0-beta.24.tgz#ad2fd2b0ff5e49119a6e0bc2052256967ad749af"
+  integrity sha512-ll6sK0nLGxqI/f5+z4jbd+pve1QITzgehv2AuGvfSDgIjPMeqUDB5YZqQmIGM/dQRk/vIio5KCW5LQPJWzMMYQ==
   dependencies:
     tslib "^1.7.1"
 
@@ -411,10 +412,10 @@
   resolved "https://registry.yarnpkg.com/@types/hammerjs/-/hammerjs-2.0.36.tgz#17ce0a235e9ffbcdcdf5095646b374c2bf615a4c"
   integrity sha512-7TUK/k2/QGpEAv/BCwSHlYu3NXZhQ9ZwBYpzr9tjlPIL2C5BeGhH3DmVavRx3ZNyELX5TLC91JTz/cen6AAtIQ==
 
-"@types/html2canvas@^0.0.35":
-  version "0.0.35"
-  resolved "https://registry.yarnpkg.com/@types/html2canvas/-/html2canvas-0.0.35.tgz#a009681a3207a7a8302e65de034ff8d42c949cf7"
-  integrity sha512-28p0/yNwXnvGWQK3rEIBj7NHNQoBXuX0ymcCNjSYR/i0Vk9z+xrKCQZPvsrEmurx9vs4B/eHGbOaJY/a9CXdSg==
+"@types/html2canvas@0.5.35":
+  version "0.5.35"
+  resolved "https://registry.yarnpkg.com/@types/html2canvas/-/html2canvas-0.5.35.tgz#62ef0b59918bf87553593342fa2b040a7477a587"
+  integrity sha512-1A2dtWZbOIZ+rUK8jmAx1We/EiNV+5vScpphU3AF14Vby6COIazi/9StosrvlVCqlQegRhsEgZf7QYOuWbwuuA==
   dependencies:
     "@types/jquery" "*"
 
@@ -456,11 +457,6 @@
   version "12.0.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.0.tgz#d11813b9c0ff8aaca29f04cbc12817f4c7d656e5"
   integrity sha512-Jrb/x3HT4PTJp6a4avhmJCDEVrPdqLfl3e8GGMbpkGGdwAV5UGlIs4vVEfsHHfylZVOKZWpOqmqFH8CbfOZ6kg==
-
-"@types/pdfjs-dist@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@types/pdfjs-dist/-/pdfjs-dist-0.1.2.tgz#91a28961916deab21745482bb26242005fb5b7c7"
-  integrity sha512-BvRLWz6RCI8FMKbgfdTCadVwimUv8920gLsnBEAkECjtqIy95jtt+G1ebNQE2b8PTnLjJICPpmBOGhgkSsiPKA==
 
 "@types/pdfjs-dist@^2.0.0":
   version "2.0.0"
@@ -1235,7 +1231,7 @@ borm-ng2-pdf@^5.2.9:
   resolved "https://registry.yarnpkg.com/borm-ng2-pdf/-/borm-ng2-pdf-5.2.9.tgz#21f955be5769ad7c3f69178763f0aff5e9bb006d"
   integrity sha512-9YPavKLmuNpG0IhuMzaIZQtNSzfUYnbamP0wHjdxGG6/yZuFpJ2dT+28bau+CJjvKn6vsn4MFU0jG/lhgEzphg==
   dependencies:
-    "@types/pdfjs-dist" "^0.1.2"
+    "@types/pdfjs-dist" "^2.0.0"
     pdfjs-dist "2.0.943"
 
 brace-expansion@^1.1.7:
