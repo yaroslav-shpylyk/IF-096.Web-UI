@@ -48,7 +48,6 @@ export class SignInComponent implements OnInit {
       }
     }, (error) => {
       this.showSpiner = false;
-      console.error(error);
     });
   }
 
