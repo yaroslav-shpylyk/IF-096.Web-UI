@@ -198,13 +198,11 @@ export class StatisticsComponent implements OnInit {
   public reziseWrap(contentWrap: ElementRef, orientation: 'p'|'l'): void {
     switch (orientation) {
       case 'l':
-        this.renderer.setStyle(contentWrap.nativeElement, 'width', `${800 * Math.sqrt(2)}px`);
-        this.renderer.setStyle(contentWrap.nativeElement, 'height', '800px');
+        this.renderer.addClass(contentWrap.nativeElement, 'big-landscape');
         break;
       case 'p':
       default:
-        this.renderer.setStyle(contentWrap.nativeElement, 'width', `${800 * Math.sqrt(2)}px`);
-        this.renderer.setStyle(contentWrap.nativeElement, 'height', '800px');
+        this.renderer.addClass(contentWrap.nativeElement, 'big-portrait');
         break;
     }
   }
@@ -234,8 +232,6 @@ export class StatisticsComponent implements OnInit {
    * @param title - title of document
    */
   public generatePdf(contentElem: ElementRef, wrap: ElementRef, orientation: 'p'|'l', title: string): void {
-    const normalWidth = contentElem.nativeElement.offsetWidth;
-    const normalHeight = wrap.nativeElement.offsetHeight;
     let newWidth: number;
     let newHeight: number;
     if (orientation === 'l') {
@@ -247,9 +243,8 @@ export class StatisticsComponent implements OnInit {
     }
     setTimeout(() => {
       this.pdfGenerator.pdfFromCanvas(contentElem, orientation, title, newWidth, newHeight);
-      wrap.nativeElement.style.width = `${normalWidth}px`;
-      wrap.nativeElement.style.height = `${normalHeight}px`;
-      wrap.nativeElement.style = '';
+      if (wrap.nativeElement.classList.contains('big-landscape')) {this.renderer.removeClass(wrap.nativeElement, 'big-landscape'); }
+      if (wrap.nativeElement.classList.contains('big-portrait')) {this.renderer.removeClass(wrap.nativeElement, 'big-portrait'); }
       this.dialogRef.removePanelClass('hidden');
       }, 1500);
   }
