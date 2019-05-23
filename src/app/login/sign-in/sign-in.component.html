@@ -9,10 +9,16 @@
         <mat-form-field class="justifier">
           <mat-icon matSuffix>account_box</mat-icon>
           <input matInput placeholder="Ім'я користувача" type="text" class="form-input" formControlName="username">
+          <mat-error *ngIf="loginForm.controls.username.hasError('required')">
+            Ви не можете залишити це поле пустим
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="justifier">
           <mat-icon matSuffix>lock</mat-icon>
           <input matInput placeholder="Пароль" type="password" class="form-input" formControlName="password">
+          <mat-error *ngIf="loginForm.controls.password.hasError('required')">
+            Ви не можете залишити це поле пустим
+          </mat-error>
         </mat-form-field>
       </div>
       <div class="form-footer">
