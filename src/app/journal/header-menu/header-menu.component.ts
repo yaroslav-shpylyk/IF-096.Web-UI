@@ -47,8 +47,7 @@ export class TeacherHeaderMenuComponent implements OnInit {
   activeRoute() {
     if (this.router.url === '/journals/my-journals' || this.router.url.slice(0, 15) === '/journals/class') {
       this.active = true; // highlight section
-    }
-    else {
+    } else {
       this.active = false;
     }
   }

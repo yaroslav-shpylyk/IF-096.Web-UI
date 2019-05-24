@@ -1,5 +1,5 @@
 <!--static sections in footer menu-->
-<a *ngFor="let i of routes" routerLink="{{i.path}}" routerLinkActive="active">
+<a *ngFor="let i of adminPanelRoutingService.routes" routerLink="{{i.path}}" routerLinkActive="active">
   <div class="icons">
     <mat-icon>{{i.icon}}</mat-icon>
     <br>
@@ -21,7 +21,7 @@
 <!--link for toggle menu-->
 <mat-menu #menu="matMenu">
   <!--loop of sections from matMenuTriggerFor menu-->
-  <div *ngFor="let i of routesMore">
+  <div *ngFor="let i of adminPanelRoutingService.routesMore">
     <a routerLink="{{i.path}}">
       <button mat-menu-item>
         <mat-icon>{{i.icon}}</mat-icon>
