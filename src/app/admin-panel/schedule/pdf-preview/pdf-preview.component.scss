@@ -4,16 +4,30 @@
     justify-content: flex-end;
 }
 h1 {
-    font-size: 1.5em;
+    font-size: 1.2em;
     text-align: center;
-    margin-bottom: 0.5em;
+    margin-bottom: 0;
 }
-p {
-    font-size: 1em;
+.title-term {
+    font-size: 0.8em;
     text-align: center;
     text-decoration: underline;
-    margin-bottom: 0.5em;
+    margin: 0.4em 0 1.5em;
 }
-th {
-    font-size: 1em;
+table {
+    border-collapse: collapse;
+}
+th, td {
+    font-size: 0.8em;
+    border: 1px solid;
+    padding: 4px 8px;
+}
+.lesson-number {
+    width: 20px;
+}
+.lesson-subject {
+    width: 150px;
+}
+td p {
+    margin: 0;
 }

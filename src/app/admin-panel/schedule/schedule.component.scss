@@ -43,13 +43,17 @@ form {
 .save-button {
     margin: 1em;
 }
-.success-msg {
-    color: $success-color;
+.success-msg, .error-msg {
     font-style: italic;
+    color: #fff;
+    padding: 4px 0;
+    border-radius: 3px;
+}
+.success-msg {
+    background-color: $success-color;
 }
 .error-msg {
-    color: $invalid-color;
-    font-style: italic;
+    background-color: $invalid-color;
 }
 
 /* Screen = B/w 320px to 600px */
@@ -64,5 +68,8 @@ form {
         display: flex;
         flex-direction: column;
         width: 95%;
+    }
+    .success-msg, .error-msg {
+        font-size: 0.6em;
     }
 }

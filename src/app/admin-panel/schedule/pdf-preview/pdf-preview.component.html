@@ -7,17 +7,21 @@
   </button>
 </div>
 
-<div id="pdfcontent" #pdfcontent>
+<div id="pdfcontent">
   <h1 mat-dialog-title>Розклад уроків {{data.selectedClass}} класу</h1>
-  <p>на період з {{data.dateStart}} по {{data.dateEnd}}</p>
+  <p class="title-term">на період з {{data.dateStart}} по {{data.dateEnd}}</p>
   <div mat-dialog-content>
     <table>
       <tr>
-        <th></th>
-        <th *ngFor="let dayName of data.weekDayName">{{dayName.legendDay}}</th>
+        <th class="lesson-number"></th>
+        <th *ngFor="let dayName of data.weekDayName" class="lesson-subject">{{dayName.legendDay}}</th>
       </tr>
-      <tr>
-        <td></td>
+      <tr *ngFor="let lesson of tableData; let i=index">
+        <td>{{i+1}}</td>
+        <td *ngFor="let subjects of lesson; let j=index">
+          <p *ngIf="subjects.firstGroup">{{subjects.firstGroup.subjectName}}</p>
+          <p *ngIf="subjects.secondGroup">{{subjects.secondGroup.subjectName}}</p>
+        </td>
       </tr>
     </table>
   </div>

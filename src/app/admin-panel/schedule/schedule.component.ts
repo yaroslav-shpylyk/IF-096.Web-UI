@@ -13,9 +13,9 @@ import { ScheduleService } from '../../services/schedule.service';
 import { PdfPreviewComponent } from './pdf-preview/pdf-preview.component';
 
 export interface DialogData {
-  selectedClass: string,
-  dateStart: string,
-  dateEnd: string,
+  selectedClass: string;
+  dateStart: string;
+  dateEnd: string;
   dataSchedule: {
     mondaySubjects: null,
     tuesdaySubjects: null,
@@ -23,8 +23,13 @@ export interface DialogData {
     thursdaySubjects: null,
     fridaySubjects: null,
     saturdaySubjects: null
-  },
-  weekDayName: null
+  };
+  weekDayName: [
+    {
+      legendDay: string,
+      dailySubjectsName: string
+    }
+  ];
 }
 
 @Component({
@@ -272,7 +277,7 @@ export class ScheduleComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(PdfPreviewComponent, {
-      width: '800pt',
+      width: '1080px',
       data: {
         selectedClass: this.frmSchedule.controls.selectClass.value.className,
         dateStart: this.frmSchedule.controls.dateTermStart.value.format('Do MMMM YYYY'),
@@ -284,7 +289,6 @@ export class ScheduleComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      //this.animal = result;
     });
   }
 }

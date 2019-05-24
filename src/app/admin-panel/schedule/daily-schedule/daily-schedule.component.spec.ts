@@ -63,8 +63,8 @@ describe('DailyScheduleComponent', () => {
   it('#removeSubject is called when delete button is clicked', () => {
     spyOn(component, 'removeSubject').and.callThrough();
     debugElements = fixture.debugElement.queryAll(By.css('button'));
-    debugElement = debugElements.find((element, i, arr) => {
-      if (element.nativeElement.innerText == 'delete') {
+    debugElement = debugElements.find((elem, i, arr) => {
+      if (elem.nativeElement.innerText === 'delete') {
         return true;
       }
     });
@@ -75,8 +75,8 @@ describe('DailyScheduleComponent', () => {
   it('#addSecondGroup is called when add button is clicked', () => {
     spyOn(component, 'addSecondGroup').and.callThrough();
     debugElements = fixture.debugElement.queryAll(By.css('button'));
-    debugElement = debugElements.find((element, i, arr) => {
-      if (element.nativeElement.innerText == 'add_box') {
+    debugElement = debugElements.find((elem, i, arr) => {
+      if (elem.nativeElement.innerText === 'add_box') {
         return true;
       }
     });
