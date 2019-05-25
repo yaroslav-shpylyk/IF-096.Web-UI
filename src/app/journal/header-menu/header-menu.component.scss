@@ -18,6 +18,7 @@ mat-nav-list { // header list
   cursor: pointer;
   height: 64px !important;
   font-size: 0.65em !important;
+  box-sizing: border-box;
 
   /* Most of the Smartphones (Portrait) */
   @media only screen and (max-width: 600px) {
