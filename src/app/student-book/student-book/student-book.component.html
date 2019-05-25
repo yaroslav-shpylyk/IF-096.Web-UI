@@ -62,7 +62,11 @@
         <td class="homeWork" mat-cell *matCellDef="let value">
           <a *ngIf="value.homeworkFileId !==null">
             <mat-icon class="icoFile" (click)="getFile(value.lessonId)"> insert_drive_file</mat-icon>
-          </a> {{value.homeWork}}
+          </a>
+          {{value.homeWork}}
+          <a *ngIf="value.homeworkFileId !==null">
+            <mat-icon class="icoFile" (click)="openAttachment($event, value.lessonId)"> pageview</mat-icon>
+          </a>
         </td>
       </ng-container>
 
