@@ -60,12 +60,12 @@
       <ng-container matColumnDef="homeWork">
         <th mat-header-cell *matHeaderCellDef class="homeWork">ЗАВДАННЯ</th>
         <td class="homeWork" mat-cell *matCellDef="let value">
-          <a *ngIf="value.homeworkFileId !==null">
-            <mat-icon class="icoFile" (click)="getFile(value.lessonId)"> insert_drive_file</mat-icon>
-          </a>
           {{value.homeWork}}
-          <a *ngIf="value.homeworkFileId !==null">
-            <mat-icon class="icoFile" (click)="openAttachment($event, value.lessonId)"> pageview</mat-icon>
+          <a *ngIf="value.homeworkFileId !==null" title="Завантажити">
+            <mat-icon class="icoFile" (click)="getFile(value.lessonId)"> get_app</mat-icon>
+          </a>
+          <a *ngIf="value.homeworkFileId !==null" title="Переглянути">
+            <mat-icon class="icoFile" (click)="openAttachment($event, value.lessonId)"> zoom_in</mat-icon>
           </a>
         </td>
       </ng-container>
