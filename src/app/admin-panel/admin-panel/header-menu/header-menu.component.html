@@ -1,7 +1,7 @@
 <!--header list-->
 <mat-nav-list class="navigation-items">
   <!--static sections in header menu-->
-  <div *ngFor="let i of routes">
+  <div *ngFor="let i of adminPanelRoutingService.routes">
     <a mat-list-item routerLink="{{i.path}}" routerLinkActive="active">
       <mat-icon>{{i.icon}}</mat-icon>
       {{i.name}}
@@ -24,7 +24,7 @@
   <!--list for dropdown menu-->
   <mat-menu #menu="matMenu" class="dropdown-menu">
     <!--loop of sections from matMenuTriggerFor menu-->
-    <div *ngFor="let i of routesMore">
+    <div *ngFor="let i of adminPanelRoutingService.routesMore">
       <a routerLink="{{i.path}}">
         <button mat-menu-item>
           <mat-icon>{{i.icon}}</mat-icon>

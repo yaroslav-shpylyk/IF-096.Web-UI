@@ -29,10 +29,4 @@ describe('AdminHeaderMenuComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-  it('should truncate name if longer than 2nd parameter and add …', () => {
-    expect(component.truncateName('Khrystyna', 5)).toBe('Khrys…');
-  });
-  it('should not truncate name if it is shorter than 2nd parameter', () => {
-    expect(component.truncateName('Khrystyna', 10)).toBe('Khrystyna');
-  });
 });

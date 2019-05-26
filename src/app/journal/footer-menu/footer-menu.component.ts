@@ -11,7 +11,8 @@ export class TeacherFooterMenuComponent implements OnInit {
   public active: boolean;
 
   constructor(public auth: AuthService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
     this.activeRoute();
@@ -28,8 +29,7 @@ export class TeacherFooterMenuComponent implements OnInit {
   activeRoute() {
     if (this.router.url === '/journals/my-journals' || this.router.url.slice(0, 15) === '/journals/class') {
       this.active = true; // highlight section
-    }
-    else {
+    } else {
       this.active = false;
     }
   }
