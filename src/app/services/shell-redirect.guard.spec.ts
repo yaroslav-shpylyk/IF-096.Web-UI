@@ -9,7 +9,7 @@ describe('Guard for Shell component which should redirect', () => {
   let shellRedirectGuard: ShellRedirectGuard;
   let authService: AuthService;
   const routerSnapshot: any = jasmine.createSpyObj<RouterStateSnapshot>('RouterStateSnapshot', ['toString']);
-  const router = {navigate: jasmine.createSpy('navigate')};
+  const router = { navigate: jasmine.createSpy('navigate') };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
