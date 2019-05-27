@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { roles } from '../enum/roles.enum';
 
@@ -9,8 +9,9 @@ import { roles } from '../enum/roles.enum';
 })
 export class ShellRedirectGuard implements CanActivate {
   constructor(private authService: AuthService,
-    private router: Router) {
+              private router: Router) {
   }
+
   /**
    * Function that always redirects
    * depending on user's role
