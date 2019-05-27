@@ -110,9 +110,4 @@ export class PdfPreviewComponent implements OnInit {
     const fileName = `schedule${this.data.selectedClass}.pdf`;
     pdfDoc.save(fileName);
   }
-
-  /** Method closes preview window */
-  closePreviewWindow(): void {
-    this.dialogRef.close();
-  }
 }
