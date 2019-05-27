@@ -1,10 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SubjectService } from '../../services/subject.service';
 import { TeacherService } from '../../services/teacher.service';
-import { TeacherData } from '../../models/teacher-data';
-import { SubjectData } from '../../models/subject-data';
 import { ClassService} from '../../services/class.service';
-import { ClassData } from '../../models/class-data';
 import { StudentsService } from '../../services/students.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ChartType, ChartOptions } from 'chart.js';
