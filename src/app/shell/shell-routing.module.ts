@@ -4,6 +4,7 @@ import { ShellComponent } from './shell/shell.component';
 import { AdminPanelGuard } from '../services/admin-panel.guard';
 import { StudentGuard } from '../services/student.guard';
 import { TeachersGuard } from '../services/teachers.guard';
+import { ShellRedirectGuard } from '../services/shell-redirect.guard';
 
 const routes: Routes = [
   {
@@ -33,6 +34,11 @@ const routes: Routes = [
         canActivate: [StudentGuard],
         canLoad: [StudentGuard],
         loadChildren: '../student-book/student-book.module#StudentBookModule'
+      },
+      {
+        path: '',
+        canActivate: [ShellRedirectGuard],
+        pathMatch: 'full'
       }
     ]
   }
