@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import * as jsPDF from 'jspdf';
 import { DialogData } from '../schedule.component';
@@ -24,20 +24,16 @@ export class PdfPreviewComponent implements OnInit {
       const dailySchedul = this.data.dataSchedule[this.data.weekDayName[i].dailySubjectsName];
       for (let j = 0; j < dailySchedul.length; j++) {
         if (dailySchedul.value[j].firstGroup !== '') {
-          try {
-            this.tableData[j][i] = dailySchedul.value[j];
-          } catch {
+          if(this.tableData.length <= j) {
             this.tableData.push(new Array(6).fill(' '));
-            this.tableData[j][i] = dailySchedul.value[j];
           }
+          this.tableData[j][i] = dailySchedul.value[j];
         } else if ('secondGroup' in dailySchedul.value[j]) {
           if (dailySchedul.value[j].secondGroup !== '') {
-            try {
-              this.tableData[j][i] = dailySchedul.value[j];
-            } catch {
+            if(this.tableData.length <= j) {
               this.tableData.push(new Array(6).fill(' '));
-              this.tableData[j][i] = dailySchedul.value[j];
             }
+            this.tableData[j][i] = dailySchedul.value[j];
           }
         }
       }
@@ -116,7 +112,7 @@ export class PdfPreviewComponent implements OnInit {
   }
 
   /** Method closes preview window */
-  onNoClick(): void {
+  closePreviewWindow(): void {
     this.dialogRef.close();
   }
 }

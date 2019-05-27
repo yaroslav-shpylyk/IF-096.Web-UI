@@ -2,66 +2,66 @@ $icon-color: rgb(78, 125, 185);
 $shadow-color: rgb(182, 182, 182);
 
 fieldset {
-    padding: 0;
-    padding-left: 0.3em;
-    background-color: #fff;
-    box-shadow: 1px 1px 2px $shadow-color;
-    border-style: none;
+  padding: 0;
+  padding-left: 0.3em;
+  background-color: #fff;
+  box-shadow: 1px 1px 2px $shadow-color;
+  border-style: none;
 }
 legend {
-    color: $icon-color;
-    font-style: italic;
-    text-shadow: 1px 1px 2px $shadow-color;
+  color: $icon-color;
+  font-style: italic;
+  text-shadow: 1px 1px 2px $shadow-color;
 }
 .daily-schedule {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 .lesson-subject {
-    display: flex;
-    width: 75%;
+  display: flex;
+  width: 75%;
 }
 .select-subject {
-    margin: 0 0.5em;
-    width: 45%;
+  margin: 0 0.5em;
+  width: 45%;
 }
 .lesson-button {
-    align-self: center;
+  align-self: center;
 }
 mat-icon {
-    color: $icon-color;
+  color: $icon-color;
 }
 .invisible {
-    display: none;
+  display: none;
 }
 
 /* Screen = 800px */
 @media (min-width: 700px) and (max-width: 920px) {
-    .lesson-subject {
-        display: flex;
-        flex-direction: column;
-        width: 70%;
-    }
-    .select-subject {
-        margin: 0 0.5em;
-        width: 80%;
-    }
+  .lesson-subject {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+  }
+  .select-subject {
+    margin: 0 0.5em;
+    width: 80%;
+  }
 }
 
-/* Screen = B/w 320px to 600px */
+/* Screen = B/w 320px to 700px */
 @media (min-width: 320px) and (max-width: 700px) {
-    .daily-schedule {
-        flex-wrap: nowrap;
-    }
-    .lesson-subject {
-        flex-direction: column;
-        width: 80%;
-    }
-    .select-subject {
-        width: 80%;
-    }
-    .lesson-button {
-        display: flex;
-    }
+  .daily-schedule {
+    flex-wrap: nowrap;
+  }
+  .lesson-subject {
+    flex-direction: column;
+    width: 80%;
+  }
+  .select-subject {
+    width: 80%;
+  }
+  .lesson-button {
+    display: flex;
+  }
 }

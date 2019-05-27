@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule, FormArray, FormGroup, FormControl } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule, MatIconModule } from '@angular/material';
 import { DailyScheduleComponent } from './daily-schedule.component';
 
