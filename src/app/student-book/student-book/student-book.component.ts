@@ -4,6 +4,9 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-mo
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { saveAs} from 'file-saver';
 import * as _moment from 'moment';
+import { SubjectAttachmentDialogComponent } from '../../shared/subject-attachment-dialog/subject-attachment-dialog.component';
+import { MatDialog } from '@angular/material';
+import { HomeworkStorageService } from '../../services/homework-storage.service';
 
 const moment = _moment;
 
@@ -30,7 +33,10 @@ export class StudentBookComponent implements OnInit {
   public listViewSetter: boolean;
   public dateValue = moment();
 
-  constructor(private studentBookService: StudentBookService) {
+
+  constructor(private studentBookService: StudentBookService,
+              private homeworkStorageService: HomeworkStorageService,
+              public attachmentDialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -105,5 +111,18 @@ export class StudentBookComponent implements OnInit {
   listView() {
     this.listViewSetter = true;
     this.gridViewSetter = false;
+  }
+
+  public openAttachment(event: { preventDefault: () => void; }, id): void {
+    event.preventDefault();
+    this.homeworkStorageService.saveFile(id).subscribe(data => {
+      this.attachmentDialog.open(SubjectAttachmentDialogComponent, {
+        width: '97vw',
+        height: '93vh',
+        maxWidth: '97vw',
+        maxHeight: '90vh',
+        data
+      });
+    });
   }
 }
