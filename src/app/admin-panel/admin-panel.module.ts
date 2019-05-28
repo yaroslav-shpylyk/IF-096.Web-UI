@@ -58,6 +58,7 @@ import { StickyButtonComponent } from './sticky-button/sticky-button.component';
 import { ListPopupComponent } from './new-year/class-card/list-popup/list-popup.component';
 import { StatisticsComponent } from './new-year/statistics/statistics.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { PdfPreviewComponent } from './schedule/pdf-preview/pdf-preview.component';
 
 
 @NgModule({
@@ -89,7 +90,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     ListPopupComponent,
     StatisticsComponent,
     StickyButtonComponent,
-    ListPopupComponent
+    ListPopupComponent,
+    PdfPreviewComponent
   ],
   imports: [
     CommonModule,
@@ -139,7 +141,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     ConfirmationDialogComponent,
     ClassCardComponent,
     ListPopupComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    PdfPreviewComponent
   ],
   providers: []
 })

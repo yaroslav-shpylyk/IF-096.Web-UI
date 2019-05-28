@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule, FormArray, FormGroup, FormControl } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule, MatIconModule } from '@angular/material';
 import { DailyScheduleComponent } from './daily-schedule.component';
 
@@ -29,6 +29,8 @@ describe('DailyScheduleComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DailyScheduleComponent);
     component = fixture.componentInstance;
+    component.ngOnInit();
+    fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -59,12 +61,10 @@ describe('DailyScheduleComponent', () => {
   });
 
   it('#removeSubject is called when delete button is clicked', () => {
-    component.ngOnInit();
-    fixture.detectChanges();
     spyOn(component, 'removeSubject').and.callThrough();
     debugElements = fixture.debugElement.queryAll(By.css('button'));
-    debugElement = debugElements.find((element, i, arr) => {
-      if (element.nativeElement.innerText == 'delete') {
+    debugElement = debugElements.find((elem, i, arr) => {
+      if (elem.nativeElement.innerText === 'delete') {
         return true;
       }
     });
@@ -73,12 +73,10 @@ describe('DailyScheduleComponent', () => {
   });
 
   it('#addSecondGroup is called when add button is clicked', () => {
-    component.ngOnInit();
-    fixture.detectChanges();
     spyOn(component, 'addSecondGroup').and.callThrough();
     debugElements = fixture.debugElement.queryAll(By.css('button'));
-    debugElement = debugElements.find((element, i, arr) => {
-      if (element.nativeElement.innerText == 'add_box') {
+    debugElement = debugElements.find((elem, i, arr) => {
+      if (elem.nativeElement.innerText === 'add_box') {
         return true;
       }
     });

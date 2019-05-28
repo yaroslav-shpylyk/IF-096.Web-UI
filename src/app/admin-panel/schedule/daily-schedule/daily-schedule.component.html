@@ -4,28 +4,28 @@
     <div *ngFor="let lesson of dailySchedule.controls; let lessonNumber=index"
      class="daily-schedule">
       <span>{{ lessonNumber + 1 }}. </span>
+      <div class="lesson-subject">
+        <mat-form-field class="select-subject">
+          <mat-select [formControl]="lesson.controls.firstGroup"
+          [placeholder]="selectSubjectMsg"
+          (selectionChange)="addSubject(lessonNumber)">
+            <mat-option *ngFor="let subj of arrSubjectsList" [value]="subj">
+              {{ subj.subjectName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-      <mat-form-field class="select-subject">
-        <mat-select [formControl]="lesson.controls.firstGroup"
-         [placeholder]="selectSubjectMsg"
-         (selectionChange)="addSubject(lessonNumber)">
-          <mat-option *ngFor="let subj of arrSubjectsList" [value]="subj">
-            {{ subj.subjectName }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field class="select-subject"
-       [ngClass]="{invisible: lesson.controls.secondGroup.disabled}">
-        <mat-select [formControl]="lesson.controls.secondGroup"
-         [placeholder]="selectSubjectMsg">
-          <mat-option *ngFor="let subj of arrSubjectsList" [value]="subj">
-            {{ subj.subjectName }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <div>
+        <mat-form-field class="select-subject"
+        [ngClass]="{invisible: lesson.controls.secondGroup.disabled}">
+          <mat-select [formControl]="lesson.controls.secondGroup"
+          [placeholder]="selectSubjectMsg">
+            <mat-option *ngFor="let subj of arrSubjectsList" [value]="subj">
+              {{ subj.subjectName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="lesson-button">
         <button mat-icon-button type="button" (click)="addSecondGroup(lessonNumber)">
           <mat-icon>add_box</mat-icon>
         </button>

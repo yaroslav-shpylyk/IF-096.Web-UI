@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA, DebugElement } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import {
@@ -23,7 +23,7 @@ describe('ScheduleComponent', () => {
   let element: HTMLElement;
   let scheduleService: ScheduleService;
   let spy: jasmine.Spy;
-  let scheduleDataInstance = new ScheduleData;
+  const scheduleDataInstance = new ScheduleData();
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -71,8 +71,8 @@ describe('ScheduleComponent', () => {
   });
 
   it('dateTermStart/End fields validity', () => {
-    let dateTermStart = component.frmSchedule.controls['dateTermStart'];
-    let dateTermEnd = component.frmSchedule.controls['dateTermEnd'];
+    const dateTermStart = component.frmSchedule.controls.dateTermStart;
+    const dateTermEnd = component.frmSchedule.controls.dateTermEnd;
     dateTermStart.setValue(new Date());
     fixture.detectChanges();
     expect(dateTermStart.valid).toBeFalsy();
