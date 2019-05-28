@@ -27,10 +27,7 @@ export class StudentDetailModalComponent implements OnInit {
 
   ngOnInit() {
     this.studentServise.getOneStudent(this.data.paramId)
-      .subscribe((student: Student) => {
-      this.studentInfo = student;
-      console.log(student);
-      });
+      .subscribe((student: Student) => this.studentInfo = student);
     this.route.queryParams.subscribe(params => {
       this.classId = params.classId;
     });

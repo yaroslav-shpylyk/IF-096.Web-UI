@@ -17,16 +17,19 @@ describe('StudentDetailModalComponent', () => {
   let component: StudentDetailModalComponent;
   let fixture: ComponentFixture<StudentDetailModalComponent>;
 
-  let studentService: any;
+  let studentService: StudentsService;
+
+  let componentStudentService: StudentsService;
   const mockId = 13;
   const mockClassId = 23;
-  let mockStudentService: any;
+  // let mockStudentService: any;
+  let studentServiceStub: Partial<StudentsService>;
 
 
 
   beforeEach(() => {
 
-    mockStudentService = {
+    studentServiceStub = {
       avatar: null,
       classId: 52,
       classe: '7-Б',
@@ -63,7 +66,7 @@ describe('StudentDetailModalComponent', () => {
             })
           }
         },
-        { provide: StudentsService, useValue: mockStudentService }
+        { provide: StudentsService, useValue: studentServiceStub }
       ],
     })
       .compileComponents();
@@ -74,12 +77,24 @@ describe('StudentDetailModalComponent', () => {
     fixture = TestBed.createComponent(StudentDetailModalComponent);
     component = fixture.componentInstance;
 
-    studentService = TestBed.get(StudentsService);
+    studentService = fixture.debugElement.injector.get(StudentsService);
     console.log('studentService', studentService);
+
+    componentStudentService = studentService;
+    // #docregion setup
+    // #docregion inject-from-testbed
+    // UserService from the root injector
+    studentService = TestBed.get(StudentsService);
+    // #enddocregion inject-from-testbed
 
     fixture.detectChanges();
   });
 
+
+  it('TestBed and Component UserService should be the same', () => {
+    console.log('studentService', studentService);
+    expect(studentService === componentStudentService).toBe(true);
+  });
 
 
   it('should create', () => {
