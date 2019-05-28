@@ -27,9 +27,7 @@ describe('ClassCardComponent', () => {
     fixture.detectChanges();
   });
 
-//TypeError: Cannot read property 'invalid' of undefined
-
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });
