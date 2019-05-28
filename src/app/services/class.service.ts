@@ -17,13 +17,10 @@ export class ClassService {
    * @param subjectNumber - Id of the subject
    * @returns - Array with classes data
    */
-  public getClasses(
-    type: string,
-    subjectNumber?: string
-  ): Observable<ClassData[]> {
+  public getClasses(type: string, subjectNumber?: string): Observable<ClassData[]> {
     const subjectId = subjectNumber || '';
-    return this.http.get(`/classes?subjectId=${subjectId}`).pipe(
-      map((result: { status: any; data: ClassData[] | null }) => {
+    return this.http.get<{ status: any; data: ClassData[] | null }>(`/classes?subjectId=${subjectId}`).pipe(
+      map(result => {
         switch (type) {
           case 'all': {
             return result.data;
