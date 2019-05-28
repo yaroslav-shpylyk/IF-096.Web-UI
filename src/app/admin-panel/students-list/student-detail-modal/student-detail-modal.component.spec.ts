@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { StudentDetailModalComponent, StudentDatailsComponent } from './student-detail-modal.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -10,68 +10,98 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { NgModule } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
+import { StudentsService } from '../../../services/students.service';
+
 
 describe('StudentDetailModalComponent', () => {
-    let component: StudentDetailModalComponent;
-    let fixture: ComponentFixture<StudentDetailModalComponent>;
-    const mockId = 13;
-    const mockClassId = 23;
+  let component: StudentDetailModalComponent;
+  let fixture: ComponentFixture<StudentDetailModalComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule,
-                BrowserAnimationsModule,
-                FormsModule,
-                MaterialModule,
-                ReactiveFormsModule,
-                RouterTestingModule,
-                ],
-            declarations: [StudentDetailModalComponent, AvatarComponent],
-            providers: [
-                MatDialog, { provide: MatDialogRef, useValue: {} },
-                MatDialog, { provide: MAT_DIALOG_DATA, useValue: {} },
-                {
-                    provide: ActivatedRoute,
-                    useValue: {
-                        params: of({
-                            id: mockId
-                        }),
-                        queryParams: of({
-                            classId: mockClassId
-                        })
-                    }
-                }
-            ],
-        })
-            .compileComponents();
-    }));
+  let studentService: any;
+  const mockId = 13;
+  const mockClassId = 23;
+  let mockStudentService: any;
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(StudentDetailModalComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
-});
 
-@NgModule({
-    imports: [
-        HttpClientTestingModule,
+  beforeEach(() => {
+
+    mockStudentService = {
+      avatar: null,
+      classId: 52,
+      classe: '7-Б',
+      dateOfBirth: '2002-02-05',
+      email: '',
+      firstname: 'Артур',
+      id: 0,
+      lastname: 'Годованваі',
+      login: 'artur',
+      patronymic: 'Ігорович',
+      phone: '',
+    };
+
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule,
         BrowserAnimationsModule,
         FormsModule,
         MaterialModule,
         ReactiveFormsModule,
-    ],
-    declarations: [
-        StudentDetailModalComponent,
-        AvatarComponent
-    ],
-    entryComponents: [
-        StudentDetailModalComponent
-    ]
+        RouterTestingModule,
+      ],
+      declarations: [StudentDetailModalComponent, AvatarComponent],
+      providers: [
+        MatDialog, { provide: MatDialogRef, useValue: {} },
+        MatDialog, { provide: MAT_DIALOG_DATA, useValue: {} },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({
+              id: mockId
+            }),
+            queryParams: of({
+              classId: mockClassId
+            })
+          }
+        },
+        { provide: StudentsService, useValue: mockStudentService }
+      ],
+    })
+      .compileComponents();
+
+
+
+
+    fixture = TestBed.createComponent(StudentDetailModalComponent);
+    component = fixture.componentInstance;
+
+    studentService = TestBed.get(StudentsService);
+    console.log('studentService', studentService);
+
+    fixture.detectChanges();
+  });
+
+
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
+
+@NgModule({
+  imports: [
+    HttpClientTestingModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    MaterialModule,
+    ReactiveFormsModule,
+  ],
+  declarations: [
+    StudentDetailModalComponent,
+    AvatarComponent
+  ],
+  entryComponents: [
+    StudentDetailModalComponent
+  ]
 })
 export class TestModule { }
 
@@ -97,9 +127,9 @@ describe('StudentDatailsComponent', () => {
       ],
       providers: [
         MatDialog,
-        {provide: MatDialogRef, useValue: {}},
+        { provide: MatDialogRef, useValue: {} },
         MatDialog,
-        {provide: MAT_DIALOG_DATA, useValue: {}},
+        { provide: MAT_DIALOG_DATA, useValue: {} },
         {
           provide: Router,
           useClass: class {
@@ -117,16 +147,21 @@ describe('StudentDatailsComponent', () => {
             })
           }
         }
-     ],
+      ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(StudentDatailsComponent);
     component = fixture.componentInstance;
+    console.log('my', component);
+    fixture.detectChanges();
+    console.log(fixture.nativeElement.querySelector('mat-card-title'));
     fixture.detectChanges();
   });
+
+
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -137,15 +172,18 @@ describe('StudentDatailsComponent', () => {
     expect(component.paramId).toEqual(mockId);
   });
 
-  it('openDialog should open StudentDetailModalComponent', done => {
-    component.dialog
-      .open(StudentDetailModalComponent, {
-        width: '250px',
-        data: { paramId: 23 }
-      })
-      .afterOpen()
-      .subscribe(() => {
-        expect(true).toBeTruthy();
-      });
-  });
+  it('should ')
+
+  //   it('openDialog should open StudentDetailModalComponent', done => {
+  //     component.dialog
+  //       .open(StudentDetailModalComponent, {
+  //         width: '250px',
+  //         data: { paramId: 23 }
+  //       });
+  //       expect(true).toBeTruthy();
+  //     //   .afterOpen()
+  //     //   .subscribe(() => {
+  //     //     expect(true).toBeTruthy();
+  //     //   });
+  //   });
 });
