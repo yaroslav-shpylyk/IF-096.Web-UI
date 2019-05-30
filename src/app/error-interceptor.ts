@@ -23,6 +23,8 @@ export class ErrorInterceptor implements HttpInterceptor {
           errorMessage = 'Неможливо зберегти! Даний об\'єкт вже існує!';
         } else if (error.error.status.message === 'Bad Credentials') {
           errorMessage = 'Ви ввели некоректні дані. Спробуйде ще раз!';
+        } else if (error.error.status.message === 'java.sql.Date cannot be cast to java.lang.CharSequence') {
+          errorMessage = 'Для даного класу розклад вже існує!';
         }
         this.dialog.open(ErrorComponent, {data: {message: errorMessage}});
         return throwError(error);

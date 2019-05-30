@@ -1,12 +1,27 @@
-import { TestBed } from '@angular/core/testing';
-
+import { TestBed, async } from '@angular/core/testing';
 import { SubjectService } from './subject.service';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 describe('SubjectsService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let httpTestingController: HttpTestingController;
+  let subjectService: SubjectService;
 
-  it('should be created', () => {
-    const service: SubjectService = TestBed.get(SubjectService);
-    expect(service).toBeTruthy();
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [ HttpClientTestingModule ],
+      providers: [ SubjectService ]
+    })
+     .compileComponents();
+  }));
+
+  beforeEach(() => {
+    httpTestingController = TestBed.get(HttpTestingController);
+    subjectService = TestBed.get(SubjectService);
   });
+  afterEach(() => {
+    httpTestingController.verify();
+  });
+  it('service should be defined', async(() => {
+    expect(subjectService).toBeDefined();
+  }));
 });

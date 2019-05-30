@@ -221,10 +221,6 @@ export class NewYearComponent implements OnInit {
     const config = new MatDialogConfig();
     config.panelClass = ['full-screen-modal'];
     config.data = {
-      position: {
-        top: '10px',
-        right: '10px'
-      },
       allClasses: this.allClasses
     };
     this.dialog.open(

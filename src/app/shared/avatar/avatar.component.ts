@@ -54,10 +54,10 @@ export class AvatarComponent implements OnInit, OnChanges {
   private createAvatar(): void {
     this.abbreviation = '';
     if (this.checkValue(this.avatar)) {
-      this.avatarComponent.nativeElement.style.backgroundColor = 'white';
+      this.backgroundColor = 'rgb(255,255,255)';
       this.avatarComponent.nativeElement.style.backgroundImage = `url(${this.avatar})`;
     } else if (this.checkValue(this.firstName) && this.checkValue(this.lastName)) {
-      this.abbreviation = this.generateAbbreviation();
+      this.abbreviation = this.generateAbbreviation(this.firstName, this.lastName);
       this.backgroundColor = this.getRandomColor(4);
     } else {
       this.backgroundColor = this.getRandomColor(4);
@@ -74,15 +74,15 @@ export class AvatarComponent implements OnInit, OnChanges {
       this.avatarComponent.nativeElement.style.backgroundColor = 'white';
       this.avatarComponent.nativeElement.style.backgroundImage = `url(${this.avatar})`;
     } else if (this.checkValue(this.firstName) && this.checkValue(this.lastName)) {
-      this.abbreviation = this.generateAbbreviation();
+      this.abbreviation = this.generateAbbreviation(this.firstName, this.lastName);
     }
   }
   /**
    * Method generates abbreviation from name
    * @returns - Two uppercase first letters of firstName and lastName
    */
-  private generateAbbreviation(): string {
-    const words = [this.firstName, this.lastName];
+  private generateAbbreviation(firstName: string, lastName: string): string {
+    const words = [firstName, lastName];
     return words.every(word => this.checkValue(word)) ?
       words
         .map(word => word.slice(0, 1).toUpperCase())
@@ -111,7 +111,7 @@ export class AvatarComponent implements OnInit, OnChanges {
    * Method checks if value has data
    * @param value - Data
    */
-  public checkValue(value: any): boolean {
+  public checkValue(value: string): boolean {
     return value !== undefined && value !== null && value.trim() !== '';
   }
 }

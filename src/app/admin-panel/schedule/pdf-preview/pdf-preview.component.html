@@ -1,0 +1,28 @@
+<div mat-dialog-actions class="buttons">
+  <button mat-icon-button (click)="onDownload()" cdkFocusInitial>
+    <mat-icon>save_alt</mat-icon>
+  </button>
+  <button mat-icon-button [mat-dialog-close]="true">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div id="pdfcontent">
+  <h1 mat-dialog-title>Розклад уроків {{data.selectedClass}} класу</h1>
+  <p class="title-term">на період з {{data.dateStart}} по {{data.dateEnd}}</p>
+  <div mat-dialog-content>
+    <table>
+      <tr>
+        <th class="lesson-number"></th>
+        <th *ngFor="let dayName of data.weekDayName" class="lesson-subject">{{dayName.legendDay}}</th>
+      </tr>
+      <tr *ngFor="let lesson of tableData; let i=index">
+        <td>{{i+1}}</td>
+        <td *ngFor="let subjects of lesson; let j=index">
+          <p *ngIf="subjects.firstGroup">{{subjects.firstGroup.subjectName}}</p>
+          <p *ngIf="subjects.secondGroup">{{subjects.secondGroup.subjectName}}</p>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

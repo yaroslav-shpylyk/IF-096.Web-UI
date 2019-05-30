@@ -2,6 +2,7 @@ import { TestBed, inject, async } from '@angular/core/testing';
 
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TeachersJournalService } from './teachers-journal.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 const mockTeachersJournalPost = {
   class: {},
@@ -16,7 +17,14 @@ const mockPost = {
 };
 
 describe('TeachersJournalService', () => {
+<<<<<<< HEAD
   
+=======
+  beforeEach(() => TestBed.configureTestingModule({
+    providers: [TeachersJournalService],
+    imports: [HttpClientTestingModule]
+  }));
+>>>>>>> master
 
   beforeEach(() => {
     TestBed.configureTestingModule({

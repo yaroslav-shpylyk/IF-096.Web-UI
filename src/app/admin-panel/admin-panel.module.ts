@@ -58,6 +58,7 @@ import { StickyButtonComponent } from './sticky-button/sticky-button.component';
 import { ListPopupComponent } from './new-year/class-card/list-popup/list-popup.component';
 import { StatisticsComponent } from './new-year/statistics/statistics.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { PdfPreviewComponent } from './schedule/pdf-preview/pdf-preview.component';
 import { SnackbarMessComponent } from './teacher-connection/snackbar-mess/snackbar-mess.component';
 import { ConnectToJournalDialogComponent, ConnectToJournalComponent } from './teachers/teachers-list/connect-to-journal-dialog/connect-to-journal-dialog.component';
 
@@ -92,6 +93,7 @@ import { ConnectToJournalDialogComponent, ConnectToJournalComponent } from './te
     StatisticsComponent,
     StickyButtonComponent,
     ListPopupComponent,
+    PdfPreviewComponent,
     SnackbarMessComponent,
     ConnectToJournalDialogComponent,
     ConnectToJournalComponent
@@ -116,7 +118,6 @@ import { ConnectToJournalDialogComponent, ConnectToJournalComponent } from './te
     ChartsModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    MatInputModule,
     MatRadioModule,
     MaterialModule,
     MatSortModule,
@@ -146,6 +147,7 @@ import { ConnectToJournalDialogComponent, ConnectToJournalComponent } from './te
     ClassCardComponent,
     ListPopupComponent,
     StatisticsComponent,
+    PdfPreviewComponent,
     SnackbarMessComponent,
     ConnectToJournalDialogComponent
   ],

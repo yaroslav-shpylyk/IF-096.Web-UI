@@ -4,6 +4,7 @@ import { ShellComponent } from './shell/shell.component';
 import { AdminPanelGuard } from '../services/admin-panel.guard';
 import { StudentGuard } from '../services/student.guard';
 import { TeachersGuard } from '../services/teachers.guard';
+import { ShellRedirectGuard } from '../services/shell-redirect.guard';
 
 const routes: Routes = [
   {
@@ -34,12 +35,11 @@ const routes: Routes = [
         canLoad: [StudentGuard],
         loadChildren: '../student-book/student-book.module#StudentBookModule'
       },
-      // {
-      //   path: 'new-year-transition',
-      //   canActivate: [AdminPanelGuard],
-      //   canLoad: [AdminPanelGuard],
-      //   loadChildren: '../new-year/new-year.module#NewYearModule'
-      // },
+      {
+        path: '',
+        canActivate: [ShellRedirectGuard],
+        pathMatch: 'full'
+      }
     ]
   }
 ];
