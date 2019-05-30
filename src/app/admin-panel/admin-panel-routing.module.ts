@@ -14,6 +14,7 @@ import { EditDialogEntryComponent } from './teachers/teachers-list/edit-dialog/e
 import { SubjectsComponent } from './subjects/subjects.component';
 import { NewYearComponent } from './new-year/new-year.component';
 import { TeacherConnectionComponent } from './teacher-connection/teacher-connection.component';
+import { ConnectToJournalComponent } from './teachers/teachers-list/connect-to-journal-dialog/connect-to-journal-dialog.component';
 
 const routes: Routes = [
   {
@@ -53,7 +54,8 @@ const routes: Routes = [
             path: ':id',
             component: DialogEntryComponent
           },
-          { path: ':id/edit', component: EditDialogEntryComponent }
+          { path: ':id/edit', component: EditDialogEntryComponent },
+          { path: ':id/connect-to-journal-dialog', component: ConnectToJournalComponent }
         ]
       },
       {

@@ -164,6 +164,13 @@ export class TeachersListComponent implements OnInit, OnDestroy {
     });
   }
 
+  onConnectToJournal(id: number) {
+    this.teachersStorageService.teacherToDisplay = this.mappedTeachers[id];
+    this.router.navigate([id, 'connect-to-journal-dialog'], {
+      relativeTo: this.route
+    });
+  }
+
   onDelete(teacher: { id: number; firstname: string; lastname: string }): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '20em',
