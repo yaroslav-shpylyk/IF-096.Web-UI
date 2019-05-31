@@ -7,7 +7,6 @@ import {
   FormArray,
   FormBuilder
 } from '@angular/forms';
-import { StudentsService } from '../../services/students.service';
 import { ClassService } from '../../services/class.service';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material';
@@ -19,6 +18,8 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { SubjectData } from '../../models/subject-data';
 import { ClassData } from '../../models/class-data';
 import { TeacherData } from '../../models/teacher-data';
+import { MatSnackBar } from '@angular/material';
+import { SnackbarMessComponent } from '../../admin-panel/teacher-connection/snackbar-mess/snackbar-mess.component'
 
 @Component({
   selector: 'app-teacher-connection',
@@ -32,7 +33,9 @@ export class TeacherConnectionComponent implements OnInit {
     private classService: ClassService,
     private subjectService: SubjectService,
     private fb: FormBuilder,
-    private teacherjournalServise: TeachersJournalService
+    private teacherjournalServise: TeachersJournalService,
+    private snackBar: MatSnackBar,
+    
   ) { }
   teachers: TeacherData[];
   subjects: SubjectData[];
@@ -44,7 +47,8 @@ export class TeacherConnectionComponent implements OnInit {
   teacher: boolean;
   subject: boolean;
   class: boolean;
-
+  durationInSeconds = 5;
+  
   myForm = this.fb.group({
     class: ['', Validators.required],
     subject: ['', Validators.required],
@@ -95,6 +99,17 @@ export class TeacherConnectionComponent implements OnInit {
       )
       .subscribe();
   }
+
+  /**
+   * The method that is called after the formSubmit
+   * confirmation of the choice of values ​​to add open confirmation message
+   */
+  openSnackBar() {
+    this.snackBar.openFromComponent(SnackbarMessComponent, {
+      duration: this.durationInSeconds * 1000,
+    });
+  }
+
 
   ngOnInit() {
     /**

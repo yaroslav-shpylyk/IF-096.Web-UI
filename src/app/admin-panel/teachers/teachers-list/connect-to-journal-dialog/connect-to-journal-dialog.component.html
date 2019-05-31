@@ -1,0 +1,33 @@
+<div mat-dialog-content>
+  <div class="container">
+    <h3>Приєднати до журналу</h3>
+    <form [formGroup]="myForm">
+      <div class="form-group">
+        <mat-form-field>
+          <mat-select placeholder="Вибрано" formControlName="teacher">
+            <mat-option [value]="this.data.id">{{ this.data.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Виберіть предмет" formControlName="subject">
+            <mat-option *ngFor="let item of subjects" [value]="item">{{ item.subjectName }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Виберіть клас" formControlName="class">
+            <mat-option *ngFor="let item of classes" [value]="item">{{ item.className }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div id="buttons-area">
+          <div mat-dialog-actions>
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              (click)="onSubmit(myForm.value)">Зберегти</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

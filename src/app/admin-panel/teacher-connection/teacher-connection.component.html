@@ -84,7 +84,8 @@
               color="primary"
               type="submit"
               [disabled]="!myForm"
-              (click)="onSubmit(myForm.value)"
+              (click)="[onSubmit(myForm.value), openSnackBar()]"
+              aria-label="Show an example snack-bar"
             >
               Зберегти
             </button>

@@ -59,6 +59,8 @@ import { ListPopupComponent } from './new-year/class-card/list-popup/list-popup.
 import { StatisticsComponent } from './new-year/statistics/statistics.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { PdfPreviewComponent } from './schedule/pdf-preview/pdf-preview.component';
+import { SnackbarMessComponent } from './teacher-connection/snackbar-mess/snackbar-mess.component';
+import { ConnectToJournalDialogComponent, ConnectToJournalComponent } from './teachers/teachers-list/connect-to-journal-dialog/connect-to-journal-dialog.component';
 
 
 @NgModule({
@@ -91,7 +93,10 @@ import { PdfPreviewComponent } from './schedule/pdf-preview/pdf-preview.componen
     StatisticsComponent,
     StickyButtonComponent,
     ListPopupComponent,
-    PdfPreviewComponent
+    PdfPreviewComponent,
+    SnackbarMessComponent,
+    ConnectToJournalDialogComponent,
+    ConnectToJournalComponent
   ],
   imports: [
     CommonModule,
@@ -142,7 +147,9 @@ import { PdfPreviewComponent } from './schedule/pdf-preview/pdf-preview.componen
     ClassCardComponent,
     ListPopupComponent,
     StatisticsComponent,
-    PdfPreviewComponent
+    PdfPreviewComponent,
+    SnackbarMessComponent,
+    ConnectToJournalDialogComponent
   ],
   providers: []
 })

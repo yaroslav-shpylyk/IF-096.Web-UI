@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  overflow: hidden;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+#buttons-area {
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  margin: 0;
+  padding-bottom: 1em;
+}
+
+h3 {
+  padding: 0 1em 0;
+  color: rgb(107, 103, 103);
+}
