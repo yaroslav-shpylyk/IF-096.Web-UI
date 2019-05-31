@@ -17,15 +17,6 @@ const mockPost = {
 };
 
 describe('TeachersJournalService', () => {
-<<<<<<< HEAD
-  
-=======
-  beforeEach(() => TestBed.configureTestingModule({
-    providers: [TeachersJournalService],
-    imports: [HttpClientTestingModule]
-  }));
->>>>>>> master
-
   beforeEach(() => {
     TestBed.configureTestingModule({
     imports: [HttpClientTestingModule],
