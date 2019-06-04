@@ -24,13 +24,13 @@ export class PdfPreviewComponent implements OnInit {
       const dailySchedul = this.data.dataSchedule[this.data.weekDayName[i].dailySubjectsName];
       for (let j = 0; j < dailySchedul.length; j++) {
         if (dailySchedul.value[j].firstGroup !== '') {
-          if(this.tableData.length <= j) {
+          if (this.tableData.length <= j) {
             this.tableData.push(new Array(6).fill(' '));
           }
           this.tableData[j][i] = dailySchedul.value[j];
         } else if ('secondGroup' in dailySchedul.value[j]) {
           if (dailySchedul.value[j].secondGroup !== '') {
-            if(this.tableData.length <= j) {
+            if (this.tableData.length <= j) {
               this.tableData.push(new Array(6).fill(' '));
             }
             this.tableData[j][i] = dailySchedul.value[j];
