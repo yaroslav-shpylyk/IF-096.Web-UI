@@ -7,14 +7,15 @@ import {
 } from '@angular/animations';
 
 import { AfterViewInit, Directive, ElementRef, OnDestroy } from '@angular/core';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subject } from 'rxjs';
 import {
   distinctUntilChanged,
   filter,
   map,
   pairwise,
   share,
-  throttleTime
+  throttleTime,
+  takeUntil
 } from 'rxjs/operators';
 
 enum Direction {
@@ -28,6 +29,7 @@ enum Direction {
 })
 export class StickyButtonDirective implements AfterViewInit, OnDestroy {
   player: AnimationPlayer;
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
   set show(show: boolean) {
     if (this.player) {
@@ -38,7 +40,6 @@ export class StickyButtonDirective implements AfterViewInit, OnDestroy {
 
     const factory = this.builder.build(metadata);
     const player = factory.create(this.el.nativeElement);
-
     player.play();
   }
 
@@ -64,6 +65,7 @@ export class StickyButtonDirective implements AfterViewInit, OnDestroy {
     ];
   }
 
+
   ngAfterViewInit() {
     const scroll$ = fromEvent(window, 'scroll').pipe(
       throttleTime(10),
@@ -71,7 +73,8 @@ export class StickyButtonDirective implements AfterViewInit, OnDestroy {
       pairwise(),
       map(([y1, y2]): Direction => (y2 < y1 ? Direction.Up : Direction.Down)),
       distinctUntilChanged(),
-      share()
+      share(),
+      takeUntil(this.destroy$)
     );
 
     const goingUp$ = scroll$.pipe(
@@ -86,5 +89,7 @@ export class StickyButtonDirective implements AfterViewInit, OnDestroy {
     goingDown$.subscribe(() => (this.show = false));
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.destroy$.next(true);
+  }
 }
