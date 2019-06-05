@@ -45,6 +45,10 @@ export class DetailsDialogOverviewComponent implements OnInit {
    */
   onBackClick(): void {
     this.dialogRef.close();
+    this.router.navigate(['admin-panel', 'teachers'], {
+      relativeTo: this.route,
+      replaceUrl: true
+    });
   }
 
   /**
