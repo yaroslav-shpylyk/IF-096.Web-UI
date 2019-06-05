@@ -61,6 +61,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { PdfPreviewComponent } from './schedule/pdf-preview/pdf-preview.component';
 import { SnackbarMessComponent } from './teacher-connection/snackbar-mess/snackbar-mess.component';
 import { ConnectToJournalDialogComponent, ConnectToJournalComponent } from './teachers/teachers-list/connect-to-journal-dialog/connect-to-journal-dialog.component';
+import { StickyButtonDirective } from './teachers/helpers/sticky-button.directive';
 
 
 @NgModule({
@@ -96,7 +97,8 @@ import { ConnectToJournalDialogComponent, ConnectToJournalComponent } from './te
     PdfPreviewComponent,
     SnackbarMessComponent,
     ConnectToJournalDialogComponent,
-    ConnectToJournalComponent
+    ConnectToJournalComponent,
+    StickyButtonDirective
   ],
   imports: [
     CommonModule,
