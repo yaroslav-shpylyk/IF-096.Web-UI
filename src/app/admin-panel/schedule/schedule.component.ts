@@ -286,9 +286,5 @@ export class ScheduleComponent implements OnInit {
         weekDayName: this.weekDayName
       }
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-    });
   }
 }
