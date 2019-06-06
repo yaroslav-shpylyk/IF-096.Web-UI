@@ -280,8 +280,8 @@ export class ScheduleComponent implements OnInit {
       width: '1080px',
       data: {
         selectedClass: this.frmSchedule.controls.selectClass.value.className,
-        dateStart: this.frmSchedule.controls.dateTermStart.value.format('Do MMMM YYYY'),
-        dateEnd: this.frmSchedule.controls.dateTermEnd.value.format('Do MMMM YYYY'),
+        dateStart: this.frmSchedule.controls.dateTermStart.value.format('LL'),
+        dateEnd: this.frmSchedule.controls.dateTermEnd.value.format('LL'),
         dataSchedule: this.emittedDays,
         weekDayName: this.weekDayName
       }

@@ -4,6 +4,7 @@ import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { DialogData } from '../schedule.component';
 import { robotoFont } from '../../../../fonts/roboto.font';
+//import { PdfGeneratorService } from '../../../services/pdf-generator.service';
 
 @Component({
   selector: 'app-pdf-preview',
@@ -16,7 +17,8 @@ export class PdfPreviewComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<PdfPreviewComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    //private pdfGeneratorService: PdfGeneratorService
   ) {}
 
   ngOnInit() {
@@ -47,7 +49,6 @@ export class PdfPreviewComponent implements OnInit {
         if (lessonSubjects !== ' ') {
           this.tableData[j][i + 1] = lessonSubjects;
         }
-
       }
     }
   }
@@ -99,5 +100,32 @@ export class PdfPreviewComponent implements OnInit {
     });
     const fileName = `schedule${this.data.selectedClass}.pdf`;
     pdfDoc.save(fileName);
+  }
+
+  onDownload1() {
+    const title = `Розклад уроків ${this.data.selectedClass} класу`
+    // з ${this.data.dateStart} по ${this.data.dateEnd}`;
+
+    // generetes table headers
+    const tableHeader = [' '];
+    for (const dayName of this.data.weekDayName) {
+      tableHeader.push(dayName.legendDay);
+    }
+
+    const tableStyle = {
+      headStyles: {
+        fontStyle: 'Roboto-Regular',
+        halign: 'center',
+        fontSize: 12,
+        fillColor: [78, 125, 185]
+      },
+      styles: {
+        font: 'Roboto-Regular',
+        fontSize: 10
+      },
+      theme: 'grid'
+    }
+
+    //this.pdfGeneratorService.pdfFromTable(tableHeader, this.tableData, 'l', title, tableStyle);
   }
 }
