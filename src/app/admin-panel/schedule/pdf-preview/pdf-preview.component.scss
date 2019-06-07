@@ -45,3 +45,22 @@ td {
 td p {
   margin: 0;
 }
+
+/* Screen = B/w 320px to 700px */
+@media (min-width: 320px) and (max-width: 700px) {
+  h1 {
+    font-size: 0.8em;
+    margin-top: 1em;
+  }
+  .title-term {
+    font-size: 0.6em;
+    margin: 0;
+  }
+  table {
+    margin-top: 0.8em;
+  }
+  th, td {
+    font-size: 0.6em;
+    padding: 2px 4px;
+  }
+}

@@ -61,7 +61,7 @@ export class ScheduleComponent implements OnInit {
     {legendDay: 'Середа *', dailySubjectsName: 'wednesdaySubjects'},
     {legendDay: 'Четвер *', dailySubjectsName: 'thursdaySubjects'},
     {legendDay: 'П`ятниця *', dailySubjectsName: 'fridaySubjects'},
-    {legendDay: 'Субота', dailySubjectsName: 'saturdaySubjects'}
+    {legendDay: 'Субота ', dailySubjectsName: 'saturdaySubjects'}
   ];
   emittedDays = {
     mondaySubjects: null,
