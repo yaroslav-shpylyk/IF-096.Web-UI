@@ -61,31 +61,7 @@ export class PdfGeneratorService {
    */
   pdfFromTable(columnTitles: Array<string>, tableData: Array<any>, orientation: 'p'|'l', docTitle?: string, customStyle?: TableStyle) {
     const title = docTitle || document.title;
-    const defaultStyle = {
-      styles: {
-        halign: 'center',
-        font: 'Roboto-Regular',
-        overflow: 'linebreak',
-        fontSize: 20},
-      headStyles: {fontStyle: 'Roboto-Regular'},
-      theme: 'striped'
-      };
-
-    if (customStyle) {
-      for (const styleGroup in defaultStyle) {
-        if (defaultStyle.hasOwnProperty(styleGroup)) {
-          if (typeof defaultStyle[styleGroup] === 'object') {
-            for (const style in defaultStyle[styleGroup]) {
-              if (!customStyle[styleGroup].hasOwnProperty(style)) {
-                customStyle[styleGroup][style] = defaultStyle[styleGroup][style];
-              }
-            }
-          }
-        }
-      }
-    }
-
-    const tableStyle = customStyle || defaultStyle;
+    const tableStyle = this.getTableStyle(customStyle || null);
     this.initPdfDocument(orientation, title);
     this.setFont();
     this.pdfDocument.setFontSize(48);
@@ -170,5 +146,36 @@ export class PdfGeneratorService {
   private setFilename(pdfDocTitle: string): string {
     const filename = `${pdfDocTitle} (${this.todayDate}).pdf`;
     return filename;
+  }
+
+  /**
+   * Method returns styles(custom or default) of table, that will be generated
+   * @param customStyle - custom styles for table
+   */
+  private getTableStyle(customStyle?: TableStyle) {
+    const defaultStyle = {
+      styles: {
+        halign: 'center',
+        font: 'Roboto-Regular',
+        overflow: 'linebreak',
+        fontSize: 20},
+      headStyles: {fontStyle: 'Roboto-Regular'},
+      theme: 'striped'
+      };
+
+    if (customStyle) {
+      for (const styleGroup in defaultStyle) {
+        if (defaultStyle.hasOwnProperty(styleGroup)) {
+          if (typeof defaultStyle[styleGroup] === 'object') {
+            for (const style in defaultStyle[styleGroup]) {
+              if (!customStyle[styleGroup].hasOwnProperty(style)) {
+                customStyle[styleGroup][style] = defaultStyle[styleGroup][style];
+              }
+            }
+          }
+        }
+      }
+      return customStyle;
+    } else { return defaultStyle; }
   }
 }
