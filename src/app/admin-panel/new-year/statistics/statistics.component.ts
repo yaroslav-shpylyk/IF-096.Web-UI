@@ -183,9 +183,9 @@ export class StatisticsComponent implements OnInit {
       htmlContent = this.chart;
       htmlWrap = this.chartWrap;
       this.reziseWrap(htmlWrap, 'l');
-      this.generatePdf(htmlContent, htmlWrap, 'l', 'Рух учнів');
+      this.generatePdf(htmlContent, htmlWrap, 'l', ['Рух учнів']);
     } else {
-      this.pdfGenerator.pdfFromTable(['Рік', 'Кількість', 'Тенденція'], pdfTableData, 'p', 'Наповнюваність');
+      this.pdfGenerator.pdfFromTable(['Рік', 'Кількість', 'Тенденція'], pdfTableData, 'p', ['Наповнюваність']);
     }
     this.hidePreloader();
   }
@@ -231,7 +231,7 @@ export class StatisticsComponent implements OnInit {
    * @param height - current height of contentWrap
    * @param title - title of document
    */
-  public generatePdf(contentElem: ElementRef, wrap: ElementRef, orientation: 'p'|'l', title: string): void {
+  public generatePdf(contentElem: ElementRef, wrap: ElementRef, orientation: 'p'|'l', title: string[]): void {
     let newWidth: number;
     let newHeight: number;
     if (orientation === 'l') {

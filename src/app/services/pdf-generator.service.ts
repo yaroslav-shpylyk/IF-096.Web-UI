@@ -26,18 +26,16 @@ export class PdfGeneratorService {
    * Generated pdf document that contain image created from html content
    * @param htmlContent - content, that will be contained into documnent
    * @param orientation - orientation of the document (landscape or portrait)
-   * @param docTitle - title of the document
+   * @param docTitles - array that contain main title and subtitles
    * @param imgWidth - width of html content (px)
    * @param imgHeight - height of html content (px)
    */
-  pdfFromCanvas(htmlContent: ElementRef, orientation: 'p'|'l', docTitle?: string, imgWidth?: number, imgHeight?: number) {
+  pdfFromCanvas(htmlContent: ElementRef, orientation: 'p'|'l', docTitles: string[], imgWidth?: number, imgHeight?: number) {
     const content = htmlContent.nativeElement;
-    const contentWidth = imgWidth || htmlContent.nativeElement.width;
-    const contentHeight = imgHeight || htmlContent.nativeElement.height;
-    const title = docTitle || document.title;
+
     html2canvas(content, {logging: false}).then(canvas => {
       const contentDataURL = canvas.toDataURL('image/png');
-      this.initPdfDocument(orientation, docTitle || document.title);
+      this.initPdfDocument(orientation, docTitles);
       this.pageWidth = this.pdfDocument.internal.pageSize.getWidth();
       this.pageHeight = this.pdfDocument.internal.pageSize.getHeight();
       const paddings = 50;
@@ -48,7 +46,7 @@ export class PdfGeneratorService {
       const positionX = this.pageWidth / 2 - imgWidth / 2;
       const positionY = titleHeight + paddings;
       this.pdfDocument.addImage(contentDataURL, 'PNG', positionX, positionY + titleHeight / 2, imgWidth, imgHeight);
-      this.pdfDocument.save(this.setFilename(title));
+      this.pdfDocument.save(this.setFilename(docTitles[0]));
     });
   }
 
@@ -57,14 +55,12 @@ export class PdfGeneratorService {
    * @param columnTitles - column headers
    * @param tableData - data of table
    * @param orientation - page orientation of documnet
-   * @param docTitle - title of document
+   * @param docTitles - array that contain main title and subtitles
    * @param customStyle - custom styles for table
    */
-  pdfFromTable(columnTitles: Array<string>, tableData: Array<any>, orientation: 'p'|'l',
-               docTitle?: string, subTitle?: string, customStyle?: TableStyle) {
-    const title = docTitle || document.title;
+  pdfFromTable(columnTitles: Array<string>, tableData: Array<any>, orientation: 'p'|'l', docTitles: string[], customStyle?: TableStyle) {
     const tableStyle = this.getTableStyle(customStyle || null);
-    this.initPdfDocument(orientation, title, subTitle || null);
+    this.initPdfDocument(orientation, docTitles);
     this.setFont();
     this.pdfDocument.setFontSize(48);
     this.pdfDocument.autoTable({
@@ -76,15 +72,18 @@ export class PdfGeneratorService {
       headStyles: tableStyle.headStyles,
       theme: tableStyle.theme
       });
-    this.pdfDocument.save(this.setFilename(title));
+    this.pdfDocument.save(this.setFilename(docTitles[0]));
   }
 
   /**
    * creates jsPdf object and sets title, header and footer texts with default font style
    * @param orientation - orientation of pdf document ('p'|'l')
-   * @param docTitle - title of pdf document
+   * @param docTitles - array that contain main title and subtitles
    */
-  private initPdfDocument(orientation: 'p'|'l', docTitle: string, subTitle?: string): void {
+  private initPdfDocument(orientation: 'p'|'l', docTitles: string[]): void {
+    let mainTitle: string;
+    let subTitles: string[];
+    [mainTitle, ...subTitles] = docTitles;
     this.pdfDocument = new jsPDF(orientation, 'px', 'a4', { filters: ['ASCIIHexEncode'] });
     this.pageWidth = this.pdfDocument.internal.pageSize.getWidth();
     this.pageHeight = this.pdfDocument.internal.pageSize.getHeight();
@@ -92,8 +91,10 @@ export class PdfGeneratorService {
     this.yOffset = this.paddings;
 
     this.setFont();
-    this.setTitle(docTitle.toUpperCase(), this.yOffset, 18);
-    if (subTitle) { this.setTitle(subTitle, this.yOffset, 14); }
+    this.setTitle(mainTitle.toUpperCase(), this.yOffset, 18);
+    subTitles.forEach( subTitle => {
+      this.setTitle(subTitle, this.yOffset, 14);
+    } );
     this.setHeaderFooter(this.paddings);
   }
 
