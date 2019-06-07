@@ -17,7 +17,7 @@ export class AdminHeaderMenuComponent implements OnInit, OnDestroy {
 
   constructor(public auth: AuthService,
               private router: Router,
-              private adminPanelRoutingService: AdminPanelRoutingService) {
+              public adminPanelRoutingService: AdminPanelRoutingService) {
   }
 
   ngOnInit() {
