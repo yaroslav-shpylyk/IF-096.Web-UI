@@ -11,10 +11,10 @@ export class PdfGeneratorService {
 
   constructor() {
   }
-  public pageWidth: number;
-  public pageHeight: number;
-  public pdfDocument: jsPDF;
-  public paddings: number;
+  private pageWidth: number;
+  private pageHeight: number;
+  private pdfDocument: jsPDF;
+  private paddings: number;
 
   /**
    * Generated pdf document that contain image created from html content
@@ -80,7 +80,7 @@ export class PdfGeneratorService {
    * @param orientation - orientation of pdf document ('p'|'l')
    * @param docTitle - title of pdf document
    */
-  initPdfDocument(orientation: 'p'|'l', docTitle: string): void {
+  private initPdfDocument(orientation: 'p'|'l', docTitle: string): void {
     this.pdfDocument = new jsPDF(orientation, 'px', 'a4', { filters: ['ASCIIHexEncode'] });
     this.pageWidth = this.pdfDocument.internal.pageSize.getWidth();
     this.pageHeight = this.pdfDocument.internal.pageSize.getHeight();
@@ -96,7 +96,7 @@ export class PdfGeneratorService {
    * @param pdfDocTitle - title of document
    * @param paddings - size of paddings in document
    */
-  setTitle(pdfDocTitle: string, paddings: number): void {
+  private setTitle(pdfDocTitle: string, paddings: number): void {
     this.pdfDocument.setFontSize(18);
     const titleWidth = this.pdfDocument.getStringUnitWidth(pdfDocTitle) * this.pdfDocument.internal.getFontSize();
     const xOffset = (this.pageWidth / 2) - (titleWidth / 2);
@@ -106,7 +106,7 @@ export class PdfGeneratorService {
   /**
    * Method that sets header and footer text into document
    */
-  setHeaderFooter(paddings: number): void {
+  private setHeaderFooter(paddings: number): void {
     this.pdfDocument.setFontSize(10);
     this.pdfDocument.setTextColor(100);
     this.pdfDocument.text('Католицька школа-гімназія', paddings - 25, paddings / 2);
@@ -118,7 +118,7 @@ export class PdfGeneratorService {
   /**
    * Sets the default font with cyrillic characters
    */
-  setFont(): void {
+  private setFont(): void {
     this.pdfDocument.addFileToVFS('Roboto-Regular-normal.ttf', robotoFont);
     this.pdfDocument.addFont('Roboto-Regular-normal.ttf', 'Roboto-Regular', 'normal');
     this.pdfDocument.setFont('Roboto-Regular');
@@ -128,15 +128,15 @@ export class PdfGeneratorService {
    * Method that start process of saving pdf document
    * @param filename - filename of genarated document
    */
-  savePdf(filename: string): void {
-    this.pdfDocument.save(filename);
-  }
+  // private savePdf(filename: string): void {
+  //   this.pdfDocument.save(filename);
+  // }
 
   /**
    * Method return current data
    * @returns - current date (dd.mm.yyyy)
    */
-  get todayDate(): string {
+  private get todayDate(): string {
     const curDate = new Date();
     const dd = String(curDate.getDate()).padStart(2, '0');
     const mm = String(curDate.getMonth() + 1).padStart(2, '0');
@@ -149,7 +149,7 @@ export class PdfGeneratorService {
    * Method return filename of document based on title and current date
    * @param pdfDocTitle - title of document
    */
-  setFilename(pdfDocTitle: string): string {
+  private setFilename(pdfDocTitle: string): string {
     const filename = `${pdfDocTitle} (${this.todayDate}).pdf`;
     return filename;
   }
