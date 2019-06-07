@@ -185,7 +185,7 @@ export class StatisticsComponent implements OnInit {
       this.reziseWrap(htmlWrap, 'l');
       this.generatePdf(htmlContent, htmlWrap, 'l', 'Рух учнів');
     } else {
-      this.pdfGenerator.pdfFromTable(['Рік', 'Кількість', 'Тенденція'], pdfTableData, 'p', 'Наповнюваність', 20);
+      this.pdfGenerator.pdfFromTable(['Рік', 'Кількість', 'Тенденція'], pdfTableData, 'p', 'Наповнюваність');
     }
     this.hidePreloader();
   }

@@ -4,6 +4,11 @@ import html2canvas from 'html2canvas';
 import { robotoFont } from '../../fonts/roboto.font';
 import 'jspdf-autotable';
 
+export interface TableStyle {
+  styles: any;
+  headStyles: any;
+  theme: string;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -52,11 +57,35 @@ export class PdfGeneratorService {
    * @param tableData - data of table
    * @param orientation - page orientation of documnet
    * @param docTitle - title of document
-   * @param fontSize - font size of table content
+   * @param customStyle - custom styles for table
    */
-  pdfFromTable(columnTitles: Array<string>, tableData: Array<any>, orientation: 'p'|'l', docTitle?: string, fontSize?: number) {
+  pdfFromTable(columnTitles: Array<string>, tableData: Array<any>, orientation: 'p'|'l', docTitle?: string, customStyle?: TableStyle) {
     const title = docTitle || document.title;
-    const fSize = fontSize || 12;
+    const defaultStyle = {
+      styles: {
+        halign: 'center',
+        font: 'Roboto-Regular',
+        overflow: 'linebreak',
+        fontSize: 20},
+      headStyles: {fontStyle: 'Roboto-Regular'},
+      theme: 'striped'
+      };
+
+    if (customStyle) {
+      for (const styleGroup in defaultStyle) {
+        if (defaultStyle.hasOwnProperty(styleGroup)) {
+          if (typeof defaultStyle[styleGroup] === 'object') {
+            for (const style in defaultStyle[styleGroup]) {
+              if (!customStyle[styleGroup].hasOwnProperty(style)) {
+                customStyle[styleGroup][style] = defaultStyle[styleGroup][style];
+              }
+            }
+          }
+        }
+      }
+    }
+
+    const tableStyle = customStyle || defaultStyle;
     this.initPdfDocument(orientation, title);
     this.setFont();
     this.pdfDocument.setFontSize(48);
@@ -65,12 +94,9 @@ export class PdfGeneratorService {
       body: tableData,
       startY: this.paddings + 30,
       margin: {top: 25, bottom: 15},
-      styles: {
-        halign: 'center',
-        font: 'Roboto-Regular',
-        overflow: 'linebreak',
-        fontSize: `${fSize}`},
-      headStyles: { fontStyle: 'Roboto-Regular' },
+      styles: tableStyle.styles,
+      headStyles: tableStyle.headStyles,
+      theme: tableStyle.theme
       });
     this.pdfDocument.save(this.setFilename(title));
   }
@@ -123,14 +149,6 @@ export class PdfGeneratorService {
     this.pdfDocument.addFont('Roboto-Regular-normal.ttf', 'Roboto-Regular', 'normal');
     this.pdfDocument.setFont('Roboto-Regular');
   }
-
-  /**
-   * Method that start process of saving pdf document
-   * @param filename - filename of genarated document
-   */
-  // private savePdf(filename: string): void {
-  //   this.pdfDocument.save(filename);
-  // }
 
   /**
    * Method return current data
