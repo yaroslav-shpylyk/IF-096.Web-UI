@@ -246,6 +246,6 @@ export class StatisticsComponent implements OnInit {
       if (wrap.nativeElement.classList.contains('big-landscape')) {this.renderer.removeClass(wrap.nativeElement, 'big-landscape'); }
       if (wrap.nativeElement.classList.contains('big-portrait')) {this.renderer.removeClass(wrap.nativeElement, 'big-portrait'); }
       this.dialogRef.removePanelClass('hidden');
-      }, 1500);
+      }, 1510);
   }
 }
