@@ -20,6 +20,7 @@ export class PdfGeneratorService {
   private pageHeight: number;
   private pdfDocument: jsPDF;
   private paddings: number;
+  private yOffset: number;
 
   /**
    * Generated pdf document that contain image created from html content
@@ -59,16 +60,17 @@ export class PdfGeneratorService {
    * @param docTitle - title of document
    * @param customStyle - custom styles for table
    */
-  pdfFromTable(columnTitles: Array<string>, tableData: Array<any>, orientation: 'p'|'l', docTitle?: string, customStyle?: TableStyle) {
+  pdfFromTable(columnTitles: Array<string>, tableData: Array<any>, orientation: 'p'|'l',
+               docTitle?: string, subTitle?: string, customStyle?: TableStyle) {
     const title = docTitle || document.title;
     const tableStyle = this.getTableStyle(customStyle || null);
-    this.initPdfDocument(orientation, title);
+    this.initPdfDocument(orientation, title, subTitle || null);
     this.setFont();
     this.pdfDocument.setFontSize(48);
     this.pdfDocument.autoTable({
       head: [columnTitles],
       body: tableData,
-      startY: this.paddings + 30,
+      startY: this.yOffset + 5,
       margin: {top: 25, bottom: 15},
       styles: tableStyle.styles,
       headStyles: tableStyle.headStyles,
@@ -82,27 +84,31 @@ export class PdfGeneratorService {
    * @param orientation - orientation of pdf document ('p'|'l')
    * @param docTitle - title of pdf document
    */
-  private initPdfDocument(orientation: 'p'|'l', docTitle: string): void {
+  private initPdfDocument(orientation: 'p'|'l', docTitle: string, subTitle?: string): void {
     this.pdfDocument = new jsPDF(orientation, 'px', 'a4', { filters: ['ASCIIHexEncode'] });
     this.pageWidth = this.pdfDocument.internal.pageSize.getWidth();
     this.pageHeight = this.pdfDocument.internal.pageSize.getHeight();
     this.paddings = 50;
+    this.yOffset = this.paddings;
 
     this.setFont();
-    this.setTitle(docTitle, this.paddings);
+    this.setTitle(docTitle.toUpperCase(), this.yOffset, 18);
+    if (subTitle) { this.setTitle(subTitle, this.yOffset, 14); }
     this.setHeaderFooter(this.paddings);
   }
 
   /**
    * Method that sets title in the top of document
    * @param pdfDocTitle - title of document
-   * @param paddings - size of paddings in document
+   * @param paddingTop - coordinate against upper edge of the page
+   * @param fontSize - size offont
    */
-  private setTitle(pdfDocTitle: string, paddings: number): void {
-    this.pdfDocument.setFontSize(18);
-    const titleWidth = this.pdfDocument.getStringUnitWidth(pdfDocTitle) * this.pdfDocument.internal.getFontSize();
+  private setTitle(pdfDocTitle: string, paddingTop: number, fontSize?: number): void {
+    if (fontSize ) { this.pdfDocument.setFontSize(fontSize); }
+    this.yOffset += this.pdfDocument.getTextDimensions(pdfDocTitle).h;
+    const titleWidth = this.pdfDocument.getTextDimensions(pdfDocTitle).w;
     const xOffset = (this.pageWidth / 2) - (titleWidth / 2);
-    this.pdfDocument.text(pdfDocTitle.toUpperCase(), xOffset, paddings);
+    this.pdfDocument.text(pdfDocTitle, xOffset, paddingTop);
   }
 
   /**
