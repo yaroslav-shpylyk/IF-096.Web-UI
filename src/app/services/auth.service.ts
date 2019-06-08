@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import {Observable, timer, Subject, interval} from 'rxjs';
+import { Observable, Subject, interval } from 'rxjs';
 import { LoginData } from '../models/login-data';
 import { catchError, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
