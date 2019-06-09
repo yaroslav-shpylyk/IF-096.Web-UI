@@ -158,8 +158,9 @@ export class PdfGeneratorService {
   /**
    * Method returns styles(custom or default) of table, that will be generated
    * @param customStyle - custom styles for table
+   * @returns - object with styles for table
    */
-  private getTableStyle(customStyle?: TableStyle) {
+  private getTableStyle(customStyle?: TableStyle): TableStyle {
     const defaultStyle = {
       styles: {
         halign: 'center',
