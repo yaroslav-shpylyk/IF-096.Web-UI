@@ -13,38 +13,46 @@ mat-dialog-content {
 		height: 1131.37px;
 		width: 800px;
 	}
-	@media (max-width: 600px) { 
+	@media (max-width: 600px) {
 		.chart-container {
 			height: 35vh;
 			width: 65vw;
 		}
 	}
-	@media (min-width: 1200px){ 
+	@media (min-width: 1200px){
 		.chart-container {
 			height: 50vh;
 			width: 55vw;
 		}
 	 }
-	
+
 	position: relative;
 	h2 {
 		max-width: 80%;
 		margin: 0 auto;
 		text-align: center;
-	}
-	.export-pdf {
-		position: absolute;
-		width: 25px;
-		height: 25px;
-		top: 2%;
-		right: 5%;
-		font-size: 2em;
-		cursor: pointer;
-		color: rgba(0,0,0,0.5)
-	}
-	.export-pdf:hover {
-		color: black;
-	}
+  }
+  @media (max-width: 480px){
+    h2 {
+      max-width: 70%;
+      margin: 0;
+      text-align: center;
+    }
+  }
+
+  .action-buttons {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    display: flex;
+    button {
+      cursor: pointer;
+      color: rgba(0,0,0,0.5);
+    }
+    button:hover {
+      color: rgba(0,0,0,1);
+    }
+  }
 }
 .mat-table {
   width: 100%;
