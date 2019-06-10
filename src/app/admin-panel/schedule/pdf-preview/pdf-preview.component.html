@@ -14,7 +14,8 @@
     <table>
       <tr>
         <th class="lesson-number"></th>
-        <th *ngFor="let dayName of data.weekDayName" class="lesson-subject">{{dayName.legendDay}}</th>
+        <th *ngFor="let dayName of data.weekDayName" class="lesson-subject">
+          {{dayName.legendDay.substring(0, dayName.legendDay.length - 1)}}</th>
       </tr>
       <tr *ngFor="let lesson of tableData; let i=index">
         <td *ngFor="let subjects of lesson; let j=index">
