@@ -31,8 +31,7 @@ describe('StatisticsComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-//TypeError: Cannot read property 'forEach' of undefined
+  // TypeError: Cannot read property 'forEach' of undefined
 
   // it('should create', () => {
   //   expect(component).toBeTruthy();

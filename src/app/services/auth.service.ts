@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable, timer, Subject } from 'rxjs';
+import { Observable, Subject, interval } from 'rxjs';
 import { LoginData } from '../models/login-data';
 import { catchError, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -51,10 +51,9 @@ export class AuthService implements OnDestroy {
         tap(response => {
           const token: string = response.headers.get('Authorization');
           localStorage.setItem('token', token);
-          this.refreshTokenTimer();
+          this.refreshTokenTimer().subscribe();
           this.router.navigate(['']);
-        }),
-        switchMap(() => this.refreshTokenTimer())
+        })
       );
   }
 
@@ -106,9 +105,15 @@ export class AuthService implements OnDestroy {
    */
   private refreshTokenTimer(): Observable<HttpResponse<object|null>> {
     const delay = 300000;
-    return timer(0, delay)
+    return interval(delay)
       .pipe(
         switchMap(() => this.refreshToken()),
+        catchError(error => {
+          if (error.status.code === 401) {
+            this.logout();
+          }
+          return error;
+        }),
         takeUntil(this.onDestroy$)
       );
   }
