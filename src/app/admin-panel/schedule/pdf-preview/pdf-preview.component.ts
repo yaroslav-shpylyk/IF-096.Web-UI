@@ -1,9 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import * as jsPDF from 'jspdf';
-import 'jspdf-autotable';
 import { DialogData } from '../schedule.component';
-import { robotoFont } from '../../../../fonts/roboto.font';
 import { PdfGeneratorService } from '../../../services/pdf-generator.service';
 
 @Component({
@@ -12,7 +9,6 @@ import { PdfGeneratorService } from '../../../services/pdf-generator.service';
   styleUrls: ['./pdf-preview.component.scss']
 })
 export class PdfPreviewComponent implements OnInit {
-
   tableData = [];
 
   constructor(
@@ -53,80 +49,29 @@ export class PdfPreviewComponent implements OnInit {
     }
   }
 
-  /** Method generates pdf-document from form data */
-  onDownload() {
-    const lineHeight = 20;
-    let lineNumber = 2;
-
-    const pdfDoc = new jsPDF('l', 'pt', 'a4');
-    pdfDoc.addFileToVFS('Roboto-Regular-normal.ttf', robotoFont);
-    pdfDoc.addFont('Roboto-Regular-normal.ttf', 'Roboto-Regular', 'normal');
-    pdfDoc.setFont('Roboto-Regular');
-
-    // generetes title
-    pdfDoc.setFontSize(14);
-    const title = `Розклад уроків ${this.data.selectedClass} класу`;
-    let xOffset = (pdfDoc.internal.pageSize.width / 2) - (pdfDoc.getStringUnitWidth(title) * pdfDoc.internal.getFontSize() / 2);
-    pdfDoc.text(title, xOffset, lineHeight * lineNumber);
-
-    pdfDoc.setFontSize(12);
-    const period = `на період з ${this.data.dateStart} по ${this.data.dateEnd}`;
-    xOffset = (pdfDoc.internal.pageSize.width / 2) - (pdfDoc.getStringUnitWidth(period) * pdfDoc.internal.getFontSize() / 2);
-    lineNumber += 1;
-    pdfDoc.text(period, xOffset, lineHeight * lineNumber);
-
-    // generetes table headers
-    lineNumber += 2;
-    const tableHeader = [[' ']];
-    for (const dayName of this.data.weekDayName) {
-      tableHeader[0].push(dayName.legendDay.substring(0, dayName.legendDay.length - 1));
-    }
-    // generetes table
-    pdfDoc.autoTable({
-      startY: lineHeight * lineNumber,
-      head: tableHeader,
-      headStyles: {
-        fontStyle: 'Roboto-Regular',
-        halign: 'center',
-        fontSize: 12,
-        fillColor: [78, 125, 185]
-      },
-      body: this.tableData,
-      styles: {
-        font: 'Roboto-Regular',
-        fontSize: 10
-      },
-      theme: 'grid'
-    });
-    const fileName = `schedule${this.data.selectedClass}.pdf`;
-    pdfDoc.save(fileName);
-  }
-
   /** Method generates data and style for pdf-document */
-  onDownload1() {
-    const title = `Розклад уроків ${this.data.selectedClass} класу`;
+  onDownload() {
+    const mainTitle = `Розклад уроків ${this.data.selectedClass} класу`;
     const subTitle = `з ${this.data.dateStart} по ${this.data.dateEnd}`;
 
     // generetes table headers
     const tableHeader = [' '];
     for (const dayName of this.data.weekDayName) {
-      tableHeader.push(dayName.legendDay);
+      tableHeader.push(dayName.legendDay.substring(0, dayName.legendDay.length - 1));
     }
-
     const tableStyle = {
       headStyles: {
-        //fontStyle: 'Roboto-Regular',
-        //halign: 'center',
+        halign: 'center',
         fontSize: 12,
         fillColor: [78, 125, 185]
       },
       styles: {
-        //font: 'Roboto-Regular',
         fontSize: 10,
         halign: 'left'
       },
       theme: 'grid'
-    }
-    //this.pdfGeneratorService.pdfFromTable(tableHeader, this.tableData, 'l', title, subTitle,tableStyle);
+    };
+    this.pdfGeneratorService.pdfFromTable(
+      tableHeader, this.tableData, 'l', [mainTitle, subTitle], tableStyle);
   }
 }
