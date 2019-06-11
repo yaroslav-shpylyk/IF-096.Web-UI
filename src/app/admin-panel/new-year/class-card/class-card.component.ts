@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormArray } from '@angular/forms';
 import { ClassInfo } from '../../../models/class-info';
 import { MatDialog } from '@angular/material';
 import { NewYearService } from '../../../services/new-year.service';
@@ -14,11 +14,11 @@ import { Student } from '../../../models/student';
 export class ClassCardComponent implements OnInit {
   @Input() curClass: ClassInfo;
   @Input() controlIndex: number;
-  @Input() newTitleField: FormControl;
   @Input() form: FormGroup;
   @Input() isClassTransited: boolean;
   @Input() isCardLock: boolean;
   @Input() currentYear: number;
+  newTitleField: FormControl;
   public isEditEnable = false;
   public classList: Student[];
 
@@ -26,7 +26,10 @@ export class ClassCardComponent implements OnInit {
     private newYearService: NewYearService,
     public dialog: MatDialog) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    const arrayControl = this.form.get('newClassTitle') as FormArray;
+    this.newTitleField = arrayControl.at(this.controlIndex) as FormControl;
+  }
 
   /**
    * Display popup with list of pupils for current classs
