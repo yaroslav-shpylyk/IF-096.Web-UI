@@ -14,13 +14,13 @@ import { StatisticsComponent } from '../../admin-panel/new-year/statistics/stati
 
 export class NewYearComponent implements OnInit {
 
-  public allClasses: ClassData[] = [];
-  public activeClasses: ClassData[] = [];
-  public transititionForm: FormGroup;
-  public isNotEmpty = true;
-  public isCurrentYear = true;
-  public filteredClasses: { classData?: ClassData, control: FormControl}[] = [];
-  public transitedCards: ClassCardComponent[] = [];
+  allClasses: ClassData[] = [];
+  activeClasses: ClassData[] = [];
+  transititionForm: FormGroup;
+  isNotEmpty = true;
+  isCurrentYear = true;
+  filteredClasses: { classData?: ClassData, control: FormControl}[] = [];
+  transitedCards: ClassCardComponent[] = [];
   @ViewChildren('classCard') classCards: QueryList<ClassCardComponent>;
 
   constructor(

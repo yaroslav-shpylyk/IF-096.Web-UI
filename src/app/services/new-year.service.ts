@@ -74,7 +74,7 @@ export class NewYearService {
    * @returns object that contain classes info without graduated classes
    * @param   formData array of objects that contains info about current classes (with new titles)
    */
-  public getTransitRequest(formData: ClassData[]): ClassData[] {
+  private getTransitRequest(formData: ClassData[]): ClassData[] {
     const transitClassesQuery = [];
     formData.forEach(
       (item) => {
@@ -91,7 +91,7 @@ export class NewYearService {
    * @returns responce that contain id's for new classes
    * @param req  objects array with classes info (new class title and new year)
    */
-  public createClasses(req: ClassData[] ): Observable <ClassData[]> {
+  private createClasses(req: ClassData[] ): Observable <ClassData[]> {
     return this.http.post(`/students/transition`, req)
     .pipe(
       map((response: { status: any, data: any }) => {
@@ -105,7 +105,7 @@ export class NewYearService {
    * @returns responce that contain id's for new classes
    * @param req  objects array with id's for classes (old and new id's)
    */
-  public bindPupils(req: {oldClassId: number, newClassId: number}[]): Observable<any> {
+  private bindPupils(req: {oldClassId: number, newClassId: number}[]): Observable<any> {
     return this.http.put(`/students/transition`, req).pipe(
       map((response: any) => {
         return response;
