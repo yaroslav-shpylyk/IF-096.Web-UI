@@ -13,7 +13,7 @@ import { StatisticsComponent } from '../../admin-panel/new-year/statistics/stati
 })
 
 export class NewYearComponent implements OnInit {
-
+  showSpiner = true;
   allClasses: ClassData[] = [];
   activeClasses: ClassData[] = [];
   transititionForm: FormGroup;
@@ -33,6 +33,7 @@ export class NewYearComponent implements OnInit {
     this.newYearTransitition.getClasses().subscribe(
       data => {
         this.allClasses = data;
+        this.showSpiner = false;
         this.activeClasses = this.allClasses.filter(
           curClass => curClass.isActive
         );
