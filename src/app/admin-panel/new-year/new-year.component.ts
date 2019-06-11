@@ -136,11 +136,6 @@ export class NewYearComponent implements OnInit {
             `Виконано. Переведено класів: ${formData.length}`,
             'popup-success'
           );
-        } else {
-          this.displaySnackBar(
-            `Помилка. Сервер відхилив запит`,
-            'popup-error'
-          );
         }
       }
     );
@@ -152,8 +147,8 @@ export class NewYearComponent implements OnInit {
   displaySnackBar(message: string, styleClass: string): void {
     const config = new MatSnackBarConfig();
     config.panelClass = [styleClass];
-    config.duration = 4000;
-    config.verticalPosition = 'bottom';
+    config.duration = 3000;
+    config.verticalPosition = 'top';
     this.snackBar.open(message, null, config);
   }
 
