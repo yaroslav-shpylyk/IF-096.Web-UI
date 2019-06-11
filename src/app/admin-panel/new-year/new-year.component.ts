@@ -5,7 +5,7 @@ import { ClassData } from '../../models/class-data';
 import { ClassCardComponent } from './class-card/class-card.component';
 import { MatSnackBar, MatSnackBarConfig, MatDialog, MatDialogConfig } from '@angular/material';
 import { StatisticsComponent } from '../../admin-panel/new-year/statistics/statistics.component';
-
+import { NewTitleValidator } from './validators/new-title.validator';
 @Component({
   selector: 'app-new-year',
   templateUrl: './new-year.component.html',
@@ -47,7 +47,6 @@ export class NewYearComponent implements OnInit {
     );
   }
 
-
   /**
    * Add new FormControl with validators to FormArray
    * @param singleClass ClassData[] - objects with data about current class
@@ -56,50 +55,10 @@ export class NewYearComponent implements OnInit {
     const newInput = this.fb.control(
       this.newTitle(singleClass.className),
       [Validators.pattern('(^[1-7][(]([1-9]|1[0-2])-[А-Я]{1}[)]$)|(^([1-9]|1[0-2])-[А-Я]{1}$)'),
-      this.classTitleValidator(this.allClasses, singleClass.classYear, singleClass.className)]);
+      NewTitleValidator(this.allClasses, singleClass.classYear, singleClass.className),
+    ]);
     (this.transititionForm.controls.newClassTitle as FormArray).push(newInput);
     this.filteredClasses.push( {classData: singleClass, control: newInput} );
-  }
-
-  /**
-   * Title validation for new class
-   * @param allClasses ClassData[] - Array of objects with data about classes
-   * @param classYear number - current class year
-   * @param curClassTitle string - current class title
-   * @returns - return FormControl with validation error or null
-   */
-  classTitleValidator = (allClasses: ClassData[], classYear: number, curClassTitle: string) => {
-    return (control: FormControl) => {
-      if (curClassTitle === control.value) {
-        return {title_dublicate: {valid: false}};
-      }
-      const existError = allClasses.some(
-         (item) => {
-          return (item.classYear === classYear + 1 && item.className === control.value); }
-      );
-      if (existError) {
-        return { class_exist: {valid: false} };
-      }
-
-      if (control.value !== '') {
-        const curClassNameParts = curClassTitle.split(/[-(]/);
-        const newNameParts = control.value.split(/[-(]/);
-        if (newNameParts.length !== curClassNameParts.length) {
-          if (newNameParts.length <= curClassNameParts.length ) {
-            if (+newNameParts[0] <= +curClassNameParts[1]) { return {error_number: {valid: false}}; }
-          } else {
-              if (+newNameParts[1] < +curClassNameParts[0]) { return {error_number: {valid: false}}; }
-            }
-          } else {
-          if (curClassNameParts.some(
-            (item, index)  => {
-            return +item >= +newNameParts[index] && index < newNameParts.length - 1; })) {
-            return {error_number: {valid: false} };
-          }
-        }
-      }
-      return null;
-    };
   }
 
   formSubmit() {
@@ -152,6 +111,7 @@ export class NewYearComponent implements OnInit {
    *  Filter active classses and generate according to this object with filtereted classes and array of FormControls
    */
   filterClasses(): void {
+    console.log(this.filteredClasses);
     const year = this.currentYear;
     const isCurrentYear = (singleClass) => singleClass.classYear === year;
     const isNotEmpty = (singleClass) => singleClass.numOfStudents > 0;
