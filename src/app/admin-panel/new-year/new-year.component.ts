@@ -111,7 +111,6 @@ export class NewYearComponent implements OnInit {
    *  Filter active classses and generate according to this object with filtereted classes and array of FormControls
    */
   filterClasses(): void {
-    console.log(this.filteredClasses);
     const year = this.currentYear;
     const isCurrentYear = (singleClass) => singleClass.classYear === year;
     const isNotEmpty = (singleClass) => singleClass.numOfStudents > 0;
