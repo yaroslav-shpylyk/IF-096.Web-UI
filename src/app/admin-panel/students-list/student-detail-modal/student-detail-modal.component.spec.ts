@@ -12,14 +12,13 @@ import { NgModule } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StudentsService } from '../../../services/students.service';
 import { Observable, Observer } from 'rxjs';
-import { Student } from '../../../models/student';
+import { Student } from   '../../../models/student';
 
 
 describe('StudentDetailModalComponent', () => {
   // let component: StudentDetailModalComponent;
   // let fixture: ComponentFixture<StudentDetailModalComponent>;
-
-  const mockId = 13;
+const mockId = 13;
   const mockClassId = 23;
 
 
@@ -74,8 +73,6 @@ describe('StudentDetailModalComponent', () => {
 
     it('should create', () => {
       const { component } = setup();
-
-
       expect(component).toBeTruthy();
     });
 
