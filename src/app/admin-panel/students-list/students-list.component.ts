@@ -20,6 +20,7 @@ export class StudentsListComponent implements OnInit {
   showNowActive = false;
   dataSource: MatTableDataSource<Student>;
   displayedColumns: string[] = ['avatar', 'name', 'dateOfBirth', 'schoolClass', 'moreButton'];
+  showSpinner = true;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
@@ -31,7 +32,9 @@ export class StudentsListComponent implements OnInit {
 
   ngOnInit() {
     this.activeClass = this.classListService.getClasses('active');
+    this.activeClass.subscribe(() => this.showSpinner = false);
     this.notActiveClass = this.classListService.getClasses('inActive');
+    this.notActiveClass.subscribe(() => this.showSpinner = false);
     this.initStudentList();
   }
 
@@ -43,6 +46,7 @@ export class StudentsListComponent implements OnInit {
     this.studentsService.getSubject().subscribe((res: Array<Student>) => {
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.sort = this.sort;
+      this.showSpinner = false;
     });
   }
 
@@ -51,6 +55,7 @@ export class StudentsListComponent implements OnInit {
    */
 
   onSelectionClass($event): void {
+    this.showSpinner = true;
     this.classId = $event.value;
     this.studentsService.loadStudents(this.classId);
   }
