@@ -28,9 +28,10 @@ export class NewYearComponent implements OnInit {
   transitedCards: ClassCardComponent[] = [];
   @ViewChildren('classCard') classCards: QueryList<ClassCardComponent>;
 
-  transititionForm = this.fb.group({
-    newClassTitle: this.fb.array([])
-  });
+  transititionForm = this.fb.group(
+    { newClassTitle: this.fb.array([]) },
+    { updateOn: 'blur' }
+  );
   get newClassTitle() { return this.transititionForm.get('newClassTitle') as FormArray; }
 
 
@@ -165,8 +166,7 @@ export class NewYearComponent implements OnInit {
   }
 
   /**
-   * Generate new title for class based on current title
-   * @param curTitle string - current title of class
+   * open popup window with statistic
    */
   showStatistic(): void {
     const config = new MatDialogConfig();
