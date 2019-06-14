@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { ClassData } from '../models/class-data';
 import { Student } from '../models/student';
 
@@ -21,8 +21,8 @@ export class NewYearService {
     const request = this.getTransitRequest(formData);
     const subject = new Subject<number>();
     const bindReq: {oldClassId: number, newClassId: number}[] = [];
-    this.createClasses(request).subscribe(
-      res => {
+    this.createClasses(request).pipe(
+      switchMap( res => {
         let resIndex = 0;
         formData.forEach (item => {
           if (item.className !== '') {
@@ -32,13 +32,13 @@ export class NewYearService {
             bindReq.push({oldClassId: item.id, newClassId: 0});
           }
         });
-        this.bindPupils(bindReq).subscribe(
-          result => {
-            subject.next(result.status.code);
-          }
-        );
+        return this.bindPupils(bindReq);
+      })
+    ).subscribe(
+      result => {
+        subject.next(result.status.code);
       }
-     );
+    );
     return subject.asObservable();
   }
 
