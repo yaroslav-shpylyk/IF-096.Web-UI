@@ -62,7 +62,7 @@ export class ClassCardComponent implements OnInit {
       this.isEditEnable = false;
     } else {
       this.isEditEnable = true;
-      classNameInput.focus();
+      setTimeout(() => classNameInput.focus(), 0);
     }
   }
 
