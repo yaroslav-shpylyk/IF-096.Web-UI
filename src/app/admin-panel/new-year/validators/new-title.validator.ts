@@ -13,29 +13,32 @@ export function NewTitleValidator(allClasses: ClassData[], classYear: number, cu
     if (curClassTitle === control.value) {
       return {title_dublicate: {valid: false}};
     }
-    const existError = allClasses.some(
-       (item) => {
-        return (item.classYear === classYear + 1 && item.className === control.value); }
-    );
-    if (existError) {
+
+    const isClassAllreadyPresent = item => item.classYear === classYear + 1 && item.className === control.value;
+    if (allClasses.some(isClassAllreadyPresent)) {
       return { class_exist: {valid: false} };
     }
 
     if (control.value !== '') {
-      const curClassNameParts = curClassTitle.split(/[-(]/);
-      const newNameParts = control.value.split(/[-(]/);
-      if (newNameParts.length !== curClassNameParts.length) {
-        if (newNameParts.length <= curClassNameParts.length ) {
-          if (+newNameParts[0] <= +curClassNameParts[1]) { return {error_number: {valid: false}}; }
-        } else {
-            if (+newNameParts[1] < +curClassNameParts[0]) { return {error_number: {valid: false}}; }
-          }
-        } else {
-        if (curClassNameParts.some(
-          (item, index)  => {
-          return +item >= +newNameParts[index] && index < newNameParts.length - 1; })) {
-          return {error_number: {valid: false} };
-        }
+      const partsOfCurTitle = curClassTitle.split(/[-(]/);
+      const partsOfNewTitle = control.value.split(/[-(]/);
+      const isSameTitleTypes = () => partsOfNewTitle.length === partsOfCurTitle.length; // oldTitleType: 5-A; newTitleType: 1(5-А)
+      const isOldTitleType = () => partsOfNewTitle.length <= partsOfCurTitle.length;
+
+      const isFirstNumInNewTitleLess = () => {
+        if (isOldTitleType()) {
+          return +partsOfNewTitle[0] <= +partsOfCurTitle[1];
+        } else {return +partsOfNewTitle[1] < +partsOfCurTitle[0]; }
+      };
+
+      const isSomeNumInNewTitleLess = () => partsOfCurTitle.some(
+        (item, index)  =>  +item >= +partsOfNewTitle[index] && index < partsOfNewTitle.length - 1
+      );
+
+      if (!isSameTitleTypes()) {
+        if ( isFirstNumInNewTitleLess() ) { return {error_number: {valid: false} }; }
+      } else if (isSomeNumInNewTitleLess()) {
+        return { error_number: {valid: false} };
       }
     }
     return null;
