@@ -8,30 +8,17 @@ import { MaterialModule } from '../../material.module';
 import { ClassCardComponent } from './class-card/class-card.component';
 import { TitlePipe } from './autotitle.pipe';
 import { NewYearService } from '../../services/new-year.service';
-import {ClassData} from '../../models/class-data';
+import { ClassData } from '../../models/class-data';
 import { of } from 'rxjs';
-
+import { NewTitleValidator } from './validators/new-title.validator';
+import { classesData } from './mock/classes-data';
 
 describe('NewYearComponent', () => {
   let component: NewYearComponent;
   let fixture: ComponentFixture<NewYearComponent>;
 
-  const activeClassData: ClassData = {
-    id: 15,
-    isActive: true,
-    className: '8А',
-    classDescription: 'active class',
-    classYear: 2018,
-    numOfStudents: 5
-  };
-  const notActiveClassData: ClassData = {
-      id: 25,
-      isActive: false,
-      className: '3(6-А)',
-      classDescription: ' not active class',
-      classYear: 2019,
-      numOfStudents: 0
-  };
+  const activeClassData: ClassData = classesData[0];
+  const notActiveClassData: ClassData = classesData[1];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -74,9 +61,10 @@ describe('NewYearComponent', () => {
   });
 
   it('should return empty template with message', () => {
-    fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
+    component.showSpiner = false;
     component.filteredClasses = [];
+    fixture.detectChanges();
     expect(compiled.querySelector('p').textContent.substring(0, 12)).toContain('Немає класів');
   });
 
@@ -106,7 +94,7 @@ describe('NewYearComponent', () => {
       const invalidPatternInput = new FormControl(
         {value: '8А', disabled: false},
         [Validators.pattern('(^[1-7][(]([1-9]|1[0-2])-[А-Я]{1}[)]$)|(^([1-9]|1[0-2])-[А-Я]{1}$)'),
-        component.classTitleValidator([activeClassData, notActiveClassData], 2017, '7А')]);
+        NewTitleValidator(classesData, 2017, '7А')]);
       (component.transititionForm.controls.newClassTitle as FormArray).push(invalidPatternInput);
       fixture.detectChanges();
       expect(invalidPatternInput.errors.pattern).toBeDefined();
@@ -115,11 +103,10 @@ describe('NewYearComponent', () => {
       const invalidNumberInput = new FormControl(
         {value: '2(6-А)', disabled: false},
         [Validators.pattern('(^[1-7][(]([1-9]|1[0-2])-[А-Я]{1}[)]$)|(^([1-9]|1[0-2])-[А-Я]{1}$)'),
-        component.classTitleValidator([activeClassData, notActiveClassData], 2018, '4(7-А)')]);
+        NewTitleValidator(classesData, 2018, '4(7-А)')]);
       (component.transititionForm.controls.newClassTitle as FormArray).push(invalidNumberInput);
       fixture.detectChanges();
       expect(invalidNumberInput.errors.error_number).toBeDefined();
       expect(component.transititionForm.controls.newClassTitle.valid).toBeFalsy();
    });
 });
-

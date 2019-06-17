@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { NewYearService } from '../../services/new-year.service';
 import { ClassData } from '../../models/class-data';
 import { ClassCardComponent } from './class-card/class-card.component';
 import { MatSnackBar, MatSnackBarConfig, MatDialog, MatDialogConfig } from '@angular/material';
 import { StatisticsComponent } from '../../admin-panel/new-year/statistics/statistics.component';
-
+import { NewTitleValidator } from './validators/new-title.validator';
 @Component({
   selector: 'app-new-year',
   templateUrl: './new-year.component.html',
@@ -13,26 +13,33 @@ import { StatisticsComponent } from '../../admin-panel/new-year/statistics/stati
 })
 
 export class NewYearComponent implements OnInit {
-
-  public allClasses: ClassData[] = [];
-  public activeClasses: ClassData[] = [];
-  public transititionForm: FormGroup;
-  public isNotEmpty = true;
-  public isCurrentYear = true;
-  public filteredClasses: { classData?: ClassData, control: FormControl}[] = [];
-  public transitedCards: ClassCardComponent[] = [];
-  @ViewChildren('classCard') classCards: QueryList<ClassCardComponent>;
-
   constructor(
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private newYearTransitition: NewYearService) { }
+    private newYearTransitition: NewYearService,
+    private fb: FormBuilder) { }
+
+  showSpiner = true;
+  allClasses: ClassData[] = [];
+  activeClasses: ClassData[] = [];
+  isNotEmpty = true;
+  isCurrentYear = true;
+  filteredClasses: { classData: ClassData, control: FormControl}[] = [];
+  transitedCards: ClassCardComponent[] = [];
+  @ViewChildren('classCard') classCards: QueryList<ClassCardComponent>;
+
+  transititionForm = this.fb.group(
+    { newClassTitle: this.fb.array([]) },
+    { updateOn: 'blur' }
+  );
+  get newClassTitle() { return this.transititionForm.get('newClassTitle') as FormArray; }
+
 
   ngOnInit() {
-    this.createTransititionForm();
     this.newYearTransitition.getClasses().subscribe(
       data => {
         this.allClasses = data;
+        this.showSpiner = false;
         this.activeClasses = this.allClasses.filter(
           curClass => curClass.isActive
         );
@@ -42,67 +49,17 @@ export class NewYearComponent implements OnInit {
   }
 
   /**
-   * Сreate reactive form for classes transitition
-   */
-  createTransititionForm(): void {
-    this.transititionForm = new FormGroup({
-      newClassTitle: new FormArray([]),
-    });
-  }
-  get newClassTitle() { return this.transititionForm.get('newClassTitle'); }
-
-  /**
    * Add new FormControl with validators to FormArray
    * @param singleClass ClassData[] - objects with data about current class
    */
   addNewTitleInput(singleClass: ClassData): void {
-    const newInput = new FormControl(
-      {value: this.newTitle(singleClass.className), disabled: false},
+    const newInput = this.fb.control(
+      this.newTitle(singleClass.className),
       [Validators.pattern('(^[1-7][(]([1-9]|1[0-2])-[А-Я]{1}[)]$)|(^([1-9]|1[0-2])-[А-Я]{1}$)'),
-      this.classTitleValidator(this.allClasses, singleClass.classYear, singleClass.className)]);
+      NewTitleValidator(this.allClasses, singleClass.classYear, singleClass.className),
+    ]);
     (this.transititionForm.controls.newClassTitle as FormArray).push(newInput);
     this.filteredClasses.push( {classData: singleClass, control: newInput} );
-  }
-
-  /**
-   * Title validation for new class
-   * @param allClasses ClassData[] - Array of objects with data about classes
-   * @param classYear number - current class year
-   * @param curClassTitle string - current class title
-   * @returns - return FormControl with validation error or null
-   */
-  classTitleValidator = (allClasses: ClassData[], classYear: number, curClassTitle: string) => {
-    return (control: FormControl) => {
-      if (curClassTitle === control.value) {
-        return {title_dublicate: {valid: false}};
-      }
-      const existError = allClasses.some(
-         (item) => {
-          return (item.classYear === classYear + 1 && item.className === control.value); }
-      );
-      if (existError) {
-        return { class_exist: {valid: false} };
-      }
-
-      if (control.value !== '') {
-        const curClassNameParts = curClassTitle.split(/[-(]/);
-        const newNameParts = control.value.split(/[-(]/);
-        if (newNameParts.length !== curClassNameParts.length) {
-          if (newNameParts.length <= curClassNameParts.length ) {
-            if (+newNameParts[0] <= +curClassNameParts[1]) { return {error_number: {valid: false}}; }
-          } else {
-              if (+newNameParts[1] < +curClassNameParts[0]) { return {error_number: {valid: false}}; }
-            }
-          } else {
-          if (curClassNameParts.some(
-            (item, index)  => {
-            return +item >= +newNameParts[index] && index < newNameParts.length - 1; })) {
-            return {error_number: {valid: false} };
-          }
-        }
-      }
-      return null;
-    };
   }
 
   formSubmit() {
@@ -135,11 +92,6 @@ export class NewYearComponent implements OnInit {
             `Виконано. Переведено класів: ${formData.length}`,
             'popup-success'
           );
-        } else {
-          this.displaySnackBar(
-            `Помилка. Сервер відхилив запит`,
-            'popup-error'
-          );
         }
       }
     );
@@ -151,8 +103,8 @@ export class NewYearComponent implements OnInit {
   displaySnackBar(message: string, styleClass: string): void {
     const config = new MatSnackBarConfig();
     config.panelClass = [styleClass];
-    config.duration = 4000;
-    config.verticalPosition = 'bottom';
+    config.duration = 3000;
+    config.verticalPosition = 'top';
     this.snackBar.open(message, null, config);
   }
 
@@ -183,7 +135,7 @@ export class NewYearComponent implements OnInit {
         } else {
           if (posSinglClassInFiltered !== -1) {
             this.filteredClasses.splice(posSinglClassInFiltered, 1);
-            (this.transititionForm.controls.newClassTitle as FormArray).removeAt(posSinglClassInFiltered);
+            (this.transititionForm.get('newClassTitle') as FormArray).removeAt(posSinglClassInFiltered);
           }
         }
       }
@@ -214,8 +166,7 @@ export class NewYearComponent implements OnInit {
   }
 
   /**
-   * Generate new title for class based on current title
-   * @param curTitle string - current title of class
+   * open popup window with statistic
    */
   showStatistic(): void {
     const config = new MatDialogConfig();

@@ -3,7 +3,7 @@
 .container{
   text-align: center;
   margin: 20px auto;
-  h2 { 
+  h2 {
     font-size: 1.5em;
     margin-bottom: 5px;
   }
@@ -58,7 +58,7 @@ label {
   top: 100px;
   z-index:2;
   transition: right 0.5s ease;
-  
+
   div.wrap {
     position: relative;
     display: flex;
@@ -112,10 +112,13 @@ input[type=checkbox]:checked ~ .toggle-stripe {
   right: -5px;
 }
 
-::ng-deep snack-bar-container.mat-snack-bar-container {
-  display: flex;
-  justify-content: center;
-  color: white;
+::ng-deep {
+  snack-bar-container.mat-snack-bar-container {
+    display: flex;
+    justify-content: center;
+    color: white;
+  }
+  snack-bar-container.mat-snack-bar-container.popup-success {background-color: rgb(24, 168, 72);}
+  snack-bar-container.mat-snack-bar-container.popup-error {background-color:  rgb(175, 50, 1);}
+  mat-spinner { margin: 50px auto; }
 }
-::ng-deep snack-bar-container.mat-snack-bar-container.popup-success {background-color: rgb(24, 168, 72);}
-::ng-deep snack-bar-container.mat-snack-bar-container.popup-error {background-color:  rgb(175, 50, 1);}
