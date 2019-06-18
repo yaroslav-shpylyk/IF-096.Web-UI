@@ -1,8 +1,9 @@
 <mat-dialog-content>
   <div class="avatar">
     <app-avatar [avatar]="addStudent.value.avatar" [firstName]="addStudent.value.firstname"
-      [lastName]="addStudent.value.lastname">
+      [lastName]="addStudent.value.lastname" *ngIf="!showSpinner">
     </app-avatar>
+    <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
   </div>
   <form [formGroup]="addStudent" (ngSubmit)="onSubmit(addStudent.value)">
     <mat-form-field>

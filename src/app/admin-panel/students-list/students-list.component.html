@@ -29,6 +29,7 @@
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Шукати">
       </mat-form-field>
     </div>
+    <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="avatar">
