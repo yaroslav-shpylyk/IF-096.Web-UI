@@ -31,7 +31,7 @@ describe('SubjectAttachmentDialogComponent', () => {
     fixture.detectChanges();
   });
 
-//TypeError: Cannot read property 'includes' of undefined
+// TypeError: Cannot read property 'includes' of undefined
 
   // it('should create', () => {
   //   expect(component).toBeTruthy();

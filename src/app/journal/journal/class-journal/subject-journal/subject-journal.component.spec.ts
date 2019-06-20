@@ -29,7 +29,7 @@ describe('SubjectJournalComponent', () => {
     fixture.detectChanges();
   });
 
-//Uncaught InvalidTokenError: Invalid token specified thrown
+// Uncaught InvalidTokenError: Invalid token specified thrown
 
   // it('should create', () => {
   //   expect(component).toBeTruthy();
