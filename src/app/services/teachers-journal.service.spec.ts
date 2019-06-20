@@ -2,7 +2,7 @@ import { TestBed, inject, async } from '@angular/core/testing';
 
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TeachersJournalService } from './teachers-journal.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+// import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 const mockTeachersJournalPost = {
   class: {},
