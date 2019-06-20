@@ -62,6 +62,7 @@ import { PdfPreviewComponent } from './schedule/pdf-preview/pdf-preview.componen
 import { SnackbarMessComponent } from './teacher-connection/snackbar-mess/snackbar-mess.component';
 import { ConnectToJournalDialogComponent, ConnectToJournalComponent } from './teachers/teachers-list/connect-to-journal-dialog/connect-to-journal-dialog.component';
 import { StickyButtonDirective } from './teachers/helpers/sticky-button.directive';
+import { LoadingSpinnerComponent } from './students-list/loading-spinner/loading-spinner.component';
 
 
 @NgModule({
@@ -98,7 +99,8 @@ import { StickyButtonDirective } from './teachers/helpers/sticky-button.directiv
     SnackbarMessComponent,
     ConnectToJournalDialogComponent,
     ConnectToJournalComponent,
-    StickyButtonDirective
+    StickyButtonDirective,
+    LoadingSpinnerComponent
   ],
   imports: [
     CommonModule,
