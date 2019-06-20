@@ -58,6 +58,10 @@ import { StickyButtonComponent } from './sticky-button/sticky-button.component';
 import { ListPopupComponent } from './new-year/class-card/list-popup/list-popup.component';
 import { StatisticsComponent } from './new-year/statistics/statistics.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { PdfPreviewComponent } from './schedule/pdf-preview/pdf-preview.component';
+import { SnackbarMessComponent } from './teacher-connection/snackbar-mess/snackbar-mess.component';
+import { ConnectToJournalDialogComponent, ConnectToJournalComponent } from './teachers/teachers-list/connect-to-journal-dialog/connect-to-journal-dialog.component';
+import { StickyButtonDirective } from './teachers/helpers/sticky-button.directive';
 
 
 @NgModule({
@@ -89,7 +93,12 @@ import { MatTabsModule } from '@angular/material/tabs';
     ListPopupComponent,
     StatisticsComponent,
     StickyButtonComponent,
-    ListPopupComponent
+    ListPopupComponent,
+    PdfPreviewComponent,
+    SnackbarMessComponent,
+    ConnectToJournalDialogComponent,
+    ConnectToJournalComponent,
+    StickyButtonDirective
   ],
   imports: [
     CommonModule,
@@ -139,7 +148,10 @@ import { MatTabsModule } from '@angular/material/tabs';
     ConfirmationDialogComponent,
     ClassCardComponent,
     ListPopupComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    PdfPreviewComponent,
+    SnackbarMessComponent,
+    ConnectToJournalDialogComponent
   ],
   providers: []
 })

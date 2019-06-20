@@ -1,4 +1,5 @@
 <mat-card
+  *ngIf="newTitleField"
   [formGroup]="form"
   [ngClass]="{
     'locked': isCardLock,

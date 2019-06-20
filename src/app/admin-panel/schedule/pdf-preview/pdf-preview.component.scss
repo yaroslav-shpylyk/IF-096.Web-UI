@@ -1,0 +1,66 @@
+$header-fill-color: rgb(78, 125, 185);
+$header-text-color: rgb(255, 255, 255);
+%cell {
+  font-size: 0.8em;
+  padding: 4px 8px;
+}
+
+.buttons {
+  display: flex;
+  padding: 0;
+  justify-content: flex-end;
+}
+h1 {
+  font-size: 1.2em;
+  text-align: center;
+  margin-bottom: 0;
+}
+.title-term {
+  font-size: 0.8em;
+  text-align: center;
+  text-decoration: underline;
+  margin: 0.4em 0 1.5em;
+}
+table {
+  margin-top: 1.5em;
+  border-collapse: collapse;
+}
+th {
+  @extend %cell;
+  background-color: $header-fill-color;
+  color: $header-text-color;
+  font-weight: normal;
+  border-style: none;
+}
+td {
+  @extend %cell;
+  border: 1px solid;
+}
+.lesson-number {
+  width: 20px;
+}
+.lesson-subject {
+  width: 150px;
+}
+td p {
+  margin: 0;
+}
+
+/* Screen = B/w 320px to 700px */
+@media (min-width: 320px) and (max-width: 700px) {
+  h1 {
+    font-size: 0.8em;
+    margin-top: 1em;
+  }
+  .title-term {
+    font-size: 0.6em;
+    margin: 0;
+  }
+  table {
+    margin-top: 0.8em;
+  }
+  th, td {
+    font-size: 0.6em;
+    padding: 2px 4px;
+  }
+}

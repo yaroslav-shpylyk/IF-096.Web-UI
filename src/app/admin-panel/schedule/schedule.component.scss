@@ -1,75 +1,77 @@
 $invalid-color: rgb(182, 14, 14);
 $shadow-color: rgb(182, 182, 182);
-$button-color: rgb(198, 219, 233);
 $success-color: rgb(15, 105, 15);
+%message {
+  font-style: italic;
+  color: rgb(255, 255, 255);
+  padding: 4px 0;
+  border-radius: 3px;
+}
 
 form {
-    font-size: 0.8em;
+  font-size: 0.8em;
 }
 .schedule-top {
-    display: flex;
-    width: 95%;
-    justify-content: space-around;
-    margin-bottom: 1.5em;
+  display: flex;
+  width: 95%;
+  justify-content: space-around;
+  margin-bottom: 1.5em;
 }
 .datePiker {
-    width: 30%;
+  width: 30%;
 }
 .week-schedule {
-    display: grid;
-    grid-template-columns: 49% 49%;
-    grid-column-gap: 0.8em;
-    grid-row-gap: 0.3em;
-    padding: 0.7em;
-    box-shadow: 0px 0px 15px $shadow-color;
+  display: grid;
+  grid-template-columns: 49% 49%;
+  grid-column-gap: 0.8em;
+  grid-row-gap: 0.3em;
+  padding: 0.7em;
+  box-shadow: 0px 0px 15px $shadow-color;
 }
 .mondaySubjects {
-    grid-area: 1/1;
+  grid-area: 1/1;
 }
 .tuesdaySubjects {
-    grid-area: 2/1;
+  grid-area: 2/1;
 }
 .wednesdaySubjects {
-    grid-area: 3/1;
+  grid-area: 3/1;
 }
 .thursdaySubjects {
-    grid-area: 1/2;
+  grid-area: 1/2;
 }
 .fridaySubjects {
-    grid-area: 2/2;
+  grid-area: 2/2;
 }
 .saturdaySubjects {
-    grid-area: 3/2;
+  grid-area: 3/2;
 }
 .save-button {
-    width: 6em;
-    height: 2.5em;
-    margin: 1em;
-    padding: 0.2em;
-    background-color: $button-color;
-    font-size: 1em;
-    box-shadow: 2px 2px 3px $shadow-color;
+  margin: 1em;
 }
 .success-msg {
-    color: $success-color;
-    font-style: italic;
+  @extend %message;
+  background-color: $success-color;
 }
 .error-msg {
-    color: $invalid-color;
-    font-style: italic;
+  @extend %message;
+  background-color: $invalid-color;
 }
 
-/* Screen = B/w 320px to 479px */
-@media (min-width: 320px) and (max-width: 480px) {
-    .schedule-top {
-        flex-direction: column;
-    }
-    .datePiker {
-        width: 100%;
-    }
-    .week-schedule {
-        display: flex;
-        flex-direction: column;
-        width: 95%;
-    }
+/* Screen = B/w 320px to 700px */
+@media (min-width: 320px) and (max-width: 700px) {
+  .schedule-top {
+    flex-direction: column;
+  }
+  .datePiker {
+    width: 100%;
+  }
+  .week-schedule {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+  }
+  .success-msg, .error-msg {
+    font-size: 0.6em;
+  }
 }

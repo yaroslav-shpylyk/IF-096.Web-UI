@@ -1,29 +1,35 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, Subscription } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Observable, Subject, interval } from 'rxjs';
 import { LoginData } from '../models/login-data';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import * as JWTDecoder from 'jwt-decode';
 import { TokenInfo } from '../models/token-info';
 import { ChangePasswordRequest } from '../models/change-password-request';
+import { ChangePasswordResponse } from '../models/change-password-response';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class AuthService {
-  private tokenRefreshTimer: any;
+export class AuthService implements OnDestroy {
+  private onDestroy$ = new Subject();
   private changePasswordToken = '';
   constructor(private http: HttpClient, private router: Router) { }
+
+  ngOnDestroy(): void {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+  }
 
   /**
    * Method logout's user
    */
   public logout(): void {
     localStorage.setItem('token', '');
-    clearTimeout(this.tokenRefreshTimer);
     this.router.navigate(['/login']);
+    this.onDestroy$.next();
   }
 
   /**
@@ -39,15 +45,14 @@ export class AuthService {
    * @param data - This is object with user's username and password
    * @returns - New token
    */
-  public login(data: LoginData): Observable<any> {
-    return this.http.post(`/signin`, data, { observe: 'response' })
+  public login(data: LoginData): Observable<HttpResponse<object|null>> {
+    return this.http.post<HttpResponse<object|null>>(`/signin`, data, { observe: 'response' })
       .pipe(
-        map((response: any) => {
+        tap(response => {
           const token: string = response.headers.get('Authorization');
           localStorage.setItem('token', token);
-          this.refreshTokenTimer();
+          this.refreshTokenTimer().subscribe();
           this.router.navigate(['']);
-          return response;
         })
       );
   }
@@ -57,15 +62,13 @@ export class AuthService {
    * @returns - New token
    */
   public refreshToken(): Observable<any> {
-    return this.http.get(`/refresh`, { observe: 'response' })
+    return this.http.get<HttpResponse<object|null>>(`/refresh`, { observe: 'response' })
       .pipe(
-        map((response: any) => {
+        tap(response => {
           const newToken = response.headers.get('Authorization');
           localStorage.setItem('token', newToken);
-          this.refreshTokenTimer();
-          return response;
         }),
-        catchError((error: any) => {
+        catchError(error => {
           if (error.status.code === 401) {
             this.logout();
           }
@@ -79,8 +82,8 @@ export class AuthService {
    * @param query - Users login or email
    * @returns - Status of recovery process
    */
-  public requestPasswordChange(query: string): Observable<any> {
-    return this.http.get(`/requestPasswordReset?query=${query}`);
+  public requestPasswordChange(query: string): Observable<ChangePasswordResponse> {
+    return this.http.get<ChangePasswordResponse>(`/requestPasswordReset?query=${query}`);
   }
 
   /**
@@ -89,37 +92,43 @@ export class AuthService {
    * @param token - Token for change password
    * @returns - New password
    */
-  public changePassword(password: string, token: string): Observable<any> {
+  public changePassword(password: string, token: string): Observable<ChangePasswordResponse> {
     const data: ChangePasswordRequest = {
       password,
       token
     };
-    return this.http.put(`/resetPassword`, data);
+    return this.http.put<ChangePasswordResponse>(`/resetPassword`, data);
   }
 
   /**
    * Method creates recursive timeout which refreshes token after delay
    */
-  public refreshTokenTimer(): void {
-    clearTimeout(this.tokenRefreshTimer);
-    const serviceRef: AuthService = this;
+  private refreshTokenTimer(): Observable<HttpResponse<object|null>> {
     const delay = 300000;
-    this.tokenRefreshTimer = setTimeout(function refresh() {
-      serviceRef.refreshToken().subscribe();
-      serviceRef.tokenRefreshTimer = setTimeout(refresh, delay);
-    }, delay);
+    return interval(delay)
+      .pipe(
+        switchMap(() => this.refreshToken()),
+        catchError(error => {
+          if (error.status.code === 401) {
+            this.logout();
+          }
+          return error;
+        }),
+        takeUntil(this.onDestroy$)
+      );
   }
 
   /**
    * Method checks if current token is valid and refreshes it to continue current session
    * @returns - New token or nothing
    */
-  public checkTokenValidity(): Subscription | void {
+  public checkTokenValidity(): boolean | void {
     if (this.getToken()) {
       const decodedToken: TokenInfo = JWTDecoder(this.getToken());
       const expTime: number = decodedToken.exp;
       if (expTime * 1000 > Date.now()) {
-        return this.refreshToken().subscribe();
+        this.refreshTokenTimer().subscribe();
+        return;
       }
     }
     this.logout();

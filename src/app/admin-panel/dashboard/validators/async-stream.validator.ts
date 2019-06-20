@@ -1,7 +1,7 @@
 import { AbstractControl } from '@angular/forms';
-import { ClassService } from '../../services/class.service';
+import { ClassService } from '../../../services/class.service';
 import { map } from 'rxjs/operators';
-import { ClassesFromStream } from '../../models/classes-from-stream';
+import { ClassesFromStream } from '../../../models/classes-from-stream';
 
 export function AsyncStreamValidator(classService: ClassService) {
   return (control: AbstractControl) => {

@@ -166,23 +166,28 @@ export class StatisticsComponent implements OnInit {
    * Method that start pdf creating procces based on content of active tab
    */
   public downloadPDF(): void {
+    const pdfTableData = [];
+    this.tableData.forEach( row => {
+      const rowData = [];
+      for (const key in row) {
+        if (row.hasOwnProperty(key)) {
+          rowData.push(row[key]);
+        }
+      }
+      pdfTableData.push(rowData);
+    });
     let htmlWrap: ElementRef;
     let htmlContent: ElementRef;
-    let title: string;
+    this.showPreloader();
     if (this.activeTab === 0) {
       htmlContent = this.chart;
       htmlWrap = this.chartWrap;
-      title = 'Рух учнів за минулі 5 років';
+      this.reziseWrap(htmlWrap, 'l');
+      this.generatePdf(htmlContent, htmlWrap, 'l', ['Рух учнів']);
     } else {
-      htmlContent = this.totalCountTable;
-      htmlWrap = this.totalCountTable;
-      title = 'Наповнюваність за минулі 5 років';
+      this.pdfGenerator.pdfFromTable(['Рік', 'Кількість', 'Тенденція'], pdfTableData, 'p', ['Наповнюваність']);
     }
-    const width = htmlWrap.nativeElement.offsetWidth;
-    const height = htmlWrap.nativeElement.offsetHeight;
-    this.reziseWrap(htmlWrap, 'l');
-    this.showPreloader();
-    this.generatePdf(htmlContent, htmlWrap, 'l', width, height, title);
+    this.hidePreloader();
   }
 
   /**
@@ -193,13 +198,11 @@ export class StatisticsComponent implements OnInit {
   public reziseWrap(contentWrap: ElementRef, orientation: 'p'|'l'): void {
     switch (orientation) {
       case 'l':
-        this.renderer.setStyle(contentWrap.nativeElement, 'width', `800px`);
-        this.renderer.setStyle(contentWrap.nativeElement, 'height', `500px`);
+        this.renderer.addClass(contentWrap.nativeElement, 'big-landscape');
         break;
       case 'p':
       default:
-        this.renderer.setStyle(contentWrap.nativeElement, 'width', '500px');
-        this.renderer.setStyle(contentWrap.nativeElement, 'height', '800px');
+        this.renderer.addClass(contentWrap.nativeElement, 'big-portrait');
         break;
     }
   }
@@ -212,6 +215,13 @@ export class StatisticsComponent implements OnInit {
     this.showPdfTip = true;
   }
 
+  public hidePreloader(): void {
+    setTimeout( () => {
+      this.showPdfTip = false;
+      this.dialogRef.removePanelClass('hidden');
+    }, 1500);
+  }
+
   /**
    * Start generating pdf document and hide overlay window
    * @param contentElem - element that contain html, that will be included to pdf
@@ -221,23 +231,21 @@ export class StatisticsComponent implements OnInit {
    * @param height - current height of contentWrap
    * @param title - title of document
    */
-  public generatePdf(contentElem: ElementRef, wrap: ElementRef, orientation: 'p'|'l', width: number, height: number, title: string): void {
+  public generatePdf(contentElem: ElementRef, wrap: ElementRef, orientation: 'p'|'l', title: string[]): void {
     let newWidth: number;
     let newHeight: number;
     if (orientation === 'l') {
-      newWidth = 800;
-      newHeight = 500;
+      newHeight = 800;
+      newWidth = newHeight * Math.sqrt(2);
     } else {
-      newWidth = 500;
+      newWidth = newWidth * Math.sqrt(2);
       newHeight = 800;
     }
     setTimeout(() => {
-      this.pdfGenerator.generateImagePdf(contentElem, orientation, title, newWidth, newHeight);
-      wrap.nativeElement.style.width = `${width}px`;
-      wrap.nativeElement.style.height = `${height}px`;
-      wrap.nativeElement.style = '';
-      this.showPdfTip = false;
+      this.pdfGenerator.pdfFromCanvas(contentElem, orientation, title, newWidth, newHeight);
+      if (wrap.nativeElement.classList.contains('big-landscape')) {this.renderer.removeClass(wrap.nativeElement, 'big-landscape'); }
+      if (wrap.nativeElement.classList.contains('big-portrait')) {this.renderer.removeClass(wrap.nativeElement, 'big-portrait'); }
       this.dialogRef.removePanelClass('hidden');
-    }, 1000);
+      }, 1510);
   }
 }

@@ -1,4 +1,3 @@
-<app-header></app-header>
 <div class="wrap-content">
   <div class="container">
     <p class="title">Приєднання вчителя до журналу</p>
@@ -85,7 +84,8 @@
               color="primary"
               type="submit"
               [disabled]="!myForm"
-              (click)="onSubmit(myForm.value)"
+              (click)="[onSubmit(myForm.value), openSnackBar()]"
+              aria-label="Show an example snack-bar"
             >
               Зберегти
             </button>
@@ -95,8 +95,3 @@
     </form>
   </div>
 </div>
-<footer>
-  <div fxHide.gt-xs>
-    <app-footer></app-footer>
-  </div>
-</footer>

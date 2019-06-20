@@ -25,6 +25,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
+              "src/lazy-fonts.js",
               "src/manifest.json"
             ],
             "styles": [

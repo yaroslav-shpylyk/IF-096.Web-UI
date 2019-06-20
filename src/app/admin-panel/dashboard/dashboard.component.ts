@@ -1,15 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SubjectService } from '../../services/subject.service';
 import { TeacherService } from '../../services/teacher.service';
-import { TeacherData } from '../../models/teacher-data';
-import { SubjectData } from '../../models/subject-data';
 import { ClassService} from '../../services/class.service';
-import { ClassData } from '../../models/class-data';
 import { StudentsService } from '../../services/students.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ChartType, ChartOptions } from 'chart.js';
 import { ClassesFromStream } from '../../models/classes-from-stream';
-import { AsyncStreamValidator } from './async-stream.validator';
+import { AsyncStreamValidator } from './validators/async-stream.validator';
 import { FormGroupDirective } from '@angular/forms';
 
 @Component({
@@ -88,11 +85,11 @@ export class DashboardComponent implements OnInit {
   }
   ngOnInit(): void {
     this.createStreamClassesForm();
-    this.subjectService.getSubjects().subscribe((result: SubjectData[]) => this.data.subjects = result.length);
-    this.teacherService.getTeachers().subscribe((result: TeacherData[]) => this.data.teachers = result.length);
-    this.studentService.getNumberOfStudents('active').subscribe((result: number) => this.data.students = result);
-    this.classService.getClasses('active').subscribe((result: ClassData[]) => this.data.classes = result.length);
-    this.classService.getClassesByStream().subscribe((result: ClassesFromStream) => {
+    this.subjectService.getSubjects().subscribe(result => this.data.subjects = result.length);
+    this.teacherService.getTeachers().subscribe(result => this.data.teachers = result.length);
+    this.studentService.getNumberOfStudents('active').subscribe(result => this.data.students = result);
+    this.classService.getClasses('active').subscribe(result => this.data.classes = result.length);
+    this.classService.getClassesByStream().subscribe(result => {
       this.updateChart(result);
       this.showSpinner = false;
     });

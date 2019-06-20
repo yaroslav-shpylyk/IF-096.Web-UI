@@ -23,6 +23,7 @@ export class AddStudentComponent implements OnInit {
   avatar: any = '';
   startDate: Date = new Date(2010, 0, 1);
   show = false;
+  showSpinner = false;
 
   addStudent = this.fb.group({
     lastname: ['', validText],
@@ -96,9 +97,11 @@ export class AddStudentComponent implements OnInit {
 
   initStudentData(): void {
     if (this.data.paramId) {
+      this.showSpinner = true;
       this.studentService.getOneStudent(this.data.paramId)
         .subscribe((student: Student) => {
           this.editStudentForm(student);
+          this.showSpinner = false;
         });
     }
   }

@@ -1,106 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { AdminPanelRoutingService } from '../../../services/admin-panel-routing.service';
 
 @Component({
   selector: 'app-admin-footer-menu',
   templateUrl: './footer-menu.component.html',
   styleUrls: ['./footer-menu.component.scss']
 })
-export class AdminFooterMenuComponent implements OnInit {
-
-  public routes = [ // array for static button links on bottom navigation
-    {
-      path: '/admin-panel/students',
-      icon: 'school',
-      name: 'Учні'
-    },
-    {
-      path: '/admin-panel/teachers',
-      icon: 'person',
-      name: 'Вчителі'
-    }
-  ];
-
-  public routesMore = [ // array for button links on 3 dots menu
-    {
-      path: '/admin-panel/groups',
-      icon: 'group_work',
-      name: 'Класи'
-    },
-    {
-      path: '/admin-panel/subjects',
-      icon: 'library_books',
-      name: 'Предмети'
-    },
-    {
-      path: '/journals',
-      icon: 'collections_bookmark',
-      name: 'Журнали'
-    },
-    {
-      path: '/admin-panel/schedule',
-      icon: 'today',
-      name: 'Розклад'
-    },
-    {
-      path: '/admin-panel/teacher-connection',
-      icon: 'person_add',
-      name: 'Додати вчителя до журналу'
-    },
-    {
-      path: '/admin-panel/new-year-transition',
-      icon: 'queue',
-      name: 'Новий навчальний рік'
-    }
-  ];
-
-  public iconActive: string; // icon for third section in bottom navigation menu
+export class AdminFooterMenuComponent implements OnInit, OnDestroy {
+  public iconActive: string; // icon for third section in footer menu
   public nameActive: string; // name
   public pathActive: string; // path
   public active: boolean; // active route
+  private routerChange;
 
-  constructor(public auth: AuthService, private router: Router) {
-  }
-
-  /**
-   * change third section in bottom navigation
-   * depending on selected routing from 3 dots menu
-   * show name, icon, route depending on selected section
-   * Classes is shown by default
-   */
-  activeRoute() {
-
-    for (const i in this.routesMore) { // link buttons from 3 dots menu
-      if (this.router.url === this.routesMore[i].path) { // show path, icon, route depending on route path
-        [this.pathActive, this.iconActive, this.nameActive] =
-          [this.routesMore[i].path, this.routesMore[i].icon, this.truncateName(this.routesMore[i].name, 10)];
-        this.active = true; // highlight section
-      }
-    }
-    for (const i in this.routes) { // link buttons from static menu
-      if (this.router.url === this.routes[i].path || this.router.url === '/admin-panel') {
-        this.active = false; // remove class for highlighting section in third section
-      }
-    }
-  }
-
-  /**
-   * truncate name if it is longer than specified characters in bottom navigation menu
-   * @param name of route path
-   * @param size of allowed characters
-   * @returns name or truncated name (if it is too long)
-   */
-  truncateName(name, size): string {
-    return name.length > size ? name.slice(0, size) + '…' : name;
+  constructor(public auth: AuthService,
+              private router: Router,
+              public adminPanelRoutingService: AdminPanelRoutingService) {
   }
 
   ngOnInit() {
-    this.router.events.subscribe(() => {
-      this.activeRoute();
+    this.routerChange = this.router.events.subscribe(() => {
+      this.changeSection();
     }); // call on every routing change
-    [this.pathActive, this.iconActive, this.nameActive] =
-      [this.routesMore[0].path, this.routesMore[0].icon, this.routesMore[0].name]; // show Classes by default
-    this.activeRoute(); // call to check which section is selected when component is created
+    this.changeSection(); // call to check which section is selected when component is created
+  }
+
+  ngOnDestroy() {
+    this.routerChange.unsubscribe();
+  }
+
+  /**
+   * change third section in footer menu from AdminPanelRoutingService
+   * show name, icon, route depending on selected section
+   */
+  changeSection() {
+    this.pathActive = this.adminPanelRoutingService.activeRoute().path;
+    this.iconActive = this.adminPanelRoutingService.activeRoute().icon;
+    this.nameActive = this.adminPanelRoutingService.activeRoute().name;
+    this.active = this.adminPanelRoutingService.activeRoute().active;
   }
 }
