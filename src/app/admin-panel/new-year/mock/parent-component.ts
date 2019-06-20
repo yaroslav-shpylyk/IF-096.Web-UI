@@ -8,7 +8,7 @@ import { NewTitleValidator } from '../validators/new-title.validator';
   selector: `app-new-year`,
   template: `<app-class-card></app-class-card>`
 })
-export class NewYearComponent implements OnInit {
+export class NewYearMockComponent implements OnInit {
   constructor(private fb: FormBuilder) {}
   @ViewChild(ClassCardComponent)
   public classCardComponent: ClassCardComponent;

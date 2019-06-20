@@ -8,11 +8,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TitlePipe } from '../autotitle.pipe';
 import { ClassData } from '../../../models/class-data';
 import { classesData } from '../mock/classes-data';
-import { NewYearComponent } from '../mock/parent-component';
+import { NewYearMockComponent } from '../mock/parent-component';
 
 describe('ClassCardComponent', () => {
-  let newYearComponent: NewYearComponent;
-  let newYearFixture: ComponentFixture<NewYearComponent>;
+  let newYearComponent: NewYearMockComponent;
+  let newYearFixture: ComponentFixture<NewYearMockComponent>;
   let compiled: HTMLElement;
 
   const activeClassData: ClassData = classesData[2];
@@ -20,13 +20,13 @@ describe('ClassCardComponent', () => {
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule, BrowserAnimationsModule,
         FormsModule,  MaterialModule, ReactiveFormsModule ],
-      declarations: [ ClassCardComponent, NewYearComponent, TitlePipe ]
+      declarations: [ ClassCardComponent, NewYearMockComponent, TitlePipe ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    newYearFixture = TestBed.createComponent(NewYearComponent);
+    newYearFixture = TestBed.createComponent(NewYearMockComponent);
     newYearComponent = newYearFixture.componentInstance;
 
     newYearComponent.classCardComponent.form = newYearComponent.transititionForm;
