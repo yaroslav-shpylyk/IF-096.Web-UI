@@ -1,5 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { AddStudentComponent, AddStudentModalComponent } from './add-student.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -8,34 +7,87 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { AvatarComponent } from '../../../shared/avatar/avatar.component';
 import { Router, ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
+import { ClassService } from '../../../services/class.service';
+import { of, defer } from 'rxjs';
 import { NgModule } from '@angular/core';
 
 describe('AddStudentComponent', () => {
-  let component: AddStudentComponent;
-  let fixture: ComponentFixture<AddStudentComponent>;
+
+  function asyncData<T>(data: T) {
+    return defer(() => Promise.resolve(data));
+  }
+
+  class ClassServiceSpy {
+    testclass: any = {
+      id: 42,
+      isActive: true,
+      className: '10A',
+      classDescription: null,
+      classYear: 2018,
+      numOfStudents: 24,
+    };
+
+    getClasses = jasmine.createSpy('getClasses').and.callFake(
+      () => asyncData(Object.assign({}, this.testclass))
+    );
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ HttpClientTestingModule, BrowserAnimationsModule,
+      imports: [HttpClientTestingModule, BrowserAnimationsModule,
         FormsModule, MaterialModule, ReactiveFormsModule],
-      declarations: [ AddStudentComponent, AvatarComponent ],
+      declarations: [AddStudentComponent, AvatarComponent],
       providers: [
-        MatDialog, {provide: MatDialogRef, useValue: {}},
-        MatDialog, {provide: MAT_DIALOG_DATA, useValue: {}}
-     ],
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: ClassService, useClass: ClassServiceSpy }
+      ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(AddStudentComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  function setup() {
+    const fixture = TestBed.createComponent(AddStudentComponent);
+    const component = fixture.componentInstance;
+    const classService = fixture.debugElement.injector.get(ClassService) as any;
+    return { fixture, component, classService };
+  }
+
+  function newEvent(eventName: string, bubbles = false, cancelable = false) {
+    const evt = document.createEvent('CustomEvent');  // MUST be 'CustomEvent'
+    evt.initCustomEvent(eventName, bubbles, cancelable, null);
+    return evt;
+  }
 
   it('should create', () => {
+    const { component } = setup();
     expect(component).toBeTruthy();
+  });
+
+  it('should have called `testclass`', async () => {
+    const { fixture, classService } = setup();
+    expect(classService.getClasses.calls.count()).toBe(0, 'getHero called once');
+    fixture.detectChanges();
+    expect(classService.getClasses.calls.count()).toBe(1, 'getHero called twice');
+  });
+
+  it('should have mock classList from service', fakeAsync(() => {
+    const { component, fixture } = setup();
+    fixture.detectChanges();
+    tick();
+    const allClassesFromMock = new ClassServiceSpy();
+    expect(component.allClasses).toEqual(allClassesFromMock.testclass);
+  }));
+
+  it('should save stub lastname change', () => {
+
+    const { component, fixture} = setup();
+    fixture.detectChanges();
+    const input = fixture.debugElement.nativeElement.querySelector('input');
+    const newName = 'Попович';
+    input.value = newName;
+    input.dispatchEvent(newEvent('input'));
+    expect(component.addStudent.value.lastname).toBe(newName, 'component hero has new name');
   });
 });
 
@@ -55,13 +107,12 @@ describe('AddStudentComponent', () => {
     AddStudentComponent
   ]
 })
-export class TestModule {}
+export class TestModule { }
 
 describe('AddStudentModalComponent', () => {
   let component: AddStudentModalComponent;
   let fixture: ComponentFixture<AddStudentModalComponent>;
-
-  const mockId = 1234;
+  const mockId = 124;
   const mockClassId = 123;
 
   beforeEach(async(() => {
@@ -79,9 +130,9 @@ describe('AddStudentModalComponent', () => {
       ],
       providers: [
         MatDialog,
-        {provide: MatDialogRef, useValue: {}},
+        { provide: MatDialogRef, useValue: {} },
         MatDialog,
-        {provide: MAT_DIALOG_DATA, useValue: {}},
+        { provide: MAT_DIALOG_DATA, useValue: {} },
         {
           provide: Router,
           useClass: class {
@@ -99,9 +150,9 @@ describe('AddStudentModalComponent', () => {
             })
           }
         }
-     ],
+      ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -117,15 +168,5 @@ describe('AddStudentModalComponent', () => {
   it('should read route params', () => {
     expect(component.classId).toEqual(mockClassId);
     expect(component.paramId).toEqual(mockId);
-  });
-
-  it('openDialog should open AddStudentComponent', done => {
-    component.dialog
-      .open(AddStudentComponent, {})
-      .afterOpen()
-      .subscribe(() => {
-        expect(true).toBeTruthy();
-        done();
-      });
   });
 });

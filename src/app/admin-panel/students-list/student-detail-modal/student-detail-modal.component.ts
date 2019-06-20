@@ -50,7 +50,7 @@ export class StudentDetailModalComponent implements OnInit {
       ['admin-panel', 'students', this.data.paramId, 'edit'],
       { relativeTo: this.route, replaceUrl: true, queryParams: { classId: this.classId } }
     );
-    // this.dialogRef.close();
+    this.dialogRef.close();
   }
 }
 

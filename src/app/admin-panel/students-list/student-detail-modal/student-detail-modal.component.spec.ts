@@ -12,20 +12,16 @@ import { NgModule } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StudentsService } from '../../../services/students.service';
 import { Observable, Observer } from 'rxjs';
-import { Student } from   '../../../models/student';
+import { Student } from '../../../models/student';
 
 
 describe('StudentDetailModalComponent', () => {
-  // let component: StudentDetailModalComponent;
-  // let fixture: ComponentFixture<StudentDetailModalComponent>;
-const mockId = 13;
+  const mockId = 13;
   const mockClassId = 23;
-
 
   beforeEach(() => {
 
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-    // const heroServiceSpy = jasmine.createSpyObj('HeroService', ['getHeroes']);
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule,
@@ -51,12 +47,9 @@ const mockId = 13;
           }
         },
         { provide: Router, useValue: routerSpy }
-        // { provide: StudentsService, useValue: studentServiceStub }
       ],
     })
       .compileComponents();
-
-
   });
 
   describe(':', () => {
@@ -67,20 +60,15 @@ const mockId = 13;
         StudentsService
       );
       const router = fixture.debugElement.injector.get(Router);
-
       return { fixture, component, studentAsyncService, router };
     }
-
     it('should create', () => {
       const { component } = setup();
       expect(component).toBeTruthy();
     });
 
-
     it('should get mock studentService from injector', fakeAsync(() => {
-
-      const { fixture, component, studentAsyncService } = setup();
-
+      const { fixture, studentAsyncService } = setup();
       const mockStudent = {
         avatar: null,
         classId: 52,
@@ -94,93 +82,31 @@ const mockId = 13;
         patronymic: 'Ігорович',
         phone: '',
       };
-
-
-
       spyOn(studentAsyncService, 'getOneStudent').and.returnValue(
         Observable.create((observer: Observer<Student>) => {
           observer.next(mockStudent);
           return observer;
-
         }));
-
-
       tick();
-
       fixture.detectChanges();
-
-      console.log('data', component.data);
       const name = fixture.debugElement.nativeElement.querySelector('mat-card-title');
       const details = fixture.debugElement.nativeElement.querySelector('mat-card-content');
-
-
-
       expect(name.children[0].textContent).toBe('Макар Артур');
-
       expect(name.children[1].textContent).toBe('Ігорович');
-
-
-
-      console.log('22', component.classId);
       expect(details.children[1].textContent).not.toBe('');
-
-
-
-
     }));
 
-
-    //
-
     it('should click editStudent will navigate', () => {
-
-      const { fixture, component, studentAsyncService, router } = setup();
-
+      const { fixture, router } = setup();
       const buttonEdit = fixture.nativeElement.querySelector('#btn');
-      console.log(buttonEdit);
       fixture.detectChanges();
       buttonEdit.click();
-      const call = spyOn(component, 'editStudent') as jasmine.Spy;
-
-      // component.editStudent();
-
-
-      // const routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
-
       const spy = router.navigate as jasmine.Spy;
-      // console.log('spy',spy);
       const navArgs = spy.calls.first().args[0];
-
-      // const navigateSpy = spyOn(router, 'navigate');
-      console.dir(navArgs);
-      console.dir(['admin-panel', 'students', '2', 'edit']);
-
-      console.dir([navArgs] === ['admin-panel', 'students', '2', 'edit']);
       expect(navArgs).toEqual(['admin-panel', 'students', '2', 'edit']);
-
-      // expect(component.editStudent).toHaveBeenCalled();
-
-
-
-      // component.editStudent();
-      // expect(navigateSpy).toHaveBeenCalledWith(['admin-panel', 'students', 23, 'edit']);
-
-
-      // expect(navArgs).toBe('/admin-panel/students/23/edit/',
-      //   'should nav to HeroDetail for first hero');
     }
     );
-
-    //
-
-
   });
-
-
-
-
-
-
 
 });
 
@@ -205,7 +131,6 @@ export class TestModule { }
 describe('StudentDatailsComponent', () => {
   let component: StudentDatailsComponent;
   let fixture: ComponentFixture<StudentDatailsComponent>;
-
   const mockId = 23;
   const mockClassId = 123;
 
@@ -258,28 +183,11 @@ describe('StudentDatailsComponent', () => {
   });
 
 
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
   it('should read route params', () => {
-    // expect(component.classId).toEqual(mockClassId);
     expect(component.paramId).toEqual(mockId);
   });
-
-
-
-  //   it('openDialog should open StudentDetailModalComponent', done => {
-  //     component.dialog
-  //       .open(StudentDetailModalComponent, {
-  //         width: '250px',
-  //         data: { paramId: 23 }
-  //       });
-  //       expect(true).toBeTruthy();
-  //     //   .afterOpen()
-  //     //   .subscribe(() => {
-  //     //     expect(true).toBeTruthy();
-  //     //   });
-  //   });
 });
