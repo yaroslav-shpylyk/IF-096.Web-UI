@@ -4,11 +4,12 @@ import { MaterialModule } from '../../../material.module';
 import { ClassCardComponent } from './class-card.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { TitlePipe } from '../autotitle.pipe';
 import { ClassData } from '../../../models/class-data';
 import { classesData } from '../mock/classes-data';
-import { NewYearComponent } from '../mock/parent-component';
+import { OnInit, ViewChild, Component } from '@angular/core';
+import { NewTitleValidator } from '../validators/new-title.validator';
 
 describe('ClassCardComponent', () => {
   let newYearComponent: NewYearComponent;
@@ -71,3 +72,27 @@ describe('ClassCardComponent', () => {
   });
 
 });
+
+@Component({
+  selector: `app-new-year`,
+  template: `<app-class-card></app-class-card>`
+})
+class NewYearComponent implements OnInit {
+  constructor(private fb: FormBuilder) {}
+  @ViewChild(ClassCardComponent)
+  public classCardComponent: ClassCardComponent;
+
+  transititionForm = this.fb.group({
+    newClassTitle: this.fb.array([])
+  });
+  get newClassTitle() { return this.transititionForm.get('newClassTitle') as FormArray; }
+
+  ngOnInit() {
+    const newInput = this.fb.control(
+      classesData[2].className,
+      [Validators.pattern('(^[1-7][(]([1-9]|1[0-2])-[А-Я]{1}[)]$)|(^([1-9]|1[0-2])-[А-Я]{1}$)'),
+      NewTitleValidator(classesData, classesData[2].classYear, classesData[2].className)]
+    );
+    (this.transititionForm.controls.newClassTitle as FormArray).push(newInput);
+  }
+}
