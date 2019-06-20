@@ -1,25 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { TeacherService } from '../../services/teacher.service';
 import {
-  FormGroup,
-  FormControl,
   Validators,
-  FormArray,
   FormBuilder
 } from '@angular/forms';
 import { ClassService } from '../../services/class.service';
-import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material';
-import { ReactiveFormsModule } from '@angular/forms';
-import { from } from 'rxjs';
 import { SubjectService } from '../../services/subject.service';
 import { TeachersJournalService } from '../../services/teachers-journal.service';
-import { MatStepperModule } from '@angular/material/stepper';
 import { SubjectData } from '../../models/subject-data';
 import { ClassData } from '../../models/class-data';
 import { TeacherData } from '../../models/teacher-data';
 import { MatSnackBar } from '@angular/material';
-import { SnackbarMessComponent } from '../../admin-panel/teacher-connection/snackbar-mess/snackbar-mess.component'
+import { SnackbarMessComponent } from '../../admin-panel/teacher-connection/snackbar-mess/snackbar-mess.component';
 
 @Component({
   selector: 'app-teacher-connection',
@@ -35,7 +27,7 @@ export class TeacherConnectionComponent implements OnInit {
     private fb: FormBuilder,
     private teacherjournalServise: TeachersJournalService,
     private snackBar: MatSnackBar,
-    
+
   ) { }
   teachers: TeacherData[];
   subjects: SubjectData[];
@@ -48,7 +40,7 @@ export class TeacherConnectionComponent implements OnInit {
   subject: boolean;
   class: boolean;
   durationInSeconds = 5;
-  
+
   myForm = this.fb.group({
     class: ['', Validators.required],
     subject: ['', Validators.required],

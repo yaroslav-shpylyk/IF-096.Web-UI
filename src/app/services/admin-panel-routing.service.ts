@@ -67,7 +67,7 @@ export class AdminPanelRoutingService {
   activeRoute() {
     [this.pathActive, this.iconActive, this.nameActive] =
       [this.routesMore[0].path, this.routesMore[0].icon, this.routesMore[0].name]; // show Classes by default
-    for (const i in this.routesMore) { // link buttons from More menu
+    for (const i of Object.keys (this.routesMore)) { // link buttons from More menu
       if (this.router.url === this.routesMore[i].path) { // show path, icon, route depending on route path
         [this.pathActive, this.iconActive, this.nameActive] =
           [this.routesMore[i].path, this.routesMore[i].icon, this.truncateName(this.routesMore[i].name, 8)];
