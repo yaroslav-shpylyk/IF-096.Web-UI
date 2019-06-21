@@ -10,6 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ClassService } from '../../../services/class.service';
 import { of, defer } from 'rxjs';
 import { NgModule } from '@angular/core';
+import { LoadingSpinnerComponent } from '../../students-list/loading-spinner/loading-spinner.component';
 
 describe('AddStudentComponent', () => {
 
@@ -36,7 +37,7 @@ describe('AddStudentComponent', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, BrowserAnimationsModule,
         FormsModule, MaterialModule, ReactiveFormsModule],
-      declarations: [AddStudentComponent, AvatarComponent],
+      declarations: [AddStudentComponent, AvatarComponent, LoadingSpinnerComponent],
       providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} },
@@ -101,7 +102,8 @@ describe('AddStudentComponent', () => {
   ],
   declarations: [
     AddStudentComponent,
-    AvatarComponent
+    AvatarComponent,
+    LoadingSpinnerComponent
   ],
   entryComponents: [
     AddStudentComponent

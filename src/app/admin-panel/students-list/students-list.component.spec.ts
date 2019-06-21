@@ -11,6 +11,7 @@ import { AvatarComponent } from '../../shared/avatar/avatar.component';
 import { StudentsService } from '../../services/students.service';
 import { ClassService } from '../../services/class.service';
 import { Observable, Observer, defer } from 'rxjs';
+import { LoadingSpinnerComponent } from '../students-list/loading-spinner/loading-spinner.component';
 
 describe('StudentsListComponent', () => {
 
@@ -26,7 +27,8 @@ describe('StudentsListComponent', () => {
       ],
       declarations: [
         StudentsListComponent,
-        AvatarComponent
+        AvatarComponent,
+        LoadingSpinnerComponent
       ]
     })
       .compileComponents();
