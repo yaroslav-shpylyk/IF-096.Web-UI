@@ -1,10 +1,10 @@
 <mat-card
   *ngIf="newTitleField"
   [formGroup]="form"
+  [@classTransited]="isClassTransited ? true : false"
   [ngClass]="{
     'locked': isCardLock,
     'active': !isCardLock,
-    'transited': isClassTransited,
     'normal': !newTitleField.invalid,
     'warning': newTitleField.invalid
   }">

@@ -83,10 +83,7 @@ export class NewYearComponent implements OnInit {
       (status) => {
         if (status === 201) {
           this.transitedCards.forEach (
-            el => {
-              el.isClassTransited = true;
-              el.isCardLock = true;
-            }
+            el => el.isClassTransited = true
           );
           this.displaySnackBar(
             `Виконано. Переведено класів: ${formData.length}`,
