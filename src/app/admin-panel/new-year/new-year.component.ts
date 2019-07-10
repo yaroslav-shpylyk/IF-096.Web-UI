@@ -6,10 +6,34 @@ import { ClassCardComponent } from './class-card/class-card.component';
 import { MatSnackBar, MatSnackBarConfig, MatDialog, MatDialogConfig } from '@angular/material';
 import { StatisticsComponent } from '../../admin-panel/new-year/statistics/statistics.component';
 import { NewTitleValidator } from './validators/new-title.validator';
+import { animate, trigger, transition, style, query, stagger, state } from '@angular/animations';
 @Component({
   selector: 'app-new-year',
   templateUrl: './new-year.component.html',
-  styleUrls: ['./new-year.component.scss']
+  styleUrls: ['./new-year.component.scss'],
+  animations: [
+    trigger('showTitle', [
+      state('void', style({transform: 'translateY(-50px)', opacity: 0})),
+      state('*', style({transform: 'translateY(0px)', opacity: 1})),
+      transition(':enter, :leave', animate(200))
+    ]),
+    trigger('insertRemoveCard', [
+      transition('* <=> *', [
+        query(':leave', [
+          stagger(50, [
+            animate(100, style({transform: 'translateY(-50px)', opacity: 0}))
+          ])
+        ], { optional: true }),
+        query(':enter', [
+          style({ opacity: 0 }),
+          stagger(100, [
+            style({ opacity: 0, transform: 'translateY(50px)' }),
+            animate(200, style({ transform: 'translateY(0px)', opacity: 1 }))
+          ])
+        ], { optional: true })
+      ])
+    ])
+  ]
 })
 
 export class NewYearComponent implements OnInit {
