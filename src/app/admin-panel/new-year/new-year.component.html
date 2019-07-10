@@ -1,12 +1,11 @@
 <div class="container">
-  <h2>Перехід на новий навчальний рік</h2>
+  <h2 @showTitle>Перехід на новий навчальний рік</h2>
   <mat-spinner *ngIf="showSpiner"></mat-spinner>
   <ng-container *ngIf="!showSpiner">
-    <div class="statistic"(click)="showStatistic()">(Переглянути статистику за минулі 5 років)</div>
-    <form *ngIf="filteredClasses.length>0; else emptyFilter" [formGroup]="transititionForm" class="component" (ngSubmit)="formSubmit()">
-      <div>
+    <div class="statistic"(click)="showStatistic()" @showTitle>(Переглянути статистику за минулі 5 років)</div>
+    <form *ngIf="filteredClasses.length>0; else emptyFilter" [@insertRemoveCard]="filteredClasses?.length" [formGroup]="transititionForm" class="component" (ngSubmit)="formSubmit()">
+      <div *ngFor="let curClass of filteredClasses; let i=index" >
         <app-class-card
-          *ngFor="let curClass of filteredClasses; let i=index"
           [controlIndex]="i"
           [form]="transititionForm"
           [curClass]="curClass.classData"

@@ -6,10 +6,12 @@ import { ClassCardComponent } from './class-card/class-card.component';
 import { MatSnackBar, MatSnackBarConfig, MatDialog, MatDialogConfig } from '@angular/material';
 import { StatisticsComponent } from '../../admin-panel/new-year/statistics/statistics.component';
 import { NewTitleValidator } from './validators/new-title.validator';
+import { inOutCardsAnimation } from './animations/animations';
 @Component({
   selector: 'app-new-year',
   templateUrl: './new-year.component.html',
-  styleUrls: ['./new-year.component.scss']
+  styleUrls: ['./new-year.component.scss'],
+  animations: [inOutCardsAnimation]
 })
 
 export class NewYearComponent implements OnInit {
@@ -83,10 +85,7 @@ export class NewYearComponent implements OnInit {
       (status) => {
         if (status === 201) {
           this.transitedCards.forEach (
-            el => {
-              el.isClassTransited = true;
-              el.isCardLock = true;
-            }
+            el => el.isClassTransited = true
           );
           this.displaySnackBar(
             `Виконано. Переведено класів: ${formData.length}`,

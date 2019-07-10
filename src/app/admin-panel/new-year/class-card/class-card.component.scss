@@ -1,26 +1,18 @@
 @import "../../../../styles.scss";
 
-.warning {
-  background-color: rgba(21,101,192,1);
-  background: -moz-linear-gradient(left, rgba(255,0,0,1) 0%, rgba(255,255,255,1) 0.75%, rgba(255,255,255,1) 100%);
-  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,0,0,1)), color-stop(0.75%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
-  background: -webkit-linear-gradient(left, rgba(255,0,0,1) 0%, rgba(255,255,255,1) 0.75%, rgba(255,255,255,1) 100%);
-  background: -o-linear-gradient(left, rgba(255,0,0,1) 0%, rgba(255,255,255,1) 0.75%, rgba(255,255,255,1) 100%);
-  background: -ms-linear-gradient(left, rgba(255,0,0,1) 0%, rgba(255,255,255,1) 0.75%, rgba(255,255,255,1) 100%);
-  background: linear-gradient(to right, rgba(255,0,0,1) 0%, rgba(255,255,255,1) 0.75%, rgba(255,255,255,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0000', endColorstr='#ffffff', GradientType=1 );
+.normal:before, .warning:before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: block;
+  width: 5px;
+  height: 100%;
+  border-radius: 4px 0px 0px 4px;
 }
 
-.normal {
-  background-color: rgba(21,101,192,1);
-  background: -moz-linear-gradient(left, rgba(21,101,192,1) 0%, rgba(255,255,255,1) 0.75%, rgba(255,255,255,1) 100%);
-  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(21,101,192,1)), color-stop(0.75%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
-  background: -webkit-linear-gradient(left, rgba(21,101,192,1) 0%, rgba(255,255,255,1) 0.75%, rgba(255,255,255,1) 100%);
-  background: -o-linear-gradient(left, rgba(21,101,192,1) 0%, rgba(255,255,255,1) 0.75%, rgba(255,255,255,1) 100%);
-  background: -ms-linear-gradient(left, rgba(21,101,192,1) 0%, rgba(255,255,255,1) 0.75%, rgba(255,255,255,1) 100%);
-  background: linear-gradient(to right, rgba(21,101,192,1) 0%, rgba(255,255,255,1) 0.75%, rgba(255,255,255,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1565c0', endColorstr='#ffffff', GradientType=1 );
-}
+.normal:before { background-color: rgba(21,101,192,1); }
+.warning:before { background-color: rgba(255,0,0,1); }
 
 mat-card {
   display: flex;
@@ -37,7 +29,7 @@ mat-card {
   .clas-transition {width: 10%; }
   .new-class-title {
     position: relative;
-    width: 35%; 
+    width: 35%;
     .class-info {width: 100%; }
   }
   .class-edit-title { width: 10%; }
@@ -50,7 +42,7 @@ mat-card {
     // @media (min-width: 481px) and (max-width: 767px) { font-size: 0.55em; }
     // @media (min-width: 768px) { font-size: 0.8em; }
   }
-  
+
   input[type="checkbox"] {
     display:none;
   }
@@ -79,11 +71,11 @@ mat-card {
       font-size: 0.8em;
       font-style: italic;
     }
-    .material-icons { 
+    .material-icons {
       display: block;
       padding: 2px 0;
       font-size: 0.65em;
-      margin-left: -25px; 
+      margin-left: -25px;
       color: rgba(128, 128, 128, 0.5); }
   }
 
@@ -94,12 +86,6 @@ mat-card {
   .class-info.hidden {
     display: none;
   }
-}
-
-mat-card.locked.transited, mat-card.locked:hover.transited {
-  background-color: #5fb663;
-  cursor: default;
-  pointer-events: none;
 }
 
 mat-card.locked, mat-card.locked:hover {

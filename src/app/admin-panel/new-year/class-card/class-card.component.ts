@@ -5,11 +5,12 @@ import { MatDialog } from '@angular/material';
 import { NewYearService } from '../../../services/new-year.service';
 import { ListPopupComponent } from './list-popup/list-popup.component';
 import { Student } from '../../../models/student';
-
+import { trasitedCardsAnimation } from '../animations/animations';
 @Component({
   selector: 'app-class-card',
   templateUrl: './class-card.component.html',
-  styleUrls: ['./class-card.component.scss']
+  styleUrls: ['./class-card.component.scss'],
+  animations: [trasitedCardsAnimation]
 })
 export class ClassCardComponent implements OnInit {
   @Input() curClass: ClassInfo;
@@ -19,8 +20,8 @@ export class ClassCardComponent implements OnInit {
   @Input() isCardLock: boolean;
   @Input() currentYear: number;
   newTitleField: FormControl;
-  public isEditEnable = false;
-  public classList: Student[];
+  isEditEnable = false;
+  classList: Student[];
 
   constructor(
     private newYearService: NewYearService,

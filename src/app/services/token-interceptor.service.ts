@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class TokenInterceptorService implements HttpInterceptor {
-  private readonly url: string = 'http://35.228.220.5:8080';
+  private readonly url: string = 'http://35.228.86.127:8080';
   constructor(private authService: AuthService) { }
 
   /**
