@@ -9,12 +9,13 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { registerLocaleData } from '@angular/common';
 import localeUk from '@angular/common/locales/uk';
 import { HideZeroPipe } from './student-book/hide-zero.pipe';
+import { ScoresReportComponent } from './scores-report/scores-report.component';
 
 // For localization pipe
 registerLocaleData(localeUk, 'uk-Ua');
 
 @NgModule({
-  declarations: [StudentBookComponent, HideZeroPipe],
+  declarations: [StudentBookComponent, HideZeroPipe, ScoresReportComponent],
   imports: [
     CommonModule,
     StudentBookRoutingModule,
