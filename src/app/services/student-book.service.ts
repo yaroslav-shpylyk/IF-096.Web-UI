@@ -47,19 +47,17 @@ export class StudentBookService {
       );
   }
 
-  public getAllMarks(startDate: string, endDate?: string): Observable<StudentBookData[]> {
+  public getAllMarks(startDate: string, endDate: string): Observable<StudentBookData[]> {
     const marksSubject = new Subject<StudentBookData[]>();
-    const curDate = moment();
-    const endOfSemestr = moment(`${moment().year()}-06-25`);
+    const endDateValue = moment(endDate);
     const requests = [];
     let mondayDate = moment(startDate);
-
-    while ( curDate.valueOf() >= mondayDate.valueOf() && mondayDate.valueOf() <= endOfSemestr.valueOf()) {
+    while (mondayDate.valueOf() <= endDateValue.valueOf()) {
       requests.push(this.getStudentBook(mondayDate.format('YYYY-MM-DD')));
       mondayDate = moment(mondayDate).add(7, 'days');
     }
 
-    forkJoin(...requests).pipe(
+    forkJoin(requests).pipe(
       map(
         res => {
           return [].concat(...res).filter(

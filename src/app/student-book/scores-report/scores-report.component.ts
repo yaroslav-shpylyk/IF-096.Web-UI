@@ -10,10 +10,16 @@ const moment = _moment;
   styleUrls: ['./scores-report.component.scss']
 })
 export class ScoresReportComponent implements OnInit {
-
   marksGroupedBySubject;
-  displayedSubjects;
-  pickerDate;
+  displayedSubjects = new Set();
+
+  isEndOfYear = moment().valueOf() < moment(`${this.educationYear + 1}-06-01`).valueOf();
+  startPickerValue = this.dateOfSemestStart;
+  endPickerValue = (this.isEndOfYear) ? moment() : moment(`${this.educationYear + 1}-06-01`);
+  endPickerMax = this.endPickerValue;
+  startPickerMin = moment(`${this.educationYear}-09-01`);
+  get endPickerMin() { return this.startPickerValue.clone().add(1, 'days'); }
+  get startPickerMax() { return this.endPickerValue.clone().subtract(1, 'days'); }
 
   constructor(
     private studentBookService: StudentBookService
@@ -23,11 +29,15 @@ export class ScoresReportComponent implements OnInit {
     this.getMarks();
   }
 
+  /**
+   *  Gets all scores and group them by the subject title
+   */
   getMarks() {
-    this.pickerDate = moment('2019-01-13');
-    const daysToMonday = 1 - this.pickerDate.day();
-    const mondayDate = this.pickerDate.add(daysToMonday, 'days').format('YYYY-MM-DD');
-    this.studentBookService.getAllMarks(mondayDate).subscribe(
+    const startDate = moment(this.startPickerValue.format('YYYY-MM-DD'));
+    const endDate = this.endPickerValue.format('YYYY-MM-DD');
+    const daysToMonday = 1 - startDate.day();
+    const mondayDate = startDate.add(daysToMonday, 'days').format('YYYY-MM-DD');
+    this.studentBookService.getAllMarks(mondayDate, endDate).subscribe(
       result => {
         this.marksGroupedBySubject = result.reduce(
           (groupedMarks, mark) => {
@@ -37,8 +47,28 @@ export class ScoresReportComponent implements OnInit {
           },
           Object.create(null)
         );
-        this.displayedSubjects = new Set(Object.keys(this.marksGroupedBySubject));
+        Object.keys(this.marksGroupedBySubject).forEach(
+          subject => this.displayedSubjects.add(subject)
+        );
       }
     );
+  }
+
+  /**
+   * Return start of current semestr
+   */
+  get dateOfSemestStart(): _moment.Moment {
+    const curMonth = moment().month();
+    const start = (curMonth < 12 && curMonth > 7) ? `${moment().year()}-09-01` : `${moment().year()}-01-14`;
+    return moment(start);
+  }
+
+  /**
+   * Return current educational year
+   */
+  get educationYear(): number {
+    const curMonth = moment().month();
+    const year = (curMonth < 12 && curMonth > 7) ? moment().year() : moment().year() - 1;
+    return year;
   }
 }

@@ -1,4 +1,24 @@
 <h2>Виписка оцінок</h2>
+<mat-form-field>
+  <input matInput [matDatepicker]="startDatePicker"
+    [min]="startPickerMin"
+    [max]="startPickerMax"
+    (dateInput)="getMarks()"
+    [(ngModel)]="startPickerValue">
+  <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+  <mat-datepicker #startDatePicker></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field>
+  <input matInput [matDatepicker]="endDatePicker"
+    [min]="endPickerMin"
+    [max]="endPickerMax"
+    (dateInput)="getMarks()"
+    [(ngModel)]="endPickerValue">
+  <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+  <mat-datepicker #endDatePicker></mat-datepicker>
+</mat-form-field>
+
 <app-subject-marks
   *ngFor="let subject of displayedSubjects"
   [subjectTitle] = "subject"
