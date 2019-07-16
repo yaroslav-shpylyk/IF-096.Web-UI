@@ -1,3 +1,6 @@
-<p>
-  scores-report works!
-</p>
+<h2>Виписка оцінок</h2>
+<app-subject-marks
+  *ngFor="let subject of displayedSubjects"
+  [subjectTitle] = "subject"
+  [subjectMarks] = "marksGroupedBySubject[subject]">
+</app-subject-marks>
