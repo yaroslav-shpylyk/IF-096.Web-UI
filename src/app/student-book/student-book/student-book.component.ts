@@ -125,4 +125,8 @@ export class StudentBookComponent implements OnInit {
       });
     });
   }
+
+  mondayFilter = (d: _moment.Moment): boolean => {
+    return d.day() === 1;
+  }
 }
