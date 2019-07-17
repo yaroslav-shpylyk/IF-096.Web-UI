@@ -5,7 +5,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { saveAs} from 'file-saver';
 import * as _moment from 'moment';
 import { SubjectAttachmentDialogComponent } from '../../shared/subject-attachment-dialog/subject-attachment-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { HomeworkStorageService } from '../../services/homework-storage.service';
 
 const moment = _moment;
@@ -31,11 +31,12 @@ export class StudentBookComponent implements OnInit {
   public showTable: boolean;
   public gridViewSetter: boolean;
   public listViewSetter: boolean;
-  public dateValue = moment();
+  public dateValue = this.getStartOfWeek(moment());
 
 
   constructor(private studentBookService: StudentBookService,
               private homeworkStorageService: HomeworkStorageService,
+              private snackBar: MatSnackBar,
               public attachmentDialog: MatDialog) {
   }
 
@@ -126,7 +127,35 @@ export class StudentBookComponent implements OnInit {
     });
   }
 
+  /**
+   * Datepicker filter: disable non Mondays dates
+   */
   mondayFilter = (d: _moment.Moment): boolean => {
     return d.day() === 1;
+  }
+
+  /**
+   * Checks the datepicker value if there is a Monday and corrects it
+   */
+  checkDate() {
+    if ( this.dateValue.day() !== 1 ) {
+      this.dateValue = this.getStartOfWeek(this.dateValue);
+      this.snackBar.open('Тиждень має починатись з понедіка', null, {
+        duration: 2000,
+        verticalPosition: 'top',
+        panelClass: 'popup-error'
+      });
+    }
+    this.showSchedule();
+  }
+
+  /**
+   * Method return date of Monday in current week
+   * @param curDate - current title of class
+   * @returns date of Monday
+   */
+  getStartOfWeek(curDate: _moment.Moment): _moment.Moment {
+    const daysToMonday = 1 - curDate.day();
+    return curDate.clone().add(daysToMonday, 'days');
   }
 }

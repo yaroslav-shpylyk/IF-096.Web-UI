@@ -22,7 +22,7 @@
     <!--DatePicker-->
     <mat-form-field>
       <input matInput [matDatepicker]="picker"
-             (dateInput)="showSchedule()"
+             (dateChange)="checkDate()"
              [(ngModel)]="dateValue"
              [matDatepickerFilter]="mondayFilter"
              >
