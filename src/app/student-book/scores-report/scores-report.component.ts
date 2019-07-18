@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentBookService } from '../../services/student-book.service';
+import { MatChip } from '@angular/material/chips';
 import * as _moment from 'moment';
 const moment = _moment;
 
@@ -20,6 +21,12 @@ export class ScoresReportComponent implements OnInit {
   startPickerMin = moment(`${this.educationYear}-09-01`);
   get endPickerMin() { return this.startPickerValue.clone().add(1, 'days'); }
   get startPickerMax() { return this.endPickerValue.clone().subtract(1, 'days'); }
+
+  filters = [
+    {name: 'Тиждень', value: this.endPickerValue.clone().subtract(1, 'week'), selected: false},
+    {name: 'Місяць', value: this.endPickerValue.clone().subtract(1, 'month'), selected: false},
+    {name: 'Семестр', value: this.startPickerValue, selected: true}
+  ];
 
   constructor(
     private studentBookService: StudentBookService
@@ -70,5 +77,11 @@ export class ScoresReportComponent implements OnInit {
     const curMonth = moment().month();
     const year = (curMonth < 12 && curMonth > 7) ? moment().year() : moment().year() - 1;
     return year;
+  }
+
+  onChipClick(chip: MatChip) {
+    this.startPickerValue = chip.value;
+    chip.select();
+    this.getMarks();
   }
 }

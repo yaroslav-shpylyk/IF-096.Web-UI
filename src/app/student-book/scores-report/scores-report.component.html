@@ -1,4 +1,16 @@
 <h2>Виписка оцінок</h2>
+
+<mat-chip-list>
+  <mat-chip
+    *ngFor="let filter of filters"
+    (click)="onChipClick(filterChip)"
+    [value] = "filter.value"
+    [selected] = "filter.selected"
+    #filterChip="matChip">
+    {{filter.name}}
+  </mat-chip>
+</mat-chip-list>
+
 <mat-form-field>
   <input matInput [matDatepicker]="startDatePicker"
     [min]="startPickerMin"
@@ -8,7 +20,6 @@
   <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
   <mat-datepicker #startDatePicker></mat-datepicker>
 </mat-form-field>
-
 <mat-form-field>
   <input matInput [matDatepicker]="endDatePicker"
     [min]="endPickerMin"
@@ -19,8 +30,9 @@
   <mat-datepicker #endDatePicker></mat-datepicker>
 </mat-form-field>
 
-<app-subject-marks
-  *ngFor="let subject of displayedSubjects"
-  [subjectTitle] = "subject"
-  [subjectMarks] = "marksGroupedBySubject[subject]">
-</app-subject-marks>
+<ng-container *ngFor="let subject of displayedSubjects">
+  <app-subject-marks *ngIf="marksGroupedBySubject[subject]"
+    [subjectTitle] = "subject"
+    [subjectMarks] = "marksGroupedBySubject[subject]">
+  </app-subject-marks>
+</ng-container>
