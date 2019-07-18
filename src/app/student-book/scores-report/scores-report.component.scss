@@ -1,6 +1,11 @@
+h2 {
+  text-align: center;
+  margin: 10px;
+}
+
 app-subject-marks {
   display: grid;
-  grid-template-columns: 125px 1fr;
+  grid-template-columns: 1fr;
   grid-gap: 2vw;
   align-items: center;
   margin: 10px;
@@ -9,7 +14,37 @@ app-subject-marks {
   background-color: #fff;
   padding: 10px;
   box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
-  @media only screen and (max-width: 600px) {
-    grid-template-columns: 1fr;
+  @media only screen and (min-width: 600px) {
+    grid-template-columns: 125px 1fr;
+  }
+}
+
+.filters-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 80px;
+  margin-left: -20px;
+  @media only screen and (min-width: 600px) {
+    flex-direction: row;
+    padding: 10px;
+    margin: 0;
+  }
+  .datePicker { text-align: center; }
+}
+
+.filter-switcher {
+  .material-icons {
+    color: rgba(0,0,0,.54);
+    &.active {color: #0d417b;}
+    &:hover {color: #0d417bd9}
+  }
+  position: absolute;
+  right: 2%;
+  ::ng-deep {
+    & .mat-checkbox-inner-container {display: none;}
+    & .mat-checkbox-label {display: flex;}
   }
 }

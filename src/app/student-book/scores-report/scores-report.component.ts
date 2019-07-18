@@ -22,11 +22,12 @@ export class ScoresReportComponent implements OnInit {
   get endPickerMin() { return this.startPickerValue.clone().add(1, 'days'); }
   get startPickerMax() { return this.endPickerValue.clone().subtract(1, 'days'); }
 
-  filters = [
+  dateRangeFilters = [
     {name: 'Тиждень', value: this.endPickerValue.clone().subtract(1, 'week'), selected: false},
     {name: 'Місяць', value: this.endPickerValue.clone().subtract(1, 'month'), selected: false},
     {name: 'Семестр', value: this.startPickerValue, selected: true}
   ];
+  isCustomDateRangeFilter = false;
 
   constructor(
     private studentBookService: StudentBookService
@@ -79,6 +80,9 @@ export class ScoresReportComponent implements OnInit {
     return year;
   }
 
+  /**
+   * Changes start date of filtering range acording to selected filter
+   */
   onChipClick(chip: MatChip) {
     this.startPickerValue = chip.value;
     chip.select();
