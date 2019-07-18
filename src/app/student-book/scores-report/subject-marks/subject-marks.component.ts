@@ -12,8 +12,6 @@ export class SubjectMarksComponent implements OnInit {
   @Input() subjectMarks: StudentBookData;
   @Input() subjectTitle: string;
 
-  ngOnInit() {
-    console.log(this.subjectMarks);
-  }
+  ngOnInit() { }
 
 }
