@@ -6,12 +6,12 @@ import { ClassCardComponent } from './class-card/class-card.component';
 import { MatSnackBar, MatSnackBarConfig, MatDialog, MatDialogConfig } from '@angular/material';
 import { StatisticsComponent } from '../../admin-panel/new-year/statistics/statistics.component';
 import { NewTitleValidator } from './validators/new-title.validator';
-import { inOutCardsAnimation } from './animations/animations';
+import { enterFromTop, multiEnterFromBottom } from '../../animations/animation';
 @Component({
   selector: 'app-new-year',
   templateUrl: './new-year.component.html',
   styleUrls: ['./new-year.component.scss'],
-  animations: [inOutCardsAnimation]
+  animations: [enterFromTop, multiEnterFromBottom()]
 })
 
 export class NewYearComponent implements OnInit {

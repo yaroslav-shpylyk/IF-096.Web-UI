@@ -1,0 +1,11 @@
+<div class="subject">{{subjectTitle}}</div>
+<div class="marks">
+  <div *ngFor="let mark of subjectMarks"
+    [ngClass]="{'hight-mark': mark.mark > 9, 'low-mark': mark.mark < 4}"
+    [matTooltip]="mark.note ? mark.note : ''"
+    class="mark-info">
+    <i *ngIf="mark.note" class="material-icons note"> comment </i>
+    <div class="mark">{{mark.mark}}</div>
+    <div class="date">{{mark.date|date:'dd MMM'}}</div>
+  </div>
+</div>

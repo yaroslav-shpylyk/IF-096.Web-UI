@@ -9,9 +9,15 @@
   </div>
   <!--student book button-->
   <div>
-    <a mat-list-item routerLinkActive="active" routerLink="/student-book">
+    <a mat-list-item routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/student-book">
       <mat-icon>book</mat-icon>
       Щоденник
+    </a>
+  </div>
+  <div>
+    <a mat-list-item routerLinkActive="active" routerLink="/student-book/scores">
+      <mat-icon>timeline</mat-icon>
+      Успішність
     </a>
   </div>
   <!-- avatar and name -->

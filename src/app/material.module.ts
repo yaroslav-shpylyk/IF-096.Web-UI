@@ -5,6 +5,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatChipsModule} from '@angular/material/chips';
 
 import {
   MatButtonModule,
@@ -58,7 +59,8 @@ import {
     MatBottomSheetModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
-    MatStepperModule
+    MatStepperModule,
+    MatChipsModule
   ],
   exports: [
     MatButtonModule,
@@ -87,7 +89,8 @@ import {
     MatBottomSheetModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
-    MatStepperModule
+    MatStepperModule,
+    MatChipsModule
   ]
 })
 export class MaterialModule {}

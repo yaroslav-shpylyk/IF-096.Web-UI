@@ -1,0 +1,46 @@
+<h2 @enterFromTop>Виписка оцінок</h2>
+
+<div @enterFromTop class="filters-container">
+  <mat-chip-list *ngIf="!isCustomDateRangeFilter">
+    <mat-chip
+      *ngFor="let filter of dateRangeFilters"
+      (click)="onChipClick(filterChip)"
+      [value] = "filter.value"
+      [selected] = "filter.selected"
+      #filterChip="matChip">
+      {{filter.name}}
+    </mat-chip>
+  </mat-chip-list>
+  <ng-container *ngIf="isCustomDateRangeFilter">
+    <mat-form-field class="datePicker">
+      <span matPrefix>від: </span>
+      <input matInput [matDatepicker]="startDatePicker"
+        [min]="startPickerMin"
+        [max]="startPickerMax"
+        (dateInput)="getMarks()"
+        [(ngModel)]="startPickerValue">
+      <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #startDatePicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="datePicker">
+      <span matPrefix>до: </span>
+      <input matInput [matDatepicker]="endDatePicker"
+        [min]="endPickerMin"
+        [max]="endPickerMax"
+        (dateInput)="getMarks()"
+        [(ngModel)]="endPickerValue">
+      <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #endDatePicker></mat-datepicker>
+    </mat-form-field>
+  </ng-container>
+  <mat-checkbox [(ngModel)]="isCustomDateRangeFilter" class="filter-switcher">
+    <i class="material-icons"  [ngClass]="(isCustomDateRangeFilter)?'active':'default'">date_range</i>
+  </mat-checkbox>
+</div>
+
+<div *ngFor="let subject of displayedSubjects" [@multiEnterFromBottom]="marksGroupedBySubject[subject]">
+  <app-subject-marks class="subject-container" *ngIf="marksGroupedBySubject[subject]"
+    [subjectTitle] = "subject"
+    [subjectMarks] = "marksGroupedBySubject[subject]">
+  </app-subject-marks>
+</div>

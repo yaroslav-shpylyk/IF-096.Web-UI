@@ -1,0 +1,52 @@
+@import "../../../../styles.scss";
+.subject {
+  text-align: center;
+  color: $dark-color;
+}
+.marks{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  grid-gap: 5px;
+  .mark-info{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    border: 1px solid rgba(49, 44, 44, 0.25);
+    text-align: center;
+    &.low-mark {
+      background-color: rgba(255,255,255,1);
+      background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.26) 31%, rgba(255,214,214,0) 42%, rgba(255,0,0,0.19) 100%);
+      background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(31%, rgba(255,255,255,0.26)), color-stop(42%, rgba(255,214,214,0)), color-stop(100%, rgba(255,0,0,0.19)));
+      background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.26) 31%, rgba(255,214,214,0) 42%, rgba(255,0,0,0.19) 100%);
+      background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.26) 31%, rgba(255,214,214,0) 42%, rgba(255,0,0,0.19) 100%);
+      background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.26) 31%, rgba(255,214,214,0) 42%, rgba(255,0,0,0.19) 100%);
+      background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0.26) 31%, rgba(255,214,214,0) 42%, rgba(255,0,0,0.19) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ff0000', GradientType=0 );
+      border-bottom: 1px solid #ff0000;
+    }
+    &.hight-mark {
+      background-color: rgba(255,255,255,1);
+      background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.26) 31%, rgba(214,236,217,0) 42%, rgba(0,138,16,0.19) 100%);
+      background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(31%, rgba(255,255,255,0.26)), color-stop(42%, rgba(214,236,217,0)), color-stop(100%, rgba(0,138,16,0.19)));
+      background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.26) 31%, rgba(214,236,217,0) 42%, rgba(0,138,16,0.19) 100%);
+      background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.26) 31%, rgba(214,236,217,0) 42%, rgba(0,138,16,0.19) 100%);
+      background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.26) 31%, rgba(214,236,217,0) 42%, rgba(0,138,16,0.19) 100%);
+      background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0.26) 31%, rgba(214,236,217,0) 42%, rgba(0,138,16,0.19) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#008a10', GradientType=0 );
+      border-bottom: 1px solid #008a10;
+    }
+    .note {
+      font-size: 0.5em;
+      color: gray;
+      position: absolute;
+      right: 2px;
+      top: 2px;
+    }
+    .date {
+      font-size: 0.65em;
+      color: gray;
+    }
+    .mark { font-size: 1.5em; }
+  }
+}
