@@ -47,6 +47,12 @@ export class StudentBookService {
       );
   }
 
+  /**
+   * Method which get all pupil marks in date range
+   * @param startDate - start date of the range
+   * @param endDate - end date of the range
+   * @returns data (json) from server
+   */
   public getAllMarks(startDate: string, endDate: string): Observable<StudentBookData[]> {
     const marksSubject = new Subject<StudentBookData[]>();
     const endDateValue = moment(endDate);

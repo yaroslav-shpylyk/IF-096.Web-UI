@@ -1,6 +1,6 @@
-<h2>Виписка оцінок</h2>
+<h2 @enterFromTop>Виписка оцінок</h2>
 
-<div class="filters-container">
+<div @enterFromTop class="filters-container">
   <mat-chip-list *ngIf="!isCustomDateRangeFilter">
     <mat-chip
       *ngFor="let filter of dateRangeFilters"
@@ -38,9 +38,9 @@
   </mat-checkbox>
 </div>
 
-<ng-container *ngFor="let subject of displayedSubjects">
-  <app-subject-marks *ngIf="marksGroupedBySubject[subject]"
+<div *ngFor="let subject of displayedSubjects" [@multiEnterFromBottom]="marksGroupedBySubject[subject]">
+  <app-subject-marks class="subject-container" *ngIf="marksGroupedBySubject[subject]"
     [subjectTitle] = "subject"
     [subjectMarks] = "marksGroupedBySubject[subject]">
   </app-subject-marks>
-</ng-container>
+</div>

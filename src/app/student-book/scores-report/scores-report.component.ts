@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentBookService } from '../../services/student-book.service';
 import { MatChip } from '@angular/material/chips';
+import { multiEnterFromBottom, enterFromTop } from '../../animations/animation';
+import { StudentBookData } from '../../models/student-book-data';
 import * as _moment from 'moment';
 const moment = _moment;
-
 
 @Component({
   selector: 'app-scores-report',
   templateUrl: './scores-report.component.html',
-  styleUrls: ['./scores-report.component.scss']
+  styleUrls: ['./scores-report.component.scss'],
+  animations: [enterFromTop, multiEnterFromBottom('.subject-container')]
 })
 export class ScoresReportComponent implements OnInit {
-  marksGroupedBySubject;
+  marksGroupedBySubject: {string: StudentBookData};
   displayedSubjects = new Set();
 
   isEndOfYear = moment().valueOf() < moment(`${this.educationYear + 1}-06-01`).valueOf();
