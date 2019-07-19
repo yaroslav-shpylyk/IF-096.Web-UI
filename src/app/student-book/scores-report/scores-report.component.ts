@@ -16,7 +16,7 @@ export class ScoresReportComponent implements OnInit {
   marksGroupedBySubject: {string: StudentBookData};
   displayedSubjects = new Set();
 
-  isEndOfYear = moment().valueOf() < moment(`${this.educationYear + 1}-06-01`).valueOf();
+  isEndOfYear = moment().isBefore(moment(`${this.educationYear + 1}-06-01`));
   startPickerValue = this.dateOfSemestStart;
   endPickerValue = (this.isEndOfYear) ? moment() : moment(`${this.educationYear + 1}-06-01`);
   endPickerMax = this.endPickerValue;
