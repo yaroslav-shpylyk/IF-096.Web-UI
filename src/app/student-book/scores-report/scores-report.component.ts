@@ -13,7 +13,7 @@ const moment = _moment;
   animations: [enterFromTop, multiEnterFromBottom('.subject-container')]
 })
 export class ScoresReportComponent implements OnInit {
-  marksGroupedBySubject: {string: StudentBookData};
+  marksGroupedBySubject: {string: StudentBookData[]};
   displayedSubjects = new Set();
 
   isEndOfYear = moment().isBefore(moment(`${this.educationYear + 1}-06-01`));
