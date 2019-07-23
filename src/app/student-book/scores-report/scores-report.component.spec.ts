@@ -89,7 +89,7 @@ fdescribe('ScoresReportComponent', () => {
     expect(datePickerElements.length).toBe(2);
   });
 
-  it('should set update max and min values for datepickes after' , async( () => {
+  it('should set update max and min values for datepickes' , async( () => {
     const compiled = fixture.debugElement.nativeElement;
 
     // One month range via matchip templates
