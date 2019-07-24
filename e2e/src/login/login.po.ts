@@ -5,6 +5,11 @@ export interface Credentials {
   password: string;
 }
 
+const adminCreds = {
+  login: browser.params.admin.login,
+  password: browser.params.admin.password
+};
+
 export class LoginPage {
   navigateTo() {
     return browser.get('#/login');
@@ -31,7 +36,7 @@ export class LoginPage {
   }
 
   loginAsAdmin() {
-    this.fillCredential({ login: browser.params.login.email, password: browser.params.login.password });
+    this.fillCredential(adminCreds);
     this.getSubmitButton().click();
   }
 }

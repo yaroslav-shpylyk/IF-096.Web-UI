@@ -10,10 +10,8 @@ import { StudentBookService } from '../../services/student-book.service';
 import { lessonsMockData } from '../mocks/lessons-data';
 import * as _moment from 'moment';
 import { of } from 'rxjs';
-// import { By } from '@angular/platform-browser';
-import { by, element } from 'protractor';
 
-fdescribe('ScoresReportComponent', () => {
+describe('ScoresReportComponent', () => {
   let component: ScoresReportComponent;
   let fixture: ComponentFixture<ScoresReportComponent>;
   const moment = _moment;
