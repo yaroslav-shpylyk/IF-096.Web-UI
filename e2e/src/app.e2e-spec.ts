@@ -8,9 +8,9 @@ describe('workspace-project App', () => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+  it('should redirect to login page', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Welcome to school-journal!');
+    expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + '/#/login');
   });
 
   afterEach(async () => {

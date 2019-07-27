@@ -58,7 +58,7 @@ export class StudentBookService {
     const endDateValue = moment(endDate);
     const requests = [];
     let mondayDate = moment(startDate);
-    while (mondayDate.valueOf() <= endDateValue.valueOf()) {
+    while (mondayDate.isBefore(endDateValue)) {
       requests.push(this.getStudentBook(mondayDate.format('YYYY-MM-DD')));
       mondayDate = moment(mondayDate).add(7, 'days');
     }
