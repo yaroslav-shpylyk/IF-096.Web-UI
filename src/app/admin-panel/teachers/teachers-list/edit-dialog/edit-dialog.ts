@@ -12,7 +12,8 @@ import {
 } from '../../helpers/validators';
 import { MatSnackBar } from '@angular/material';
 import { TeacherData } from '../../../../models/teacher-data';
-
+import { imageValidator } from './image.validator';
+import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-edit-dialog-overview',
   templateUrl: './edit-dialog.html',
@@ -23,6 +24,7 @@ export class EditDialogOverviewComponent implements OnInit {
   teacherForm: FormGroup;
   editMode: boolean;
   ava: string;
+  file = new BehaviorSubject<any>(null);
 
   constructor(
     public dialogRef: MatDialogRef<EditDialogOverviewComponent>,
@@ -112,10 +114,11 @@ export class EditDialogOverviewComponent implements OnInit {
         oldPassword: [''],
         newPassword: [''],
         confirmPassword: [''],
-        teacherAvatar: ['']
+        teacherAvatar: ['', [Validators.required], [imageValidator(this.file)]]
       },
       {
-        validator: MustMatch('newPassword', 'confirmPassword')
+        updateOn: 'blur',
+        validator: MustMatch('newPassword', 'confirmPassword'),
       }
     );
   }
@@ -210,6 +213,7 @@ export class EditDialogOverviewComponent implements OnInit {
   onFileSelected(event: { target: { files: any[] } }) {
     const file = event.target.files[0];
     const reader = new FileReader();
+    this.file.next(file);
     reader.onload = this._handleReaderLoaded.bind(this);
     reader.readAsDataURL(file);
   }
