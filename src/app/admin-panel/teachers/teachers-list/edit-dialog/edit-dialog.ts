@@ -12,7 +12,7 @@ import {
 } from '../../helpers/validators';
 import { MatSnackBar } from '@angular/material';
 import { TeacherData } from '../../../../models/teacher-data';
-import { imageValidator } from './image.validator';
+import { imageValidator } from '../../../../validators/image-type.validator';
 import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-edit-dialog-overview',
