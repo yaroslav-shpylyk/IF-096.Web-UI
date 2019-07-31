@@ -112,7 +112,7 @@ export class AddStudentComponent implements OnInit {
 
   private editStudentForm(student: Student): void {
     this.addStudent = this.fb.group({
-      avatar: [student.avatar],
+      avatar: '',
       dateOfBirth: [student.dateOfBirth],
       email: [student.email],
       firstname: [student.firstname, validText],
