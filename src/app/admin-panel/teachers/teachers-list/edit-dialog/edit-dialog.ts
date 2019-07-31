@@ -24,7 +24,7 @@ export class EditDialogOverviewComponent implements OnInit {
   teacherForm: FormGroup;
   editMode: boolean;
   ava: string;
-  file = new BehaviorSubject<any>(null);
+  file = new BehaviorSubject<File>(null);
 
   constructor(
     public dialogRef: MatDialogRef<EditDialogOverviewComponent>,
