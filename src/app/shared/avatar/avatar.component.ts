@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-avatar',
   template: `
-    <div class="avatar" #avatarComponent>
+    <div class="avatar" #avatarComponent (click) = "emitChange()">
       <ng-template [ngIf]="abbreviation">{{abbreviation}}</ng-template>
       <mat-icon *ngIf="!abbreviation && !checkValue(avatar)">person_outline</mat-icon>
     </div>`,
@@ -32,9 +32,11 @@ export class AvatarComponent implements OnInit, OnChanges {
   @Input() avatar: string;
   @Input() firstName: string;
   @Input() lastName: string;
+  @Input() editable = false;
   private backgroundColor: string;
   @ViewChild('avatarComponent') avatarComponent: ElementRef;
   public abbreviation = '';
+  @Output() changeAvatar = new EventEmitter();
   constructor() { }
 
   ngOnInit() {
@@ -113,5 +115,9 @@ export class AvatarComponent implements OnInit, OnChanges {
    */
   public checkValue(value: string): boolean {
     return value !== undefined && value !== null && value.trim() !== '';
+  }
+
+  private emitChange() {
+    if ( this.editable ) { this.changeAvatar.emit(); }
   }
 }
