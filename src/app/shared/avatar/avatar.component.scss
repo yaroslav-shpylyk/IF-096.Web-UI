@@ -11,8 +11,7 @@
   background-size: cover;
   overflow: hidden;
   position: relative;
-
-  .change-image {
+  &.editable .change-image {
     position: absolute;
     background-color: rgba(0,0,0,.54);
     color: white;

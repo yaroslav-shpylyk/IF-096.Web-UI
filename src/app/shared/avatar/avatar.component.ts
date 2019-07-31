@@ -3,10 +3,10 @@ import { Component, OnInit, Input, ViewChild, ElementRef, OnChanges, SimpleChang
 @Component({
   selector: 'app-avatar',
   template: `
-    <div class="avatar" #avatarComponent>
+    <div class="avatar" #avatarComponent [ngClass]='editable?"editable":""'>
       <ng-template [ngIf]="abbreviation">{{abbreviation}}</ng-template>
       <mat-icon *ngIf="!abbreviation && !checkValue(avatar)">person_outline</mat-icon>
-      <div class="change-image" (click) = "emitChange()">Змінити</div>
+      <div class="change-image" *ngIf="editable" (click) = "emitChange()">Змінити</div>
     </div>`,
   styleUrls: ['./avatar.component.scss']
 })

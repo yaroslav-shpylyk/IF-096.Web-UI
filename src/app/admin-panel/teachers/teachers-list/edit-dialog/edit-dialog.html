@@ -1,9 +1,11 @@
 <div class="wrapper">
   <div class="container">
     <div class="avatar">
-      <app-avatar *ngIf="editMode" [avatar]="teacher?.avatar"
-                  [firstName]="teacher?.firstname"
-                  [lastName]="teacher?.lastname">
+      <app-avatar *ngIf="editMode" (changeAvatar)="avatarRef.click()"
+        [avatar]="teacher?.avatar"
+        [editable]="true"
+        [firstName]="teacher?.firstname"
+        [lastName]="teacher?.lastname">
       </app-avatar>
       <app-avatar *ngIf="!editMode" [avatar]="ava">
       </app-avatar>
@@ -11,7 +13,7 @@
 
     <form [formGroup]="teacherForm" (ngSubmit)="onSubmit()">
       <div>
-        <input
+        <input [ngStyle]="{'display': 'none'}" #avatarRef
           formControlName="teacherAvatar"
           type="file"
           (change)="onFileSelected($event)"
