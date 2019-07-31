@@ -3,30 +3,12 @@ import { Component, OnInit, Input, ViewChild, ElementRef, OnChanges, SimpleChang
 @Component({
   selector: 'app-avatar',
   template: `
-    <div class="avatar" #avatarComponent (click) = "emitChange()">
+    <div class="avatar" #avatarComponent>
       <ng-template [ngIf]="abbreviation">{{abbreviation}}</ng-template>
       <mat-icon *ngIf="!abbreviation && !checkValue(avatar)">person_outline</mat-icon>
+      <div class="change-image" (click) = "emitChange()">Змінити</div>
     </div>`,
-  styles: [`
-  .avatar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 3em;
-    height: 3em;
-    border-radius: 50%;
-    color: white;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-  }
-  .avatar > mat-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2em;
-  }
-  `]
+  styleUrls: ['./avatar.component.scss']
 })
 export class AvatarComponent implements OnInit, OnChanges {
   @Input() avatar: string;
