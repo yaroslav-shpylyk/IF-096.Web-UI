@@ -57,13 +57,12 @@ export class AddStudentComponent implements OnInit {
    */
 
   onUpload($event): void {
-    const file = $event.target.files[0];
+    const file = ($event.target as HTMLInputElement).files[0];
     const reader = new FileReader();
     reader.onloadend = () => {
-      this.avatar = reader.result;
+     this.avatar = reader.result;
     };
     reader.readAsDataURL(file);
-    this.initStudentData();
   }
 
   /**
@@ -102,6 +101,7 @@ export class AddStudentComponent implements OnInit {
         .subscribe((student: Student) => {
           this.editStudentForm(student);
           this.showSpinner = false;
+          this.avatar = student.avatar;
         });
     }
   }
