@@ -1,12 +1,17 @@
 <div class="wrapper">
   <div class="container">
     <div class="avatar">
-      <app-avatar *ngIf="editMode" [avatar]="teacher?.avatar"
-                  [firstName]="teacher?.firstname"
-                  [lastName]="teacher?.lastname">
-      </app-avatar>
-      <app-avatar *ngIf="!editMode" [avatar]="ava">
-      </app-avatar>
+      <div class="error-message" *ngIf="teacherForm.get('teacherAvatar').invalid">
+        Некоректний тип зображення
+      </div>
+      <ng-container *ngIf="teacherForm.get('teacherAvatar').valid">
+        <app-avatar *ngIf="editMode" [avatar]="teacher?.avatar"
+          [firstName]="teacher?.firstname"
+          [lastName]="teacher?.lastname">
+        </app-avatar>
+        <app-avatar *ngIf="!editMode" [avatar]="ava">
+        </app-avatar>
+      </ng-container>
     </div>
 
     <form [formGroup]="teacherForm" (ngSubmit)="onSubmit()">
@@ -15,6 +20,7 @@
           formControlName="teacherAvatar"
           type="file"
           (change)="onFileSelected($event)"
+          [ngStyle]="{'color':teacherForm.get('teacherAvatar').invalid ? 'red' : null }"
         />
 
         <mat-form-field>

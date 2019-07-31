@@ -114,7 +114,7 @@ export class EditDialogOverviewComponent implements OnInit {
         oldPassword: [''],
         newPassword: [''],
         confirmPassword: [''],
-        teacherAvatar: ['', [Validators.required], [imageValidator(this.file)]]
+        teacherAvatar: ['', null, imageValidator(this.file)]
       },
       {
         updateOn: 'blur',
@@ -230,6 +230,7 @@ export class EditDialogOverviewComponent implements OnInit {
     } else {
       this.ava = reader.result;
     }
+    this.teacherForm.get('teacherAvatar').updateValueAndValidity();
   }
 
   /**

@@ -3,7 +3,7 @@ import { Observable, Observer, of, BehaviorSubject } from 'rxjs';
 
 export function imageValidator( blob: BehaviorSubject<any>)  {
   return ( control: AbstractControl ): Promise<{ [key: string]: any }> | Observable<{ [key: string]: any }> => {
-
+    if (blob.value === null) { return of(null); }
     const imgTypes = new Set(['89504e47', 'ffd8ffe0', 'ffd8ffe1', 'ffd8ffe2', 'ffd8ffe3', 'ffd8ffe8' ]);
     const fileReader = new FileReader();
 
