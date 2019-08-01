@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { StudentsService } from '../../../services/students.service';
 import { ClassInfo } from '../../../models/class-info';
@@ -24,6 +24,7 @@ export class AddStudentComponent implements OnInit {
   startDate: Date = new Date(2010, 0, 1);
   show = false;
   showSpinner = false;
+  @ViewChild('avatarRef') avatarRef: ElementRef;
 
   addStudent = this.fb.group({
     lastname: ['', validText],
@@ -57,13 +58,12 @@ export class AddStudentComponent implements OnInit {
    */
 
   onUpload($event): void {
-    const file = $event.target.files[0];
+    const file = ($event.target as HTMLInputElement).files[0];
     const reader = new FileReader();
     reader.onloadend = () => {
-      this.avatar = reader.result;
+     this.avatar = reader.result;
     };
     reader.readAsDataURL(file);
-    this.initStudentData();
   }
 
   /**
@@ -102,6 +102,7 @@ export class AddStudentComponent implements OnInit {
         .subscribe((student: Student) => {
           this.editStudentForm(student);
           this.showSpinner = false;
+          this.avatar = student.avatar;
         });
     }
   }
@@ -112,7 +113,7 @@ export class AddStudentComponent implements OnInit {
 
   private editStudentForm(student: Student): void {
     this.addStudent = this.fb.group({
-      avatar: [student.avatar],
+      avatar: '',
       dateOfBirth: [student.dateOfBirth],
       email: [student.email],
       firstname: [student.firstname, validText],
