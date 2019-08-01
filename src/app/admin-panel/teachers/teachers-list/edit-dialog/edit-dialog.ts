@@ -225,12 +225,17 @@ export class EditDialogOverviewComponent implements OnInit {
    */
   _handleReaderLoaded(e: { target: any }) {
     const reader = e.target;
-    if (this.editMode) {
-      this.teacher.avatar = reader.result;
-    } else {
-      this.ava = reader.result;
-    }
-    this.teacherForm.get('teacherAvatar').updateValueAndValidity();
+    const avatarFormControl = this.teacherForm.get('teacherAvatar');
+    avatarFormControl.updateValueAndValidity();
+    this.teacherForm.get('teacherAvatar').statusChanges.subscribe(
+      () => {
+        if (avatarFormControl.valid) {
+          if (this.editMode) {
+            this.teacher.avatar = reader.result;
+          } else { this.ava = reader.result; }
+        }
+      }
+    );
   }
 
   /**

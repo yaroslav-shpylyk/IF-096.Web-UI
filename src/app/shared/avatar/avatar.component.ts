@@ -5,6 +5,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef, OnChanges, SimpleChang
   template: `
     <div class="avatar" #avatarComponent [ngClass]='editable?"editable":""'>
       <ng-template [ngIf]="abbreviation">{{abbreviation}}</ng-template>
+      <ng-content></ng-content>
       <mat-icon *ngIf="!abbreviation && !checkValue(avatar)">person_outline</mat-icon>
       <div class="change-image" *ngIf="editable" (click) = "emitChange()">Змінити</div>
     </div>`,

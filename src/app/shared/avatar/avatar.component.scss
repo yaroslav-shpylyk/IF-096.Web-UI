@@ -34,7 +34,23 @@
       font-weight: 600;
     }
   }
-
+  ::ng-deep .error-message {
+    position: absolute;
+    color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    padding: 5px;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid #ff0000;
+    box-sizing: border-box;
+    background-color: #fafafaab;
+    text-shadow: black 1px 1px 3px;
+  }
 }
 .avatar > mat-icon {
   display: flex;
