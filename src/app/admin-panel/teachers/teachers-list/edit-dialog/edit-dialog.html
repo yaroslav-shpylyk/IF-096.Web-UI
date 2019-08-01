@@ -10,7 +10,6 @@
           <span *ngIf="teacherForm.get('teacherAvatar').errors.invalidMimeType">Некоректний тип зображення</span>
           <span *ngIf="teacherForm.get('teacherAvatar').errors.invalidFileSize">Розмір файлу завеликий</span>
         </div>
-        <!-- <ng-container *ngIf="teacherForm.get('teacherAvatar').valid"> -->
       </app-avatar>
       <app-avatar *ngIf="!editMode" [avatar]="ava"></app-avatar>
     </div>
@@ -21,7 +20,6 @@
           formControlName="teacherAvatar"
           type="file"
           (change)="onFileSelected($event)"
-          [ngStyle]="{'color':teacherForm.get('teacherAvatar').invalid ? 'red' : null }"
         />
 
         <mat-form-field>
