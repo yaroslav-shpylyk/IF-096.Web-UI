@@ -212,10 +212,12 @@ export class EditDialogOverviewComponent implements OnInit {
    */
   onFileSelected(event: { target: { files: any[] } }) {
     const file = event.target.files[0];
-    const reader = new FileReader();
-    this.file.next(file);
-    reader.onload = this._handleReaderLoaded.bind(this);
-    reader.readAsDataURL(file);
+    if (file) {
+      const reader = new FileReader();
+      this.file.next(file);
+      reader.onload = this._handleReaderLoaded.bind(this);
+      reader.readAsDataURL(file);
+    }
   }
 
   /**
