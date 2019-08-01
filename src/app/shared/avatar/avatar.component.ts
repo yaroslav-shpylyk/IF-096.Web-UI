@@ -1,40 +1,24 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-avatar',
   template: `
-    <div class="avatar" #avatarComponent>
+    <div class="avatar" #avatarComponent [ngClass]='editable?"editable":""'>
       <ng-template [ngIf]="abbreviation">{{abbreviation}}</ng-template>
       <mat-icon *ngIf="!abbreviation && !checkValue(avatar)">person_outline</mat-icon>
+      <div class="change-image" *ngIf="editable" (click) = "emitChange()">Змінити</div>
     </div>`,
-  styles: [`
-  .avatar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 3em;
-    height: 3em;
-    border-radius: 50%;
-    color: white;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-  }
-  .avatar > mat-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2em;
-  }
-  `]
+  styleUrls: ['./avatar.component.scss']
 })
 export class AvatarComponent implements OnInit, OnChanges {
   @Input() avatar: string;
   @Input() firstName: string;
   @Input() lastName: string;
+  @Input() editable = false;
   private backgroundColor: string;
   @ViewChild('avatarComponent') avatarComponent: ElementRef;
   public abbreviation = '';
+  @Output() changeAvatar = new EventEmitter();
   constructor() { }
 
   ngOnInit() {
@@ -113,5 +97,9 @@ export class AvatarComponent implements OnInit, OnChanges {
    */
   public checkValue(value: string): boolean {
     return value !== undefined && value !== null && value.trim() !== '';
+  }
+
+  private emitChange() {
+    if ( this.editable ) { this.changeAvatar.emit(); }
   }
 }

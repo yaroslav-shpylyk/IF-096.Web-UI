@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { StudentsService } from '../../../services/students.service';
 import { ClassInfo } from '../../../models/class-info';
@@ -24,6 +24,7 @@ export class AddStudentComponent implements OnInit {
   startDate: Date = new Date(2010, 0, 1);
   show = false;
   showSpinner = false;
+  @ViewChild('avatarRef') avatarRef: ElementRef;
 
   addStudent = this.fb.group({
     lastname: ['', validText],

@@ -1,7 +1,10 @@
 <mat-dialog-content>
   <div class="avatar">
-    <app-avatar [avatar]="avatar" [firstName]="addStudent.value.firstname"
-      [lastName]="addStudent.value.lastname" *ngIf="!showSpinner">
+    <app-avatar *ngIf="!showSpinner" (changeAvatar)="avatarRef.click()"
+      [avatar] = "avatar"
+      [firstName] = "addStudent.value.firstname"
+      [lastName] = "addStudent.value.lastname"
+      [editable] = "true">
     </app-avatar>
     <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
   </div>
@@ -34,6 +37,9 @@
       <input placeholder="Логін *" matInput type="text" class="form-input" formControlName="login">
       <mat-error *ngIf="addStudent.invalid">Мін 5 символів</mat-error>
     </mat-form-field>
+    <input placeholder="Додати аватар" type="file" [ngStyle]="{'display': 'none'}" class="form-input"
+      #avatarRef formControlName="avatar"
+      (change)="onUpload($event)">
     <ng-container *ngIf="show">
       <mat-form-field>
         <span matPrefix>+380 &nbsp;</span>
@@ -41,8 +47,6 @@
       </mat-form-field>
       <mat-form-field><input placeholder="Електронна адреса" matInput type="email" class="form-input"
           formControlName="email"></mat-form-field>
-      <input placeholder="Додати аватар" type="file" (change)="onUpload($event)" class="form-input"
-        formControlName="avatar">
     </ng-container>
     <button mat-raised-button type="submit" [disabled]="!addStudent.valid">Зберегти</button>
     <button mat-button color="primary" type="button" (click)="show = !show">Додаткові дані</button>
