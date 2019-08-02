@@ -12,17 +12,22 @@ import {
 } from '../../helpers/validators';
 import { MatSnackBar } from '@angular/material';
 import { TeacherData } from '../../../../models/teacher-data';
-
+import { imageValidator } from '../../../../validators/image-type.validator';
+import { BehaviorSubject } from 'rxjs';
+import { avatarValidationMessage } from '../../../../animations/animation';
 @Component({
   selector: 'app-edit-dialog-overview',
   templateUrl: './edit-dialog.html',
-  styleUrls: ['./edit-dialog.scss']
+  styleUrls: ['./edit-dialog.scss'],
+  animations: [avatarValidationMessage]
 })
 export class EditDialogOverviewComponent implements OnInit {
   teacher: TeacherData;
   teacherForm: FormGroup;
   editMode: boolean;
   ava: string;
+  file = new BehaviorSubject<File>(null);
+  messageVisible = false;
 
   constructor(
     public dialogRef: MatDialogRef<EditDialogOverviewComponent>,
@@ -112,10 +117,11 @@ export class EditDialogOverviewComponent implements OnInit {
         oldPassword: [''],
         newPassword: [''],
         confirmPassword: [''],
-        teacherAvatar: ['']
+        teacherAvatar: ['', null, imageValidator(this.file)]
       },
       {
-        validator: MustMatch('newPassword', 'confirmPassword')
+        updateOn: 'blur',
+        validator: MustMatch('newPassword', 'confirmPassword'),
       }
     );
   }
@@ -209,9 +215,12 @@ export class EditDialogOverviewComponent implements OnInit {
    */
   onFileSelected(event: { target: { files: any[] } }) {
     const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = this._handleReaderLoaded.bind(this);
-    reader.readAsDataURL(file);
+    if (file) {
+      const reader = new FileReader();
+      this.file.next(file);
+      reader.onload = this._handleReaderLoaded.bind(this);
+      reader.readAsDataURL(file);
+    }
   }
 
   /**
@@ -221,11 +230,20 @@ export class EditDialogOverviewComponent implements OnInit {
    */
   _handleReaderLoaded(e: { target: any }) {
     const reader = e.target;
-    if (this.editMode) {
-      this.teacher.avatar = reader.result;
-    } else {
-      this.ava = reader.result;
-    }
+    const avatarFormControl = this.teacherForm.get('teacherAvatar');
+    avatarFormControl.updateValueAndValidity();
+    this.teacherForm.get('teacherAvatar').statusChanges.subscribe(
+      () => {
+        if (avatarFormControl.valid) {
+          if (this.editMode) {
+            this.teacher.avatar = reader.result;
+          } else { this.ava = reader.result; }
+        } else {
+          this.messageVisible = true;
+          setTimeout(() => this.messageVisible = false, 2000);
+        }
+      }
+    );
   }
 
   /**

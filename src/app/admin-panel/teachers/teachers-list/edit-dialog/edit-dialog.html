@@ -6,9 +6,12 @@
         [editable]="true"
         [firstName]="teacher?.firstname"
         [lastName]="teacher?.lastname">
+        <div @animatedMessage class="error-message" *ngIf="teacherForm.get('teacherAvatar').invalid && messageVisible">
+          <span *ngIf="teacherForm.get('teacherAvatar').errors.invalidMimeType">Некоректний тип зображення</span>
+          <span *ngIf="teacherForm.get('teacherAvatar').errors.invalidFileSize">Розмір файлу завеликий</span>
+        </div>
       </app-avatar>
-      <app-avatar *ngIf="!editMode" [avatar]="ava">
-      </app-avatar>
+      <app-avatar *ngIf="!editMode" [avatar]="ava"></app-avatar>
     </div>
 
     <form [formGroup]="teacherForm" (ngSubmit)="onSubmit()">

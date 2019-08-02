@@ -12,11 +12,14 @@ import {
   validLogin
 } from '../validator';
 import { MatSnackBar } from '@angular/material';
-
+import { imageValidator } from '../../../validators/image-type.validator';
+import { BehaviorSubject } from 'rxjs';
+import { avatarValidationMessage } from '../../../animations/animation';
 @Component({
   selector: 'app-add-student',
   templateUrl: './add-student.component.html',
-  styleUrls: ['./add-student.component.scss']
+  styleUrls: ['./add-student.component.scss'],
+  animations: [avatarValidationMessage]
 })
 export class AddStudentComponent implements OnInit {
   allClasses: Array<ClassInfo>;
@@ -25,6 +28,8 @@ export class AddStudentComponent implements OnInit {
   show = false;
   showSpinner = false;
   @ViewChild('avatarRef') avatarRef: ElementRef;
+  file = new BehaviorSubject<File>(null);
+  messageVisible = false;
 
   addStudent = this.fb.group({
     lastname: ['', validText],
@@ -60,9 +65,23 @@ export class AddStudentComponent implements OnInit {
   onUpload($event): void {
     const file = ($event.target as HTMLInputElement).files[0];
     const reader = new FileReader();
-    reader.onloadend = () => {
-     this.avatar = reader.result;
-    };
+    const avatarControl = this.addStudent.get('avatar');
+    if (file) {
+      this.file.next(file);
+      reader.onloadend = () => {
+        avatarControl.updateValueAndValidity();
+        avatarControl.statusChanges.subscribe(
+          () => {
+            if (avatarControl.valid) {
+              this.avatar = reader.result;
+            } else {
+              this.messageVisible = true;
+              setTimeout(() => this.messageVisible = false, 2000);
+            }
+          }
+        );
+      };
+    }
     reader.readAsDataURL(file);
   }
 
@@ -113,7 +132,7 @@ export class AddStudentComponent implements OnInit {
 
   private editStudentForm(student: Student): void {
     this.addStudent = this.fb.group({
-      avatar: '',
+      avatar: ['', null, imageValidator(this.file)],
       dateOfBirth: [student.dateOfBirth],
       email: [student.email],
       firstname: [student.firstname, validText],
@@ -123,7 +142,8 @@ export class AddStudentComponent implements OnInit {
       newPass: [''],
       patronymic: [student.patronymic, validText],
       phone: [student.phone, validPhone]
-    });
+    },
+    {updateOn: 'blur'});
   }
 
   openSnackBar(message: string, action: string): void {
