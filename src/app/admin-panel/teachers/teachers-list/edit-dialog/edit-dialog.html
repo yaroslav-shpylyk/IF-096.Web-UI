@@ -6,7 +6,7 @@
         [editable]="true"
         [firstName]="teacher?.firstname"
         [lastName]="teacher?.lastname">
-        <div class="error-message" *ngIf="teacherForm.get('teacherAvatar').invalid">
+        <div @animatedMessage class="error-message" *ngIf="teacherForm.get('teacherAvatar').invalid && messageVisible">
           <span *ngIf="teacherForm.get('teacherAvatar').errors.invalidMimeType">Некоректний тип зображення</span>
           <span *ngIf="teacherForm.get('teacherAvatar').errors.invalidFileSize">Розмір файлу завеликий</span>
         </div>

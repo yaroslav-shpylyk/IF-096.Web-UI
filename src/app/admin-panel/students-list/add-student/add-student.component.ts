@@ -14,11 +14,12 @@ import {
 import { MatSnackBar } from '@angular/material';
 import { imageValidator } from '../../../validators/image-type.validator';
 import { BehaviorSubject } from 'rxjs';
-
+import { avatarValidationMessage } from '../../../animations/animation';
 @Component({
   selector: 'app-add-student',
   templateUrl: './add-student.component.html',
-  styleUrls: ['./add-student.component.scss']
+  styleUrls: ['./add-student.component.scss'],
+  animations: [avatarValidationMessage]
 })
 export class AddStudentComponent implements OnInit {
   allClasses: Array<ClassInfo>;
@@ -28,6 +29,7 @@ export class AddStudentComponent implements OnInit {
   showSpinner = false;
   @ViewChild('avatarRef') avatarRef: ElementRef;
   file = new BehaviorSubject<File>(null);
+  messageVisible = false;
 
   addStudent = this.fb.group({
     lastname: ['', validText],
@@ -72,6 +74,9 @@ export class AddStudentComponent implements OnInit {
           () => {
             if (avatarControl.valid) {
               this.avatar = reader.result;
+            } else {
+              this.messageVisible = true;
+              setTimeout(() => this.messageVisible = false, 2000);
             }
           }
         );

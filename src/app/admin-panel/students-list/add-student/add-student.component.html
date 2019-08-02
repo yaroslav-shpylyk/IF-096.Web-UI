@@ -5,7 +5,7 @@
       [firstName] = "addStudent.value.firstname"
       [lastName] = "addStudent.value.lastname"
       [editable] = "true">
-      <div class="error-message" *ngIf="addStudent.get('avatar').invalid">
+      <div @animatedMessage class="error-message" *ngIf="addStudent.get('avatar').invalid && messageVisible">
         <span *ngIf="addStudent.get('avatar').errors.invalidMimeType">Некоректний тип зображення</span>
         <span *ngIf="addStudent.get('avatar').errors.invalidFileSize">Розмір файлу завеликий</span>
       </div>
