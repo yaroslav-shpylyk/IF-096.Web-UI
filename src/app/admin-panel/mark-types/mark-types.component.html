@@ -1,3 +1,36 @@
-<p>
-  mark-types works!
-</p>
+<div class="wrapper">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Пошук">
+  </mat-form-field>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+    <ng-container matColumnDef="markType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Тип оцінки </th>
+      <td mat-cell *matCellDef="let mark" (click)="openDialog(mark)"> {{mark.markType}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="markDescription">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Опис </th>
+      <td mat-cell *matCellDef="let mark" (click)="openDialog(mark)"> {{mark.description}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let mark">
+        <button class="elipsis" mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="openDialog(mark)"><mat-icon>edit</mat-icon>Редагувати</button>
+          <button mat-menu-item><mat-icon>backspace</mat-icon>Назад</button>
+        </mat-menu>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  <div [id]="scroll">
+    <i (click)="openDialog()" class="material-icons btn">add_circle</i>
+  </div>
+</div>
