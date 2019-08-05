@@ -53,6 +53,11 @@ export class AdminPanelRoutingService {
       path: '/admin-panel/new-year-transition',
       icon: 'queue',
       name: 'Новий навчальний рік'
+    },
+    {
+      path: '/admin-panel/mark-types',
+      icon: 'local_offer',
+      name: 'Типи оцінок'
     }
   ];
 

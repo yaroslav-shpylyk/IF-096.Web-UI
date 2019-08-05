@@ -66,6 +66,7 @@ import {
 } from './teachers/teachers-list/connect-to-journal-dialog/connect-to-journal-dialog.component';
 import { StickyButtonDirective } from './teachers/helpers/sticky-button.directive';
 import { LoadingSpinnerComponent } from './students-list/loading-spinner/loading-spinner.component';
+import { MarkTypesComponent } from './mark-types/mark-types.component';
 
 
 @NgModule({
@@ -103,7 +104,8 @@ import { LoadingSpinnerComponent } from './students-list/loading-spinner/loading
     ConnectToJournalDialogComponent,
     ConnectToJournalComponent,
     StickyButtonDirective,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    MarkTypesComponent
   ],
   imports: [
     CommonModule,
