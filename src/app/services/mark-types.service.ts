@@ -12,14 +12,31 @@ export class MarkTypesService {
 
   /**
    * Method gets all mark types
-   * @param options - Object of params, which we use as query with request
    * @returns - array of types of marks
    */
-
    public getAllMarkTypes(): Observable<MarkType[]> {
     return this.http.get<{status: any, data: MarkType[]}>(`/mark_types`)
     .pipe(
       map(result => result.data)
     );
+   }
+
+  /**
+   * Method creates a new type of mark
+   * @param markTypeData - object with data about new mark type
+   * @returns - created mark type
+   */
+   createMarkType(markTypeData: MarkType): Observable<MarkType> {
+     return this.http.post<MarkType>('/mark_types', markTypeData);
+   }
+
+  /**
+   * The method changes the data  of existing mark type
+   * @param id - id of editable mark
+   * @param markType - object which we modify
+   * @returns - edited mark type
+   */
+   changeMarkType(id: number, markType: MarkType): Observable<MarkType> {
+     return this.http.put<MarkType>(`/mark_types/${id}`, markType);
    }
 }

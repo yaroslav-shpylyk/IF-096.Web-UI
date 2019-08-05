@@ -67,6 +67,7 @@ import {
 import { StickyButtonDirective } from './teachers/helpers/sticky-button.directive';
 import { LoadingSpinnerComponent } from './students-list/loading-spinner/loading-spinner.component';
 import { MarkTypesComponent } from './mark-types/mark-types.component';
+import { ManagingMarkTypesComponent } from './mark-types/managing-mark-types/managing-mark-types.component';
 
 
 @NgModule({
@@ -105,7 +106,8 @@ import { MarkTypesComponent } from './mark-types/mark-types.component';
     ConnectToJournalComponent,
     StickyButtonDirective,
     LoadingSpinnerComponent,
-    MarkTypesComponent
+    MarkTypesComponent,
+    ManagingMarkTypesComponent
   ],
   imports: [
     CommonModule,
@@ -158,7 +160,8 @@ import { MarkTypesComponent } from './mark-types/mark-types.component';
     StatisticsComponent,
     PdfPreviewComponent,
     SnackbarMessComponent,
-    ConnectToJournalDialogComponent
+    ConnectToJournalDialogComponent,
+    ManagingMarkTypesComponent
   ],
   providers: []
 })

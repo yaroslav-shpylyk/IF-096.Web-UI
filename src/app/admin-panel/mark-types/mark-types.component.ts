@@ -4,6 +4,7 @@ import { MarkType } from '../../models/mark-type';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
+import { ManagingMarkTypesComponent } from './managing-mark-types/managing-mark-types.component';
 
 @Component({
   selector: 'app-mark-types',
@@ -34,7 +35,6 @@ export class MarkTypesComponent implements OnInit {
   getMarkTypes() {
     this.markTypeService.getAllMarkTypes().subscribe(
       markTypes => {
-        console.log(markTypes);
         this.allMarkTypes = markTypes;
         this.dataSource = new MatTableDataSource(this.allMarkTypes);
         this.dataSource.sort = this.sort;
@@ -46,8 +46,19 @@ export class MarkTypesComponent implements OnInit {
    * Method open a dialog window, send data to the dialog window and update the list of mark types
    * @param markType - data which sends to the dialog window
    */
-  openDialog(markType: MarkType) {
+  editMarkType(markType: MarkType | false, index?: number) {
+    console.log(index);
+    const markData = (markType) ? markType : {markType: '', description: '', id: 0, active: true};
+    const markTypePosition = (index) ? index : this.allMarkTypes.length;
+    const dialogRef = this.dialog.open(ManagingMarkTypesComponent, { data: markData });
 
+    dialogRef.afterClosed().subscribe(
+      res => {
+        if (res === undefined) { return; }
+        this.allMarkTypes[markTypePosition] = res.data;
+        this.dataSource.data = this.allMarkTypes;
+      }
+    );
   }
 
   /**

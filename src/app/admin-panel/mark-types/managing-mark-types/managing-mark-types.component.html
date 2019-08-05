@@ -1,0 +1,30 @@
+<div mat-dialog-content>
+  <form class="popup-form">
+    <mat-form-field class="popup-full-width">
+      <input
+        matInput
+        placeholder="Тип оцінки"
+        name="markType"
+        [(ngModel)]="markTypeData.markType"
+        maxlength="50"
+        required
+        pattern="[А-ЯІЇЄҐа-яіїєґ()' -]+"
+        #subj="ngModel"
+        [class.is-invalid]="subj.invalid && subj.touched"
+      >
+    </mat-form-field>
+    <mat-form-field class="popup-full-width">
+      <textarea
+       rows="5"
+       matInput
+       placeholder="Опис"
+       name="description"
+       [(ngModel)]="markTypeData.description"
+       maxlength="500"
+      >
+      </textarea>
+    </mat-form-field>
+    <button mat-button (click)="saveMarkType()" [disabled]="subj.invalid">Зберегти</button>
+    <button mat-button (click)="onCancel()">Відмінити</button>
+  </form>
+</div>
