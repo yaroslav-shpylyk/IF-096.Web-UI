@@ -9,8 +9,8 @@
         maxlength="50"
         required
         pattern="[А-ЯІЇЄҐа-яіїєґ()' -]+"
-        #subj="ngModel"
-        [class.is-invalid]="subj.invalid && subj.touched"
+        #typeTitle="ngModel"
+        [class.is-invalid]="typeTitle.invalid && typeTitle.touched"
       >
     </mat-form-field>
     <mat-form-field class="popup-full-width">
@@ -24,7 +24,9 @@
       >
       </textarea>
     </mat-form-field>
-    <button mat-button (click)="saveMarkType()" [disabled]="subj.invalid">Зберегти</button>
+    <button mat-button (click)="saveMarkType()" [disabled]="typeTitle.invalid">Зберегти</button>
     <button mat-button (click)="onCancel()">Відмінити</button>
+    <button mat-button *ngIf="markTypeData.active"(click)="changeActiveStatus()">Архівувати</button>
+    <button mat-button *ngIf="!markTypeData.active"(click)="changeActiveStatus()">Відновити</button>
   </form>
 </div>

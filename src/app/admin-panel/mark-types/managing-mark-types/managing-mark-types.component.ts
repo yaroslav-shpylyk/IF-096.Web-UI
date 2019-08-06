@@ -53,4 +53,24 @@ export class ManagingMarkTypesComponent {
   onCancel(): void {
     this.dialogRef.close();
   }
+
+  /**
+   * Changes active property of current mark type and display snackbar with status message
+   */
+  changeActiveStatus(): void {
+    let message: string;
+    if (this.markTypeData.active) {
+      this.markTypeData.active = false;
+      message = 'Даний тип оцінок перенесено в архів';
+    } else {
+      this.markTypeData.active = true;
+      message = 'Даний тип оцінок відновлено';
+    }
+    this.markTypesService.changeMarkType(this.markTypeData.id, this.markTypeData).subscribe(
+      res => {
+        this.dialogRef.close(res);
+        this.displaySnackBar(message);
+      }
+    );
+  }
 }

@@ -23,7 +23,7 @@ export class MarkTypesComponent implements OnInit {
   scroll = 'scrollTop';
   marks: Observable<MarkType[]>;
   @HostListener('window:scroll', [])
-
+  hideDisabledMarkTypes = true;
   ngOnInit() {
     this.getMarkTypes();
   }
@@ -31,12 +31,11 @@ export class MarkTypesComponent implements OnInit {
   /**
    * The method gets all types of marks and assigns them into data for a table view
    */
-
   getMarkTypes() {
     this.markTypeService.getAllMarkTypes().subscribe(
       markTypes => {
         this.allMarkTypes = markTypes;
-        this.dataSource = new MatTableDataSource(this.allMarkTypes);
+        this.dataSource = new MatTableDataSource(this.filteredTypes);
         this.dataSource.sort = this.sort;
       }
     );
@@ -47,16 +46,15 @@ export class MarkTypesComponent implements OnInit {
    * @param markType - data which sends to the dialog window
    */
   editMarkType(markType: MarkType | false, index?: number) {
-    console.log(index);
     const markData = (markType) ? markType : {markType: '', description: '', id: 0, active: true};
-    const markTypePosition = (index) ? index : this.allMarkTypes.length;
+    const markTypePosition = (index >= 0) ? index : this.allMarkTypes.length;
     const dialogRef = this.dialog.open(ManagingMarkTypesComponent, { data: markData });
 
     dialogRef.afterClosed().subscribe(
       res => {
         if (res === undefined) { return; }
         this.allMarkTypes[markTypePosition] = res.data;
-        this.dataSource.data = this.allMarkTypes;
+        this.dataSource.data = this.filteredTypes;
       }
     );
   }
@@ -78,5 +76,22 @@ export class MarkTypesComponent implements OnInit {
       this.scroll = 'scrollBottom';
     }
     this.prevScrollpos = currentScrollPos;
+  }
+
+  /**
+   * getter for filtered mark types that gets mark types by active property
+   * @returns - array of filtered mark types
+   */
+  get filteredTypes(): MarkType[] {
+    if (this.hideDisabledMarkTypes && this.allMarkTypes) {
+      return this.allMarkTypes.filter( mark => mark.active === true );
+    } else {
+      return this.allMarkTypes;
+    }
+  }
+
+  switchFilter(): void {
+    this.hideDisabledMarkTypes = !this.hideDisabledMarkTypes;
+    this.dataSource.data = this.filteredTypes;
   }
 }
