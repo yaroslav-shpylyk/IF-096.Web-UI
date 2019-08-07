@@ -36,7 +36,6 @@ export class ManagingMarkTypesComponent {
    * Method save a new or modify exist mark type
    */
   saveMarkType() {
-    console.log('save');
     let message: string;
     this.markTypeData[0].markType = this.markTypeForm.get('typeTitle').value;
     this.markTypeData[0].description = this.markTypeForm.get('description').value;

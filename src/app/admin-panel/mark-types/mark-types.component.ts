@@ -5,11 +5,13 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import { ManagingMarkTypesComponent } from './managing-mark-types/managing-mark-types.component';
+import { enterFromTop, multiEnterFromBottom } from '../../animations/animation';
 
 @Component({
   selector: 'app-mark-types',
   templateUrl: './mark-types.component.html',
-  styleUrls: ['./mark-types.component.scss']
+  styleUrls: ['./mark-types.component.scss'],
+  animations: [enterFromTop, multiEnterFromBottom()]
 })
 export class MarkTypesComponent implements OnInit {
 

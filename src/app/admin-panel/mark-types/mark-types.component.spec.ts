@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MaterialModule } from '../../material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MarkTypesComponent } from './mark-types.component';
+import { MarkTypesService } from '../../services/mark-types.service';
 
 describe('MarkTypesComponent', () => {
   let component: MarkTypesComponent;
@@ -8,7 +13,16 @@ describe('MarkTypesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MarkTypesComponent ]
+      imports: [
+        MaterialModule,
+        ReactiveFormsModule,
+        FormsModule,
+        HttpClientTestingModule,
+        BrowserAnimationsModule,
+        MatSlideToggleModule
+      ],
+      declarations: [ MarkTypesComponent ],
+      providers: [ MarkTypesService ]
     })
     .compileComponents();
   }));
