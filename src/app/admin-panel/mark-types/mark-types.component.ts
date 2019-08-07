@@ -48,8 +48,7 @@ export class MarkTypesComponent implements OnInit {
   editMarkType(markType: MarkType | false, index?: number) {
     const markData = (markType) ? markType : {markType: '', description: '', id: 0, active: true};
     const markTypePosition = (index >= 0) ? index : this.allMarkTypes.length;
-    const dialogRef = this.dialog.open(ManagingMarkTypesComponent, { data: markData });
-
+    const dialogRef = this.dialog.open(ManagingMarkTypesComponent, { data: [markData, this.allMarkTypes] });
     dialogRef.afterClosed().subscribe(
       res => {
         if (res === undefined) { return; }

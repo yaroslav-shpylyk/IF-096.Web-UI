@@ -1,17 +1,15 @@
 <div mat-dialog-content>
-  <form class="popup-form">
+  <form class="popup-form" [formGroup]="markTypeForm">
     <mat-form-field class="popup-full-width">
       <input
+        formControlName="typeTitle"
         matInput
         placeholder="Тип оцінки"
-        name="markType"
-        [(ngModel)]="markTypeData.markType"
-        maxlength="50"
-        required
-        pattern="[А-ЯІЇЄҐа-яіїєґ()' -]+"
-        #typeTitle="ngModel"
-        [class.is-invalid]="typeTitle.invalid && typeTitle.touched"
-      >
+        name="markType">
+      <mat-error *ngIf="markTypeForm.get('typeTitle').errors?.required">Обов'язкове поле</mat-error>
+      <mat-error *ngIf="markTypeForm.get('typeTitle').errors?.pattern">Тільки укр. букви, 1 велика</mat-error>
+      <mat-error *ngIf="markTypeForm.get('typeTitle').errors?.dublicate">Тип оцінки вже існує</mat-error>
+      <mat-error *ngIf="markTypeForm.get('typeTitle').errors?.maxlength">Обмеження: 50 символів</mat-error>
     </mat-form-field>
     <mat-form-field class="popup-full-width">
       <textarea
@@ -19,14 +17,13 @@
        matInput
        placeholder="Опис"
        name="description"
-       [(ngModel)]="markTypeData.description"
-       maxlength="500"
-      >
+       formControlName="description">
       </textarea>
+      <mat-error *ngIf="markTypeForm.get('description').errors?.maxlength">Обмеження: 300 символів</mat-error>
     </mat-form-field>
-    <button mat-button (click)="saveMarkType()" [disabled]="typeTitle.invalid">Зберегти</button>
+    <button mat-button type="submit" (click)="saveMarkType()" [disabled]="markTypeForm.get('typeTitle').invalid">Зберегти</button>
     <button mat-button (click)="onCancel()">Відмінити</button>
-    <button mat-button *ngIf="markTypeData.active"(click)="changeActiveStatus()">Архівувати</button>
-    <button mat-button *ngIf="!markTypeData.active"(click)="changeActiveStatus()">Відновити</button>
+    <button mat-button *ngIf="markTypeData[0].active" (click)="changeActiveStatus()">Архівувати</button>
+    <button mat-button *ngIf="!markTypeData[0].active" (click)="changeActiveStatus()">Відновити</button>
   </form>
 </div>
