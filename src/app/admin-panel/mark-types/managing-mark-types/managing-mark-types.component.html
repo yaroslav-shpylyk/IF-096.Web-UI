@@ -1,0 +1,29 @@
+<div mat-dialog-content>
+  <form class="popup-form" [formGroup]="markTypeForm">
+    <mat-form-field class="popup-full-width">
+      <input
+        formControlName="typeTitle"
+        matInput
+        placeholder="Тип оцінки"
+        name="markType">
+      <mat-error *ngIf="markTypeForm.get('typeTitle').errors?.required">Обов'язкове поле</mat-error>
+      <mat-error *ngIf="markTypeForm.get('typeTitle').errors?.pattern">Тільки укр. букви, 1 велика</mat-error>
+      <mat-error *ngIf="markTypeForm.get('typeTitle').errors?.dublicate">Тип оцінки вже існує</mat-error>
+      <mat-error *ngIf="markTypeForm.get('typeTitle').errors?.maxlength">Обмеження: 50 символів</mat-error>
+    </mat-form-field>
+    <mat-form-field class="popup-full-width">
+      <textarea
+       rows="5"
+       matInput
+       placeholder="Опис"
+       name="description"
+       formControlName="description">
+      </textarea>
+      <mat-error *ngIf="markTypeForm.get('description').errors?.maxlength">Обмеження: 300 символів</mat-error>
+    </mat-form-field>
+    <button mat-button type="submit" (click)="saveMarkType()" [disabled]="markTypeForm.get('typeTitle').invalid">Зберегти</button>
+    <button mat-button (click)="onCancel()">Відмінити</button>
+    <button mat-button *ngIf="markTypeData[0].active" (click)="changeActiveStatus()">Архівувати</button>
+    <button mat-button *ngIf="!markTypeData[0].active" (click)="changeActiveStatus()">Відновити</button>
+  </form>
+</div>

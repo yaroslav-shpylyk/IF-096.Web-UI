@@ -15,6 +15,7 @@ import { SubjectsComponent } from './subjects/subjects.component';
 import { NewYearComponent } from './new-year/new-year.component';
 import { TeacherConnectionComponent } from './teacher-connection/teacher-connection.component';
 import { ConnectToJournalComponent } from './teachers/teachers-list/connect-to-journal-dialog/connect-to-journal-dialog.component';
+import { MarkTypesComponent } from './mark-types/mark-types.component';
 
 const routes: Routes = [
   {
@@ -61,6 +62,10 @@ const routes: Routes = [
       {
         path: 'new-year-transition',
         component: NewYearComponent
+      },
+      {
+        path: 'mark-types',
+        component: MarkTypesComponent
       },
       {
         path: '',
