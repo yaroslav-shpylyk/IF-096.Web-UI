@@ -29,6 +29,7 @@ export class NewYearComponent implements OnInit {
   filteredClasses: { classData: ClassData, control: FormControl}[] = [];
   transitedCards: ClassCardComponent[] = [];
   @ViewChildren('classCard') classCards: QueryList<ClassCardComponent>;
+  activeCard: ClassCardComponent;
 
   transititionForm = this.fb.group(
     { newClassTitle: this.fb.array([]) },
@@ -192,5 +193,16 @@ export class NewYearComponent implements OnInit {
       StatisticsComponent,
       config
     );
+  }
+
+  /**
+   * auto hides edit field if was focused on another one input field
+   * @params card - instance of the component that was clicked on
+   */
+  hideEditInput(card: ClassCardComponent): void {
+    if (this.activeCard !== card && this.activeCard) {
+      this.activeCard.isEditEnable = false;
+    }
+    this.activeCard = card;
   }
 }
