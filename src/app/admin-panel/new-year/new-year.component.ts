@@ -108,7 +108,8 @@ export class NewYearComponent implements OnInit {
   }
 
   /**
-   *  Filter active classses and generate according to this object with filtereted classes and array of FormControls
+   *  Filter active classses and generate according to this object
+   *  with filtereted classes and array of FormControls
    */
   filterClasses(): void {
     const year = this.currentYear;
@@ -137,6 +138,20 @@ export class NewYearComponent implements OnInit {
             (this.transititionForm.get('newClassTitle') as FormArray).removeAt(posSinglClassInFiltered);
           }
         }
+      }
+    );
+    this.sortClasses();
+  }
+
+  /**
+   * Group filtered classes by school year and class number
+   */
+  sortClasses(): void {
+    this.filteredClasses.sort(
+      (curClass, prevClass) => {
+        const increasingClassNumber = parseInt(curClass.classData.className, 10) - parseInt(prevClass.classData.className, 10);
+        const increasingClassYear = curClass.classData.classYear - prevClass.classData.classYear;
+        return  increasingClassYear || increasingClassNumber;
       }
     );
   }
