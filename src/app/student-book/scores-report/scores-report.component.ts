@@ -15,6 +15,7 @@ const moment = _moment;
 export class ScoresReportComponent implements OnInit {
   marksGroupedBySubject: {string: StudentBookData[]};
   displayedSubjects = new Set();
+  marksCount: number;
 
   isEndOfYear = moment().isBefore(moment(`${this.educationYear + 1}-06-01`));
   startPickerValue = this.dateOfSemestStart;
@@ -44,11 +45,12 @@ export class ScoresReportComponent implements OnInit {
    */
   getMarks() {
     const startDate = moment(this.startPickerValue.format('YYYY-MM-DD'));
-    const endDate = this.endPickerValue.format('YYYY-MM-DD');
+    const endDate = moment(this.endPickerValue.format('YYYY-MM-DD'));
     const daysToMonday = 1 - startDate.day();
-    const mondayDate = startDate.add(daysToMonday, 'days').format('YYYY-MM-DD');
-    this.studentBookService.getAllMarks(mondayDate, endDate).subscribe(
+    const mondayDate = startDate.add(daysToMonday, 'days');
+    this.studentBookService.getMarks(mondayDate, endDate).subscribe(
       result => {
+        this.marksCount = result.length;
         this.marksGroupedBySubject = result.reduce(
           (groupedMarks, mark) => {
             groupedMarks[mark.subjectName] = groupedMarks[mark.subjectName] || [];

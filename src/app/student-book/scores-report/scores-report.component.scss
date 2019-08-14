@@ -48,3 +48,8 @@ app-subject-marks {
     & .mat-checkbox-label {display: flex;}
   }
 }
+
+.message, mat-spinner {
+  margin: 0 auto;
+  text-align: center;
+}

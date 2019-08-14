@@ -50,7 +50,7 @@ describe('ScoresReportComponent', () => {
     const groupedLessons = Object.create(null);
     groupedLessons[lessonsMockData[0].subjectName] = [lessonsMockData[0]];
     groupedLessons[lessonsMockData[1].subjectName] = [lessonsMockData[1]];
-    spyOn(studentBookService, 'getAllMarks').and.returnValue(of(lessonsOfFirstSemestr));
+    spyOn(studentBookService, 'getMarks').and.returnValue(of(lessonsOfFirstSemestr));
     component.ngOnInit();
     fixture.detectChanges();
     fixture.whenStable().then( () => {
