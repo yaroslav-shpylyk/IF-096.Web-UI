@@ -29,6 +29,7 @@ export class NewYearComponent implements OnInit {
   filteredClasses: { classData: ClassData, control: FormControl}[] = [];
   transitedCards: ClassCardComponent[] = [];
   @ViewChildren('classCard') classCards: QueryList<ClassCardComponent>;
+  activeCard: ClassCardComponent;
 
   transititionForm = this.fb.group(
     { newClassTitle: this.fb.array([]) },
@@ -108,7 +109,8 @@ export class NewYearComponent implements OnInit {
   }
 
   /**
-   *  Filter active classses and generate according to this object with filtereted classes and array of FormControls
+   *  Filter active classses and generate according to this object
+   *  with filtereted classes and array of FormControls
    */
   filterClasses(): void {
     const year = this.currentYear;
@@ -137,6 +139,20 @@ export class NewYearComponent implements OnInit {
             (this.transititionForm.get('newClassTitle') as FormArray).removeAt(posSinglClassInFiltered);
           }
         }
+      }
+    );
+    this.sortClasses();
+  }
+
+  /**
+   * Group filtered classes by school year and class number
+   */
+  sortClasses(): void {
+    this.filteredClasses.sort(
+      (curClass, prevClass) => {
+        const increasingClassNumber = parseInt(curClass.classData.className, 10) - parseInt(prevClass.classData.className, 10);
+        const increasingClassYear = curClass.classData.classYear - prevClass.classData.classYear;
+        return  increasingClassYear || increasingClassNumber;
       }
     );
   }
@@ -177,5 +193,16 @@ export class NewYearComponent implements OnInit {
       StatisticsComponent,
       config
     );
+  }
+
+  /**
+   * auto hides edit field if was focused on another one input field
+   * @params card - instance of the component that was clicked on
+   */
+  hideEditInput(card: ClassCardComponent): void {
+    if (this.activeCard !== card && this.activeCard) {
+      this.activeCard.isEditEnable = false;
+    }
+    this.activeCard = card;
   }
 }

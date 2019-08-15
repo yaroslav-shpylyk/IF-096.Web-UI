@@ -26,7 +26,10 @@ mat-card {
   @media (min-width: 768px) { padding: 15px; }
 
   .class-lock {width: 10%; }
-  .clas-transition {width: 10%; }
+  .class-transition {
+    width: 10%;
+    i { cursor: default; }
+   }
   .new-class-title {
     position: relative;
     width: 35%;
@@ -34,13 +37,10 @@ mat-card {
   }
   .class-edit-title { width: 10%; }
   input {
-    // width: 70%;
     height: 35px;
     position: relative;
     font-size: 1em;
     text-align: center;
-    // @media (min-width: 481px) and (max-width: 767px) { font-size: 0.55em; }
-    // @media (min-width: 768px) { font-size: 0.8em; }
   }
 
   input[type="checkbox"] {

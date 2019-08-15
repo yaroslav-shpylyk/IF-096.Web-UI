@@ -6,6 +6,7 @@
     <form *ngIf="filteredClasses.length>0; else emptyFilter" [@multiEnterFromBottom]="filteredClasses?.length" [formGroup]="transititionForm" class="component" (ngSubmit)="formSubmit()">
       <div *ngFor="let curClass of filteredClasses; let i=index" >
         <app-class-card
+          (click) = "cardClick(classCard)"
           [controlIndex]="i"
           [form]="transititionForm"
           [curClass]="curClass.classData"
