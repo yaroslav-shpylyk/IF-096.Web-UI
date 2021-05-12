@@ -27,7 +27,7 @@
     "@angular/service-worker": "~7.2.0",
     "@egjs/hammerjs": "^2.0.15",
     "borm-ng2-pdf": "^5.2.9",
-    "chart.js": "^2.8.0",
+    "chart.js": "^2.9.4",
     "core-js": "^2.5.4",
     "express": "4.16.4",
     "file-saver": "^2.0.1",
